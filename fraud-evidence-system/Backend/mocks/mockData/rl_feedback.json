@@ -1,0 +1,32 @@
+{
+  "success": true,
+  "feedback": {
+    "id": "66d4a2b8c9e1234567890xyz",
+    "wallet": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
+    "predictedRisk": 0.78,
+    "actualOutcome": "fraud_confirmed",
+    "accuracy": 0.96,
+    "reward": 1.0,
+    "investigatorNotes": "Confirmed fraudulent activity after investigation. Wallet was involved in multi-stage money laundering scheme.",
+    "actionTaken": "wallet_frozen",
+    "submittedBy": "investigator@fraud.com",
+    "submittedAt": "2024-01-07T14:00:00.000Z",
+    "modelImpact": {
+      "retrainingScheduled": true,
+      "expectedImprovement": 0.02,
+      "trainingBatchId": "BATCH-2024-001",
+      "scheduledFor": "2024-01-08T02:00:00.000Z"
+    },
+    "predictionMetrics": {
+      "truePositive": true,
+      "falsePositive": false,
+      "trueNegative": false,
+      "falseNegative": false
+    },
+    "investigationDuration": "4 hours",
+    "evidenceGathered": 8,
+    "associatedCases": ["CASE-2024-001", "CASE-2024-007"]
+  },
+  "message": "Feedback recorded and will be used for model retraining"
+}
+

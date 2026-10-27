@@ -1,0 +1,21 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "wallet",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "riskLevel",
+        "type": "uint256"
+      }
+    ],
+    "name": "WalletFlagged",
+    "type": "event"
+  }
+]

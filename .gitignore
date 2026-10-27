@@ -1,0 +1,54 @@
+# Dependencies
+**/node_modules/
+**/bower_components/
+
+# Python
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+**/.venv/
+**/venv/
+**/env/
+**/ENV/
+
+# Build artifacts
+**/build/
+**/dist/
+**/.cache/
+*.tsbuildinfo
+coverage/
+.nyc_output/
+*.lcov
+
+# Environment & credentials (DO NOT COMMIT)
+**/.env
+**/.env.local
+**/.env.*.local
+*.pem
+*.key
+*.cert
+
+# Logs & temporary files
+**/*.log
+**/logs/
+*.tmp
+*.temp
+*.pid
+*.seed
+*.pid.lock
+
+# Operating System & IDE
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+
+# Large archives and binaries
+*.tar
+*.zip
+*.gz
+*.rar
+wallet-server
+blackhole_backup.tar

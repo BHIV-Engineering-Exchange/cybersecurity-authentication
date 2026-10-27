@@ -1,0 +1,401 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "description": "RBAC Permissions Matrix for Fraud Evidence System",
+    "lastUpdated": "2024-01-15",
+    "roles": ["user", "investigator", "admin", "superadmin"],
+    "actions": [
+      "upload", "annotate", "export", "escalate", "freeze", "read-evidence",
+      "view", "download", "delete", "share", "verify", "modify",
+      "create", "update", "assign", "close", "manage-roles", "reset-password",
+      "generate", "analytics", "config", "logs", "backup", "monitor", "maintenance",
+      "train", "predict", "reset", "sync"
+    ]
+  },
+  "permissions": {
+    "upload": {
+      "description": "Upload evidence files and documents",
+      "roles": {
+        "user": true,
+        "investigator": true,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "standard",
+      "requiresApproval": false
+    },
+    "annotate": {
+      "description": "Add annotations and metadata to evidence",
+      "roles": {
+        "user": false,
+        "investigator": true,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "standard",
+      "requiresApproval": false
+    },
+    "export": {
+      "description": "Export evidence and reports",
+      "roles": {
+        "user": false,
+        "investigator": true,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "high",
+      "requiresApproval": true
+    },
+    "escalate": {
+      "description": "Escalate cases to higher authorities",
+      "roles": {
+        "user": false,
+        "investigator": true,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "high",
+      "requiresApproval": true
+    },
+    "freeze": {
+      "description": "Freeze accounts or evidence",
+      "roles": {
+        "user": false,
+        "investigator": false,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "critical",
+      "requiresApproval": true
+    },
+    "read-evidence": {
+      "description": "View and read evidence files",
+      "roles": {
+        "user": false,
+        "investigator": true,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "standard",
+      "requiresApproval": false
+    },
+    "view": {
+      "description": "General view access to resources",
+      "roles": {
+        "user": true,
+        "investigator": true,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "standard",
+      "requiresApproval": false
+    },
+    "download": {
+      "description": "Download evidence and documents",
+      "roles": {
+        "user": false,
+        "investigator": true,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "high",
+      "requiresApproval": false
+    },
+    "delete": {
+      "description": "Delete evidence, cases, or users",
+      "roles": {
+        "user": false,
+        "investigator": false,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "critical",
+      "requiresApproval": true
+    },
+    "share": {
+      "description": "Share evidence with external parties",
+      "roles": {
+        "user": false,
+        "investigator": true,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "high",
+      "requiresApproval": true
+    },
+    "verify": {
+      "description": "Verify evidence authenticity",
+      "roles": {
+        "user": false,
+        "investigator": true,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "standard",
+      "requiresApproval": false
+    },
+    "modify": {
+      "description": "Modify evidence metadata",
+      "roles": {
+        "user": false,
+        "investigator": false,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "high",
+      "requiresApproval": true
+    },
+    "create": {
+      "description": "Create new cases, users, or resources",
+      "roles": {
+        "user": true,
+        "investigator": true,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "standard",
+      "requiresApproval": false
+    },
+    "update": {
+      "description": "Update existing cases, users, or resources",
+      "roles": {
+        "user": false,
+        "investigator": true,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "standard",
+      "requiresApproval": false
+    },
+    "assign": {
+      "description": "Assign cases to investigators",
+      "roles": {
+        "user": false,
+        "investigator": false,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "standard",
+      "requiresApproval": false
+    },
+    "close": {
+      "description": "Close cases and investigations",
+      "roles": {
+        "user": false,
+        "investigator": true,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "high",
+      "requiresApproval": false
+    },
+    "manage-roles": {
+      "description": "Manage user roles and permissions",
+      "roles": {
+        "user": false,
+        "investigator": false,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "critical",
+      "requiresApproval": true
+    },
+    "reset-password": {
+      "description": "Reset user passwords",
+      "roles": {
+        "user": false,
+        "investigator": false,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "high",
+      "requiresApproval": true
+    },
+    "generate": {
+      "description": "Generate reports and analytics",
+      "roles": {
+        "user": false,
+        "investigator": true,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "standard",
+      "requiresApproval": false
+    },
+    "analytics": {
+      "description": "Access analytics and insights",
+      "roles": {
+        "user": false,
+        "investigator": false,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "standard",
+      "requiresApproval": false
+    },
+    "config": {
+      "description": "Configure system settings",
+      "roles": {
+        "user": false,
+        "investigator": false,
+        "admin": false,
+        "superadmin": true
+      },
+      "auditLevel": "critical",
+      "requiresApproval": true
+    },
+    "logs": {
+      "description": "Access system logs",
+      "roles": {
+        "user": false,
+        "investigator": false,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "high",
+      "requiresApproval": false
+    },
+    "backup": {
+      "description": "Perform system backups",
+      "roles": {
+        "user": false,
+        "investigator": false,
+        "admin": false,
+        "superadmin": true
+      },
+      "auditLevel": "critical",
+      "requiresApproval": true
+    },
+    "monitor": {
+      "description": "Monitor system performance",
+      "roles": {
+        "user": false,
+        "investigator": false,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "standard",
+      "requiresApproval": false
+    },
+    "maintenance": {
+      "description": "Perform system maintenance",
+      "roles": {
+        "user": false,
+        "investigator": false,
+        "admin": false,
+        "superadmin": true
+      },
+      "auditLevel": "critical",
+      "requiresApproval": true
+    },
+    "train": {
+      "description": "Train ML/RL models",
+      "roles": {
+        "user": false,
+        "investigator": false,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "high",
+      "requiresApproval": true
+    },
+    "predict": {
+      "description": "Make predictions using ML/RL models",
+      "roles": {
+        "user": false,
+        "investigator": true,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "standard",
+      "requiresApproval": false
+    },
+    "reset": {
+      "description": "Reset ML/RL models",
+      "roles": {
+        "user": false,
+        "investigator": false,
+        "admin": false,
+        "superadmin": true
+      },
+      "auditLevel": "critical",
+      "requiresApproval": true
+    },
+    "sync": {
+      "description": "Sync blockchain data",
+      "roles": {
+        "user": false,
+        "investigator": false,
+        "admin": true,
+        "superadmin": true
+      },
+      "auditLevel": "high",
+      "requiresApproval": true
+    }
+  },
+  "roleHierarchy": {
+    "superadmin": 4,
+    "admin": 3,
+    "investigator": 2,
+    "user": 1
+  },
+  "resourceAccess": {
+    "evidence": {
+      "low": ["investigator", "admin", "superadmin"],
+      "medium": ["investigator", "admin", "superadmin"],
+      "high": ["admin", "superadmin"],
+      "critical": ["superadmin"]
+    },
+    "case": {
+      "low": ["user", "investigator", "admin", "superadmin"],
+      "medium": ["investigator", "admin", "superadmin"],
+      "high": ["admin", "superadmin"],
+      "critical": ["superadmin"]
+    },
+    "user": {
+      "low": ["investigator", "admin", "superadmin"],
+      "medium": ["admin", "superadmin"],
+      "high": ["admin", "superadmin"],
+      "critical": ["superadmin"]
+    },
+    "system": {
+      "low": ["admin", "superadmin"],
+      "medium": ["admin", "superadmin"],
+      "high": ["superadmin"],
+      "critical": ["superadmin"]
+    }
+  },
+  "endpointMappings": {
+    "/api/evidence/upload": ["upload"],
+    "/api/evidence/annotate": ["annotate"],
+    "/api/evidence/export": ["export"],
+    "/api/evidence/download": ["download"],
+    "/api/evidence/view": ["read-evidence"],
+    "/api/evidence/share": ["share"],
+    "/api/evidence/verify": ["verify"],
+    "/api/evidence/delete": ["delete"],
+    "/api/case/create": ["create"],
+    "/api/case/update": ["update"],
+    "/api/case/assign": ["assign"],
+    "/api/case/close": ["close"],
+    "/api/case/escalate": ["escalate"],
+    "/api/user/create": ["create"],
+    "/api/user/update": ["update"],
+    "/api/user/delete": ["delete"],
+    "/api/user/manage-roles": ["manage-roles"],
+    "/api/user/reset-password": ["reset-password"],
+    "/api/report/generate": ["generate"],
+    "/api/report/export": ["export"],
+    "/api/report/analytics": ["analytics"],
+    "/api/system/config": ["config"],
+    "/api/system/logs": ["logs"],
+    "/api/system/backup": ["backup"],
+    "/api/system/monitor": ["monitor"],
+    "/api/system/maintenance": ["maintenance"],
+    "/api/rl/train": ["train"],
+    "/api/rl/predict": ["predict"],
+    "/api/rl/reset": ["reset"],
+    "/api/blockchain/sync": ["sync"],
+    "/api/account/freeze": ["freeze"]
+  }
+}

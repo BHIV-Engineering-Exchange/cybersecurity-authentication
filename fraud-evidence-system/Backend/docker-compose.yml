@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  mock-server:
+    build:
+      context: ./mocks
+      dockerfile: Dockerfile
+    container_name: fraud-evidence-mock-server
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - NODE_ENV=production
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:5000/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+    networks:
+      - fraud-evidence-network
+    labels:
+      - "com.fraud-evidence.service=mock-server"
+      - "com.fraud-evidence.description=Mock server for API development and testing"
+
+networks:
+  fraud-evidence-network:
+    driver: bridge
+    name: fraud-evidence-network

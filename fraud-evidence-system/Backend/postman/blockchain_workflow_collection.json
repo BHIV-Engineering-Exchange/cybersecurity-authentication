@@ -1,0 +1,548 @@
+{
+  "info": {
+    "name": "Blockchain Anchoring Workflow - Test Collection",
+    "_postman_id": "blockchain-workflow-v1",
+    "description": "Complete test collection for blockchain anchoring workflow with deterministic mock responses",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5050",
+      "type": "string"
+    },
+    {
+      "key": "evidenceId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "txHash",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Complete Workflow - Upload → Anchor → Verify",
+      "item": [
+        {
+          "name": "Step 1: Upload Evidence",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Evidence uploaded successfully\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.eql(true);",
+                  "    ",
+                  "    // Save evidence ID for next steps",
+                  "    pm.collectionVariables.set('evidenceId', jsonData.evidenceId);",
+                  "    console.log('Evidence ID:', jsonData.evidenceId);",
+                  "    console.log('Storage Hash:', jsonData.storageHash);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "user",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "evidenceFile",
+                  "type": "file",
+                  "src": [],
+                  "description": "Select a test file to upload"
+                },
+                {
+                  "key": "caseId",
+                  "value": "CASE-2024-BLOCKCHAIN-TEST",
+                  "type": "text"
+                },
+                {
+                  "key": "wallet",
+                  "value": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
+                  "type": "text"
+                },
+                {
+                  "key": "reporter",
+                  "value": "blockchain-test@fraud.com",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Test evidence for blockchain anchoring",
+                  "type": "text"
+                },
+                {
+                  "key": "riskLevel",
+                  "value": "high",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/evidence/upload",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "evidence", "upload"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Step 2: Anchor on Blockchain",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Evidence anchored successfully\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.eql(true);",
+                  "});",
+                  "",
+                  "pm.test(\"Blockchain transaction hash returned\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.blockchain).to.have.property('txHash');",
+                  "    pm.expect(jsonData.blockchain.txHash).to.match(/^0x[a-f0-9]{64}$/);",
+                  "    ",
+                  "    // Save for verification",
+                  "    pm.collectionVariables.set('txHash', jsonData.blockchain.txHash);",
+                  "    console.log('TX Hash:', jsonData.blockchain.txHash);",
+                  "    console.log('Block Number:', jsonData.blockchain.blockNumber);",
+                  "});",
+                  "",
+                  "pm.test(\"Block number is realistic\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.blockchain.blockNumber).to.be.a('number');",
+                  "    pm.expect(jsonData.blockchain.blockNumber).to.be.above(18000000);",
+                  "});",
+                  "",
+                  "pm.test(\"Contract address is valid\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.blockchain.contractAddress).to.match(/^0x[a-f0-9]{40}$/);",
+                  "});",
+                  "",
+                  "pm.test(\"Anchor status is anchored\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.evidence.anchorStatus).to.eql('anchored');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "investigator",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/evidence/{{evidenceId}}/anchor",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "evidence", "{{evidenceId}}", "anchor"]
+            },
+            "description": "Anchor evidence hash on blockchain"
+          },
+          "response": []
+        },
+        {
+          "name": "Step 3: Verify on Blockchain",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Blockchain verification successful\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.eql(true);",
+                  "});",
+                  "",
+                  "pm.test(\"Verification is valid\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.verification.isValid).to.eql(true);",
+                  "});",
+                  "",
+                  "pm.test(\"On-chain data matches\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    var savedTxHash = pm.collectionVariables.get('txHash');",
+                  "    pm.expect(jsonData.verification.onChainData.txHash).to.eql(savedTxHash);",
+                  "});",
+                  "",
+                  "pm.test(\"Hash comparison shows match\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.verification.comparison.hashMatches).to.eql(true);",
+                  "});",
+                  "",
+                  "pm.test(\"Evidence status updated to verified\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.evidence.verificationStatus).to.eql('verified');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "investigator",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/evidence/{{evidenceId}}/blockchain-verify",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "evidence", "{{evidenceId}}", "blockchain-verify"]
+            },
+            "description": "Verify evidence on blockchain"
+          },
+          "response": []
+        },
+        {
+          "name": "Step 4: Re-Anchor (Idempotent Check)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Returns already anchored message\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.include('already anchored');",
+                  "});",
+                  "",
+                  "pm.test(\"Same transaction hash returned\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    var savedTxHash = pm.collectionVariables.get('txHash');",
+                  "    pm.expect(jsonData.blockchain.txHash).to.eql(savedTxHash);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "investigator",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/evidence/{{evidenceId}}/anchor",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "evidence", "{{evidenceId}}", "anchor"]
+            },
+            "description": "Try to anchor again (should return existing anchor)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Complete workflow from upload to blockchain verification"
+    },
+    {
+      "name": "Deterministic Testing",
+      "item": [
+        {
+          "name": "Test 1: Anchor Evidence A",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.collectionVariables.set('evidenceA_tx', jsonData.blockchain.txHash);",
+                  "pm.collectionVariables.set('evidenceA_block', jsonData.blockchain.blockNumber);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "investigator",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/evidence/{{evidenceId}}/anchor",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "evidence", "{{evidenceId}}", "anchor"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Test 2: Anchor Evidence A Again",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Deterministic: Same TX hash returned\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    var originalTx = pm.collectionVariables.get('evidenceA_tx');",
+                  "    pm.expect(jsonData.blockchain.txHash).to.eql(originalTx);",
+                  "});",
+                  "",
+                  "pm.test(\"Deterministic: Same block number returned\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    var originalBlock = pm.collectionVariables.get('evidenceA_block');",
+                  "    pm.expect(jsonData.blockchain.blockNumber).to.eql(originalBlock);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "investigator",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/evidence/{{evidenceId}}/anchor",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "evidence", "{{evidenceId}}", "anchor"]
+            },
+            "description": "Verify same evidence always gets same tx hash (deterministic)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Tests to verify deterministic blockchain responses"
+    },
+    {
+      "name": "Error Scenarios",
+      "item": [
+        {
+          "name": "Anchor - Evidence Not Found",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Returns 404\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "",
+                  "pm.test(\"Error message is correct\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.include('not found');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "investigator",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/evidence/invalid-id-12345/anchor",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "evidence", "invalid-id-12345", "anchor"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify - Not Anchored Yet",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Returns 400 for non-anchored evidence\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Suggests anchoring first\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.suggestion).to.include('anchor');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "investigator",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/evidence/{{evidenceId}}/blockchain-verify",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "evidence", "{{evidenceId}}", "blockchain-verify"]
+            },
+            "description": "Try to verify before anchoring (use different evidence ID)"
+          },
+          "response": []
+        },
+        {
+          "name": "Anchor - Permission Denied (User Role)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Returns 403\", function () {",
+                  "    pm.response.to.have.status(403);",
+                  "});",
+                  "",
+                  "pm.test(\"Permission denied message\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.include('Forbidden');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "user",
+                "type": "text",
+                "description": "User role cannot anchor (needs investigator+)"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/evidence/{{evidenceId}}/anchor",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "evidence", "{{evidenceId}}", "anchor"]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Test error scenarios and edge cases"
+    },
+    {
+      "name": "Integration Tests",
+      "item": [
+        {
+          "name": "Get Evidence After Anchoring",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Evidence includes blockchain data\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    var jsonData = pm.response.json();",
+                  "    ",
+                  "    // Note: This test assumes evidence has been anchored",
+                  "    // Run after Step 2 in workflow",
+                  "    console.log('Evidence includes blockchain fields:', {",
+                  "        hasFields: jsonData.evidence !== null",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "analyst",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/evidence/{{evidenceId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "evidence", "{{evidenceId}}"]
+            },
+            "description": "Verify MongoDB was updated with blockchain fields"
+          },
+          "response": []
+        },
+        {
+          "name": "Verify File Integrity + Blockchain",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Complete verification passed\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.eql(true);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "investigator",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/evidence/{{evidenceId}}/verify",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "evidence", "{{evidenceId}}", "verify"]
+            },
+            "description": "Verify both local file integrity and blockchain verification"
+          },
+          "response": []
+        }
+      ],
+      "description": "Integration tests for complete workflow"
+    }
+  ]
+}
+

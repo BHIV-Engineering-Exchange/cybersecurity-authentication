@@ -1,0 +1,4334 @@
+components:
+  schemas:
+    AccessRequestCreate:
+      properties:
+        email:
+          format: email
+          title: Email
+          type: string
+        full_name:
+          title: Full Name
+          type: string
+        requested_password:
+          title: Requested Password
+          type: string
+        reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reason
+      required:
+      - full_name
+      - email
+      - requested_password
+      title: AccessRequestCreate
+      type: object
+    AccessRequestResponse:
+      properties:
+        created_at:
+          title: Created At
+          type: string
+        email:
+          title: Email
+          type: string
+        full_name:
+          title: Full Name
+          type: string
+        id:
+          title: Id
+          type: integer
+        reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reason
+        rejection_reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Rejection Reason
+        reviewed_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reviewed At
+        reviewed_by:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Reviewed By
+        status:
+          title: Status
+          type: string
+        updated_at:
+          title: Updated At
+          type: string
+      required:
+      - id
+      - full_name
+      - email
+      - reason
+      - status
+      - reviewed_by
+      - reviewed_at
+      - rejection_reason
+      - created_at
+      - updated_at
+      title: AccessRequestResponse
+      type: object
+    AccessRequestUpdate:
+      properties:
+        initial_password:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Initial Password
+        rejection_reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Rejection Reason
+        status:
+          title: Status
+          type: string
+      required:
+      - status
+      title: AccessRequestUpdate
+      type: object
+    AdminSetPasswordRequest:
+      properties:
+        email:
+          format: email
+          title: Email
+          type: string
+        new_password:
+          title: New Password
+          type: string
+      required:
+      - email
+      - new_password
+      title: AdminSetPasswordRequest
+      type: object
+    AuditLogResponse:
+      properties:
+        action:
+          title: Action
+          type: string
+        details:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Details
+        entity_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Entity Id
+        entity_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Entity Type
+        id:
+          title: Id
+          type: integer
+        ip_address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ip Address
+        message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Message
+        method:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Method
+        path:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Path
+        request_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Request Id
+        status:
+          title: Status
+          type: string
+        timestamp:
+          format: date-time
+          title: Timestamp
+          type: string
+        user_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: User Id
+      required:
+      - id
+      - action
+      - message
+      - entity_type
+      - entity_id
+      - status
+      - details
+      - user_id
+      - ip_address
+      - request_id
+      - path
+      - method
+      - timestamp
+      title: AuditLogResponse
+      type: object
+    Body_create_evidence_api_v1_evidence__post:
+      properties:
+        description:
+          default: ''
+          title: Description
+          type: string
+        file:
+          format: binary
+          title: File
+          type: string
+        investigator_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Investigator Id
+        risk_level:
+          default: medium
+          title: Risk Level
+          type: string
+        tags:
+          default: ''
+          title: Tags
+          type: string
+        title:
+          default: ''
+          title: Title
+          type: string
+        wallet_id:
+          title: Wallet Id
+          type: string
+      required:
+      - file
+      - wallet_id
+      title: Body_create_evidence_api_v1_evidence__post
+      type: object
+    Body_login_api_v1_auth_login_post:
+      properties:
+        client_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Id
+        client_secret:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Secret
+        grant_type:
+          anyOf:
+          - pattern: password
+            type: string
+          - type: 'null'
+          title: Grant Type
+        password:
+          title: Password
+          type: string
+        scope:
+          default: ''
+          title: Scope
+          type: string
+        username:
+          title: Username
+          type: string
+      required:
+      - username
+      - password
+      title: Body_login_api_v1_auth_login_post
+      type: object
+    CaseCreate:
+      properties:
+        case_id:
+          title: Case Id
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        investigator_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Investigator Id
+        status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: active
+          title: Status
+        title:
+          title: Title
+          type: string
+      required:
+      - case_id
+      - title
+      title: CaseCreate
+      type: object
+    CaseResponse:
+      properties:
+        case_id:
+          title: Case Id
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        id:
+          title: Id
+          type: integer
+        investigator_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Investigator Id
+        status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: active
+          title: Status
+        title:
+          title: Title
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated At
+          type: string
+      required:
+      - case_id
+      - title
+      - description
+      - status
+      - id
+      - investigator_id
+      - created_at
+      - updated_at
+      title: CaseResponse
+      type: object
+    ComplaintCreate:
+      properties:
+        evidence_ids:
+          anyOf:
+          - items:
+              type: integer
+            type: array
+          - type: 'null'
+          title: Evidence Ids
+        incident_description:
+          title: Incident Description
+          type: string
+        internal_notes:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Internal Notes
+        investigator_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Investigator Id
+        investigator_location_city:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Investigator Location City
+        investigator_location_country:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Investigator Location Country
+        investigator_location_ip:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Investigator Location Ip
+        investigator_location_latitude:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Investigator Location Latitude
+        investigator_location_longitude:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Investigator Location Longitude
+        officer_address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Officer Address
+        officer_designation:
+          title: Officer Designation
+          type: string
+        officer_email:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Officer Email
+        officer_mobile:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Officer Mobile
+        officer_telephone:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Officer Telephone
+        wallet_address:
+          title: Wallet Address
+          type: string
+      required:
+      - wallet_address
+      - officer_designation
+      - incident_description
+      title: ComplaintCreate
+      type: object
+    ComplaintResponse:
+      properties:
+        created_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created At
+        evidence_ids:
+          anyOf:
+          - items:
+              type: integer
+            type: array
+          - type: 'null'
+          title: Evidence Ids
+        id:
+          title: Id
+          type: integer
+        incident_description:
+          title: Incident Description
+          type: string
+        internal_notes:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Internal Notes
+        investigator_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Investigator Id
+        investigator_location_city:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Investigator Location City
+        investigator_location_country:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Investigator Location Country
+        investigator_location_ip:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Investigator Location Ip
+        investigator_location_latitude:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Investigator Location Latitude
+        investigator_location_longitude:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Investigator Location Longitude
+        officer_address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Officer Address
+        officer_designation:
+          title: Officer Designation
+          type: string
+        officer_email:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Officer Email
+        officer_mobile:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Officer Mobile
+        officer_telephone:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Officer Telephone
+        status:
+          title: Status
+          type: string
+        updated_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated At
+        wallet_address:
+          title: Wallet Address
+          type: string
+      required:
+      - id
+      - wallet_address
+      - investigator_id
+      - officer_designation
+      - officer_address
+      - officer_email
+      - officer_mobile
+      - officer_telephone
+      - incident_description
+      - internal_notes
+      - evidence_ids
+      - investigator_location_city
+      - investigator_location_country
+      - investigator_location_latitude
+      - investigator_location_longitude
+      - investigator_location_ip
+      - status
+      - created_at
+      - updated_at
+      title: ComplaintResponse
+      type: object
+    EvidenceResponse:
+      properties:
+        anchor_status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: pending
+          title: Anchor Status
+        case_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Case Id
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        evidence_id:
+          title: Evidence Id
+          type: string
+        file_path:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: File Path
+        file_size:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: File Size
+        file_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: File Type
+        hash:
+          title: Hash
+          type: string
+        id:
+          title: Id
+          type: integer
+        immutable:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          default: true
+          title: Immutable
+        investigator_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Investigator Id
+        title:
+          title: Title
+          type: string
+      required:
+      - evidence_id
+      - title
+      - description
+      - hash
+      - file_path
+      - file_size
+      - file_type
+      - anchor_status
+      - immutable
+      - id
+      - investigator_id
+      - case_id
+      - created_at
+      title: EvidenceResponse
+      type: object
+    FreezeWalletRequest:
+      properties:
+        freeze_reason:
+          title: Freeze Reason
+          type: string
+        frozen_by:
+          title: Frozen By
+          type: string
+      required:
+      - freeze_reason
+      - frozen_by
+      title: FreezeWalletRequest
+      type: object
+    GraphEdge:
+      properties:
+        amount:
+          title: Amount
+          type: number
+        from:
+          title: From
+          type: string
+        to:
+          title: To
+          type: string
+      required:
+      - from
+      - to
+      - amount
+      title: GraphEdge
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    IncidentReportRequest:
+      properties:
+        description:
+          title: Description
+          type: string
+        investigator_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Investigator Id
+        wallet_address:
+          title: Wallet Address
+          type: string
+      required:
+      - wallet_address
+      - description
+      title: IncidentReportRequest
+      type: object
+    IncidentReportResponse:
+      properties:
+        detected_patterns:
+          items:
+            type: string
+          title: Detected Patterns
+          type: array
+        graph_data:
+          items:
+            $ref: '#/components/schemas/GraphEdge'
+          title: Graph Data
+          type: array
+        report_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Report Id
+        risk_level:
+          title: Risk Level
+          type: string
+        risk_score:
+          title: Risk Score
+          type: number
+        summary:
+          $ref: '#/components/schemas/TransactionSummary'
+        system_conclusion:
+          title: System Conclusion
+          type: string
+        timeline:
+          items:
+            $ref: '#/components/schemas/TimelineEntry'
+          title: Timeline
+          type: array
+        transactions:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/TransactionDetail'
+            type: array
+          - type: 'null'
+          title: Transactions
+        wallet:
+          title: Wallet
+          type: string
+      required:
+      - wallet
+      - risk_score
+      - risk_level
+      - detected_patterns
+      - summary
+      - graph_data
+      - timeline
+      - transactions
+      - system_conclusion
+      - report_id
+      title: IncidentReportResponse
+      type: object
+    MessageCreate:
+      properties:
+        content:
+          title: Content
+          type: string
+        is_broadcast:
+          default: false
+          title: Is Broadcast
+          type: boolean
+        message_type:
+          default: message
+          title: Message Type
+          type: string
+        priority:
+          default: normal
+          title: Priority
+          type: string
+        recipient_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Recipient Id
+        subject:
+          title: Subject
+          type: string
+      required:
+      - subject
+      - content
+      title: MessageCreate
+      type: object
+    MessageResponse:
+      properties:
+        content:
+          title: Content
+          type: string
+        created_at:
+          title: Created At
+          type: string
+        id:
+          title: Id
+          type: integer
+        is_broadcast:
+          title: Is Broadcast
+          type: boolean
+        is_read:
+          title: Is Read
+          type: boolean
+        message_type:
+          title: Message Type
+          type: string
+        priority:
+          title: Priority
+          type: string
+        read_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Read At
+        recipient_email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Recipient Email
+        recipient_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Recipient Id
+        recipient_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Recipient Name
+        sender_email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sender Email
+        sender_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Sender Id
+        subject:
+          title: Subject
+          type: string
+      required:
+      - id
+      - sender_id
+      - recipient_id
+      - message_type
+      - subject
+      - content
+      - is_read
+      - is_broadcast
+      - priority
+      - created_at
+      - read_at
+      - sender_email
+      - recipient_email
+      - recipient_name
+      title: MessageResponse
+      type: object
+    PasswordResetRequest:
+      properties:
+        email:
+          format: email
+          title: Email
+          type: string
+        new_password:
+          title: New Password
+          type: string
+        old_password:
+          title: Old Password
+          type: string
+        reset_token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reset Token
+      required:
+      - email
+      - old_password
+      - new_password
+      title: PasswordResetRequest
+      type: object
+    RLFeedbackRequest:
+      properties:
+        actual_is_fraud:
+          title: Actual Is Fraud
+          type: integer
+        predicted_action:
+          title: Predicted Action
+          type: integer
+        reward:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Reward
+        transaction_data:
+          title: Transaction Data
+          type: object
+      required:
+      - transaction_data
+      - predicted_action
+      - actual_is_fraud
+      title: RLFeedbackRequest
+      type: object
+    RLPredictionRequest:
+      properties:
+        transaction_data:
+          title: Transaction Data
+          type: object
+      required:
+      - transaction_data
+      title: RLPredictionRequest
+      type: object
+    RLTrainRequest:
+      properties:
+        epochs:
+          default: 1
+          title: Epochs
+          type: integer
+        limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          default: 1000
+          title: Limit
+        transaction_ids:
+          anyOf:
+          - items:
+              type: integer
+            type: array
+          - type: 'null'
+          title: Transaction Ids
+      title: RLTrainRequest
+      type: object
+    RiskScoreCreate:
+      properties:
+        case_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Case Id
+        category:
+          title: Category
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        level:
+          title: Level
+          type: string
+        score:
+          title: Score
+          type: integer
+      required:
+      - category
+      - score
+      - level
+      title: RiskScoreCreate
+      type: object
+    RiskScoreResponse:
+      properties:
+        case_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Case Id
+        category:
+          title: Category
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        id:
+          title: Id
+          type: integer
+        level:
+          title: Level
+          type: string
+        score:
+          title: Score
+          type: integer
+      required:
+      - category
+      - score
+      - level
+      - description
+      - id
+      - case_id
+      - created_at
+      title: RiskScoreResponse
+      type: object
+    SendWelcomeEmailRequest:
+      properties:
+        email:
+          format: email
+          title: Email
+          type: string
+        location_city:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Location City
+        location_country:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Location Country
+        location_ip:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Location Ip
+        location_latitude:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Location Latitude
+        location_longitude:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Location Longitude
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: Investigator
+          title: Name
+      required:
+      - email
+      title: SendWelcomeEmailRequest
+      type: object
+    TimelineEntry:
+      properties:
+        amount:
+          title: Amount
+          type: number
+        time:
+          title: Time
+          type: string
+        timestamp:
+          title: Timestamp
+          type: string
+      required:
+      - time
+      - amount
+      - timestamp
+      title: TimelineEntry
+      type: object
+    Token:
+      properties:
+        access_token:
+          title: Access Token
+          type: string
+        token_type:
+          title: Token Type
+          type: string
+      required:
+      - access_token
+      - token_type
+      title: Token
+      type: object
+    TransactionCreate:
+      properties:
+        amount:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Amount
+        case_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Case Id
+        flagged:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          default: false
+          title: Flagged
+        from_address:
+          title: From Address
+          type: string
+        hash:
+          title: Hash
+          type: string
+        timestamp:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Timestamp
+        to_address:
+          title: To Address
+          type: string
+        transaction_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Transaction Type
+        wallet_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Wallet Id
+      required:
+      - hash
+      - from_address
+      - to_address
+      title: TransactionCreate
+      type: object
+    TransactionDetail:
+      properties:
+        amount:
+          title: Amount
+          type: number
+        direction:
+          title: Direction
+          type: string
+        from_address:
+          title: From Address
+          type: string
+        id:
+          title: Id
+          type: integer
+        suspicious:
+          default: false
+          title: Suspicious
+          type: boolean
+        timestamp:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Timestamp
+        to_address:
+          title: To Address
+          type: string
+        type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Type
+      required:
+      - id
+      - from_address
+      - to_address
+      - amount
+      - direction
+      - timestamp
+      - type
+      - suspicious
+      title: TransactionDetail
+      type: object
+    TransactionResponse:
+      properties:
+        amount:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Amount
+        case_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Case Id
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        flagged:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          default: false
+          title: Flagged
+        from_address:
+          title: From Address
+          type: string
+        hash:
+          title: Hash
+          type: string
+        id:
+          title: Id
+          type: integer
+        timestamp:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Timestamp
+        to_address:
+          title: To Address
+          type: string
+        transaction_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Transaction Type
+        wallet_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Wallet Id
+      required:
+      - hash
+      - from_address
+      - to_address
+      - amount
+      - transaction_type
+      - flagged
+      - id
+      - case_id
+      - wallet_id
+      - timestamp
+      - created_at
+      title: TransactionResponse
+      type: object
+    TransactionSummary:
+      properties:
+        pattern_type:
+          title: Pattern Type
+          type: string
+        total_in:
+          title: Total In
+          type: number
+        total_out:
+          title: Total Out
+          type: number
+        tx_count:
+          title: Tx Count
+          type: integer
+        unique_receivers:
+          title: Unique Receivers
+          type: integer
+        unique_senders:
+          title: Unique Senders
+          type: integer
+      required:
+      - total_in
+      - total_out
+      - tx_count
+      - unique_senders
+      - unique_receivers
+      - pattern_type
+      title: TransactionSummary
+      type: object
+    UnfreezeWalletRequest:
+      properties:
+        unfreeze_reason:
+          title: Unfreeze Reason
+          type: string
+        unfrozen_by:
+          title: Unfrozen By
+          type: string
+      required:
+      - unfreeze_reason
+      - unfrozen_by
+      title: UnfreezeWalletRequest
+      type: object
+    UserCreate:
+      properties:
+        email:
+          format: email
+          title: Email
+          type: string
+        full_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Full Name
+        password:
+          title: Password
+          type: string
+        role:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: investigator
+          title: Role
+      required:
+      - email
+      - password
+      title: UserCreate
+      type: object
+    UserResponse:
+      properties:
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        email:
+          format: email
+          title: Email
+          type: string
+        full_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Full Name
+        id:
+          title: Id
+          type: integer
+        is_active:
+          title: Is Active
+          type: boolean
+        role:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: investigator
+          title: Role
+      required:
+      - email
+      - full_name
+      - role
+      - id
+      - is_active
+      - created_at
+      title: UserResponse
+      type: object
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+    WalletCreate:
+      properties:
+        address:
+          title: Address
+          type: string
+        anchor_status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: pending
+          title: Anchor Status
+        balance:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Balance
+        case_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Case Id
+        label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Label
+        risk_level:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: low
+          title: Risk Level
+      required:
+      - address
+      title: WalletCreate
+      type: object
+    WalletResponse:
+      properties:
+        address:
+          title: Address
+          type: string
+        anchor_status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: pending
+          title: Anchor Status
+        balance:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Balance
+        case_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Case Id
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        id:
+          title: Id
+          type: integer
+        label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Label
+        last_activity:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Last Activity
+        risk_level:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: low
+          title: Risk Level
+      required:
+      - address
+      - label
+      - balance
+      - risk_level
+      - anchor_status
+      - id
+      - case_id
+      - last_activity
+      - created_at
+      title: WalletResponse
+      type: object
+    WatchlistAddRequest:
+      properties:
+        label:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Label
+        wallet_address:
+          title: Wallet Address
+          type: string
+      required:
+      - wallet_address
+      title: WatchlistAddRequest
+      type: object
+  securitySchemes:
+    OAuth2PasswordBearer:
+      flows:
+        password:
+          scopes: {}
+          tokenUrl: /api/v1/auth/login
+      type: oauth2
+info:
+  description: Backend API for cybercrime investigation dashboard
+  title: Cybercrime Investigation API
+  version: 1.0.0
+openapi: 3.1.0
+paths:
+  /:
+    get:
+      description: Root endpoint
+      operationId: root__get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Root
+  /api/v1/access-requests/admin/set-password:
+    post:
+      description: Set/reset investigator password (superadmin only).
+      operationId: admin_set_password_api_v1_access_requests_admin_set_password_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminSetPasswordRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Admin Set Password
+      tags:
+      - access-requests
+  /api/v1/access-requests/request:
+    post:
+      description: Submit a new investigator access request
+      operationId: create_access_request_api_v1_access_requests_request_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessRequestCreate'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessRequestResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Create Access Request
+      tags:
+      - access-requests
+  /api/v1/access-requests/requests:
+    get:
+      description: Get all access requests (superadmin only)
+      operationId: get_access_requests_api_v1_access_requests_requests_get
+      parameters:
+      - in: query
+        name: status_filter
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status Filter
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AccessRequestResponse'
+                title: Response Get Access Requests Api V1 Access Requests Requests
+                  Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Access Requests
+      tags:
+      - access-requests
+  /api/v1/access-requests/requests/{request_id}:
+    get:
+      description: Get a specific access request
+      operationId: get_access_request_api_v1_access_requests_requests__request_id__get
+      parameters:
+      - in: path
+        name: request_id
+        required: true
+        schema:
+          title: Request Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessRequestResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Access Request
+      tags:
+      - access-requests
+  /api/v1/access-requests/requests/{request_id}/review:
+    patch:
+      description: Approve or reject an access request (superadmin only)
+      operationId: review_access_request_api_v1_access_requests_requests__request_id__review_patch
+      parameters:
+      - in: path
+        name: request_id
+        required: true
+        schema:
+          title: Request Id
+          type: integer
+      - in: query
+        name: reviewed_by
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Reviewed By
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessRequestUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessRequestResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Review Access Request
+      tags:
+      - access-requests
+  /api/v1/audit/:
+    get:
+      description: Get audit log entries
+      operationId: get_audit_logs_api_v1_audit__get
+      parameters:
+      - in: query
+        name: skip
+        required: false
+        schema:
+          default: 0
+          title: Skip
+          type: integer
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AuditLogResponse'
+                title: Response Get Audit Logs Api V1 Audit  Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Audit Logs
+      tags:
+      - audit
+  /api/v1/auth/login:
+    post:
+      description: Login and get access token
+      operationId: login_api_v1_auth_login_post
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Body_login_api_v1_auth_login_post'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Login
+      tags:
+      - authentication
+  /api/v1/auth/me:
+    get:
+      description: Get current authenticated user
+      operationId: get_current_user_api_v1_auth_me_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+          description: Successful Response
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get Current User
+      tags:
+      - authentication
+  /api/v1/auth/register:
+    post:
+      description: Register a new user
+      operationId: register_api_v1_auth_register_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Register
+      tags:
+      - authentication
+  /api/v1/cases/:
+    get:
+      description: Get all investigation cases
+      operationId: get_cases_api_v1_cases__get
+      parameters:
+      - in: query
+        name: skip
+        required: false
+        schema:
+          default: 0
+          title: Skip
+          type: integer
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CaseResponse'
+                title: Response Get Cases Api V1 Cases  Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Cases
+      tags:
+      - cases
+    post:
+      description: Create a new investigation case
+      operationId: create_case_api_v1_cases__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CaseCreate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaseResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Create Case
+      tags:
+      - cases
+  /api/v1/cases/{case_id}:
+    get:
+      description: Get a specific case by ID
+      operationId: get_case_api_v1_cases__case_id__get
+      parameters:
+      - in: path
+        name: case_id
+        required: true
+        schema:
+          title: Case Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaseResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Case
+      tags:
+      - cases
+  /api/v1/complaints/:
+    get:
+      description: Get all filed complaints
+      operationId: get_complaints_api_v1_complaints__get
+      parameters:
+      - in: query
+        name: investigator_id
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Investigator Id
+      - in: query
+        name: skip
+        required: false
+        schema:
+          default: 0
+          title: Skip
+          type: integer
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ComplaintResponse'
+                title: Response Get Complaints Api V1 Complaints  Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Complaints
+      tags:
+      - complaints
+    post:
+      description: Create a new complaint
+      operationId: create_complaint_api_v1_complaints__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComplaintCreate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComplaintResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Create Complaint
+      tags:
+      - complaints
+  /api/v1/complaints/{complaint_id}:
+    get:
+      description: Get a specific complaint by ID
+      operationId: get_complaint_api_v1_complaints__complaint_id__get
+      parameters:
+      - in: path
+        name: complaint_id
+        required: true
+        schema:
+          title: Complaint Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComplaintResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Complaint
+      tags:
+      - complaints
+  /api/v1/complaints/{complaint_id}/status:
+    patch:
+      description: Update complaint status
+      operationId: update_complaint_status_api_v1_complaints__complaint_id__status_patch
+      parameters:
+      - in: path
+        name: complaint_id
+        required: true
+        schema:
+          title: Complaint Id
+          type: integer
+      - in: query
+        name: status
+        required: true
+        schema:
+          title: Status
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComplaintResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Update Complaint Status
+      tags:
+      - complaints
+  /api/v1/dashboard/activity-feed:
+    get:
+      description: 'Combined activity stream: evidence uploads, complaints, wallet
+        freeze/unfreeze, AI reports, etc.
+
+        Currently derived from AuditLog; can be extended later.'
+      operationId: get_activity_feed_api_v1_dashboard_activity_feed_get
+      parameters:
+      - in: query
+        name: actor_id
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Actor Id
+      - in: query
+        name: type
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Type
+      - in: query
+        name: start
+        required: false
+        schema:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Start
+      - in: query
+        name: end
+        required: false
+        schema:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: End
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          maximum: 200
+          minimum: 1
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Activity Feed
+      tags:
+      - dashboard
+  /api/v1/dashboard/notifications:
+    get:
+      description: 'Aggregated notifications: AI, complaints, wallets, system.
+
+        Filtered by user role:
+
+        - Superadmin: sees all notifications including access requests
+
+        - Investigator: sees only their own activity and messages'
+      operationId: get_notifications_api_v1_dashboard_notifications_get
+      parameters:
+      - in: query
+        name: type
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Type
+      - in: query
+        name: severity
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Severity
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          maximum: 200
+          minimum: 1
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get Notifications
+      tags:
+      - dashboard
+  /api/v1/dashboard/notifications/mark-all-read:
+    post:
+      description: 'Mark all notifications as read for the current user.
+
+        Updates User.last_notification_read_at and marks all Messages as read.'
+      operationId: mark_notifications_read_api_v1_dashboard_notifications_mark_all_read_post
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Mark Notifications Read
+      tags:
+      - dashboard
+  /api/v1/dashboard/priority-queue:
+    get:
+      description: 'Build a unified queue of complaints + high-risk incident reports,
+
+        call OpenRouter for AI priority scoring, and return sorted list.'
+      operationId: get_priority_queue_api_v1_dashboard_priority_queue_get
+      parameters:
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          minimum: 1
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Priority Queue
+      tags:
+      - dashboard
+  /api/v1/dashboard/risk-trends:
+    get:
+      description: 'Compute risk trends from incident reports (risk levels) and complaints
+        (regional volume)
+
+        over the last N days.'
+      operationId: get_risk_trends_api_v1_dashboard_risk_trends_get
+      parameters:
+      - in: query
+        name: days
+        required: false
+        schema:
+          default: 30
+          maximum: 365
+          minimum: 1
+          title: Days
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Risk Trends
+      tags:
+      - dashboard
+  /api/v1/evidence/:
+    get:
+      description: Get all evidence
+      operationId: get_evidence_api_v1_evidence__get
+      parameters:
+      - in: query
+        name: case_id
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Case Id
+      - in: query
+        name: investigator_id
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Investigator Id
+      - in: query
+        name: skip
+        required: false
+        schema:
+          default: 0
+          title: Skip
+          type: integer
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/EvidenceResponse'
+                title: Response Get Evidence Api V1 Evidence  Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Evidence
+      tags:
+      - evidence
+    post:
+      description: 'Create a new evidence entry from an uploaded file.
+
+
+        This is designed to work with the Investigator UI "Evidence Upload"
+
+        section. It accepts ANY file type (PDF, images, CSV, Excel, docs, etc.)
+
+        via multipart/form-data and stores the file plus metadata in SQL.
+
+        Notifies superadmin when evidence is uploaded.'
+      operationId: create_evidence_api_v1_evidence__post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_create_evidence_api_v1_evidence__post'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvidenceResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Create Evidence
+      tags:
+      - evidence
+  /api/v1/evidence/{evidence_id}:
+    get:
+      description: Get a specific evidence item by ID
+      operationId: get_evidence_item_api_v1_evidence__evidence_id__get
+      parameters:
+      - in: path
+        name: evidence_id
+        required: true
+        schema:
+          title: Evidence Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvidenceResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Evidence Item
+      tags:
+      - evidence
+  /api/v1/evidence/{evidence_id}/download:
+    get:
+      description: Download an evidence file
+      operationId: download_evidence_api_v1_evidence__evidence_id__download_get
+      parameters:
+      - in: path
+        name: evidence_id
+        required: true
+        schema:
+          title: Evidence Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Download Evidence
+      tags:
+      - evidence
+  /api/v1/evidence/{evidence_id}/view:
+    get:
+      description: View an evidence file (for images, PDFs, etc.)
+      operationId: view_evidence_api_v1_evidence__evidence_id__view_get
+      parameters:
+      - in: path
+        name: evidence_id
+        required: true
+        schema:
+          title: Evidence Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: View Evidence
+      tags:
+      - evidence
+  /api/v1/fraud-predictions/model/status:
+    get:
+      description: Check if model is available
+      operationId: get_model_status_api_v1_fraud_predictions_model_status_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Get Model Status
+      tags:
+      - fraud-predictions
+  /api/v1/fraud-predictions/predict:
+    post:
+      description: Predict fraud for transaction data (without saving to DB)
+      operationId: predict_fraud_for_transaction_data_api_v1_fraud_predictions_predict_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Transaction
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Predict Fraud For Transaction Data
+      tags:
+      - fraud-predictions
+  /api/v1/fraud-predictions/predict/{transaction_id}:
+    get:
+      description: Predict fraud for a specific transaction
+      operationId: predict_fraud_for_transaction_api_v1_fraud_predictions_predict__transaction_id__get
+      parameters:
+      - in: path
+        name: transaction_id
+        required: true
+        schema:
+          title: Transaction Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Predict Fraud For Transaction
+      tags:
+      - fraud-predictions
+  /api/v1/fraud-transactions/:
+    get:
+      description: Get fraud detection transactions with filtering
+      operationId: get_fraud_transactions_api_v1_fraud_transactions__get
+      parameters:
+      - in: query
+        name: skip
+        required: false
+        schema:
+          default: 0
+          minimum: 0
+          title: Skip
+          type: integer
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          maximum: 10000
+          minimum: 1
+          title: Limit
+          type: integer
+      - description: 'Filter by fraud: 0=normal, 1=fraud'
+        in: query
+        name: is_fraud
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          description: 'Filter by fraud: 0=normal, 1=fraud'
+          title: Is Fraud
+      - description: 'Filter by type: CASH_IN, CASH_OUT, DEBIT, PAYMENT, TRANSFER'
+        in: query
+        name: transaction_type
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: 'Filter by type: CASH_IN, CASH_OUT, DEBIT, PAYMENT, TRANSFER'
+          title: Transaction Type
+      - description: Minimum step (time)
+        in: query
+        name: step_min
+        required: false
+        schema:
+          anyOf:
+          - minimum: 1
+            type: integer
+          - type: 'null'
+          description: Minimum step (time)
+          title: Step Min
+      - description: Maximum step (time)
+        in: query
+        name: step_max
+        required: false
+        schema:
+          anyOf:
+          - maximum: 744
+            type: integer
+          - type: 'null'
+          description: Maximum step (time)
+          title: Step Max
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  type: object
+                title: Response Get Fraud Transactions Api V1 Fraud Transactions  Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Fraud Transactions
+      tags:
+      - fraud-transactions
+  /api/v1/fraud-transactions/stats:
+    get:
+      description: Get fraud detection statistics
+      operationId: get_fraud_stats_api_v1_fraud_transactions_stats_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Get Fraud Stats
+      tags:
+      - fraud-transactions
+  /api/v1/fraud-transactions/{transaction_id}:
+    get:
+      description: Get a specific fraud transaction by ID
+      operationId: get_fraud_transaction_api_v1_fraud_transactions__transaction_id__get
+      parameters:
+      - in: path
+        name: transaction_id
+        required: true
+        schema:
+          title: Transaction Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Fraud Transaction
+      tags:
+      - fraud-transactions
+  /api/v1/incidents/analyze:
+    post:
+      description: 'Analyze a wallet address and generate comprehensive fraud risk
+        report.
+
+        Saves the report to the SQL database for persistence.
+
+
+        Role-based access:
+
+        - Investigators can create reports (automatically linked to their ID)
+
+        - Superadmin can create reports (can specify investigator_id or leave null)'
+      operationId: analyze_wallet_incident_api_v1_incidents_analyze_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IncidentReportRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncidentReportResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Analyze Wallet Incident
+      tags:
+      - incidents
+  /api/v1/incidents/reports:
+    get:
+      description: 'Get list of saved incident reports with filtering (from SQL database).
+
+
+        Role-based access:
+
+        - Superadmin: sees all reports
+
+        - Investigator: sees only their own reports (automatically filtered)
+
+
+        pattern_type options:
+
+        - "fraud": Fraud wallets (fraud, money_laundering, ponzi, ransomware)
+
+        - "normal": Normal wallets
+
+        - Specific: "fraud", "money_laundering", "ponzi", "ransomware", "normal"'
+      operationId: get_incident_reports_api_v1_incidents_reports_get
+      parameters:
+      - in: query
+        name: skip
+        required: false
+        schema:
+          default: 0
+          title: Skip
+          type: integer
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 20
+          title: Limit
+          type: integer
+      - in: query
+        name: wallet_address
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Wallet Address
+      - in: query
+        name: investigator_id
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Investigator Id
+      - in: query
+        name: risk_level
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Risk Level
+      - in: query
+        name: status
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status
+      - in: query
+        name: pattern_type
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Pattern Type
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  type: object
+                title: Response Get Incident Reports Api V1 Incidents Reports Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Incident Reports
+      tags:
+      - incidents
+  /api/v1/incidents/reports/{report_id}:
+    get:
+      description: 'Get a specific incident report by ID from SQL database.
+
+
+        Role-based access:
+
+        - Superadmin: can view any report
+
+        - Investigator: can only view their own reports'
+      operationId: get_incident_report_api_v1_incidents_reports__report_id__get
+      parameters:
+      - in: path
+        name: report_id
+        required: true
+        schema:
+          title: Report Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                title: Response Get Incident Report Api V1 Incidents Reports  Report
+                  Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Incident Report
+      tags:
+      - incidents
+  /api/v1/incidents/reports/{report_id}/notes:
+    post:
+      description: Add a note to an incident report in SQL database.
+      operationId: add_report_note_api_v1_incidents_reports__report_id__notes_post
+      parameters:
+      - in: path
+        name: report_id
+        required: true
+        schema:
+          title: Report Id
+          type: string
+      - in: query
+        name: note
+        required: true
+        schema:
+          title: Note
+          type: string
+      - in: query
+        name: author
+        required: false
+        schema:
+          default: Investigator
+          title: Author
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Add Report Note
+      tags:
+      - incidents
+  /api/v1/incidents/reports/{report_id}/status:
+    patch:
+      description: Update the status of an incident report in SQL database.
+      operationId: update_report_status_api_v1_incidents_reports__report_id__status_patch
+      parameters:
+      - in: path
+        name: report_id
+        required: true
+        schema:
+          title: Report Id
+          type: string
+      - in: query
+        name: status
+        required: true
+        schema:
+          title: Status
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Update Report Status
+      tags:
+      - incidents
+  /api/v1/investigators/activity/all:
+    get:
+      description: Get activity summary for all investigators
+      operationId: get_all_investigators_activity_api_v1_investigators_activity_all_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Get All Investigators Activity
+      tags:
+      - investigators
+  /api/v1/investigators/bulk-action:
+    post:
+      description: Perform bulk actions on investigators
+      operationId: bulk_investigator_action_api_v1_investigators_bulk_action_post
+      parameters:
+      - in: query
+        name: action
+        required: true
+        schema:
+          title: Action
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                type: integer
+              title: Investigator Ids
+              type: array
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Bulk Investigator Action
+      tags:
+      - investigators
+  /api/v1/investigators/check-superadmin:
+    get:
+      description: Check if superadmin account exists
+      operationId: check_superadmin_api_v1_investigators_check_superadmin_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Check Superadmin
+      tags:
+      - investigators
+  /api/v1/investigators/database/status:
+    get:
+      description: Check database connection status
+      operationId: check_database_status_api_v1_investigators_database_status_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Check Database Status
+      tags:
+      - investigators
+  /api/v1/investigators/delete-all-investigators:
+    delete:
+      description: Delete all investigator accounts (except superadmin)
+      operationId: delete_all_investigators_api_v1_investigators_delete_all_investigators_delete
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Delete All Investigators
+      tags:
+      - investigators
+  /api/v1/investigators/email-config:
+    get:
+      description: Check email configuration status
+      operationId: check_email_config_api_v1_investigators_email_config_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Check Email Config
+      tags:
+      - investigators
+  /api/v1/investigators/init-superadmin:
+    post:
+      description: Initialize or reset superadmin account (ensures account exists
+        with correct password)
+      operationId: init_superadmin_api_v1_investigators_init_superadmin_post
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Init Superadmin
+      tags:
+      - investigators
+  /api/v1/investigators/investigators:
+    get:
+      description: Get list of all investigators (excludes superadmin)
+      operationId: list_investigators_api_v1_investigators_investigators_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: List Investigators
+      tags:
+      - investigators
+  /api/v1/investigators/investigators/{investigator_id}:
+    delete:
+      description: Delete a single investigator by ID
+      operationId: delete_investigator_api_v1_investigators_investigators__investigator_id__delete
+      parameters:
+      - in: path
+        name: investigator_id
+        required: true
+        schema:
+          title: Investigator Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Delete Investigator
+      tags:
+      - investigators
+  /api/v1/investigators/location-from-ip:
+    get:
+      description: Get location information from IP address using ip-api.com (free
+        tier)
+      operationId: get_location_from_ip_api_v1_investigators_location_from_ip_get
+      parameters:
+      - in: query
+        name: ip_address
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Ip Address
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Location From Ip
+      tags:
+      - investigators
+  /api/v1/investigators/reset-password:
+    post:
+      description: Reset password for an investigator - requires old password verification
+      operationId: reset_password_api_v1_investigators_reset_password_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordResetRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Reset Password
+      tags:
+      - investigators
+  /api/v1/investigators/send-welcome-email:
+    post:
+      description: Create investigator account and send welcome email with auto-generated
+        password and reset link
+      operationId: send_welcome_email_api_v1_investigators_send_welcome_email_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendWelcomeEmailRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Send Welcome Email
+      tags:
+      - investigators
+  /api/v1/investigators/{investigator_id}/activity:
+    get:
+      description: Get comprehensive activity data for a specific investigator
+      operationId: get_investigator_activity_api_v1_investigators__investigator_id__activity_get
+      parameters:
+      - in: path
+        name: investigator_id
+        required: true
+        schema:
+          title: Investigator Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Investigator Activity
+      tags:
+      - investigators
+  /api/v1/investigators/{investigator_id}/activity-logs:
+    get:
+      description: Get detailed activity logs for a specific investigator
+      operationId: get_investigator_activity_logs_api_v1_investigators__investigator_id__activity_logs_get
+      parameters:
+      - in: path
+        name: investigator_id
+        required: true
+        schema:
+          title: Investigator Id
+          type: integer
+      - in: query
+        name: skip
+        required: false
+        schema:
+          default: 0
+          title: Skip
+          type: integer
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      - in: query
+        name: action_type
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Action Type
+      - in: query
+        name: start_date
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Start Date
+      - in: query
+        name: end_date
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: End Date
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Investigator Activity Logs
+      tags:
+      - investigators
+  /api/v1/investigators/{investigator_id}/dashboard:
+    get:
+      description: Get investigator self-service dashboard stats
+      operationId: get_investigator_self_service_dashboard
+      parameters:
+      - in: path
+        name: investigator_id
+        required: true
+        schema:
+          title: Investigator Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Investigator Dashboard
+      tags:
+      - investigator-self-service
+  /api/v1/investigators/{investigator_id}/status:
+    get:
+      description: Get comprehensive status and health metrics for an investigator
+      operationId: get_investigator_status_api_v1_investigators__investigator_id__status_get
+      parameters:
+      - in: path
+        name: investigator_id
+        required: true
+        schema:
+          title: Investigator Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Investigator Status
+      tags:
+      - investigators
+    patch:
+      description: Update investigator availability status
+      operationId: update_investigator_self_service_status
+      parameters:
+      - in: path
+        name: investigator_id
+        required: true
+        schema:
+          title: Investigator Id
+          type: integer
+      - in: query
+        name: status
+        required: true
+        schema:
+          title: Status
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Update Investigator Status
+      tags:
+      - investigator-self-service
+  /api/v1/messages/broadcast:
+    post:
+      description: Broadcast an announcement to all investigators
+      operationId: broadcast_announcement_api_v1_messages_broadcast_post
+      parameters:
+      - in: query
+        name: sender_id
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Sender Id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageCreate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                title: Response Broadcast Announcement Api V1 Messages Broadcast Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Broadcast Announcement
+      tags:
+      - messages
+  /api/v1/messages/history:
+    get:
+      description: 'Get communication history sent to investigators.
+
+        Includes direct messages and broadcast announcements already delivered to
+        investigators.'
+      operationId: get_message_history_api_v1_messages_history_get
+      parameters:
+      - in: query
+        name: investigator_id
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Investigator Id
+      - in: query
+        name: message_type
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Message Type
+      - in: query
+        name: skip
+        required: false
+        schema:
+          default: 0
+          title: Skip
+          type: integer
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 200
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/MessageResponse'
+                title: Response Get Message History Api V1 Messages History Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Message History
+      tags:
+      - messages
+  /api/v1/messages/investigators/{investigator_id}/message:
+    post:
+      description: Send a message to a specific investigator
+      operationId: send_message_to_investigator_api_v1_messages_investigators__investigator_id__message_post
+      parameters:
+      - in: path
+        name: investigator_id
+        required: true
+        schema:
+          title: Investigator Id
+          type: integer
+      - in: query
+        name: sender_id
+        required: false
+        schema:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Sender Id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageCreate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Send Message To Investigator
+      tags:
+      - messages
+  /api/v1/messages/investigators/{investigator_id}/messages:
+    get:
+      description: Get all messages for a specific investigator
+      operationId: get_investigator_messages_api_v1_messages_investigators__investigator_id__messages_get
+      parameters:
+      - in: path
+        name: investigator_id
+        required: true
+        schema:
+          title: Investigator Id
+          type: integer
+      - in: query
+        name: unread_only
+        required: false
+        schema:
+          default: false
+          title: Unread Only
+          type: boolean
+      - in: query
+        name: skip
+        required: false
+        schema:
+          default: 0
+          title: Skip
+          type: integer
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/MessageResponse'
+                title: Response Get Investigator Messages Api V1 Messages Investigators  Investigator
+                  Id  Messages Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Investigator Messages
+      tags:
+      - messages
+  /api/v1/messages/investigators/{investigator_id}/reply:
+    post:
+      description: Investigator replies to a message from superadmin
+      operationId: reply_to_message_api_v1_messages_investigators__investigator_id__reply_post
+      parameters:
+      - in: path
+        name: investigator_id
+        required: true
+        schema:
+          title: Investigator Id
+          type: integer
+      - in: query
+        name: message_id
+        required: true
+        schema:
+          title: Message Id
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageCreate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Reply To Message
+      tags:
+      - messages
+  /api/v1/messages/investigators/{investigator_id}/unread-count:
+    get:
+      description: Get count of unread messages for an investigator
+      operationId: get_unread_count_api_v1_messages_investigators__investigator_id__unread_count_get
+      parameters:
+      - in: path
+        name: investigator_id
+        required: true
+        schema:
+          title: Investigator Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Unread Count
+      tags:
+      - messages
+  /api/v1/messages/messages/{message_id}/read:
+    patch:
+      description: Mark a message as read
+      operationId: mark_message_as_read_api_v1_messages_messages__message_id__read_patch
+      parameters:
+      - in: path
+        name: message_id
+        required: true
+        schema:
+          title: Message Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Mark Message As Read
+      tags:
+      - messages
+  /api/v1/risk/:
+    get:
+      description: Get all risk scores
+      operationId: get_risk_scores_api_v1_risk__get
+      parameters:
+      - in: query
+        name: case_id
+        required: false
+        schema:
+          title: Case Id
+          type: integer
+      - in: query
+        name: skip
+        required: false
+        schema:
+          default: 0
+          title: Skip
+          type: integer
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/RiskScoreResponse'
+                title: Response Get Risk Scores Api V1 Risk  Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Risk Scores
+      tags:
+      - risk
+    post:
+      description: Create a new risk score entry
+      operationId: create_risk_score_api_v1_risk__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RiskScoreCreate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskScoreResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Create Risk Score
+      tags:
+      - risk
+  /api/v1/rl-engine/feedback:
+    post:
+      description: Provide feedback to RL agent for learning
+      operationId: provide_feedback_api_v1_rl_engine_feedback_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RLFeedbackRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Provide Feedback
+      tags:
+      - rl-engine
+  /api/v1/rl-engine/performance:
+    get:
+      description: Get detailed RL performance metrics
+      operationId: get_rl_performance_api_v1_rl_engine_performance_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Get Rl Performance
+      tags:
+      - rl-engine
+  /api/v1/rl-engine/predict:
+    post:
+      description: Predict fraud using RL agent
+      operationId: predict_with_rl_api_v1_rl_engine_predict_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RLPredictionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Predict With Rl
+      tags:
+      - rl-engine
+  /api/v1/rl-engine/predict/{transaction_id}:
+    get:
+      description: Predict fraud for a specific transaction using RL
+      operationId: predict_transaction_rl_api_v1_rl_engine_predict__transaction_id__get
+      parameters:
+      - in: path
+        name: transaction_id
+        required: true
+        schema:
+          title: Transaction Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Predict Transaction Rl
+      tags:
+      - rl-engine
+  /api/v1/rl-engine/reset:
+    post:
+      description: Reset RL model (clear Q-table)
+      operationId: reset_rl_model_api_v1_rl_engine_reset_post
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Reset Rl Model
+      tags:
+      - rl-engine
+  /api/v1/rl-engine/status:
+    get:
+      description: Get RL model status and statistics
+      operationId: get_rl_status_api_v1_rl_engine_status_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Get Rl Status
+      tags:
+      - rl-engine
+  /api/v1/rl-engine/train:
+    post:
+      description: Train RL agent on transaction data
+      operationId: train_rl_agent_api_v1_rl_engine_train_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RLTrainRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Train Rl Agent
+      tags:
+      - rl-engine
+  /api/v1/system/health:
+    get:
+      operationId: system_health_api_v1_system_health_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                title: Response System Health Api V1 System Health Get
+                type: object
+          description: Successful Response
+      summary: System Health
+      tags:
+      - system-health
+  /api/v1/system/queue/flush:
+    post:
+      operationId: flush_queue_api_v1_system_queue_flush_post
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                title: Response Flush Queue Api V1 System Queue Flush Post
+                type: object
+          description: Successful Response
+      summary: Flush Queue
+      tags:
+      - system-health
+  /api/v1/transactions/:
+    get:
+      description: Get all transactions
+      operationId: get_transactions_api_v1_transactions__get
+      parameters:
+      - in: query
+        name: case_id
+        required: false
+        schema:
+          title: Case Id
+          type: integer
+      - in: query
+        name: wallet_id
+        required: false
+        schema:
+          title: Wallet Id
+          type: integer
+      - in: query
+        name: flagged
+        required: false
+        schema:
+          title: Flagged
+          type: boolean
+      - in: query
+        name: skip
+        required: false
+        schema:
+          default: 0
+          title: Skip
+          type: integer
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/TransactionResponse'
+                title: Response Get Transactions Api V1 Transactions  Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Transactions
+      tags:
+      - transactions
+    post:
+      description: Create a new transaction entry
+      operationId: create_transaction_api_v1_transactions__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionCreate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Create Transaction
+      tags:
+      - transactions
+  /api/v1/transactions/{transaction_id}:
+    get:
+      description: Get a specific transaction by ID
+      operationId: get_transaction_api_v1_transactions__transaction_id__get
+      parameters:
+      - in: path
+        name: transaction_id
+        required: true
+        schema:
+          title: Transaction Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Transaction
+      tags:
+      - transactions
+  /api/v1/wallet-fraud/search/transactions:
+    get:
+      description: 'Search for a wallet address in fraud transactions
+
+        Returns all transactions where wallet appears as origin or destination'
+      operationId: search_wallet_in_transactions_api_v1_wallet_fraud_search_transactions_get
+      parameters:
+      - description: Wallet address or customer ID to search
+        in: query
+        name: wallet_address
+        required: true
+        schema:
+          description: Wallet address or customer ID to search
+          title: Wallet Address
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Search Wallet In Transactions
+      tags:
+      - wallet-fraud
+  /api/v1/wallet-fraud/{wallet_address}/analyze:
+    get:
+      description: 'Analyze a wallet for fraud by finding related transactions and
+        predicting fraud
+
+
+        The wallet address can be:
+
+        - A wallet address from the Wallet model (e.g., "0x742d35...")
+
+        - A customer ID from FraudTransaction (e.g., "C1234567890")'
+      operationId: analyze_wallet_fraud_api_v1_wallet_fraud__wallet_address__analyze_get
+      parameters:
+      - in: path
+        name: wallet_address
+        required: true
+        schema:
+          title: Wallet Address
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Analyze Wallet Fraud
+      tags:
+      - wallet-fraud
+  /api/v1/wallet-fraud/{wallet_address}/predict:
+    get:
+      description: Get fraud predictions for a specific wallet's recent transactions
+      operationId: predict_wallet_fraud_api_v1_wallet_fraud__wallet_address__predict_get
+      parameters:
+      - in: path
+        name: wallet_address
+        required: true
+        schema:
+          title: Wallet Address
+          type: string
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          maximum: 100
+          minimum: 1
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Predict Wallet Fraud
+      tags:
+      - wallet-fraud
+  /api/v1/wallets/:
+    get:
+      description: Get all wallets under investigation
+      operationId: get_wallets_api_v1_wallets__get
+      parameters:
+      - in: query
+        name: case_id
+        required: false
+        schema:
+          title: Case Id
+          type: integer
+      - in: query
+        name: skip
+        required: false
+        schema:
+          default: 0
+          title: Skip
+          type: integer
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/WalletResponse'
+                title: Response Get Wallets Api V1 Wallets  Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Wallets
+      tags:
+      - wallets
+    post:
+      description: Create a new wallet entry
+      operationId: create_wallet_api_v1_wallets__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WalletCreate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Create Wallet
+      tags:
+      - wallets
+  /api/v1/wallets/frozen/list:
+    get:
+      description: Get all frozen wallets
+      operationId: get_frozen_wallets_api_v1_wallets_frozen_list_get
+      parameters:
+      - in: query
+        name: skip
+        required: false
+        schema:
+          default: 0
+          title: Skip
+          type: integer
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Frozen Wallets
+      tags:
+      - wallets
+  /api/v1/wallets/search/transactions:
+    get:
+      description: 'Search for a wallet address in fraud transactions
+
+        Returns all transactions where wallet appears as origin or destination'
+      operationId: search_wallet_in_transactions_api_v1_wallets_search_transactions_get
+      parameters:
+      - description: Wallet address or customer ID to search
+        in: query
+        name: wallet_address
+        required: true
+        schema:
+          description: Wallet address or customer ID to search
+          title: Wallet Address
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Search Wallet In Transactions
+      tags:
+      - wallet-fraud
+  /api/v1/wallets/search/{wallet_address}:
+    get:
+      description: Search wallet by address and get all related data
+      operationId: search_wallet_api_v1_wallets_search__wallet_address__get
+      parameters:
+      - in: path
+        name: wallet_address
+        required: true
+        schema:
+          title: Wallet Address
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Search Wallet
+      tags:
+      - wallets
+  /api/v1/wallets/unfrozen/list:
+    get:
+      description: Get all unfrozen wallets (previously frozen)
+      operationId: get_unfrozen_wallets_api_v1_wallets_unfrozen_list_get
+      parameters:
+      - in: query
+        name: skip
+        required: false
+        schema:
+          default: 0
+          title: Skip
+          type: integer
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Unfrozen Wallets
+      tags:
+      - wallets
+  /api/v1/wallets/{wallet_address}/analyze:
+    get:
+      description: 'Analyze a wallet for fraud by finding related transactions and
+        predicting fraud
+
+
+        The wallet address can be:
+
+        - A wallet address from the Wallet model (e.g., "0x742d35...")
+
+        - A customer ID from FraudTransaction (e.g., "C1234567890")'
+      operationId: analyze_wallet_fraud_api_v1_wallets__wallet_address__analyze_get
+      parameters:
+      - in: path
+        name: wallet_address
+        required: true
+        schema:
+          title: Wallet Address
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Analyze Wallet Fraud
+      tags:
+      - wallet-fraud
+  /api/v1/wallets/{wallet_address}/predict:
+    get:
+      description: Get fraud predictions for a specific wallet's recent transactions
+      operationId: predict_wallet_fraud_api_v1_wallets__wallet_address__predict_get
+      parameters:
+      - in: path
+        name: wallet_address
+        required: true
+        schema:
+          title: Wallet Address
+          type: string
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          maximum: 100
+          minimum: 1
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Predict Wallet Fraud
+      tags:
+      - wallet-fraud
+  /api/v1/wallets/{wallet_id}:
+    get:
+      description: Get a specific wallet by ID
+      operationId: get_wallet_api_v1_wallets__wallet_id__get
+      parameters:
+      - in: path
+        name: wallet_id
+        required: true
+        schema:
+          title: Wallet Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Wallet
+      tags:
+      - wallets
+  /api/v1/wallets/{wallet_id}/freeze:
+    post:
+      description: Freeze a wallet
+      operationId: freeze_wallet_api_v1_wallets__wallet_id__freeze_post
+      parameters:
+      - in: path
+        name: wallet_id
+        required: true
+        schema:
+          title: Wallet Id
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FreezeWalletRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Freeze Wallet
+      tags:
+      - wallets
+  /api/v1/wallets/{wallet_id}/unfreeze:
+    post:
+      description: Unfreeze a wallet
+      operationId: unfreeze_wallet_api_v1_wallets__wallet_id__unfreeze_post
+      parameters:
+      - in: path
+        name: wallet_id
+        required: true
+        schema:
+          title: Wallet Id
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnfreezeWalletRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Unfreeze Wallet
+      tags:
+      - wallets
+  /api/v1/watchlist/:
+    get:
+      description: Return all watchlisted wallets with latest monitoring status.
+      operationId: get_watchlist_api_v1_watchlist__get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  type: object
+                title: Response Get Watchlist Api V1 Watchlist  Get
+                type: array
+          description: Successful Response
+      summary: Get Watchlist
+      tags:
+      - watchlist
+    post:
+      description: Add a wallet to the watchlist.
+      operationId: add_to_watchlist_api_v1_watchlist__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WatchlistAddRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                title: Response Add To Watchlist Api V1 Watchlist  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Add To Watchlist
+      tags:
+      - watchlist
+  /api/v1/watchlist/batch-analyze:
+    post:
+      description: 'Run analysis for all active watchlist wallets.
+
+        This auto-creates new incident reports and updates monitoring status.'
+      operationId: batch_analyze_watchlist_api_v1_watchlist_batch_analyze_post
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                title: Response Batch Analyze Watchlist Api V1 Watchlist Batch Analyze
+                  Post
+                type: object
+          description: Successful Response
+      summary: Batch Analyze Watchlist
+      tags:
+      - watchlist
+  /api/v1/watchlist/{watch_id}:
+    delete:
+      description: Soft-remove a wallet from the watchlist.
+      operationId: remove_from_watchlist_api_v1_watchlist__watch_id__delete
+      parameters:
+      - in: path
+        name: watch_id
+        required: true
+        schema:
+          title: Watch Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                title: Response Remove From Watchlist Api V1 Watchlist  Watch Id  Delete
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Remove From Watchlist
+      tags:
+      - watchlist
+  /api/v1/watchlist/{watch_id}/analyze:
+    post:
+      description: Run incident analysis for a single watchlist wallet and update
+        monitoring status.
+      operationId: analyze_watchlist_wallet_api_v1_watchlist__watch_id__analyze_post
+      parameters:
+      - in: path
+        name: watch_id
+        required: true
+        schema:
+          title: Watch Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                title: Response Analyze Watchlist Wallet Api V1 Watchlist  Watch Id  Analyze
+                  Post
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Analyze Watchlist Wallet
+      tags:
+      - watchlist
+  /health:
+    get:
+      description: Health check endpoint
+      operationId: health_check_health_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Health Check
+  /{full_path}:
+    options:
+      description: Handle all OPTIONS requests explicitly
+      operationId: options_handler__full_path__options
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Options Handler

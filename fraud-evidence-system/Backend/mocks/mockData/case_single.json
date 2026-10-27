@@ -1,0 +1,87 @@
+{
+  "success": true,
+  "case": {
+    "id": "66d4a2b8c9e1234567890abc",
+    "caseId": "CASE-2024-001",
+    "title": "Suspicious cryptocurrency transactions",
+    "description": "Multiple high-value transactions from flagged wallet. Investigation revealed systematic pattern of fraudulent activity involving multiple wallets and exchanges.",
+    "status": "in_progress",
+    "priority": "high",
+    "category": "financial_fraud",
+    "createdBy": "investigator@fraud.com",
+    "assignedTo": "senior-investigator@fraud.com",
+    "createdAt": "2024-01-07T10:00:00.000Z",
+    "updatedAt": "2024-01-07T12:00:00.000Z",
+    "evidenceCount": 5,
+    "entities": [
+      {
+        "type": "wallet_address",
+        "value": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
+        "confidence": 0.95,
+        "addedBy": "investigator@fraud.com",
+        "addedAt": "2024-01-07T10:00:00.000Z"
+      },
+      {
+        "type": "email",
+        "value": "suspicious@example.com",
+        "confidence": 0.80,
+        "addedBy": "investigator@fraud.com",
+        "addedAt": "2024-01-07T10:30:00.000Z"
+      }
+    ],
+    "indicators": [
+      {
+        "type": "transaction",
+        "value": "0x1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t",
+        "confidence": 0.90,
+        "addedBy": "investigator@fraud.com",
+        "addedAt": "2024-01-07T10:00:00.000Z"
+      },
+      {
+        "type": "ip_address",
+        "value": "192.168.1.100",
+        "confidence": 0.75,
+        "addedBy": "investigator@fraud.com",
+        "addedAt": "2024-01-07T11:00:00.000Z"
+      }
+    ],
+    "tags": ["cryptocurrency", "high-value", "suspicious-pattern"],
+    "riskScore": 0.78,
+    "auditTrail": [
+      {
+        "action": "created",
+        "timestamp": "2024-01-07T10:00:00.000Z",
+        "performedBy": "investigator@fraud.com",
+        "details": {
+          "initialData": {
+            "title": "Suspicious cryptocurrency transactions",
+            "priority": "high"
+          }
+        }
+      },
+      {
+        "action": "updated",
+        "timestamp": "2024-01-07T11:00:00.000Z",
+        "performedBy": "investigator@fraud.com",
+        "details": {
+          "action": "evidence_added",
+          "evidenceId": "66d4a2b8c9e1234567890abc"
+        }
+      },
+      {
+        "action": "updated",
+        "timestamp": "2024-01-07T12:00:00.000Z",
+        "performedBy": "senior-investigator@fraud.com",
+        "details": {
+          "changes": {
+            "assignedTo": {
+              "old": null,
+              "new": "senior-investigator@fraud.com"
+            }
+          }
+        }
+      }
+    ]
+  }
+}
+

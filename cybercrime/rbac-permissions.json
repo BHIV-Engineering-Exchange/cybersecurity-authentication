@@ -1,0 +1,102 @@
+{
+  "version": 1,
+  "roles": ["public", "investigator", "superadmin"],
+  "permissions": [
+    {
+      "role": "public",
+      "methods": ["GET"],
+      "paths": ["/", "/health", "/api/v1/system/health", "/api/docs*", "/api/redoc*", "/openapi.json", "/api/openapi.json", "/docs*", "/redoc*"]
+    },
+    {
+      "role": "public",
+      "methods": ["POST"],
+      "paths": [
+        "/api/v1/auth/login",
+        "/api/v1/auth/register",
+        "/api/v1/access-requests/request",
+        "/api/v1/investigators/init-superadmin"
+      ]
+    },
+    {
+      "role": "public",
+      "methods": ["GET"],
+      "paths": ["/api/v1/investigators/check-superadmin"]
+    },
+    {
+      "role": "investigator",
+      "methods": ["GET"],
+      "paths": [
+        "/api/v1/auth/me",
+        "/api/v1/cases*",
+        "/api/v1/wallets*",
+        "/api/v1/transactions*",
+        "/api/v1/evidence*",
+        "/api/v1/risk*",
+        "/api/v1/complaints*",
+        "/api/v1/incidents*",
+        "/api/v1/watchlist*",
+        "/api/v1/dashboard/*",
+        "/api/v1/messages/investigators/*/messages",
+        "/api/v1/messages/investigators/*/unread-count",
+        "/api/v1/messages/messages/*/read",
+        "/api/v1/fraud-transactions*",
+        "/api/v1/fraud-predictions*",
+        "/api/v1/wallet-fraud*",
+        "/api/v1/rl-engine*",
+        "/api/v1/investigators/*/dashboard",
+        "/api/v1/investigators/*/status",
+        "/api/v1/investigators/*/activity",
+        "/api/v1/investigators/*/activity-logs",
+        "/api/v1/investigators/location-from-ip"
+      ]
+    },
+    {
+      "role": "investigator",
+      "methods": ["POST"],
+      "paths": [
+        "/api/v1/cases*",
+        "/api/v1/wallets*",
+        "/api/v1/transactions*",
+        "/api/v1/evidence*",
+        "/api/v1/complaints*",
+        "/api/v1/incidents/analyze",
+        "/api/v1/incidents/reports/*/notes",
+        "/api/v1/watchlist*",
+        "/api/v1/messages/investigators/*/reply",
+        "/api/v1/fraud-predictions/predict",
+        "/api/v1/rl-engine*",
+        "/api/v1/dashboard/notifications/mark-all-read",
+        "/api/v1/investigators/reset-password",
+        "/api/v1/authz*"
+      ]
+    },
+    {
+      "role": "investigator",
+      "methods": ["PATCH"],
+      "paths": [
+        "/api/v1/complaints/*/status",
+        "/api/v1/incidents/reports/*/status",
+        "/api/v1/investigators/*/status",
+        "/api/v1/messages/messages/*/read"
+      ]
+    },
+    {
+      "role": "investigator",
+      "methods": ["DELETE"],
+      "paths": ["/api/v1/watchlist/*"]
+    },
+    {
+      "role": "superadmin",
+      "methods": ["*"],
+      "paths": [
+        "/",
+        "/health",
+        "/api/docs*",
+        "/api/redoc*",
+        "/openapi.json",
+        "/api/openapi.json",
+        "/api/v1/*"
+      ]
+    }
+  ]
+}

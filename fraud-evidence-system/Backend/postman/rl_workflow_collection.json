@@ -1,0 +1,677 @@
+{
+  "info": {
+    "name": "RL Engine Workflow - Test Collection",
+    "_postman_id": "rl-workflow-v1",
+    "description": "Test collection for Reinforcement Learning prediction and feedback system with deterministic behavior",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5050",
+      "type": "string"
+    },
+    {
+      "key": "testWallet",
+      "value": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
+      "type": "string"
+    },
+    {
+      "key": "predictionId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Deterministic Prediction Tests",
+      "item": [
+        {
+          "name": "Test 1: Predict with Low Risk Features",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Prediction successful\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.eql(true);",
+                  "});",
+                  "",
+                  "pm.test(\"Returns valid action\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.prediction.action).to.be.oneOf(['monitor', 'investigate', 'freeze']);",
+                  "});",
+                  "",
+                  "pm.test(\"Score is between 0 and 1\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.prediction.score).to.be.at.least(0);",
+                  "    pm.expect(jsonData.prediction.score).to.be.at.most(1);",
+                  "});",
+                  "",
+                  "pm.test(\"Includes explainable features\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.prediction.explainableFeatures).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Includes reasoning\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.prediction.reasoning).to.be.an('array');",
+                  "    pm.expect(jsonData.prediction.reasoning.length).to.be.above(0);",
+                  "});",
+                  "",
+                  "// Save for determinism test",
+                  "pm.collectionVariables.set('test1_action', jsonData.prediction.action);",
+                  "pm.collectionVariables.set('test1_score', jsonData.prediction.score);",
+                  "pm.collectionVariables.set('predictionId', jsonData.metadata.predictionId);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "analyst",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wallet\": \"{{testWallet}}\",\n  \"features\": {\n    \"transactionCount\": 10,\n    \"totalVolume\": 1000,\n    \"avgTransactionValue\": 100,\n    \"uniqueAddresses\": 5,\n    \"suspiciousPatterns\": 0,\n    \"accountAge\": 180,\n    \"riskLevel\": \"low\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/rl/predict",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rl", "predict"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Test 2: Same Input - Verify Determinism",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Deterministic: Same action returned\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    var originalAction = pm.collectionVariables.get('test1_action');",
+                  "    pm.expect(jsonData.prediction.action).to.eql(originalAction);",
+                  "    console.log('Original action:', originalAction);",
+                  "    console.log('Current action:', jsonData.prediction.action);",
+                  "});",
+                  "",
+                  "pm.test(\"Deterministic: Same score returned\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    var originalScore = pm.collectionVariables.get('test1_score');",
+                  "    pm.expect(jsonData.prediction.score).to.eql(originalScore);",
+                  "    console.log('Original score:', originalScore);",
+                  "    console.log('Current score:', jsonData.prediction.score);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "analyst",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wallet\": \"{{testWallet}}\",\n  \"features\": {\n    \"transactionCount\": 10,\n    \"totalVolume\": 1000,\n    \"avgTransactionValue\": 100,\n    \"uniqueAddresses\": 5,\n    \"suspiciousPatterns\": 0,\n    \"accountAge\": 180,\n    \"riskLevel\": \"low\"\n  }\n}",
+              "description": "Exact same request as Test 1 - should get identical response"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/rl/predict",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rl", "predict"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Test 3: High Risk Features → Freeze Action",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"High risk predicts freeze action\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    // High risk with many suspicious patterns should suggest freeze",
+                  "    pm.expect(jsonData.prediction.action).to.be.oneOf(['freeze', 'investigate']);",
+                  "});",
+                  "",
+                  "pm.test(\"High confidence score\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.prediction.score).to.be.above(0.7);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "analyst",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wallet\": \"0x1234567890abcdef1234567890abcdef12345678\",\n  \"features\": {\n    \"transactionCount\": 500,\n    \"totalVolume\": 100000,\n    \"avgTransactionValue\": 200,\n    \"uniqueAddresses\": 100,\n    \"suspiciousPatterns\": 8,\n    \"accountAge\": 15,\n    \"riskLevel\": \"critical\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/rl/predict",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rl", "predict"]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Tests to verify deterministic RL predictions"
+    },
+    {
+      "name": "Feedback Workflow",
+      "item": [
+        {
+          "name": "Step 1: Make Prediction",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.collectionVariables.set('predictionId', jsonData.metadata.predictionId);",
+                  "pm.collectionVariables.set('predictedAction', jsonData.prediction.action);",
+                  "console.log('Prediction ID:', jsonData.metadata.predictionId);",
+                  "console.log('Predicted Action:', jsonData.prediction.action);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "analyst",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wallet\": \"{{testWallet}}\",\n  \"features\": {\n    \"riskLevel\": \"high\",\n    \"suspiciousPatterns\": 3\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/rl/predict",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rl", "predict"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Step 2: Submit Positive Feedback",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Feedback submitted successfully\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.eql(true);",
+                  "});",
+                  "",
+                  "pm.test(\"Feedback includes reward\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.feedback.reward).to.be.a('number');",
+                  "});",
+                  "",
+                  "pm.test(\"Positive feedback has positive reward\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.feedback.reward).to.be.above(0);",
+                  "});",
+                  "",
+                  "pm.test(\"Model impact included\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.modelImpact).to.have.property('currentAccuracy');",
+                  "    pm.expect(jsonData.modelImpact).to.have.property('totalFeedback');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "investigator",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wallet\": \"{{testWallet}}\",\n  \"outcome\": \"correct\",\n  \"actualAction\": \"investigate\",\n  \"adminNotes\": \"Prediction was accurate. Wallet was involved in fraudulent activity.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/rl/feedback",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rl", "feedback"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Step 3: Submit Negative Feedback",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Negative feedback processed\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Negative feedback has negative reward\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.feedback.reward).to.be.below(0);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "investigator",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wallet\": \"0xabcdef1234567890abcdef1234567890abcdef12\",\n  \"outcome\": \"false_positive\",\n  \"actualAction\": \"dismiss\",\n  \"adminNotes\": \"Prediction was incorrect. Wallet was legitimate.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/rl/predict",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rl", "predict"]
+            },
+            "description": "First make a prediction, then submit negative feedback"
+          },
+          "response": []
+        }
+      ],
+      "description": "Tests for deterministic behavior and feedback loop"
+    },
+    {
+      "name": "Feature Variation Tests",
+      "item": [
+        {
+          "name": "High Volume → Investigate",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"High volume triggers investigate or freeze\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.prediction.action).to.be.oneOf(['investigate', 'freeze']);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "analyst",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wallet\": \"0x9999999999999999999999999999999999999999\",\n  \"features\": {\n    \"transactionCount\": 150,\n    \"totalVolume\": 50000,\n    \"accountAge\": 20,\n    \"riskLevel\": \"medium\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/rl/predict",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rl", "predict"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Many Suspicious Patterns → Freeze",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Known fraudster pattern triggers freeze\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.prediction.action).to.eql('freeze');",
+                  "});",
+                  "",
+                  "pm.test(\"High score for freeze action\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.prediction.score).to.be.above(0.85);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "analyst",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wallet\": \"0x8888888888888888888888888888888888888888\",\n  \"features\": {\n    \"suspiciousPatterns\": 7,\n    \"transactionCount\": 200,\n    \"accountAge\": 10,\n    \"riskLevel\": \"critical\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/rl/predict",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rl", "predict"]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Tests different feature combinations"
+    },
+    {
+      "name": "Statistics & History",
+      "item": [
+        {
+          "name": "Get RL Statistics",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Stats retrieved\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Includes predictions count\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.stats.predictions.total).to.be.a('number');",
+                  "});",
+                  "",
+                  "pm.test(\"Includes accuracy\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.stats.accuracy).to.be.an('object');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "analyst",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/rl/stats",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rl", "stats"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Prediction History for Wallet",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"History retrieved\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Predictions array returned\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.predictions).to.be.an('array');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "analyst",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/rl/predictions/{{testWallet}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rl", "predictions", "{{testWallet}}"]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Tests for statistics and historical data"
+    },
+    {
+      "name": "Error Scenarios",
+      "item": [
+        {
+          "name": "Predict - Missing Wallet",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Returns 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Error message indicates missing wallet\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.message).to.include('Wallet');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "analyst",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"features\": {\n    \"riskLevel\": \"medium\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/rl/predict",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rl", "predict"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Feedback - Missing Outcome",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Returns 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "investigator",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wallet\": \"{{testWallet}}\",\n  \"actualAction\": \"investigate\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/rl/feedback",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rl", "feedback"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Predict - Permission Denied (User)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"User cannot use RL predict\", function () {",
+                  "    pm.response.to.have.status(403);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "user",
+                "type": "text",
+                "description": "User role cannot use RL predict"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wallet\": \"{{testWallet}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/rl/predict",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rl", "predict"]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Error handling and validation tests"
+    }
+  ]
+}
+

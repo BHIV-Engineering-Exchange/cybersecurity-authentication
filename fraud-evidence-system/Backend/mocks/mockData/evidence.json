@@ -1,0 +1,47 @@
+{
+  "success": true,
+  "message": "Evidence uploaded successfully",
+  "evidence": {
+    "id": "66d4a2b8c9e1234567890abc",
+    "caseId": "CASE-2024-001",
+    "entity": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
+    "filename": "evidence_1704672000000_transaction.png",
+    "fileHash": "0x5d7e8f9a0b1c2d3e4f5g6h7i8j9k0l1m2n3o4p5q",
+    "storageHash": "QmX5Z8Y9W7V6U5T4S3R2Q1P0O9N8M7L6K5J4I3H2G1F",
+    "ipfsHash": "QmT4k8J9aB3d5F7g1H2i6K0l3M5n7O9p2Q4r6S8t1U3v",
+    "blockchainTxHash": "0x1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t",
+    "blockNumber": 18542301,
+    "uploadedAt": "2024-01-07T12:00:00.000Z",
+    "verificationStatus": "verified",
+    "redundancyCount": 3,
+    "storageLocations": {
+      "cache": true,
+      "s3": true,
+      "ipfs": true
+    }
+  },
+  "blockchain": {
+    "txHash": "0x1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t",
+    "blockNumber": 18542301,
+    "contractAddress": "0x9876543210987654321098765432109876543210"
+  },
+  "storage": {
+    "redundancy": 3,
+    "locations": {
+      "cache": {
+        "success": true,
+        "timestamp": "2024-01-07T12:00:00.000Z"
+      },
+      "s3": {
+        "success": true,
+        "s3Key": "evidence/CASE-2024-001/1704672000000_transaction.png",
+        "s3Url": "https://s3.amazonaws.com/fraud-evidence/CASE-2024-001/1704672000000_transaction.png"
+      },
+      "ipfs": {
+        "success": true,
+        "ipfsHash": "QmT4k8J9aB3d5F7g1H2i6K0l3M5n7O9p2Q4r6S8t1U3v"
+      }
+    }
+  }
+}
+

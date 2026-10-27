@@ -1,0 +1,51 @@
+services:
+  # Backend API Service
+  - type: web
+    name: cybercrime-backend
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: cybercrime-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: PORT
+        value: "10000"
+      - key: CORS_ORIGINS
+        value: "https://cybercrime-frontend.onrender.com,http://localhost:5173"
+      - key: EVIDENCE_STORAGE_PATH
+        value: "/opt/render/project/src/backend/evidence_storage"
+      - key: BREVO_API_KEY
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: MONGODB_URL
+        sync: false
+
+  # Frontend Service
+  - type: web
+    name: cybercrime-frontend
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    startCommand: cd frontend && npx vite preview --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: VITE_API_URL
+        value: "https://cybercrime-backend.onrender.com/api/v1"
+      - key: PORT
+        value: "10000"
+
+databases:
+  # PostgreSQL Database
+  - name: cybercrime-db
+    plan: free
+    databaseName: cybercrime_db
+    user: cybercrime_user

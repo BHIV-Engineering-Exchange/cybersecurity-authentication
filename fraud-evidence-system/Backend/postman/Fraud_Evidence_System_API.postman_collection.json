@@ -1,0 +1,640 @@
+{
+  "info": {
+    "name": "Fraud Evidence System API",
+    "description": "Complete API collection for the fraud evidence system with RBAC, blockchain integration, and ML-powered analysis",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{authToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5050",
+      "type": "string"
+    },
+    {
+      "key": "authToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "evidenceId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "caseId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"adminpassword\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('authToken', response.token);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"investigator@example.com\",\n  \"password\": \"investigator123\",\n  \"role\": \"investigator\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "profile"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Evidence Management",
+      "item": [
+        {
+          "name": "List Evidence",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/evidence?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "evidence"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Evidence by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/evidence/{{evidenceId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "evidence", "{{evidenceId}}"]
+            }
+          }
+        },
+        {
+          "name": "Upload Evidence",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "evidenceFile",
+                  "type": "file",
+                  "src": "/path/to/test-file.pdf"
+                },
+                {
+                  "key": "caseId",
+                  "value": "CASE-2024-001",
+                  "type": "text"
+                },
+                {
+                  "key": "entity",
+                  "value": "0x742d35Cc6634C0532925a3b8D",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Test evidence upload",
+                  "type": "text"
+                },
+                {
+                  "key": "tags",
+                  "value": "test,upload",
+                  "type": "text"
+                },
+                {
+                  "key": "riskLevel",
+                  "value": "medium",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/evidence/upload",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "evidence", "upload"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('evidenceId', response.evidence._id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Download Evidence",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/evidence/download/{{evidenceId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "evidence", "download", "{{evidenceId}}"]
+            }
+          }
+        },
+        {
+          "name": "Verify Evidence",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/evidence/verify/{{evidenceId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "evidence", "verify", "{{evidenceId}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Evidence by Case",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/evidence/case/{{caseId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "evidence", "case", "{{caseId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Case Management",
+      "item": [
+        {
+          "name": "List Cases",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/cases?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cases"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Case",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Suspicious Wallet Activity\",\n  \"description\": \"Investigation into rapid token dumping patterns\",\n  \"priority\": \"high\",\n  \"assignedTo\": \"investigator@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/cases",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cases"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('caseId', response.case.caseId);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Case by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/cases/{{caseId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cases", "{{caseId}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Case",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"investigating\",\n  \"priority\": \"critical\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/cases/{{caseId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cases", "{{caseId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "RL Engine",
+      "item": [
+        {
+          "name": "Get RL Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/rl/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rl", "status"]
+            }
+          }
+        },
+        {
+          "name": "Make RL Prediction",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"walletData\": {\n    \"riskScore\": 75,\n    \"rapidDumping\": 0.8,\n    \"largeTransfers\": 0.6,\n    \"flashLoans\": 0.3,\n    \"phishingScore\": 0.7\n  },\n  \"geoData\": {\n    \"country\": \"CN\",\n    \"org\": \"VPN Service\",\n    \"city\": \"Beijing\"\n  },\n  \"escalationData\": {\n    \"history\": [\n      { \"outcome\": \"correct\" },\n      { \"outcome\": \"missed_threat\" }\n    ]\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/rl/predict",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rl", "predict"]
+            }
+          }
+        },
+        {
+          "name": "Train RL Model",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"walletData\": {\n    \"riskScore\": 75,\n    \"rapidDumping\": 0.8,\n    \"largeTransfers\": 0.6,\n    \"flashLoans\": 0.3,\n    \"phishingScore\": 0.7\n  },\n  \"geoData\": {\n    \"country\": \"CN\",\n    \"org\": \"VPN Service\",\n    \"city\": \"Beijing\"\n  },\n  \"escalationData\": {\n    \"history\": [\n      { \"outcome\": \"correct\" },\n      { \"outcome\": \"missed_threat\" }\n    ]\n  },\n  \"action\": 2,\n  \"outcome\": \"correct\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/rl/train",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rl", "train"]
+            }
+          }
+        },
+        {
+          "name": "Run RL Simulation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"episodes\": 100\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/rl/simulate",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rl", "simulate"]
+            }
+          }
+        },
+        {
+          "name": "Get RL Performance",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/rl/performance",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rl", "performance"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reports & Analytics",
+      "item": [
+        {
+          "name": "Generate Case Report",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"format\": \"pdf\",\n  \"includeEvidence\": true,\n  \"includeTimeline\": true,\n  \"includeRiskEvolution\": true,\n  \"includeEscalations\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/cases/{{caseId}}/report",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cases", "{{caseId}}", "report"]
+            }
+          }
+        },
+        {
+          "name": "Export Evidence Data",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reports/export?format=csv&caseId={{caseId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "reports", "export"],
+              "query": [
+                {
+                  "key": "format",
+                  "value": "csv"
+                },
+                {
+                  "key": "caseId",
+                  "value": "{{caseId}}"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "User Management",
+      "item": [
+        {
+          "name": "List Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"newuser@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"investigator\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users"]
+            }
+          }
+        },
+        {
+          "name": "Update User Role",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"admin\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users/userId",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "userId"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "System Health",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["health"]
+            }
+          }
+        },
+        {
+          "name": "Get System Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/stats",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "stats"]
+            }
+          }
+        },
+        {
+          "name": "Get Audit Logs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/audit/logs?page=1&limit=20",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "audit", "logs"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Set default headers",
+          "pm.request.headers.add({",
+          "    key: 'X-Request-ID',",
+          "    value: 'req_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)",
+          "});"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Global test script",
+          "pm.test('Response time is less than 5000ms', function () {",
+          "    pm.expect(pm.response.responseTime).to.be.below(5000);",
+          "});",
+          "",
+          "pm.test('Response has proper error format', function () {",
+          "    if (pm.response.code >= 400) {",
+          "        const response = pm.response.json();",
+          "        pm.expect(response).to.have.property('error');",
+          "        pm.expect(response).to.have.property('code');",
+          "        pm.expect(response).to.have.property('message');",
+          "        pm.expect(response).to.have.property('timestamp');",
+          "    }",
+          "});"
+        ]
+      }
+    }
+  ]
+}

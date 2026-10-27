@@ -1,0 +1,1118 @@
+openapi: 3.0.3
+info:
+  title: Fraud Evidence System API
+  description: |
+    API for managing fraud evidence, cases, and reinforcement learning predictions.
+    This system provides endpoints for evidence upload, verification, case management,
+    RL-based fraud prediction, and escalation management.
+  version: 1.0.0
+  contact:
+    name: Yashika (Backend Lead)
+    email: backend@fraudevidence.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:5000
+    description: Local Mock Server
+  - url: http://localhost:5050
+    description: Local Development Server
+  - url: https://api.fraudevidence.com
+    description: Production Server
+
+tags:
+  - name: Evidence
+    description: Evidence upload, verification, and management
+  - name: Cases
+    description: Case management operations
+  - name: RL Engine
+    description: Reinforcement Learning predictions and feedback
+  - name: Escalation
+    description: Risk escalation and alerting
+
+paths:
+  /api/evidence/upload:
+    post:
+      tags:
+        - Evidence
+      summary: Upload fraud evidence
+      description: Upload evidence files with metadata for fraud investigation
+      operationId: uploadEvidence
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - evidenceFile
+                - caseId
+                - entity
+              properties:
+                evidenceFile:
+                  type: string
+                  format: binary
+                  description: Evidence file (documents, images, etc.)
+                caseId:
+                  type: string
+                  description: Associated case ID
+                  example: "CASE-2024-001"
+                entity:
+                  type: string
+                  description: Entity identifier (wallet address, email, etc.)
+                  example: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb"
+                description:
+                  type: string
+                  description: Description of the evidence
+                  example: "Transaction screenshot showing fraudulent activity"
+                tags:
+                  type: string
+                  description: Comma-separated tags
+                  example: "transaction,screenshot,fraud"
+                riskLevel:
+                  type: string
+                  enum: [low, medium, high, critical]
+                  default: medium
+                  description: Risk level assessment
+      responses:
+        '201':
+          description: Evidence uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvidenceUploadResponse'
+              example:
+                success: true
+                message: "Evidence uploaded successfully"
+                evidence:
+                  id: "66d4a2b8c9e1234567890abc"
+                  caseId: "CASE-2024-001"
+                  entity: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb"
+                  filename: "evidence_1704672000000_transaction.png"
+                  fileHash: "0x5d7e8f9a0b1c2d3e4f5g6h7i8j9k0l1m2n3o4p5q"
+                  storageHash: "QmX5Z8Y9W7V6U5T4S3R2Q1P0O9N8M7L6K5J4I3H2G1F"
+                  ipfsHash: "QmT4k8J9aB3d5F7g1H2i6K0l3M5n7O9p2Q4r6S8t1U3v"
+                  blockchainTxHash: "0x1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t"
+                  blockNumber: 18542301
+                  uploadedAt: "2024-01-07T12:00:00.000Z"
+                  verificationStatus: "verified"
+                  redundancyCount: 3
+                  storageLocations:
+                    cache: true
+                    s3: true
+                    ipfs: true
+                blockchain:
+                  txHash: "0x1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t"
+                  blockNumber: 18542301
+                  contractAddress: "0x9876543210987654321098765432109876543210"
+                storage:
+                  redundancy: 3
+                  locations:
+                    cache:
+                      success: true
+                      timestamp: "2024-01-07T12:00:00.000Z"
+                    s3:
+                      success: true
+                      s3Key: "evidence/CASE-2024-001/1704672000000_transaction.png"
+                      s3Url: "https://s3.amazonaws.com/fraud-evidence/..."
+                    ipfs:
+                      success: true
+                      ipfsHash: "QmT4k8J9aB3d5F7g1H2i6K0l3M5n7O9p2Q4r6S8t1U3v"
+        '400':
+          description: Bad request - Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: true
+                code: 400
+                message: "Case ID and entity are required"
+                timestamp: "2024-01-07T12:00:00.000Z"
+        '401':
+          description: Unauthorized - Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - BearerAuth: []
+
+  /api/evidence/{id}/verify:
+    get:
+      tags:
+        - Evidence
+      summary: Verify evidence integrity
+      description: Verify evidence integrity across storage layers and blockchain
+      operationId: verifyEvidence
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Evidence ID
+          schema:
+            type: string
+          example: "66d4a2b8c9e1234567890abc"
+      responses:
+        '200':
+          description: Evidence verification completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvidenceVerificationResponse'
+              example:
+                success: true
+                verification:
+                  evidenceId: "66d4a2b8c9e1234567890abc"
+                  storageIntegrity:
+                    overallIntegrity: true
+                    redundancyCount: 3
+                    verification:
+                      cache:
+                        verified: true
+                        hashMatch: true
+                        location: "cache"
+                      s3:
+                        verified: true
+                        hashMatch: true
+                        location: "s3"
+                      ipfs:
+                        verified: true
+                        hashMatch: true
+                        ipfsHash: "QmT4k8J9aB3d5F7g1H2i6K0l3M5n7O9p2Q4r6S8t1U3v"
+                  blockchainIntegrity:
+                    isValid: true
+                    onChainHash: "0x5d7e8f9a0b1c2d3e4f5g6h7i8j9k0l1m2n3o4p5q"
+                    storedHash: "0x5d7e8f9a0b1c2d3e4f5g6h7i8j9k0l1m2n3o4p5q"
+                    hashMatch: true
+                    blockNumber: 18542301
+                    timestamp: "2024-01-07T12:00:00.000Z"
+                  overallStatus: "verified"
+                  redundancyCount: 3
+                  verifiedAt: "2024-01-07T13:00:00.000Z"
+        '404':
+          description: Evidence not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: true
+                code: 404
+                message: "Evidence not found"
+                timestamp: "2024-01-07T12:00:00.000Z"
+        '500':
+          description: Verification failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - BearerAuth: []
+
+  /api/cases:
+    get:
+      tags:
+        - Cases
+      summary: List all cases
+      description: Retrieve a paginated list of fraud investigation cases
+      operationId: listCases
+      parameters:
+        - name: page
+          in: query
+          description: Page number
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          description: Items per page
+          schema:
+            type: integer
+            default: 20
+        - name: status
+          in: query
+          description: Filter by case status
+          schema:
+            type: string
+            enum: [open, in_progress, escalated, closed, archived]
+        - name: priority
+          in: query
+          description: Filter by priority
+          schema:
+            type: string
+            enum: [low, medium, high, critical]
+      responses:
+        '200':
+          description: Cases retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaseListResponse'
+              example:
+                success: true
+                cases:
+                  - id: "66d4a2b8c9e1234567890abc"
+                    caseId: "CASE-2024-001"
+                    title: "Suspicious cryptocurrency transactions"
+                    description: "Multiple high-value transactions from flagged wallet"
+                    status: "in_progress"
+                    priority: "high"
+                    category: "financial_fraud"
+                    createdBy: "investigator@fraud.com"
+                    assignedTo: "senior-investigator@fraud.com"
+                    createdAt: "2024-01-07T10:00:00.000Z"
+                    updatedAt: "2024-01-07T12:00:00.000Z"
+                    evidenceCount: 5
+                    entities:
+                      - type: "wallet_address"
+                        value: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb"
+                        confidence: 0.95
+                  - id: "66d4a2b8c9e1234567890abd"
+                    caseId: "CASE-2024-002"
+                    title: "Phishing scam investigation"
+                    description: "Email phishing targeting crypto users"
+                    status: "open"
+                    priority: "medium"
+                    category: "phishing"
+                    createdBy: "investigator@fraud.com"
+                    createdAt: "2024-01-07T11:00:00.000Z"
+                    updatedAt: "2024-01-07T11:00:00.000Z"
+                    evidenceCount: 2
+                pagination:
+                  page: 1
+                  limit: 20
+                  total: 45
+                  pages: 3
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - BearerAuth: []
+    
+    post:
+      tags:
+        - Cases
+      summary: Create a new case
+      description: Create a new fraud investigation case
+      operationId: createCase
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CaseCreateRequest'
+            example:
+              title: "Suspicious cryptocurrency transactions"
+              description: "Multiple high-value transactions from flagged wallet"
+              priority: "high"
+              category: "financial_fraud"
+              entities:
+                - type: "wallet_address"
+                  value: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb"
+                  confidence: 0.95
+              indicators:
+                - type: "transaction"
+                  value: "0x1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t"
+                  confidence: 0.90
+      responses:
+        '201':
+          description: Case created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaseResponse'
+              example:
+                success: true
+                case:
+                  id: "66d4a2b8c9e1234567890abc"
+                  caseId: "CASE-2024-001"
+                  title: "Suspicious cryptocurrency transactions"
+                  description: "Multiple high-value transactions from flagged wallet"
+                  status: "open"
+                  priority: "high"
+                  category: "financial_fraud"
+                  createdBy: "investigator@fraud.com"
+                  createdAt: "2024-01-07T10:00:00.000Z"
+                  entities:
+                    - type: "wallet_address"
+                      value: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb"
+                      confidence: 0.95
+                      addedBy: "investigator@fraud.com"
+                      addedAt: "2024-01-07T10:00:00.000Z"
+                  indicators:
+                    - type: "transaction"
+                      value: "0x1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t"
+                      confidence: 0.90
+                      addedBy: "investigator@fraud.com"
+                      addedAt: "2024-01-07T10:00:00.000Z"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - BearerAuth: []
+
+  /api/cases/{id}:
+    get:
+      tags:
+        - Cases
+      summary: Get case by ID
+      description: Retrieve detailed information about a specific case
+      operationId: getCaseById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Case ID
+          schema:
+            type: string
+          example: "66d4a2b8c9e1234567890abc"
+      responses:
+        '200':
+          description: Case retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaseResponse'
+        '404':
+          description: Case not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - BearerAuth: []
+    
+    put:
+      tags:
+        - Cases
+      summary: Update case
+      description: Update an existing case
+      operationId: updateCase
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Case ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CaseUpdateRequest'
+            example:
+              title: "Updated case title"
+              status: "in_progress"
+              priority: "critical"
+              assignedTo: "senior-investigator@fraud.com"
+      responses:
+        '200':
+          description: Case updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaseResponse'
+        '404':
+          description: Case not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - BearerAuth: []
+    
+    delete:
+      tags:
+        - Cases
+      summary: Delete case
+      description: Delete a case (admin only)
+      operationId: deleteCase
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Case ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Case deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+              example:
+                success: true
+                message: "Case deleted successfully"
+        '403':
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Case not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - BearerAuth: []
+
+  /api/rl/predict:
+    post:
+      tags:
+        - RL Engine
+      summary: Get fraud prediction
+      description: Use reinforcement learning model to predict fraud risk for a wallet
+      operationId: predictFraud
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RLPredictRequest'
+            example:
+              wallet: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb"
+              features:
+                transactionCount: 150
+                totalVolume: 50000
+                avgTransactionValue: 333.33
+                uniqueAddresses: 45
+                suspiciousPatterns: 3
+                accountAge: 180
+      responses:
+        '200':
+          description: Prediction generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RLPredictResponse'
+              example:
+                success: true
+                prediction:
+                  wallet: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb"
+                  riskScore: 0.78
+                  riskLevel: "high"
+                  confidence: 0.92
+                  action: "flag"
+                  reasoning:
+                    - "High transaction volume in short time period"
+                    - "Multiple suspicious patterns detected"
+                    - "Interactions with known fraudulent addresses"
+                  features:
+                    transactionCount: 150
+                    totalVolume: 50000
+                    avgTransactionValue: 333.33
+                    uniqueAddresses: 45
+                    suspiciousPatterns: 3
+                    accountAge: 180
+                  model:
+                    version: "1.2.0"
+                    trainedAt: "2024-01-05T00:00:00.000Z"
+                    accuracy: 0.94
+                  timestamp: "2024-01-07T12:00:00.000Z"
+        '400':
+          description: Bad request - Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - BearerAuth: []
+
+  /api/rl/feedback:
+    post:
+      tags:
+        - RL Engine
+      summary: Submit prediction feedback
+      description: Provide feedback on RL prediction to improve model accuracy
+      operationId: submitFeedback
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RLFeedbackRequest'
+            example:
+              wallet: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb"
+              predictedRisk: 0.78
+              actualOutcome: "fraud_confirmed"
+              investigatorNotes: "Confirmed fraudulent activity after investigation"
+              actionTaken: "wallet_frozen"
+      responses:
+        '200':
+          description: Feedback submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RLFeedbackResponse'
+              example:
+                success: true
+                feedback:
+                  id: "66d4a2b8c9e1234567890xyz"
+                  wallet: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb"
+                  predictedRisk: 0.78
+                  actualOutcome: "fraud_confirmed"
+                  accuracy: 0.96
+                  reward: 1.0
+                  investigatorNotes: "Confirmed fraudulent activity after investigation"
+                  actionTaken: "wallet_frozen"
+                  submittedBy: "investigator@fraud.com"
+                  submittedAt: "2024-01-07T14:00:00.000Z"
+                  modelImpact:
+                    retrainingScheduled: true
+                    expectedImprovement: 0.02
+                message: "Feedback recorded and will be used for model retraining"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - BearerAuth: []
+
+  /api/escalate:
+    post:
+      tags:
+        - Escalation
+      summary: Escalate high-risk case
+      description: Escalate a high-risk case to authorities or senior investigators
+      operationId: escalateCase
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EscalationRequest'
+            example:
+              entityId: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb"
+              caseId: "CASE-2024-001"
+              riskScore: 0.92
+              reason: "Critical fraud risk - immediate action required"
+              urgency: "urgent"
+              escalateTo: "RBI"
+              evidenceIds:
+                - "66d4a2b8c9e1234567890abc"
+                - "66d4a2b8c9e1234567890abd"
+      responses:
+        '200':
+          description: Case escalated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EscalationResponse'
+              example:
+                success: true
+                escalation:
+                  id: "66d4a2b8c9e1234567890esc"
+                  entityId: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb"
+                  caseId: "CASE-2024-001"
+                  riskScore: 0.92
+                  reason: "Critical fraud risk - immediate action required"
+                  urgency: "urgent"
+                  escalateTo: "RBI"
+                  status: "pending"
+                  escalatedBy: "admin@fraud.com"
+                  escalatedAt: "2024-01-07T15:00:00.000Z"
+                  evidenceCount: 2
+                  notificationsSent:
+                    - recipient: "rbi-cybercrime@rbi.org"
+                      method: "email"
+                      status: "sent"
+                    - recipient: "+91-1234567890"
+                      method: "sms"
+                      status: "sent"
+                  referenceNumber: "ESC-2024-001-RBI"
+                message: "Escalation forwarded successfully"
+                rbiStatus: "received"
+        '400':
+          description: Bad request - Missing required fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: true
+                code: 400
+                message: "Missing entityId or riskScore"
+                timestamp: "2024-01-07T15:00:00.000Z"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Failed to escalate
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: true
+                code: 500
+                message: "Failed to escalate to RBI"
+                timestamp: "2024-01-07T15:00:00.000Z"
+      security:
+        - BearerAuth: []
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT authentication token
+
+  schemas:
+    EvidenceUploadResponse:
+      type: object
+      required:
+        - success
+        - message
+        - evidence
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        evidence:
+          type: object
+          properties:
+            id:
+              type: string
+            caseId:
+              type: string
+            entity:
+              type: string
+            filename:
+              type: string
+            fileHash:
+              type: string
+            storageHash:
+              type: string
+            ipfsHash:
+              type: string
+            blockchainTxHash:
+              type: string
+            blockNumber:
+              type: integer
+            uploadedAt:
+              type: string
+              format: date-time
+            verificationStatus:
+              type: string
+              enum: [pending, verified, failed]
+            redundancyCount:
+              type: integer
+            storageLocations:
+              type: object
+              properties:
+                cache:
+                  type: boolean
+                s3:
+                  type: boolean
+                ipfs:
+                  type: boolean
+        blockchain:
+          type: object
+        storage:
+          type: object
+
+    EvidenceVerificationResponse:
+      type: object
+      required:
+        - success
+        - verification
+      properties:
+        success:
+          type: boolean
+        verification:
+          type: object
+          properties:
+            evidenceId:
+              type: string
+            storageIntegrity:
+              type: object
+            blockchainIntegrity:
+              type: object
+            overallStatus:
+              type: string
+            redundancyCount:
+              type: integer
+            verifiedAt:
+              type: string
+              format: date-time
+
+    CaseListResponse:
+      type: object
+      required:
+        - success
+        - cases
+        - pagination
+      properties:
+        success:
+          type: boolean
+        cases:
+          type: array
+          items:
+            $ref: '#/components/schemas/Case'
+        pagination:
+          type: object
+          properties:
+            page:
+              type: integer
+            limit:
+              type: integer
+            total:
+              type: integer
+            pages:
+              type: integer
+
+    Case:
+      type: object
+      properties:
+        id:
+          type: string
+        caseId:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          enum: [open, in_progress, escalated, closed, archived]
+        priority:
+          type: string
+          enum: [low, medium, high, critical]
+        category:
+          type: string
+        createdBy:
+          type: string
+        assignedTo:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        evidenceCount:
+          type: integer
+        entities:
+          type: array
+          items:
+            type: object
+
+    CaseCreateRequest:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        priority:
+          type: string
+          enum: [low, medium, high, critical]
+        category:
+          type: string
+        entities:
+          type: array
+          items:
+            type: object
+        indicators:
+          type: array
+          items:
+            type: object
+
+    CaseUpdateRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          enum: [open, in_progress, escalated, closed, archived]
+        priority:
+          type: string
+          enum: [low, medium, high, critical]
+        assignedTo:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+
+    CaseResponse:
+      type: object
+      required:
+        - success
+        - case
+      properties:
+        success:
+          type: boolean
+        case:
+          $ref: '#/components/schemas/Case'
+
+    RLPredictRequest:
+      type: object
+      required:
+        - wallet
+      properties:
+        wallet:
+          type: string
+          description: Wallet address to analyze
+        features:
+          type: object
+          description: Optional features for prediction
+          properties:
+            transactionCount:
+              type: integer
+            totalVolume:
+              type: number
+            avgTransactionValue:
+              type: number
+            uniqueAddresses:
+              type: integer
+            suspiciousPatterns:
+              type: integer
+            accountAge:
+              type: integer
+
+    RLPredictResponse:
+      type: object
+      required:
+        - success
+        - prediction
+      properties:
+        success:
+          type: boolean
+        prediction:
+          type: object
+          properties:
+            wallet:
+              type: string
+            riskScore:
+              type: number
+              minimum: 0
+              maximum: 1
+            riskLevel:
+              type: string
+              enum: [low, medium, high, critical]
+            confidence:
+              type: number
+              minimum: 0
+              maximum: 1
+            action:
+              type: string
+              enum: [monitor, flag, escalate, freeze]
+            reasoning:
+              type: array
+              items:
+                type: string
+            features:
+              type: object
+            model:
+              type: object
+            timestamp:
+              type: string
+              format: date-time
+
+    RLFeedbackRequest:
+      type: object
+      required:
+        - wallet
+        - predictedRisk
+        - actualOutcome
+      properties:
+        wallet:
+          type: string
+        predictedRisk:
+          type: number
+        actualOutcome:
+          type: string
+          enum: [fraud_confirmed, false_positive, under_investigation, no_fraud]
+        investigatorNotes:
+          type: string
+        actionTaken:
+          type: string
+          enum: [wallet_frozen, case_closed, escalated, monitoring]
+
+    RLFeedbackResponse:
+      type: object
+      required:
+        - success
+        - feedback
+        - message
+      properties:
+        success:
+          type: boolean
+        feedback:
+          type: object
+          properties:
+            id:
+              type: string
+            wallet:
+              type: string
+            predictedRisk:
+              type: number
+            actualOutcome:
+              type: string
+            accuracy:
+              type: number
+            reward:
+              type: number
+            investigatorNotes:
+              type: string
+            actionTaken:
+              type: string
+            submittedBy:
+              type: string
+            submittedAt:
+              type: string
+              format: date-time
+            modelImpact:
+              type: object
+        message:
+          type: string
+
+    EscalationRequest:
+      type: object
+      required:
+        - entityId
+        - riskScore
+      properties:
+        entityId:
+          type: string
+        caseId:
+          type: string
+        riskScore:
+          type: number
+        reason:
+          type: string
+        urgency:
+          type: string
+          enum: [normal, urgent, critical]
+        escalateTo:
+          type: string
+          enum: [RBI, Police, Senior_Investigator]
+        evidenceIds:
+          type: array
+          items:
+            type: string
+
+    EscalationResponse:
+      type: object
+      required:
+        - success
+        - escalation
+        - message
+      properties:
+        success:
+          type: boolean
+        escalation:
+          type: object
+          properties:
+            id:
+              type: string
+            entityId:
+              type: string
+            caseId:
+              type: string
+            riskScore:
+              type: number
+            reason:
+              type: string
+            urgency:
+              type: string
+            escalateTo:
+              type: string
+            status:
+              type: string
+            escalatedBy:
+              type: string
+            escalatedAt:
+              type: string
+              format: date-time
+            evidenceCount:
+              type: integer
+            notificationsSent:
+              type: array
+              items:
+                type: object
+            referenceNumber:
+              type: string
+        message:
+          type: string
+        rbiStatus:
+          type: string
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - code
+        - message
+        - timestamp
+      properties:
+        error:
+          type: boolean
+          example: true
+        code:
+          type: integer
+          example: 400
+        message:
+          type: string
+          example: "Bad request"
+        details:
+          type: object
+        timestamp:
+          type: string
+          format: date-time
+          example: "2024-01-07T12:00:00.000Z"
+

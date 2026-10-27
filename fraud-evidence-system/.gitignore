@@ -1,0 +1,81 @@
+# Dependencies
+node_modules/
+Backend/node_modules/
+Frontend/node_modules/
+BHIV-Fouth-Installment-main/BHIV-Fouth-Installment-main/node_modules/
+
+# Environment variables (SENSITIVE - DO NOT COMMIT)
+.env
+Backend/.env
+Frontend/.env
+*.env.local
+*.env.production
+
+# Logs
+*.log
+logs/
+Backend/logs/
+*.pid
+*.seed
+*.pid.lock
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Testing
+coverage/
+.nyc_output
+*.lcov
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Build output
+Frontend/build/
+Backend/artifacts/
+Backend/cache/
+*.tsbuildinfo
+
+# Deployment
+deployment-*.json
+*.pem
+*.key
+*.cert
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Package manager
+package-lock.json.backup
+yarn.lock
+
+# Database
+*.sqlite
+*.db
+
+# Keep but ignore content
+Backend/storage/*.json
+!Backend/storage/.gitkeep
+
+# Keep example files
+!.env.example
+!Backend/.env.example
+!Frontend/.env.example

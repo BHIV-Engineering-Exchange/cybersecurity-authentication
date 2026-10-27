@@ -1,0 +1,918 @@
+openapi: 3.0.3
+info:
+  title: Fraud Evidence System API
+  description: API for managing fraud evidence, cases, and reinforcement learning predictions
+  version: 1.0.0
+  contact:
+    name: Fraud Evidence System Team
+    email: support@fraudevidence.com
+servers:
+  - url: http://localhost:5050
+    description: Development server
+  - url: http://localhost:3001
+    description: Mock server
+tags:
+  - name: Evidence
+    description: Evidence management operations
+  - name: Cases
+    description: Case management operations
+  - name: RL
+    description: Reinforcement Learning operations
+  - name: Escalation
+    description: Escalation operations
+paths:
+  /api/evidence/upload:
+    post:
+      tags:
+        - Evidence
+      summary: Upload evidence file
+      description: Upload a new evidence file with metadata
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+                - caseId
+                - entity
+                - description
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Evidence file to upload
+                caseId:
+                  type: string
+                  description: Associated case ID
+                  example: "case_12345"
+                entity:
+                  type: string
+                  description: Entity being investigated
+                  example: "0x1234567890abcdef"
+                description:
+                  type: string
+                  description: Description of the evidence
+                  example: "Suspicious transaction screenshot"
+                tags:
+                  type: string
+                  description: Comma-separated tags
+                  example: "transaction,screenshot,suspicious"
+                riskLevel:
+                  type: string
+                  enum: [low, medium, high, critical]
+                  description: Risk level of the evidence
+                  example: "high"
+      responses:
+        '201':
+          description: Evidence uploaded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Evidence uploaded successfully"
+                  evidence:
+                    $ref: '#/components/schemas/Evidence'
+        '400':
+          description: Bad request - invalid file or missing required fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - bearerAuth: []
+
+  /api/evidence/{id}/verify:
+    get:
+      tags:
+        - Evidence
+      summary: Verify evidence authenticity
+      description: Verify the authenticity and integrity of evidence
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Evidence ID
+          schema:
+            type: string
+            example: "evid_67890"
+      responses:
+        '200':
+          description: Evidence verification successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  verification:
+                    type: object
+                    properties:
+                      isAuthentic:
+                        type: boolean
+                        example: true
+                      integrityCheck:
+                        type: boolean
+                        example: true
+                      timestamp:
+                        type: string
+                        format: date-time
+                        example: "2025-01-02T10:30:00Z"
+                      verifiedBy:
+                        type: string
+                        example: "system"
+                      confidence:
+                        type: number
+                        format: float
+                        minimum: 0
+                        maximum: 1
+                        example: 0.95
+        '404':
+          description: Evidence not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - bearerAuth: []
+
+  /api/cases:
+    get:
+      tags:
+        - Cases
+      summary: List all cases
+      description: Retrieve a list of all fraud cases
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          description: Number of cases per page
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: status
+          in: query
+          description: Filter by case status
+          schema:
+            type: string
+            enum: [open, investigating, closed, escalated]
+        - name: priority
+          in: query
+          description: Filter by case priority
+          schema:
+            type: string
+            enum: [low, medium, high, critical]
+      responses:
+        '200':
+          description: List of cases retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  cases:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Case'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - bearerAuth: []
+
+    post:
+      tags:
+        - Cases
+      summary: Create a new case
+      description: Create a new fraud investigation case
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - description
+                - entity
+                - priority
+              properties:
+                title:
+                  type: string
+                  description: Case title
+                  example: "Suspicious Wallet Activity"
+                description:
+                  type: string
+                  description: Detailed case description
+                  example: "Multiple suspicious transactions detected from wallet 0x1234..."
+                entity:
+                  type: string
+                  description: Entity being investigated
+                  example: "0x1234567890abcdef"
+                priority:
+                  type: string
+                  enum: [low, medium, high, critical]
+                  description: Case priority level
+                  example: "high"
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  description: Case tags
+                  example: ["wallet", "transaction", "suspicious"]
+                assignedTo:
+                  type: string
+                  description: Investigator assigned to the case
+                  example: "investigator@example.com"
+      responses:
+        '201':
+          description: Case created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Case created successfully"
+                  case:
+                    $ref: '#/components/schemas/Case'
+        '400':
+          description: Bad request - invalid data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - bearerAuth: []
+
+  /api/cases/{id}:
+    get:
+      tags:
+        - Cases
+      summary: Get case by ID
+      description: Retrieve a specific case by its ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Case ID
+          schema:
+            type: string
+            example: "case_12345"
+      responses:
+        '200':
+          description: Case retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  case:
+                    $ref: '#/components/schemas/Case'
+        '404':
+          description: Case not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - bearerAuth: []
+
+    put:
+      tags:
+        - Cases
+      summary: Update case
+      description: Update an existing case
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Case ID
+          schema:
+            type: string
+            example: "case_12345"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: "Updated Case Title"
+                description:
+                  type: string
+                  example: "Updated case description"
+                status:
+                  type: string
+                  enum: [open, investigating, closed, escalated]
+                  example: "investigating"
+                priority:
+                  type: string
+                  enum: [low, medium, high, critical]
+                  example: "critical"
+                assignedTo:
+                  type: string
+                  example: "new-investigator@example.com"
+      responses:
+        '200':
+          description: Case updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Case updated successfully"
+                  case:
+                    $ref: '#/components/schemas/Case'
+        '404':
+          description: Case not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - bearerAuth: []
+
+    delete:
+      tags:
+        - Cases
+      summary: Delete case
+      description: Delete a case (soft delete)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Case ID
+          schema:
+            type: string
+            example: "case_12345"
+      responses:
+        '200':
+          description: Case deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Case deleted successfully"
+        '404':
+          description: Case not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - bearerAuth: []
+
+  /api/rl/predict:
+    post:
+      tags:
+        - RL
+      summary: Get RL prediction
+      description: Get fraud prediction from reinforcement learning model
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - entity
+                - features
+              properties:
+                entity:
+                  type: string
+                  description: Entity to analyze (wallet address, transaction hash, etc.)
+                  example: "0x1234567890abcdef"
+                features:
+                  type: object
+                  description: Feature vector for the entity
+                  properties:
+                    transactionCount:
+                      type: integer
+                      example: 150
+                    totalVolume:
+                      type: number
+                      format: float
+                      example: 125000.50
+                    avgTransactionSize:
+                      type: number
+                      format: float
+                      example: 833.33
+                    timeSinceFirstTx:
+                      type: integer
+                      description: Days since first transaction
+                      example: 45
+                    uniqueCounterparties:
+                      type: integer
+                      example: 23
+                context:
+                  type: object
+                  description: Additional context for prediction
+                  properties:
+                    caseId:
+                      type: string
+                      example: "case_12345"
+                    investigationType:
+                      type: string
+                      example: "wallet_analysis"
+      responses:
+        '200':
+          description: Prediction generated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  prediction:
+                    type: object
+                    properties:
+                      riskScore:
+                        type: number
+                        format: float
+                        minimum: 0
+                        maximum: 1
+                        example: 0.85
+                      confidence:
+                        type: number
+                        format: float
+                        minimum: 0
+                        maximum: 1
+                        example: 0.92
+                      riskLevel:
+                        type: string
+                        enum: [low, medium, high, critical]
+                        example: "high"
+                      reasoning:
+                        type: array
+                        items:
+                          type: string
+                        example: ["High transaction volume", "Multiple unique counterparties", "Recent activity spike"]
+                      recommendedActions:
+                        type: array
+                        items:
+                          type: string
+                        example: ["Flag for investigation", "Monitor closely", "Request additional evidence"]
+                      modelVersion:
+                        type: string
+                        example: "v2.1.0"
+                      timestamp:
+                        type: string
+                        format: date-time
+                        example: "2025-01-02T10:30:00Z"
+        '400':
+          description: Bad request - invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - bearerAuth: []
+
+  /api/rl/feedback:
+    post:
+      tags:
+        - RL
+      summary: Submit RL feedback
+      description: Submit feedback on RL model predictions for training
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - predictionId
+                - feedback
+              properties:
+                predictionId:
+                  type: string
+                  description: ID of the prediction being feedback on
+                  example: "pred_67890"
+                feedback:
+                  type: string
+                  enum: [correct, incorrect, partially_correct]
+                  description: Feedback on prediction accuracy
+                  example: "correct"
+                actualOutcome:
+                  type: string
+                  description: Actual outcome if known
+                  example: "fraud_confirmed"
+                comments:
+                  type: string
+                  description: Additional comments
+                  example: "Prediction was accurate, fraud was confirmed by investigation"
+                confidence:
+                  type: number
+                  format: float
+                  minimum: 0
+                  maximum: 1
+                  description: Confidence in the feedback
+                  example: 0.95
+      responses:
+        '200':
+          description: Feedback submitted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Feedback submitted successfully"
+                  feedbackId:
+                    type: string
+                    example: "fb_12345"
+                  modelUpdate:
+                    type: object
+                    properties:
+                      updated:
+                        type: boolean
+                        example: true
+                      version:
+                        type: string
+                        example: "v2.1.1"
+        '400':
+          description: Bad request - invalid feedback data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Prediction not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - bearerAuth: []
+
+  /api/escalate:
+    post:
+      tags:
+        - Escalation
+      summary: Escalate case or entity
+      description: Escalate a case or entity for higher priority investigation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - entityId
+                - reason
+                - priority
+              properties:
+                entityId:
+                  type: string
+                  description: ID of entity or case to escalate
+                  example: "case_12345"
+                reason:
+                  type: string
+                  description: Reason for escalation
+                  example: "High-risk activity detected, immediate attention required"
+                priority:
+                  type: string
+                  enum: [high, critical, emergency]
+                  description: Escalation priority level
+                  example: "critical"
+                investigatorEmail:
+                  type: string
+                  format: email
+                  description: Email of investigator to notify
+                  example: "senior-investigator@example.com"
+                additionalContext:
+                  type: object
+                  description: Additional context for escalation
+                  properties:
+                    riskScore:
+                      type: number
+                      format: float
+                      example: 0.95
+                    evidenceCount:
+                      type: integer
+                      example: 15
+                    timeToEscalate:
+                      type: string
+                      description: Time taken to escalate
+                      example: "2 hours"
+      responses:
+        '200':
+          description: Escalation successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Case escalated successfully"
+                  escalation:
+                    type: object
+                    properties:
+                      escalationId:
+                        type: string
+                        example: "esc_12345"
+                      escalatedAt:
+                        type: string
+                        format: date-time
+                        example: "2025-01-02T10:30:00Z"
+                      escalatedTo:
+                        type: string
+                        example: "senior-investigator@example.com"
+                      priority:
+                        type: string
+                        example: "critical"
+                      status:
+                        type: string
+                        example: "pending_review"
+        '400':
+          description: Bad request - invalid escalation data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Entity or case not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token for authentication
+
+  schemas:
+    Evidence:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "evid_67890"
+        filename:
+          type: string
+          example: "screenshot_20250102.png"
+        caseId:
+          type: string
+          example: "case_12345"
+        entity:
+          type: string
+          example: "0x1234567890abcdef"
+        description:
+          type: string
+          example: "Suspicious transaction screenshot"
+        tags:
+          type: array
+          items:
+            type: string
+          example: ["transaction", "screenshot", "suspicious"]
+        riskLevel:
+          type: string
+          enum: [low, medium, high, critical]
+          example: "high"
+        status:
+          type: string
+          enum: [pending, verified, rejected, archived]
+          example: "pending"
+        uploadedBy:
+          type: string
+          example: "investigator@example.com"
+        uploadedAt:
+          type: string
+          format: date-time
+          example: "2025-01-02T10:30:00Z"
+        fileSize:
+          type: integer
+          description: File size in bytes
+          example: 2048576
+        mimeType:
+          type: string
+          example: "image/png"
+        storageHash:
+          type: string
+          description: Hash for integrity verification
+          example: "sha256:abc123def456..."
+
+    Case:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "case_12345"
+        title:
+          type: string
+          example: "Suspicious Wallet Activity"
+        description:
+          type: string
+          example: "Multiple suspicious transactions detected from wallet 0x1234..."
+        entity:
+          type: string
+          example: "0x1234567890abcdef"
+        status:
+          type: string
+          enum: [open, investigating, closed, escalated]
+          example: "investigating"
+        priority:
+          type: string
+          enum: [low, medium, high, critical]
+          example: "high"
+        tags:
+          type: array
+          items:
+            type: string
+          example: ["wallet", "transaction", "suspicious"]
+        assignedTo:
+          type: string
+          example: "investigator@example.com"
+        createdBy:
+          type: string
+          example: "system"
+        createdAt:
+          type: string
+          format: date-time
+          example: "2025-01-02T10:30:00Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2025-01-02T10:30:00Z"
+        evidenceCount:
+          type: integer
+          example: 5
+        riskScore:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+          example: 0.85
+
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 1
+        limit:
+          type: integer
+          example: 20
+        total:
+          type: integer
+          example: 150
+        totalPages:
+          type: integer
+          example: 8
+        hasNext:
+          type: boolean
+          example: true
+        hasPrev:
+          type: boolean
+          example: false
+
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: string
+          example: "Error message"
+        code:
+          type: integer
+          example: 400
+        timestamp:
+          type: string
+          format: date-time
+          example: "2025-01-02T10:30:00Z"
+        path:
+          type: string
+          example: "/api/evidence/upload"
+        method:
+          type: string
+          example: "POST"

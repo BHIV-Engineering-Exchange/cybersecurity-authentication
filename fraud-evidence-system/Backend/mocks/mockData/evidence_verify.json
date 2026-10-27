@@ -1,0 +1,39 @@
+{
+  "success": true,
+  "verification": {
+    "evidenceId": "66d4a2b8c9e1234567890abc",
+    "storageIntegrity": {
+      "overallIntegrity": true,
+      "redundancyCount": 3,
+      "verification": {
+        "cache": {
+          "verified": true,
+          "hashMatch": true,
+          "location": "cache"
+        },
+        "s3": {
+          "verified": true,
+          "hashMatch": true,
+          "location": "s3"
+        },
+        "ipfs": {
+          "verified": true,
+          "hashMatch": true,
+          "ipfsHash": "QmT4k8J9aB3d5F7g1H2i6K0l3M5n7O9p2Q4r6S8t1U3v"
+        }
+      }
+    },
+    "blockchainIntegrity": {
+      "isValid": true,
+      "onChainHash": "0x5d7e8f9a0b1c2d3e4f5g6h7i8j9k0l1m2n3o4p5q",
+      "storedHash": "0x5d7e8f9a0b1c2d3e4f5g6h7i8j9k0l1m2n3o4p5q",
+      "hashMatch": true,
+      "blockNumber": 18542301,
+      "timestamp": "2024-01-07T12:00:00.000Z"
+    },
+    "overallStatus": "verified",
+    "redundancyCount": 3,
+    "verifiedAt": "2024-01-07T13:00:00.000Z"
+  }
+}
+

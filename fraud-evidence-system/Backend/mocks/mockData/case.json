@@ -1,0 +1,72 @@
+{
+  "success": true,
+  "cases": [
+    {
+      "id": "66d4a2b8c9e1234567890abc",
+      "caseId": "CASE-2024-001",
+      "title": "Suspicious cryptocurrency transactions",
+      "description": "Multiple high-value transactions from flagged wallet",
+      "status": "in_progress",
+      "priority": "high",
+      "category": "financial_fraud",
+      "createdBy": "investigator@fraud.com",
+      "assignedTo": "senior-investigator@fraud.com",
+      "createdAt": "2024-01-07T10:00:00.000Z",
+      "updatedAt": "2024-01-07T12:00:00.000Z",
+      "evidenceCount": 5,
+      "entities": [
+        {
+          "type": "wallet_address",
+          "value": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "id": "66d4a2b8c9e1234567890abd",
+      "caseId": "CASE-2024-002",
+      "title": "Phishing scam investigation",
+      "description": "Email phishing targeting crypto users",
+      "status": "open",
+      "priority": "medium",
+      "category": "phishing",
+      "createdBy": "investigator@fraud.com",
+      "createdAt": "2024-01-07T11:00:00.000Z",
+      "updatedAt": "2024-01-07T11:00:00.000Z",
+      "evidenceCount": 2
+    },
+    {
+      "id": "66d4a2b8c9e1234567890abe",
+      "caseId": "CASE-2024-003",
+      "title": "Money laundering network",
+      "description": "Complex network of interconnected wallets suspected of money laundering",
+      "status": "escalated",
+      "priority": "critical",
+      "category": "money_laundering",
+      "createdBy": "senior-investigator@fraud.com",
+      "assignedTo": "admin@fraud.com",
+      "createdAt": "2024-01-06T08:00:00.000Z",
+      "updatedAt": "2024-01-07T14:00:00.000Z",
+      "evidenceCount": 15,
+      "entities": [
+        {
+          "type": "wallet_address",
+          "value": "0x1234567890abcdef1234567890abcdef12345678",
+          "confidence": 0.98
+        },
+        {
+          "type": "wallet_address",
+          "value": "0xabcdef1234567890abcdef1234567890abcdef12",
+          "confidence": 0.92
+        }
+      ]
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "limit": 20,
+    "total": 45,
+    "pages": 3
+  }
+}
+

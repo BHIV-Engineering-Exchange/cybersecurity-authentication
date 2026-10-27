@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Generation Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        .section h3 {
+            color: #444;
+            margin-bottom: 15px;
+        }
+        input, select, button {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .preview-btn {
+            background: #28a745;
+        }
+        .preview-btn:hover {
+            background: #1e7e34;
+        }
+        .status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 10px 0;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Styled PDF Report Generator</h1>
+        
+        <!-- Authentication Section -->
+        <div class="section">
+            <h3>🔐 Authentication</h3>
+            <input type="email" id="email" placeholder="Email (admin@example.com)" value="admin@example.com">
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="login()">Login</button>
+            <div id="authStatus" class="status"></div>
+        </div>
+
+        <!-- Case Report Section -->
+        <div class="section">
+            <h3>📊 Case Report Generation</h3>
+            <input type="text" id="caseId" placeholder="Case ID (e.g., CASE-001)" value="CASE-001">
+            <select id="caseFormat">
+                <option value="pdf">PDF</option>
+                <option value="html">HTML</option>
+            </select>
+            
+            <div class="checkbox-group">
+                <label><input type="checkbox" id="includeEvidence" checked> Include Evidence</label>
+                <label><input type="checkbox" id="includeRiskEvolution" checked> Risk Evolution</label>
+                <label><input type="checkbox" id="includeEscalations" checked> Escalation Trail</label>
+                <label><input type="checkbox" id="includeTimeline" checked> Timeline</label>
+                <label><input type="checkbox" id="watermark"> Watermark</label>
+            </div>
+            
+            <button onclick="generateCaseReport()">Generate Case Report</button>
+            <button class="preview-btn" onclick="previewCaseReport()">Preview HTML</button>
+            <div id="caseStatus" class="status"></div>
+        </div>
+
+        <!-- Entity Report Section -->
+        <div class="section">
+            <h3>👤 Entity Report Generation</h3>
+            <input type="text" id="entityId" placeholder="Entity/Wallet Address" value="0x1234567890abcdef">
+            <select id="entityFormat">
+                <option value="pdf">PDF</option>
+                <option value="html">HTML</option>
+            </select>
+            
+            <div class="checkbox-group">
+                <label><input type="checkbox" id="entityIncludeEvidence" checked> Include Evidence</label>
+                <label><input type="checkbox" id="entityIncludeTimeline" checked> Timeline</label>
+                <label><input type="checkbox" id="entityWatermark"> Watermark</label>
+            </div>
+            
+            <button onclick="generateEntityReport()">Generate Entity Report</button>
+            <button class="preview-btn" onclick="previewEntityReport()">Preview HTML</button>
+            <div id="entityStatus" class="status"></div>
+        </div>
+
+        <!-- Linked Investigation Section -->
+        <div class="section">
+            <h3>🔗 Linked Investigation Report</h3>
+            <input type="text" id="entities" placeholder="Entities (comma-separated)" value="0x1234567890abcdef,0xfedcba0987654321">
+            <input type="text" id="investigationId" placeholder="Investigation ID" value="INV-001">
+            <select id="linkedFormat">
+                <option value="pdf">PDF</option>
+                <option value="html">HTML</option>
+            </select>
+            
+            <div class="checkbox-group">
+                <label><input type="checkbox" id="linkedIncludeEvidence" checked> Include Evidence</label>
+                <label><input type="checkbox" id="linkedIncludeRiskEvolution" checked> Risk Evolution</label>
+                <label><input type="checkbox" id="linkedIncludeEscalations" checked> Escalation Trail</label>
+                <label><input type="checkbox" id="linkedIncludeTimeline" checked> Timeline</label>
+                <label><input type="checkbox" id="linkedWatermark"> Watermark</label>
+            </div>
+            
+            <button onclick="generateLinkedReport()">Generate Linked Report</button>
+            <div id="linkedStatus" class="status"></div>
+        </div>
+    </div>
+
+    <script>
+        let authToken = '';
+        const baseURL = 'http://localhost:5050';
+
+        async function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const statusDiv = document.getElementById('authStatus');
+
+            try {
+                const response = await fetch(`${baseURL}/api/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+                
+                if (response.ok && data.token) {
+                    authToken = data.token;
+                    showStatus(statusDiv, 'success', '✅ Login successful!');
+                } else {
+                    showStatus(statusDiv, 'error', '❌ Login failed: ' + (data.error || 'Unknown error'));
+                }
+            } catch (error) {
+                showStatus(statusDiv, 'error', '❌ Login error: ' + error.message);
+            }
+        }
+
+        async function generateCaseReport() {
+            if (!authToken) {
+                alert('Please login first!');
+                return;
+            }
+
+            const caseId = document.getElementById('caseId').value;
+            const format = document.getElementById('caseFormat').value;
+            const statusDiv = document.getElementById('caseStatus');
+
+            const options = {
+                format,
+                includeEvidence: document.getElementById('includeEvidence').checked,
+                includeRiskEvolution: document.getElementById('includeRiskEvolution').checked,
+                includeEscalations: document.getElementById('includeEscalations').checked,
+                includeTimeline: document.getElementById('includeTimeline').checked,
+                watermark: document.getElementById('watermark').checked
+            };
+
+            try {
+                const response = await fetch(`${baseURL}/api/reports/case/${caseId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(options)
+                });
+
+                if (response.ok) {
+                    if (format === 'pdf') {
+                        const blob = await response.blob();
+                        downloadFile(blob, `case-report-${caseId}.pdf`);
+                        showStatus(statusDiv, 'success', '✅ PDF generated and downloaded!');
+                    } else {
+                        const html = await response.text();
+                        openHTMLInNewTab(html);
+                        showStatus(statusDiv, 'success', '✅ HTML report opened in new tab!');
+                    }
+                } else {
+                    const error = await response.json();
+                    showStatus(statusDiv, 'error', '❌ Error: ' + error.error);
+                }
+            } catch (error) {
+                showStatus(statusDiv, 'error', '❌ Request failed: ' + error.message);
+            }
+        }
+
+        async function previewCaseReport() {
+            const caseId = document.getElementById('caseId').value;
+            if (!authToken) {
+                alert('Please login first!');
+                return;
+            }
+            window.open(`${baseURL}/api/reports/preview/case/${caseId}`, '_blank');
+        }
+
+        async function generateEntityReport() {
+            if (!authToken) {
+                alert('Please login first!');
+                return;
+            }
+
+            const entityId = document.getElementById('entityId').value;
+            const format = document.getElementById('entityFormat').value;
+            const statusDiv = document.getElementById('entityStatus');
+
+            const options = {
+                format,
+                includeEvidence: document.getElementById('entityIncludeEvidence').checked,
+                includeTimeline: document.getElementById('entityIncludeTimeline').checked,
+                watermark: document.getElementById('entityWatermark').checked
+            };
+
+            try {
+                const response = await fetch(`${baseURL}/api/reports/entity/${entityId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(options)
+                });
+
+                if (response.ok) {
+                    if (format === 'pdf') {
+                        const blob = await response.blob();
+                        downloadFile(blob, `entity-report-${entityId}.pdf`);
+                        showStatus(statusDiv, 'success', '✅ PDF generated and downloaded!');
+                    } else {
+                        const html = await response.text();
+                        openHTMLInNewTab(html);
+                        showStatus(statusDiv, 'success', '✅ HTML report opened in new tab!');
+                    }
+                } else {
+                    const error = await response.json();
+                    showStatus(statusDiv, 'error', '❌ Error: ' + error.error);
+                }
+            } catch (error) {
+                showStatus(statusDiv, 'error', '❌ Request failed: ' + error.message);
+            }
+        }
+
+        async function previewEntityReport() {
+            const entityId = document.getElementById('entityId').value;
+            if (!authToken) {
+                alert('Please login first!');
+                return;
+            }
+            window.open(`${baseURL}/api/reports/preview/entity/${entityId}`, '_blank');
+        }
+
+        async function generateLinkedReport() {
+            if (!authToken) {
+                alert('Please login first!');
+                return;
+            }
+
+            const entitiesString = document.getElementById('entities').value;
+            const investigationId = document.getElementById('investigationId').value;
+            const format = document.getElementById('linkedFormat').value;
+            const statusDiv = document.getElementById('linkedStatus');
+
+            const entities = entitiesString.split(',').map(e => e.trim());
+
+            const options = {
+                entities,
+                investigationId,
+                format,
+                includeEvidence: document.getElementById('linkedIncludeEvidence').checked,
+                includeRiskEvolution: document.getElementById('linkedIncludeRiskEvolution').checked,
+                includeEscalations: document.getElementById('linkedIncludeEscalations').checked,
+                includeTimeline: document.getElementById('linkedIncludeTimeline').checked,
+                watermark: document.getElementById('linkedWatermark').checked
+            };
+
+            try {
+                const response = await fetch(`${baseURL}/api/reports/linked`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(options)
+                });
+
+                if (response.ok) {
+                    if (format === 'pdf') {
+                        const blob = await response.blob();
+                        downloadFile(blob, `linked-report-${investigationId}.pdf`);
+                        showStatus(statusDiv, 'success', '✅ PDF generated and downloaded!');
+                    } else {
+                        const html = await response.text();
+                        openHTMLInNewTab(html);
+                        showStatus(statusDiv, 'success', '✅ HTML report opened in new tab!');
+                    }
+                } else {
+                    const error = await response.json();
+                    showStatus(statusDiv, 'error', '❌ Error: ' + error.error);
+                }
+            } catch (error) {
+                showStatus(statusDiv, 'error', '❌ Request failed: ' + error.message);
+            }
+        }
+
+        function downloadFile(blob, filename) {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        function openHTMLInNewTab(html) {
+            const newTab = window.open();
+            newTab.document.write(html);
+            newTab.document.close();
+        }
+
+        function showStatus(element, type, message) {
+            element.className = `status ${type}`;
+            element.textContent = message;
+            element.style.display = 'block';
+            
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

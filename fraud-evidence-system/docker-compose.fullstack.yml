@@ -1,0 +1,93 @@
+version: '3.9'
+
+services:
+  # MongoDB Database
+  mongo:
+    image: mongo:6
+    container_name: fraud-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: fraudDB
+
+  # MongoDB Admin Interface
+  mongo-express:
+    image: mongo-express
+    container_name: fraud-mongo-express
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: true
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin
+    depends_on:
+      - mongo
+
+  # Backend API
+  backend:
+    build: 
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: fraud-backend
+    restart: unless-stopped
+    ports:
+      - "5050:5050"
+    environment:
+      - NODE_ENV=production
+      - PORT=5050
+      - MONGO_URI=mongodb://mongo:27017/fraudDB
+      - JWT_SECRET=your-super-secret-jwt-key-here
+      - ADMIN_EMAIL=keval7114@gmail.com
+      - ADMIN_PASSWORD=admin123
+      - BREVO_USER=you@yourverifieddomain.com
+      - BREVO_PASS=your-brevo-password
+      - BREVO_API_KEY=your-brevo-api-key-here
+      - ALERT_EMAIL=keval7114@gmail.com
+      - ALERT_RECIPIENTS=aryangupta3103@gmail.com
+      - WEBHOOK_URL=https://webhook.site/ac6befe4-6367-4bb2-8ae6-5eb2241f3e65
+    depends_on:
+      - mongo
+    volumes:
+      - ./Backend:/app
+      - /app/node_modules
+
+  # Frontend React App
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    container_name: fraud-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:5050
+      - REACT_APP_BACKEND_URL=http://localhost:5050
+      - REACT_APP_ENV=production
+      - REACT_APP_AUTH_TOKEN=demo-token
+    depends_on:
+      - backend
+    volumes:
+      - ./Frontend:/app
+      - /app/node_modules
+
+  # Nginx Reverse Proxy (Optional)
+  nginx:
+    image: nginx:alpine
+    container_name: fraud-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+      - backend
+
+volumes:
+  mongodb_data:

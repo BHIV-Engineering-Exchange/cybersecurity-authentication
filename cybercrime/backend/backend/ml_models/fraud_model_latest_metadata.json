@@ -1,0 +1,66 @@
+{
+  "timestamp": "20260203_040210",
+  "model_type": "RandomForestClassifier",
+  "metrics": {
+    "accuracy": 1.0,
+    "roc_auc": 1.0,
+    "confusion_matrix": [
+      [
+        4000,
+        0
+      ],
+      [
+        0,
+        1600
+      ]
+    ],
+    "classification_report": {
+      "0": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 4000.0
+      },
+      "1": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 1600.0
+      },
+      "accuracy": 1.0,
+      "macro avg": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 5600.0
+      },
+      "weighted avg": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 5600.0
+      }
+    }
+  },
+  "feature_columns": [
+    "step",
+    "type_encoded",
+    "amount",
+    "amount_log",
+    "oldbalanceOrg",
+    "newbalanceOrig",
+    "oldbalanceDest",
+    "newbalanceDest",
+    "balance_change_orig",
+    "balance_change_dest",
+    "balance_ratio_orig",
+    "balance_ratio_dest",
+    "amount_ratio_orig",
+    "orig_is_customer",
+    "dest_is_customer",
+    "dest_is_merchant",
+    "zero_balance_after",
+    "large_transaction"
+  ],
+  "model_path": "backend/ml_models\\fraud_model_20260203_040210.pkl"
+}

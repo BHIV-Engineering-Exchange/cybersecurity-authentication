@@ -1,0 +1,634 @@
+{
+  "info": {
+    "name": "RBAC Test Collection - Fraud Evidence API",
+    "_postman_id": "rbac-test-collection-v1",
+    "description": "Test collection for Role-Based Access Control (RBAC) implementation. Tests permissions for different user roles.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Guest Role Tests",
+      "item": [
+        {
+          "name": "Guest - View Reports (SHOULD PASS)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Guest can view reports\", function () {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "guest",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cases",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cases"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Guest - Upload Evidence (SHOULD FAIL)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 403\", function () {",
+                  "    pm.response.to.have.status(403);",
+                  "});",
+                  "",
+                  "pm.test(\"Error message is correct\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.error).to.eql(true);",
+                  "    pm.expect(jsonData.code).to.eql(403);",
+                  "    pm.expect(jsonData.message).to.include(\"Forbidden\");",
+                  "});",
+                  "",
+                  "pm.test(\"Response includes required fields\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('error');",
+                  "    pm.expect(jsonData).to.have.property('code');",
+                  "    pm.expect(jsonData).to.have.property('message');",
+                  "    pm.expect(jsonData).to.have.property('details');",
+                  "    pm.expect(jsonData).to.have.property('timestamp');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "guest",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "caseId",
+                  "value": "CASE-2024-001",
+                  "type": "text"
+                },
+                {
+                  "key": "entity",
+                  "value": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/evidence/upload",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "evidence", "upload"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User Role Tests",
+      "item": [
+        {
+          "name": "User - Upload Evidence (SHOULD PASS)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test(\"User can upload evidence\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.eql(true);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "user",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "caseId",
+                  "value": "CASE-2024-001",
+                  "type": "text"
+                },
+                {
+                  "key": "entity",
+                  "value": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/evidence/upload",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "evidence", "upload"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "User - Verify Evidence (SHOULD FAIL)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 403\", function () {",
+                  "    pm.response.to.have.status(403);",
+                  "});",
+                  "",
+                  "pm.test(\"User cannot verify evidence\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.error).to.eql(true);",
+                  "    pm.expect(jsonData.code).to.eql(403);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "user",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/evidence/66d4a2b8c9e1234567890abc/verify",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "evidence", "66d4a2b8c9e1234567890abc", "verify"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "User - Delete Case (SHOULD FAIL)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 403\", function () {",
+                  "    pm.response.to.have.status(403);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "user",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cases/66d4a2b8c9e1234567890abc",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cases", "66d4a2b8c9e1234567890abc"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Analyst Role Tests",
+      "item": [
+        {
+          "name": "Analyst - Read Evidence (SHOULD PASS)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "analyst",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cases",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cases"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Analyst - RL Predict (SHOULD PASS)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Analyst can use RL predict\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.eql(true);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "analyst",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wallet\": \"0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/rl/predict",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rl", "predict"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Analyst - RL Feedback (SHOULD FAIL)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 403\", function () {",
+                  "    pm.response.to.have.status(403);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "analyst",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wallet\": \"0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb\",\n  \"predictedRisk\": 0.78,\n  \"actualOutcome\": \"fraud_confirmed\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/rl/feedback",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rl", "feedback"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Investigator Role Tests",
+      "item": [
+        {
+          "name": "Investigator - Verify Evidence (SHOULD PASS)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "investigator",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/evidence/66d4a2b8c9e1234567890abc/verify",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "evidence", "66d4a2b8c9e1234567890abc", "verify"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Investigator - Escalate Case (SHOULD PASS)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "investigator",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entityId\": \"0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb\",\n  \"riskScore\": 0.92\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/escalate",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "escalate"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Investigator - Delete Case (SHOULD FAIL)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 403\", function () {",
+                  "    pm.response.to.have.status(403);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "investigator",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cases/66d4a2b8c9e1234567890abc",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cases", "66d4a2b8c9e1234567890abc"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin Role Tests",
+      "item": [
+        {
+          "name": "Admin - Delete Case (SHOULD PASS)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Admin can delete case\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.eql(true);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "admin",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cases/66d4a2b8c9e1234567890abc",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cases", "66d4a2b8c9e1234567890abc"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin - All Case Operations (SHOULD PASS)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is successful\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "admin",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Admin Test Case\",\n  \"priority\": \"high\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/cases",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cases"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Error Response Format Tests",
+      "item": [
+        {
+          "name": "Verify 403 Response Structure",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 403\", function () {",
+                  "    pm.response.to.have.status(403);",
+                  "});",
+                  "",
+                  "pm.test(\"Response has required error fields\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('error');",
+                  "    pm.expect(jsonData).to.have.property('code');",
+                  "    pm.expect(jsonData).to.have.property('message');",
+                  "    pm.expect(jsonData).to.have.property('details');",
+                  "    pm.expect(jsonData).to.have.property('timestamp');",
+                  "});",
+                  "",
+                  "pm.test(\"Error field values are correct\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.error).to.eql(true);",
+                  "    pm.expect(jsonData.code).to.eql(403);",
+                  "    pm.expect(jsonData.message).to.be.a('string');",
+                  "    pm.expect(jsonData.message).to.include('Forbidden');",
+                  "});",
+                  "",
+                  "pm.test(\"Details include required fields\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.details).to.have.property('requiredPermissions');",
+                  "    pm.expect(jsonData.details).to.have.property('userRole');",
+                  "    pm.expect(jsonData.details).to.have.property('allowedRoles');",
+                  "});",
+                  "",
+                  "pm.test(\"Timestamp is valid ISO 8601\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.timestamp).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}/);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "x-user-role",
+                "value": "user",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cases/66d4a2b8c9e1234567890abc",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cases", "66d4a2b8c9e1234567890abc"]
+            },
+            "description": "Tests that 403 Forbidden responses have the correct structure"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
+

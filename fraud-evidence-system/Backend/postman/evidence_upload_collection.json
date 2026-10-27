@@ -1,0 +1,625 @@
+{
+  "info": {
+    "name": "Evidence Upload API - Test Collection",
+    "_postman_id": "evidence-upload-test-v1",
+    "description": "Complete test collection for Evidence Upload API with local storage and RBAC",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5050",
+      "type": "string"
+    },
+    {
+      "key": "evidenceId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Service is healthy\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.status).to.eql('healthy');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        },
+        "description": "Check if server is running and healthy"
+      },
+      "response": []
+    },
+    {
+      "name": "Upload Evidence - User Role (SUCCESS)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test(\"Response has success field\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "});",
+              "",
+              "pm.test(\"Response includes evidenceId\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('evidenceId');",
+              "    pm.collectionVariables.set('evidenceId', jsonData.evidenceId);",
+              "});",
+              "",
+              "pm.test(\"Response includes storageHash\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('storageHash');",
+              "    pm.expect(jsonData.storageHash).to.be.a('string');",
+              "    pm.expect(jsonData.storageHash.length).to.eql(64); // SHA-256 is 64 hex chars",
+              "});",
+              "",
+              "pm.test(\"Response includes storageMetadata\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('storageMetadata');",
+              "    pm.expect(jsonData.storageMetadata).to.have.property('s3Key');",
+              "    pm.expect(jsonData.storageMetadata).to.have.property('ipfsHash');",
+              "    pm.expect(jsonData.storageMetadata).to.have.property('bhivPointer');",
+              "});",
+              "",
+              "pm.test(\"Evidence object has required fields\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.evidence).to.have.property('id');",
+              "    pm.expect(jsonData.evidence).to.have.property('caseId');",
+              "    pm.expect(jsonData.evidence).to.have.property('wallet');",
+              "    pm.expect(jsonData.evidence).to.have.property('filename');",
+              "    pm.expect(jsonData.evidence).to.have.property('uploadedAt');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-user-role",
+            "value": "user",
+            "type": "text",
+            "description": "Set user role for RBAC testing"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "evidenceFile",
+              "type": "file",
+              "src": [],
+              "description": "Upload any test file (e.g., test.txt, screenshot.png)"
+            },
+            {
+              "key": "caseId",
+              "value": "CASE-2024-001",
+              "type": "text",
+              "description": "Case ID to associate evidence with"
+            },
+            {
+              "key": "wallet",
+              "value": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
+              "type": "text",
+              "description": "Wallet address under investigation"
+            },
+            {
+              "key": "reporter",
+              "value": "investigator@fraud.com",
+              "type": "text",
+              "description": "Email of person reporting"
+            },
+            {
+              "key": "description",
+              "value": "Transaction screenshot showing suspicious activity",
+              "type": "text",
+              "description": "Evidence description (optional)"
+            },
+            {
+              "key": "tags",
+              "value": "transaction,suspicious,screenshot",
+              "type": "text",
+              "description": "Comma-separated tags (optional)"
+            },
+            {
+              "key": "riskLevel",
+              "value": "high",
+              "type": "text",
+              "description": "Risk level: low, medium, high, critical (optional)"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/evidence/upload",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "evidence", "upload"]
+        },
+        "description": "Upload evidence as a user (should succeed)"
+      },
+      "response": []
+    },
+    {
+      "name": "Upload Evidence - Guest Role (SHOULD FAIL)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 403\", function () {",
+              "    pm.response.to.have.status(403);",
+              "});",
+              "",
+              "pm.test(\"Response has error format\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.error).to.eql(true);",
+              "    pm.expect(jsonData.code).to.eql(403);",
+              "    pm.expect(jsonData.message).to.include('Forbidden');",
+              "});",
+              "",
+              "pm.test(\"Details show required permission\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.details.requiredPermissions).to.include('upload-evidence');",
+              "    pm.expect(jsonData.details.userRole).to.eql('guest');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-user-role",
+            "value": "guest",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "caseId",
+              "value": "CASE-2024-001",
+              "type": "text"
+            },
+            {
+              "key": "wallet",
+              "value": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
+              "type": "text"
+            },
+            {
+              "key": "reporter",
+              "value": "guest@fraud.com",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/evidence/upload",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "evidence", "upload"]
+        },
+        "description": "Upload evidence as guest (should fail with 403)"
+      },
+      "response": []
+    },
+    {
+      "name": "Upload Evidence - Missing File (SHOULD FAIL)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "pm.test(\"Error message indicates no file\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.message).to.include('No file uploaded');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-user-role",
+            "value": "user",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "caseId",
+              "value": "CASE-2024-001",
+              "type": "text"
+            },
+            {
+              "key": "wallet",
+              "value": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
+              "type": "text"
+            },
+            {
+              "key": "reporter",
+              "value": "user@fraud.com",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/evidence/upload",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "evidence", "upload"]
+        },
+        "description": "Try to upload without file (should fail with 400)"
+      },
+      "response": []
+    },
+    {
+      "name": "Upload Evidence - Missing Required Fields (SHOULD FAIL)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "pm.test(\"Error message indicates missing fields\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.message).to.include('required');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-user-role",
+            "value": "user",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "evidenceFile",
+              "type": "file",
+              "src": []
+            },
+            {
+              "key": "caseId",
+              "value": "CASE-2024-001",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/evidence/upload",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "evidence", "upload"]
+        },
+        "description": "Upload without wallet and reporter (should fail)"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Evidence by ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Evidence data is returned\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData.evidence).to.be.an('object');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-user-role",
+            "value": "analyst",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/evidence/{{evidenceId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "evidence", "{{evidenceId}}"]
+        },
+        "description": "Get evidence details by ID (uses evidenceId from upload response)"
+      },
+      "response": []
+    },
+    {
+      "name": "Verify Evidence Integrity",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Verification completed\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData.verification).to.be.an('object');",
+              "});",
+              "",
+              "pm.test(\"Overall status is provided\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.verification.overallStatus).to.be.oneOf(['verified', 'failed']);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-user-role",
+            "value": "investigator",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/evidence/{{evidenceId}}/verify",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "evidence", "{{evidenceId}}", "verify"]
+        },
+        "description": "Verify evidence integrity (requires investigator role)"
+      },
+      "response": []
+    },
+    {
+      "name": "Download Evidence File",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"File is returned\", function () {",
+              "    pm.expect(pm.response.headers.get('Content-Disposition')).to.include('attachment');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-user-role",
+            "value": "investigator",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/evidence/{{evidenceId}}/download",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "evidence", "{{evidenceId}}", "download"]
+        },
+        "description": "Download evidence file (requires download-evidence permission)"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Evidence by Case ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Evidence list is returned\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData.evidence).to.be.an('array');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-user-role",
+            "value": "user",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/evidence/case/CASE-2024-001",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "evidence", "case", "CASE-2024-001"]
+        },
+        "description": "Get all evidence for a specific case"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Storage Statistics",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Stats are returned\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData.stats).to.be.an('object');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-user-role",
+            "value": "admin",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/evidence/stats",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "evidence", "stats"]
+        },
+        "description": "Get storage statistics"
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Evidence - Admin Role (SUCCESS)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Evidence deleted\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData.message).to.include('deleted');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "x-user-role",
+            "value": "admin",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/evidence/{{evidenceId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "evidence", "{{evidenceId}}"]
+        },
+        "description": "Delete evidence as admin (should succeed)"
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Evidence - User Role (SHOULD FAIL)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 403\", function () {",
+              "    pm.response.to.have.status(403);",
+              "});",
+              "",
+              "pm.test(\"User cannot delete evidence\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.error).to.eql(true);",
+              "    pm.expect(jsonData.code).to.eql(403);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "x-user-role",
+            "value": "user",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/evidence/{{evidenceId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "evidence", "{{evidenceId}}"]
+        },
+        "description": "Try to delete as user (should fail with 403)"
+      },
+      "response": []
+    }
+  ]
+}
+

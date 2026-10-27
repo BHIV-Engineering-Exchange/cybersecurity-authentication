@@ -1,0 +1,63 @@
+{
+  "success": true,
+  "escalation": {
+    "id": "66d4a2b8c9e1234567890esc",
+    "entityId": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
+    "caseId": "CASE-2024-001",
+    "riskScore": 0.92,
+    "reason": "Critical fraud risk - immediate action required",
+    "urgency": "urgent",
+    "escalateTo": "RBI",
+    "status": "pending",
+    "escalatedBy": "admin@fraud.com",
+    "escalatedAt": "2024-01-07T15:00:00.000Z",
+    "evidenceCount": 2,
+    "notificationsSent": [
+      {
+        "recipient": "rbi-cybercrime@rbi.org",
+        "method": "email",
+        "status": "sent",
+        "sentAt": "2024-01-07T15:00:05.000Z",
+        "messageId": "MSG-RBI-2024-001"
+      },
+      {
+        "recipient": "+91-1234567890",
+        "method": "sms",
+        "status": "sent",
+        "sentAt": "2024-01-07T15:00:06.000Z",
+        "messageId": "SMS-RBI-2024-001"
+      },
+      {
+        "recipient": "senior-investigator@rbi.org",
+        "method": "email",
+        "status": "sent",
+        "sentAt": "2024-01-07T15:00:07.000Z",
+        "messageId": "MSG-RBI-2024-002"
+      }
+    ],
+    "referenceNumber": "ESC-2024-001-RBI",
+    "attachments": [
+      {
+        "type": "evidence_package",
+        "filename": "ESC-2024-001-evidence.zip",
+        "size": 5242880,
+        "hash": "0xabc123def456..."
+      },
+      {
+        "type": "case_summary",
+        "filename": "ESC-2024-001-summary.pdf",
+        "size": 524288,
+        "hash": "0xdef789ghi012..."
+      }
+    ],
+    "priorityLevel": 1,
+    "estimatedImpact": {
+      "financialLoss": 50000,
+      "affectedUsers": 15,
+      "jurisdictions": ["India", "Singapore"]
+    }
+  },
+  "message": "Escalation forwarded successfully",
+  "rbiStatus": "received"
+}
+

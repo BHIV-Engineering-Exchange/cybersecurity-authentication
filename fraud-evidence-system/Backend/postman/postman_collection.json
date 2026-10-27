@@ -1,0 +1,422 @@
+{
+  "info": {
+    "name": "Fraud Evidence System API",
+    "_postman_id": "fraud-evidence-api-v1",
+    "description": "Complete API collection for Fraud Evidence System with all endpoints for evidence management, case handling, RL predictions, and escalations.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "key": "authToken",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Evidence",
+      "item": [
+        {
+          "name": "Upload Evidence",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "evidenceFile",
+                  "type": "file",
+                  "src": []
+                },
+                {
+                  "key": "caseId",
+                  "value": "CASE-2024-001",
+                  "type": "text"
+                },
+                {
+                  "key": "entity",
+                  "value": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Transaction screenshot showing fraudulent activity",
+                  "type": "text"
+                },
+                {
+                  "key": "tags",
+                  "value": "transaction,screenshot,fraud",
+                  "type": "text"
+                },
+                {
+                  "key": "riskLevel",
+                  "value": "high",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/evidence/upload",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "evidence", "upload"]
+            },
+            "description": "Upload evidence files with metadata for fraud investigation"
+          },
+          "response": []
+        },
+        {
+          "name": "Verify Evidence",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/evidence/66d4a2b8c9e1234567890abc/verify",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "evidence", "66d4a2b8c9e1234567890abc", "verify"]
+            },
+            "description": "Verify evidence integrity across storage layers and blockchain"
+          },
+          "response": []
+        }
+      ],
+      "description": "Evidence upload and verification endpoints"
+    },
+    {
+      "name": "Cases",
+      "item": [
+        {
+          "name": "List Cases",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cases?page=1&limit=20",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cases"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "status",
+                  "value": "in_progress",
+                  "disabled": true
+                },
+                {
+                  "key": "priority",
+                  "value": "high",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Retrieve a paginated list of fraud investigation cases"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Case",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Suspicious cryptocurrency transactions\",\n  \"description\": \"Multiple high-value transactions from flagged wallet\",\n  \"priority\": \"high\",\n  \"category\": \"financial_fraud\",\n  \"entities\": [\n    {\n      \"type\": \"wallet_address\",\n      \"value\": \"0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb\",\n      \"confidence\": 0.95\n    }\n  ],\n  \"indicators\": [\n    {\n      \"type\": \"transaction\",\n      \"value\": \"0x1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t\",\n      \"confidence\": 0.90\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/cases",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cases"]
+            },
+            "description": "Create a new fraud investigation case"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Case by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cases/66d4a2b8c9e1234567890abc",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cases", "66d4a2b8c9e1234567890abc"]
+            },
+            "description": "Retrieve detailed information about a specific case"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Case",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated case title\",\n  \"status\": \"in_progress\",\n  \"priority\": \"critical\",\n  \"assignedTo\": \"senior-investigator@fraud.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/cases/66d4a2b8c9e1234567890abc",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cases", "66d4a2b8c9e1234567890abc"]
+            },
+            "description": "Update an existing case"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Case",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cases/66d4a2b8c9e1234567890abc",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cases", "66d4a2b8c9e1234567890abc"]
+            },
+            "description": "Delete a case (admin only)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Case management operations (CRUD)"
+    },
+    {
+      "name": "RL Engine",
+      "item": [
+        {
+          "name": "Get Fraud Prediction",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wallet\": \"0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb\",\n  \"features\": {\n    \"transactionCount\": 150,\n    \"totalVolume\": 50000,\n    \"avgTransactionValue\": 333.33,\n    \"uniqueAddresses\": 45,\n    \"suspiciousPatterns\": 3,\n    \"accountAge\": 180\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/rl/predict",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rl", "predict"]
+            },
+            "description": "Use reinforcement learning model to predict fraud risk for a wallet"
+          },
+          "response": []
+        },
+        {
+          "name": "Submit Prediction Feedback",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wallet\": \"0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb\",\n  \"predictedRisk\": 0.78,\n  \"actualOutcome\": \"fraud_confirmed\",\n  \"investigatorNotes\": \"Confirmed fraudulent activity after investigation\",\n  \"actionTaken\": \"wallet_frozen\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/rl/feedback",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "rl", "feedback"]
+            },
+            "description": "Provide feedback on RL prediction to improve model accuracy"
+          },
+          "response": []
+        }
+      ],
+      "description": "Reinforcement Learning predictions and feedback"
+    },
+    {
+      "name": "Escalation",
+      "item": [
+        {
+          "name": "Escalate Case",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entityId\": \"0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb\",\n  \"caseId\": \"CASE-2024-001\",\n  \"riskScore\": 0.92,\n  \"reason\": \"Critical fraud risk - immediate action required\",\n  \"urgency\": \"urgent\",\n  \"escalateTo\": \"RBI\",\n  \"evidenceIds\": [\n    \"66d4a2b8c9e1234567890abc\",\n    \"66d4a2b8c9e1234567890abd\"\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/escalate",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "escalate"]
+            },
+            "description": "Escalate a high-risk case to authorities or senior investigators"
+          },
+          "response": []
+        }
+      ],
+      "description": "Risk escalation and alerting"
+    },
+    {
+      "name": "Health & Status",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["health"]
+            },
+            "description": "Check server health status"
+          },
+          "response": []
+        },
+        {
+          "name": "API Root",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/",
+              "host": ["{{baseUrl}}"],
+              "path": [""]
+            },
+            "description": "Get API information and available endpoints"
+          },
+          "response": []
+        }
+      ],
+      "description": "Server health and status endpoints"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{authToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test(\"Status code is successful\", function () {",
+          "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+          "});",
+          "",
+          "pm.test(\"Response time is less than 500ms\", function () {",
+          "    pm.expect(pm.response.responseTime).to.be.below(500);",
+          "});",
+          "",
+          "pm.test(\"Response has correct content type\", function () {",
+          "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+          "});"
+        ]
+      }
+    }
+  ]
+}
+

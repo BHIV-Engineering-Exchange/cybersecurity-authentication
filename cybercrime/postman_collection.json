@@ -1,0 +1,147 @@
+{
+  "info": {
+    "name": "Cybercrime Sovereign Demo Collection",
+    "_postman_id": "9f995d3d-70c9-4f5f-a990-b3a0e6a8b0f7",
+    "description": "Demo-safe E2E checks for backend, evidence flow, and integration health.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health - Root",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "System Health",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/system/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "system", "health"]
+        }
+      }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{loginEmail}}\",\n  \"password\": \"{{loginPassword}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/auth/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "auth", "login"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code >= 200 && pm.response.code < 300) {",
+              "  const data = pm.response.json();",
+              "  if (data.access_token) pm.collectionVariables.set('token', data.access_token);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Upload Evidence",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": "{{evidenceFilePath}}"
+            },
+            {
+              "key": "wallet_id",
+              "type": "text",
+              "value": "C1002941337"
+            },
+            {
+              "key": "title",
+              "type": "text",
+              "value": "Regulatory Demo Evidence"
+            },
+            {
+              "key": "description",
+              "type": "text",
+              "value": "Evidence upload via Postman E2E flow"
+            },
+            {
+              "key": "risk_level",
+              "type": "text",
+              "value": "high"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/evidence/",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "evidence", ""]
+        }
+      }
+    },
+    {
+      "name": "Wallet Search",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/wallets/search/C1002941337",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "wallets", "search", "C1002941337"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "token", "value": "" },
+    { "key": "loginEmail", "value": "superadmin@example.com" },
+    { "key": "loginPassword", "value": "replace-me" },
+    { "key": "evidenceFilePath", "value": "" }
+  ]
+}

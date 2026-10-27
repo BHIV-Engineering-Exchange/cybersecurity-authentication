@@ -1,0 +1,193 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "description": "Role-Based Access Control (RBAC) Permissions Matrix",
+    "lastUpdated": "2024-01-07",
+    "roles": ["guest", "user", "analyst", "investigator", "admin", "superadmin"],
+    "actions": [
+      "read-evidence",
+      "upload-evidence",
+      "verify-evidence",
+      "download-evidence",
+      "delete-evidence",
+      "share-evidence",
+      "annotate-evidence",
+      "view-cases",
+      "create-case",
+      "update-case",
+      "delete-case",
+      "assign-case",
+      "close-case",
+      "escalate-case",
+      "view-reports",
+      "generate-reports",
+      "export-reports",
+      "rl-predict",
+      "rl-feedback",
+      "rl-train",
+      "manage-users",
+      "manage-roles",
+      "view-logs",
+      "system-config"
+    ]
+  },
+  "roles": {
+    "guest": {
+      "description": "Public access - minimal permissions",
+      "level": 1,
+      "permissions": [
+        "view-reports"
+      ]
+    },
+    "user": {
+      "description": "Basic user - can report and view own cases",
+      "level": 2,
+      "permissions": [
+        "upload-evidence",
+        "view-cases",
+        "create-case",
+        "view-reports"
+      ]
+    },
+    "analyst": {
+      "description": "Fraud analyst - can analyze and annotate evidence",
+      "level": 3,
+      "permissions": [
+        "read-evidence",
+        "upload-evidence",
+        "annotate-evidence",
+        "view-cases",
+        "create-case",
+        "update-case",
+        "view-reports",
+        "generate-reports",
+        "rl-predict"
+      ]
+    },
+    "investigator": {
+      "description": "Investigator - full case management and evidence access",
+      "level": 4,
+      "permissions": [
+        "read-evidence",
+        "upload-evidence",
+        "verify-evidence",
+        "download-evidence",
+        "share-evidence",
+        "annotate-evidence",
+        "view-cases",
+        "create-case",
+        "update-case",
+        "assign-case",
+        "close-case",
+        "escalate-case",
+        "view-reports",
+        "generate-reports",
+        "export-reports",
+        "rl-predict",
+        "rl-feedback"
+      ]
+    },
+    "admin": {
+      "description": "Administrator - can manage users and system operations",
+      "level": 5,
+      "permissions": [
+        "read-evidence",
+        "upload-evidence",
+        "verify-evidence",
+        "download-evidence",
+        "delete-evidence",
+        "share-evidence",
+        "annotate-evidence",
+        "view-cases",
+        "create-case",
+        "update-case",
+        "delete-case",
+        "assign-case",
+        "close-case",
+        "escalate-case",
+        "view-reports",
+        "generate-reports",
+        "export-reports",
+        "rl-predict",
+        "rl-feedback",
+        "rl-train",
+        "manage-users",
+        "view-logs"
+      ]
+    },
+    "superadmin": {
+      "description": "Super Administrator - full system access",
+      "level": 6,
+      "permissions": [
+        "read-evidence",
+        "upload-evidence",
+        "verify-evidence",
+        "download-evidence",
+        "delete-evidence",
+        "share-evidence",
+        "annotate-evidence",
+        "view-cases",
+        "create-case",
+        "update-case",
+        "delete-case",
+        "assign-case",
+        "close-case",
+        "escalate-case",
+        "view-reports",
+        "generate-reports",
+        "export-reports",
+        "rl-predict",
+        "rl-feedback",
+        "rl-train",
+        "manage-users",
+        "manage-roles",
+        "view-logs",
+        "system-config"
+      ]
+    }
+  },
+  "actionToRoutes": {
+    "read-evidence": ["/api/evidence/:id", "/api/evidence/:id/verify"],
+    "upload-evidence": ["/api/evidence/upload"],
+    "verify-evidence": ["/api/evidence/:id/verify"],
+    "download-evidence": ["/api/evidence/:id/download"],
+    "delete-evidence": ["/api/evidence/:id"],
+    "share-evidence": ["/api/evidence/:id/share"],
+    "annotate-evidence": ["/api/evidence/:id/annotate"],
+    "view-cases": ["/api/cases", "/api/cases/:id"],
+    "create-case": ["/api/cases"],
+    "update-case": ["/api/cases/:id"],
+    "delete-case": ["/api/cases/:id"],
+    "assign-case": ["/api/cases/:id/assign"],
+    "close-case": ["/api/cases/:id/close"],
+    "escalate-case": ["/api/escalate", "/api/cases/:id/escalate"],
+    "view-reports": ["/api/reports", "/api/reports/:id"],
+    "generate-reports": ["/api/reports/generate"],
+    "export-reports": ["/api/reports/:id/export"],
+    "rl-predict": ["/api/rl/predict"],
+    "rl-feedback": ["/api/rl/feedback"],
+    "rl-train": ["/api/rl/train"],
+    "manage-users": ["/api/users", "/api/users/:id"],
+    "manage-roles": ["/api/roles", "/api/users/:id/role"],
+    "view-logs": ["/api/logs", "/api/audit"],
+    "system-config": ["/api/config", "/api/system"]
+  },
+  "roleHierarchy": {
+    "guest": 1,
+    "user": 2,
+    "analyst": 3,
+    "investigator": 4,
+    "admin": 5,
+    "superadmin": 6
+  },
+  "permissionGroups": {
+    "evidence_read": ["read-evidence", "view-cases"],
+    "evidence_write": ["upload-evidence", "annotate-evidence"],
+    "evidence_admin": ["delete-evidence", "verify-evidence"],
+    "case_manage": ["create-case", "update-case", "assign-case"],
+    "case_admin": ["delete-case", "close-case"],
+    "rl_operations": ["rl-predict", "rl-feedback"],
+    "system_admin": ["manage-users", "view-logs", "system-config"]
+  }
+}
+

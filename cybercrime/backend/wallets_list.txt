@@ -1,0 +1,224 @@
+====================================================================================================
+WALLET DATABASE LISTING
+====================================================================================================
+Total: 213 | Fraud: 113 | Normal: 100 | Other: 0
+====================================================================================================
+
+FRAUD WALLETS (113)
+----------------------------------------------------------------------------------------------------
+0x9a133081b458fa032d1b3b31971c285b84825bb3 | fraud | Risk: 100.00% | VERY HIGH
+0xb8f44460dfa4a7f58f0b4010aad9e5d8da9e0e42 | ransomware | Risk: 50.00% | MEDIUM
+0xf202a58c9c68f2d99311d50c150fcea21bb9dd85 | ponzi | Risk: 50.00% | MEDIUM
+0x96aa0223c6ce4ea2ed90b17fd139def0671ba54f | fraud | Risk: 100.00% | VERY HIGH
+0xc0c4ae6e2741f63224c4d288d12973ea0f348375 | fraud | Risk: 100.00% | VERY HIGH
+0x07cd8c3093463b1e2342ad4d7d9580c3683b5853 | money laundering | Risk: 60.00% | HIGH
+0xe9d03507e387065dbb3d82feea8ceeadee419e6a | ponzi | Risk: 50.00% | MEDIUM
+0x2edc106c4ee60a251d6a448cf38d54db0134ae48 | fraud | Risk: 100.00% | VERY HIGH
+0x65fe660d5831d2d5d0dc21e4e68bed6cf671d7d6 | fraud | Risk: 100.00% | VERY HIGH
+0xf83b1f22cb897d1732d5c7494d42ffb03e69b079 | ponzi | Risk: 50.00% | MEDIUM
+0x4784d0042974000d51460acac364e41d3b07e9f9 | money laundering | Risk: 60.00% | HIGH
+0x297dfc73412f7701ae4cae173ab9e8de5a109ec6 | ransomware | Risk: 50.00% | MEDIUM
+0x7f8f330b84df3c13d2ea25437d0073f14e3bfeea | ransomware | Risk: 50.00% | MEDIUM
+0xaf8a0bd47754a2a8c4dfcd5c70fbb3fe0939e11a | ponzi | Risk: 50.00% | MEDIUM
+0x5a3b37f4e49eb79634e64504638b9623376c9b20 | ransomware | Risk: 50.00% | MEDIUM
+0x8a70dbd9047ace88910ad39fd0bf92f476672d21 | fraud | Risk: 100.00% | VERY HIGH
+0xd75a8aafad4e42d7b73a354deee2c7c92760b03d | money laundering | Risk: 60.00% | HIGH
+0x59ebcae17d027f5fcb41a51ee0c26a0a99c0cb09 | ponzi | Risk: 50.00% | MEDIUM
+0x92c687e2ca5f3c5f204a68bd314dd9d374bc8ec6 | ransomware | Risk: 50.00% | MEDIUM
+0x1dda11ddf146f4374722d57ce5c70b597a75cf4c | money laundering | Risk: 60.00% | HIGH
+0x0801768fd4d9aeb97baeecedf8cea1c001dd824f | ransomware | Risk: 50.00% | MEDIUM
+0x4c1f86d72891a3a45b7f71f129730dd04b8772ca | ransomware | Risk: 50.00% | MEDIUM
+0xe8fe7a163eb6421e2315d7b0376c43b564929f2d | ransomware | Risk: 50.00% | MEDIUM
+0x2472e031d71262800574478616b9c49de5d5a6df | ransomware | Risk: 50.00% | MEDIUM
+0x637bc7ab3680ef9668ab58b7a216844b09b77c90 | money laundering | Risk: 60.00% | HIGH
+0x2f24eac0ae2e5ab134a33b27a63beeb934edc458 | ransomware | Risk: 50.00% | MEDIUM
+0xee7a2f465bbf05ae98c1b14c9c24d5ffaf9e0942 | ponzi | Risk: 50.00% | MEDIUM
+0x2a19a22da69cc768ce690cfd90cbd72644a611e3 | ponzi | Risk: 50.00% | MEDIUM
+0xde43acecc0b32f13570fd8f5cec954a79dbbf6a7 | ransomware | Risk: 50.00% | MEDIUM
+0x32d66a400ad54c4119500f7426d0fac20c3a5f6c | fraud | Risk: 100.00% | VERY HIGH
+0x2f13b9ef671489823c542d118cc7dd92d9bdc25e | fraud | Risk: 100.00% | VERY HIGH
+0xb87d94e17073658d5e85d90b7b080aafc1965d5a | ponzi | Risk: 50.00% | MEDIUM
+0x76c07830fbb4b4e478a4bbe2860e667946d2ed73 | ponzi | Risk: 50.00% | MEDIUM
+0x2896ebbf1e53b3d61f501c5833f7a63209299cab | ransomware | Risk: 50.00% | MEDIUM
+0xed7fa08d5e79a7b8e585c08c2ff50ac4d6388792 | money laundering | Risk: 60.00% | HIGH
+0xce4aad2e45508d58b35b8b75ebfc14e0fd769994 | money laundering | Risk: 60.00% | HIGH
+0x96e0f7ebb864ee4b6a435fb40604625c6c492fe3 | ransomware | Risk: 50.00% | MEDIUM
+0x97daa8cd25164fef62b39c5d29ac84ff032aa06e | fraud | Risk: 100.00% | VERY HIGH
+0x555e4c07cb6a59300fdb69053a06cca04ca3b844 | ransomware | Risk: 50.00% | MEDIUM
+0xbd49951e1578ac8adf84887122f4e9fe61accb23 | money laundering | Risk: 60.00% | HIGH
+0xe2c1266742c8320288071e45a1407e6052105011 | ponzi | Risk: 50.00% | MEDIUM
+0x0e5a54f8310eb6448bd47833503f47dcb9c5bfda | fraud | Risk: 100.00% | VERY HIGH
+0x5b47a0cd01e94b7c251865b491e9b10d0a460a85 | ransomware | Risk: 50.00% | MEDIUM
+0xd89d363f49803d9521195a2cf32b1267a81aacc8 | fraud | Risk: 100.00% | VERY HIGH
+0x8d67bc65605c4c0046a541b970ce98df794f69d2 | ponzi | Risk: 50.00% | MEDIUM
+0xfdb4c6b02ff2f8291e1c4d6218281081bba79d7d | fraud | Risk: 100.00% | VERY HIGH
+0x279101deecb7dad4b815de8a82ff89f0c0daa184 | fraud | Risk: 100.00% | VERY HIGH
+0xd728f6adfcf54c41a77b799e2d52af0b040a3534 | fraud | Risk: 100.00% | VERY HIGH
+0x5ad8123dfab4f9d9e03d71ac54c0c51b9620406c | money laundering | Risk: 60.00% | HIGH
+0x4f3291fd748d75c38482eb3d3326add4b377dd7e | fraud | Risk: 100.00% | VERY HIGH
+0x95420f9594ebafcbd596ddb32ace440a60e4a37b | money laundering | Risk: 60.00% | HIGH
+0x566ab94fba39ef049f9e01cf6bd6179f52b8897b | money laundering | Risk: 60.00% | HIGH
+0x2c075334814a814cc1e63b0af78c937fed50443f | ponzi | Risk: 50.00% | MEDIUM
+0x64b871b0d24d259166bdbe306183b93653fe60cb | fraud | Risk: 100.00% | VERY HIGH
+0xcd4582b4094850b44dfcfec6c7f6e084723a91b0 | money laundering | Risk: 60.00% | HIGH
+0xec043485c8d9896eaaf70b6936462368b4a3805f | money laundering | Risk: 60.00% | HIGH
+0x54f0479a34f9488b03e395762ab0ff201ee7b6c8 | fraud | Risk: 100.00% | VERY HIGH
+0x7dfb8e9172954de2b396ae0029afbf7052723eab | ransomware | Risk: 50.00% | MEDIUM
+0x65b112f5d07721647f0b7f2947177af270e23c00 | ponzi | Risk: 50.00% | MEDIUM
+0xcc929eb0743f69ef1b9aa2eb29e96057f0525d7b | ransomware | Risk: 50.00% | MEDIUM
+0xd64094b624fcf0997d73e49a1e2ceff67c856fed | ponzi | Risk: 50.00% | MEDIUM
+0xe0a7bc780e0df893f8094e9681435756b05c0df3 | ponzi | Risk: 50.00% | MEDIUM
+0x6e1140a32c363bf98255403cfbe0b910ea3bab0d | money laundering | Risk: 60.00% | HIGH
+0xbe31c94128ec410944c1a3d58e0281daff124352 | ponzi | Risk: 50.00% | MEDIUM
+0xbace50ffaf249b9427ceacd90e5ff296f1cfa5a8 | ransomware | Risk: 50.00% | MEDIUM
+0x7191b9fd6c4c8eecea51851ceb47586fb4256523 | fraud | Risk: 100.00% | VERY HIGH
+0x066b2f45a89d34e06d33a7468ea93b41036630a8 | money laundering | Risk: 60.00% | HIGH
+0x2fcc8ae35dae6926d377a39b2aad4ed168b4de56 | ransomware | Risk: 50.00% | MEDIUM
+0x9ecf2c339655cf2e838d97b92af864dea59ae6c2 | fraud | Risk: 100.00% | VERY HIGH
+0x60a25ac5d2f520ec0fcf29590c505588c11b6915 | fraud | Risk: 100.00% | VERY HIGH
+0x409a7d0d1a8610e535a6562e6413e37f1e02031f | ransomware | Risk: 50.00% | MEDIUM
+0x2beb4633344f36ce4c2a6abd808737fd4bd205fc | money laundering | Risk: 60.00% | HIGH
+0xee0d5a4890028bd92ca4c4a537c468bb8c31c892 | ponzi | Risk: 50.00% | MEDIUM
+0x6dca7c98eab477af2a989b53d2b58fcf032e69aa | fraud | Risk: 100.00% | VERY HIGH
+0xbdb383c84b499c727f640d64d5ac7032cc11f3c2 | ransomware | Risk: 50.00% | MEDIUM
+0x011468b0f0c0694b1a95407db92ff80f1a521c68 | ponzi | Risk: 50.00% | MEDIUM
+0x78919759b30fb032fb0fcdf624f23167ced1d003 | money laundering | Risk: 60.00% | HIGH
+0x6898c75df765502d19065713b7b7aa47b8fe6cf6 | ransomware | Risk: 50.00% | MEDIUM
+0x56a9a6acfb0c547119a4130d876c3c73a9947271 | money laundering | Risk: 50.00% | MEDIUM
+0xcd26020b93f30a9287c69b292428253065ebcafb | ponzi | Risk: 50.00% | MEDIUM
+0x43c49e79e3ee78c3d883c138d87fbf9d100c4b99 | ransomware | Risk: 50.00% | MEDIUM
+0x02e32c5ad258fe92f44ba1faada14ff8d634cf64 | money laundering | Risk: 60.00% | HIGH
+0xe677c0422ce984d0f2880fb7392f513cf786d82e | fraud | Risk: 100.00% | VERY HIGH
+0x3bab1776c8fe524fe535d3358a161db9412300e3 | fraud | Risk: 100.00% | VERY HIGH
+0xd10a73ff425c25f8d59d058a4bb6109e5e89ba1d | money laundering | Risk: 60.00% | HIGH
+0xef2deebaa20849991201192d5fa8ac9053ce93d6 | ransomware | Risk: 50.00% | MEDIUM
+0xb841ec8ee136bd45ca32c55714f5972abf564e3e | ransomware | Risk: 50.00% | MEDIUM
+0xb93e029173b3a4e598c1c54d3c09d70a8d951c8f | ponzi | Risk: 50.00% | MEDIUM
+0xc14d080385c78af344e00392684372697af5e677 | ransomware | Risk: 50.00% | MEDIUM
+0xd7b1ef334ef66a9acba8a7ca105ee678e608e072 | money laundering | Risk: 60.00% | HIGH
+0x19eb9f9174942a00088139f38465194e457af6d2 | ponzi | Risk: 50.00% | MEDIUM
+0x5153087d3b1563e8d7dce19bed2d56f88b5dcb1d | fraud | Risk: 100.00% | VERY HIGH
+0x6c73e4396f326886414218a40f65f4dc4f25d0db | ransomware | Risk: 50.00% | MEDIUM
+0xfbe88b96c5cb87af32a4194197521e3370a38e67 | ponzi | Risk: 50.00% | MEDIUM
+0xd49741a3ad9e0f1d785cbc8aecb837893fa9280d | fraud | Risk: 100.00% | VERY HIGH
+0xad8d7839602129d8b71ca8eb325dc2402c51d9ba | ransomware | Risk: 50.00% | MEDIUM
+0x87b83b37abfd2621e71066c6a0d1d334b1380f19 | ransomware | Risk: 50.00% | MEDIUM
+0x97e9bac93192e4e0057b89039fee960c52097199 | money laundering | Risk: 60.00% | HIGH
+0xd2379a65d6bef52f48d5ae90b4d7fed6d1cf8df7 | ponzi | Risk: 50.00% | MEDIUM
+0x059497a3fe4712d197d060f94421f137528b16c4 | fraud | Risk: 100.00% | VERY HIGH
+Wallet_XYZ | money laundering | Risk: 100.00% | VERY HIGH
+Wallet_XYZ | money laundering | Risk: 100.00% | VERY HIGH
+Wallet_XYZ | money laundering | Risk: 100.00% | VERY HIGH
+Wallet_XYZ | money laundering | Risk: 100.00% | VERY HIGH
+Wallet_XYZ | money laundering | Risk: 100.00% | VERY HIGH
+Wallet_XYZ | money laundering | Risk: 100.00% | VERY HIGH
+Wallet_XYZ | money laundering | Risk: 100.00% | VERY HIGH
+Wallet_XYZ | money laundering | Risk: 100.00% | VERY HIGH
+Wallet_XYZ | fraud | Risk: 100.00% | VERY HIGH
+Wallet_XYZ | fraud | Risk: 100.00% | VERY HIGH
+Wallet_XYZ | fraud | Risk: 100.00% | VERY HIGH
+Wallet_XYZ | fraud | Risk: 100.00% | VERY HIGH
+Wallet_XYZ | fraud | Risk: 100.00% | VERY HIGH
+
+NORMAL WALLETS (100)
+----------------------------------------------------------------------------------------------------
+0x18367150a2ae01a37f12d1df460766fabc15f1f5 | normal | Risk: 50.00% | MEDIUM
+0x98b4d8cc0e92062472f6dd94f0eabf4618434362 | normal | Risk: 50.00% | MEDIUM
+0x6763e1319e003d60ba15575141662ed3daee24c0 | normal | Risk: 50.00% | MEDIUM
+0xd2a7cdeb4530ac7ff4a362519599b48afbf6e6ec | normal | Risk: 50.00% | MEDIUM
+0xbd98fd58f70b519c59f4dc8020022744d0d745fe | normal | Risk: 50.00% | MEDIUM
+0xa43cc65a0754dc07c949d2a63f26d7b4729a5924 | normal | Risk: 50.00% | MEDIUM
+0x2cc8f57a9199cba63a1a7c25d090a197e2ddcdb7 | normal | Risk: 50.00% | MEDIUM
+0x727d1c3da98072286ae56776aa55fd9648765874 | normal | Risk: 50.00% | MEDIUM
+0x698d5fad32f96f38c18577ae96edff1505c85090 | normal | Risk: 50.00% | MEDIUM
+0x35b2629cac6d03d35884fde96a6eb089f6268b51 | normal | Risk: 50.00% | MEDIUM
+0xe3f7c29772de4a7ddaf324a2084482d69df3dcdc | normal | Risk: 50.00% | MEDIUM
+0xd280aa002a71f97b7763dee3eb617ece12e6aa3b | normal | Risk: 50.00% | MEDIUM
+0x8f8e94dacd6b5ea69167e452c2f03be58749bcd1 | normal | Risk: 50.00% | MEDIUM
+0x981e467c86a7b7ea7b016342bf49061c298a7576 | normal | Risk: 50.00% | MEDIUM
+0x79bb92d10b8b16d3df3d87d4bbed05a8a3a69574 | normal | Risk: 50.00% | MEDIUM
+0xcd85c1752fd6c2cbd1b7a8dc91a19f96833ba2ee | normal | Risk: 50.00% | MEDIUM
+0xd43c9eb0c81ff3ffd6abe6e742eda7a66e0dc298 | normal | Risk: 50.00% | MEDIUM
+0xe880f3a6ebfce49f6f85c4cfb132ee589ad1f5ec | normal | Risk: 50.00% | MEDIUM
+0xdd62e9be09cecc7e6122cbc1d6badafefcc1a103 | normal | Risk: 50.00% | MEDIUM
+0x587de8eb60d872ff70532d6048b0802c2e918b34 | normal | Risk: 50.00% | MEDIUM
+0x25bfb8a3959c3fa48df4d4108e94c19915d94b18 | normal | Risk: 50.00% | MEDIUM
+0x96bf5290d2d81a27444c3d054a5ce8ead8613eb9 | normal | Risk: 50.00% | MEDIUM
+0x2fa4d17a7f7b31338f78467e93a1c639989fc5f7 | normal | Risk: 50.00% | MEDIUM
+0xc28b8cf7f9feb0eac1f6ed916bb30ffdfcc038e1 | normal | Risk: 50.00% | MEDIUM
+0x2ac9733da0a7075b762a7f504ab92e97c7e0cd78 | normal | Risk: 50.00% | MEDIUM
+0xc7feffcccaf7e52b2e7f2909092e8f42f54b2b5e | normal | Risk: 50.00% | MEDIUM
+0xa8be0609a6ba5d30c016e1ff9dfa3628a7065619 | normal | Risk: 50.00% | MEDIUM
+0x2a98faca4bac8a2374564c7b867866acaefeef57 | normal | Risk: 50.00% | MEDIUM
+0xd05b61cf14eb1f9cf5a10a901aba0025db3c6c5e | normal | Risk: 50.00% | MEDIUM
+0xe156622e2df4b995c34c893cf4b278314016c9f1 | normal | Risk: 50.00% | MEDIUM
+0x067ce7633fa09778e0502f31194bfb18010bf2d1 | normal | Risk: 50.00% | MEDIUM
+0xc7dfbbebef1476b5c3d5c84fec2187839eb32085 | normal | Risk: 50.00% | MEDIUM
+0x0b9bcc13783a935ff31591df65ad3a1d3c7c543e | normal | Risk: 50.00% | MEDIUM
+0xa20b07ff919fcb917889b94cf6b74f0642d13b8b | normal | Risk: 50.00% | MEDIUM
+0x308aa435b78ac12c6bedb73627e6e216b639494b | normal | Risk: 50.00% | MEDIUM
+0x1c1eec7fc47bb18aec85cb197a8a306ba79ff87a | normal | Risk: 50.00% | MEDIUM
+0xb124fcf7c3e84e2df7d4405d0ca1d24a20868db5 | normal | Risk: 50.00% | MEDIUM
+0x804b910fbe9224c5e3235b298fa4e1443569098d | normal | Risk: 50.00% | MEDIUM
+0x601cbe9e28c98352140e08eaccf78631c8ecdc1b | normal | Risk: 50.00% | MEDIUM
+0xfbe201ece877977a17ead3f436ac8a8cdd5bed5d | normal | Risk: 50.00% | MEDIUM
+0x1eb0e1a49a8cf3de21c0bb7b910b26cd485f2287 | normal | Risk: 50.00% | MEDIUM
+0x0e796229c357544f210c3bb2a4fd0d806df14ac6 | normal | Risk: 50.00% | MEDIUM
+0x6f95e88db6ad620b715ce26c69cf291fb119126b | normal | Risk: 50.00% | MEDIUM
+0x0c99d1118ae38b911803c1843e89b52d9379341e | normal | Risk: 50.00% | MEDIUM
+0xb44feebbdf777f0136fc64be753a9b59a3a80a55 | normal | Risk: 50.00% | MEDIUM
+0xba648597dce66a5017a6f5d96511f5a42e1933c2 | normal | Risk: 50.00% | MEDIUM
+0xb48cc3861cfbe4fc0a5dc1563104fdc976a7c8e5 | normal | Risk: 50.00% | MEDIUM
+0x477f6bc99e7e154a43d5cdcbb0a05da2d0ce3a72 | normal | Risk: 50.00% | MEDIUM
+0x7cd0aa2540a4aa2106aa53c69fbd82a5d09437dc | normal | Risk: 50.00% | MEDIUM
+0xd4871d4664b761e955e8a9791803fe9c481c4590 | normal | Risk: 50.00% | MEDIUM
+0x66852e6e93f9115e6bd6ea71a5a0e26a0b06acb7 | normal | Risk: 50.00% | MEDIUM
+0x30b242a53d769b0d3cfb6640b79204183c2c4c31 | normal | Risk: 50.00% | MEDIUM
+0xcadf31a3afb8233dbdb9dbfefce6d92950191687 | normal | Risk: 50.00% | MEDIUM
+0x8147b5c1c03c02c95eda23d054ea1fbcd1fffb13 | normal | Risk: 50.00% | MEDIUM
+0xbd41ceb913368bd0eb3d07c2224793151fe0fbdf | normal | Risk: 50.00% | MEDIUM
+0x4dca6c3be5e37a047fc3c3d662c8854aac5fbf23 | normal | Risk: 50.00% | MEDIUM
+0x6f56c6799e841a2bb599b3d4855617952495de26 | normal | Risk: 50.00% | MEDIUM
+0xc6954c75358e6e64f0d634ce224f9dbae2d40758 | normal | Risk: 50.00% | MEDIUM
+0xbc669a1adb384a66b30d2b329542093a94541e28 | normal | Risk: 50.00% | MEDIUM
+0x02347ac16988141e3b67753a588a075fd0dec575 | normal | Risk: 50.00% | MEDIUM
+0xa2193e80098c044d2b18084b92acdaac0acf65b9 | normal | Risk: 50.00% | MEDIUM
+0xe1e6267bd30e996e30b9028beda4d351651524d2 | normal | Risk: 50.00% | MEDIUM
+0x92de23932d4f705f2ba501f2205c6285878e1d97 | normal | Risk: 50.00% | MEDIUM
+0xfb413c3187d76c724898a9cd8e86661b48406bc1 | normal | Risk: 50.00% | MEDIUM
+0x04dc18b2750dedbcc7d9357f855f9fb2a66a0a6c | normal | Risk: 50.00% | MEDIUM
+0xfb8daff1e7b2735df39574a89262b3eb2b8e0248 | normal | Risk: 50.00% | MEDIUM
+0x99ec0fabed4fcdc27ee844199f594391031eae5e | normal | Risk: 50.00% | MEDIUM
+0x0a0d339186829afd41bd854887ac365404c9fbdf | normal | Risk: 50.00% | MEDIUM
+0xa56b7cb6965b30366df8f14fa4568a33ed6168d3 | normal | Risk: 50.00% | MEDIUM
+0x7c33010f4e699023437c034797d2a1ab68500dfc | normal | Risk: 50.00% | MEDIUM
+0xd3dfe318927f80def9087a1a9a6cb9f62d8f746b | normal | Risk: 50.00% | MEDIUM
+0x480c59cf5bf7363fe02c9bf96f04b23c7477d48a | normal | Risk: 50.00% | MEDIUM
+0xcd1714af55d15439988058abae9af60fe38c8e3a | normal | Risk: 50.00% | MEDIUM
+0x2be81aee98b99a535ac3b1c8de993b4b2c1d109a | normal | Risk: 50.00% | MEDIUM
+0x23c05b2cd8c32653611ba053f51d1b4b26982cdc | normal | Risk: 50.00% | MEDIUM
+0x1349fb8779b7a24e50b745ff802b701565355e60 | normal | Risk: 50.00% | MEDIUM
+0x5516135e1ce6cd2cbfc1c56c31ed4c4ae226878f | normal | Risk: 50.00% | MEDIUM
+0x98a6933cdedc6a83b688f48bb3fa7aa23d84f397 | normal | Risk: 50.00% | MEDIUM
+0x42793678997de0b593e140d0efa11e2e1acc0a94 | normal | Risk: 50.00% | MEDIUM
+0xd83ba71ab1bd90c6399a2c2743fdc660db8ac9be | normal | Risk: 50.00% | MEDIUM
+0xca10c01cab806ca5dbaf8431b64af0ca8ce17fc1 | normal | Risk: 50.00% | MEDIUM
+0x48634f22d129ecb55d9e3d24ed8a46a4b8c0f42a | normal | Risk: 50.00% | MEDIUM
+0xd49e6716994872c419d2f97fd885328cfcc4e59c | normal | Risk: 50.00% | MEDIUM
+0x71f10de37c417c766a0a0048ccd622fe55c5295b | normal | Risk: 50.00% | MEDIUM
+0x80cdb6ee6fefacbed0a6531478df974d42352d48 | normal | Risk: 50.00% | MEDIUM
+0x539795ede8b2e28b94864d63e1159ca9b7453194 | normal | Risk: 50.00% | MEDIUM
+0x343c2e9720f4421cec116af890ccc4580fe43262 | normal | Risk: 50.00% | MEDIUM
+0x4a51acf2e368fa50863475a99d72c27881f29a8a | normal | Risk: 50.00% | MEDIUM
+0x0417df373f34e1f11ec2e02b7f69dc887c9082f5 | normal | Risk: 50.00% | MEDIUM
+0xea1b3de7b5db21d510e5ea8696d5a6edc552ea50 | normal | Risk: 50.00% | MEDIUM
+0x6a7158bce5653b7dc2f0246d813de03d3bb63df4 | normal | Risk: 50.00% | MEDIUM
+0x27a0daa8cd26c18ac97477a69a1f7fd860593a9a | normal | Risk: 50.00% | MEDIUM
+0x949b02227c6b1f4b839c6f7f12b7386e14274da2 | normal | Risk: 50.00% | MEDIUM
+0x54f8d11878edc7717cbbe03b0aa0240524eb0b77 | normal | Risk: 50.00% | MEDIUM
+0xf87ad93a49464e6219194aab670fdcf1c0e5a392 | normal | Risk: 50.00% | MEDIUM
+0x34d370b0c1c9bda28351c524dfb1d7281d92c2d2 | normal | Risk: 50.00% | MEDIUM
+0xb7ac89f9353b81767494d7717f940f6c79b36579 | normal | Risk: 50.00% | MEDIUM
+0xa01ef57a165b9eb8509d0903b9469b22869eaee4 | normal | Risk: 50.00% | MEDIUM
+0x86506040cf2505e1fd1a11f357d3b9d2b5e216d3 | normal | Risk: 50.00% | MEDIUM
+0x66423a1aec35f7929efcd142063ee17fedc2c290 | normal | Risk: 50.00% | MEDIUM

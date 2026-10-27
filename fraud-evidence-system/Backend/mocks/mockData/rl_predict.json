@@ -1,0 +1,58 @@
+{
+  "success": true,
+  "prediction": {
+    "wallet": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
+    "riskScore": 0.78,
+    "riskLevel": "high",
+    "confidence": 0.92,
+    "action": "flag",
+    "reasoning": [
+      "High transaction volume in short time period",
+      "Multiple suspicious patterns detected",
+      "Interactions with known fraudulent addresses",
+      "Unusual transaction timing patterns",
+      "High-value transfers to new addresses"
+    ],
+    "features": {
+      "transactionCount": 150,
+      "totalVolume": 50000,
+      "avgTransactionValue": 333.33,
+      "uniqueAddresses": 45,
+      "suspiciousPatterns": 3,
+      "accountAge": 180,
+      "largeTransactions": 12,
+      "rapidTransactions": 8,
+      "newAddressInteractions": 15,
+      "knownFraudAddresses": 2
+    },
+    "model": {
+      "version": "1.2.0",
+      "trainedAt": "2024-01-05T00:00:00.000Z",
+      "accuracy": 0.94,
+      "precision": 0.91,
+      "recall": 0.89,
+      "f1Score": 0.90,
+      "trainingDataSize": 10000
+    },
+    "similarCases": [
+      {
+        "caseId": "CASE-2023-456",
+        "similarity": 0.87,
+        "outcome": "fraud_confirmed"
+      },
+      {
+        "caseId": "CASE-2023-789",
+        "similarity": 0.82,
+        "outcome": "fraud_confirmed"
+      }
+    ],
+    "recommendedActions": [
+      "Flag wallet for manual review",
+      "Gather additional evidence",
+      "Monitor for 48 hours",
+      "Consider escalation if pattern continues"
+    ],
+    "timestamp": "2024-01-07T12:00:00.000Z"
+  }
+}
+

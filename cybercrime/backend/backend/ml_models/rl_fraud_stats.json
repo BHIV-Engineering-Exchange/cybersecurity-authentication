@@ -1,0 +1,12 @@
+{
+  "total_predictions": 11000,
+  "correct_predictions": 10218,
+  "accuracy": 92.89,
+  "average_reward": 0.9069,
+  "total_states": 1000,
+  "exploration_rate": 0.09043820750088044,
+  "learning_rate": 0.1,
+  "discount_factor": 0.95,
+  "total_rewards": 10000,
+  "last_updated": "2026-02-03T11:21:42.332490"
+}
