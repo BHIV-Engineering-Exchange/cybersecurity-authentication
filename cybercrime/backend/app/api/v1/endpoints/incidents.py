@@ -364,13 +364,14 @@ async def analyze_wallet_incident(
         # Analyze description to boost pattern scores
         description_weights = analyze_wallet_description(request.description)
         
-        # Recorded transactions only (CYB-06): the analysis never invents data. Only in explicit demo mode
-        # (INCIDENT_SYNTHETIC_DEMO) does a wallet with no history get generated transactions, each labelled synthetic.
+        # Transactions from the system's own dataset only (CYB-06): the analysis itself never generates data. Only in
+        # explicit demo mode (INCIDENT_SYNTHETIC_DEMO) does a wallet with no records get generated transactions, each
+        # labelled synthetic. The dataset's own provenance is stated in `uncertainty`.
         observed_txns = fetch_real_transactions(db, wallet)
         uncertainty: List[str] = []
         if observed_txns:
             txns = observed_txns
-            data_basis = "observed"
+            data_basis = "recorded"
         elif settings.INCIDENT_SYNTHETIC_DEMO:
             demo_mode = next((m for m in ("ponzi", "money_laundering", "ransomware") if description_weights[m] > 0), "fraud")
             txns = [dict(t, synthetic=True) for t in generate_wallet_transactions(wallet, mode=demo_mode)]
@@ -396,10 +397,10 @@ async def analyze_wallet_incident(
             timeline = []
             confidence = 0.0
             uncertainty += [
-                "No recorded transactions were found for this wallet, so no fraud assessment was made.",
+                "No transaction records were found for this wallet, so no fraud assessment was made.",
                 "The description text is not evidence and did not raise any score.",
             ]
-            system_conclusion = ("No recorded transactions were found for this wallet, so no fraud assessment was made. "
+            system_conclusion = ("No transaction records were found for this wallet, so no fraud assessment was made. "
                                  "Add transaction data or evidence and analyse again.")
         else:
             # Calculate risk score
@@ -491,8 +492,14 @@ async def analyze_wallet_incident(
             # How far this result can be trusted (CYB-03): a rule of thumb, not a calibrated probability.
             confidence = 0.0 if data_basis == "synthetic_demo" else round(min(0.8, 0.8 * len(txns) / 20), 2)
             uncertainty.append("Rule-based score from pattern heuristics; not a calibrated probability.")
-            if data_basis == "observed":
-                uncertainty.append(f"Based on {len(observed_txns)} recorded transaction(s) for this wallet and its counterparties.")
+            if data_basis == "recorded":
+                uncertainty.append(f"Based on {len(observed_txns)} transaction record(s) for this wallet and its counterparties "
+                                   "in the system's fraud_transactions dataset.")
+                uncertainty.append("Provenance: in this repository that dataset is filled by a generator script "
+                                   "(scripts/generate_transactions.py), so it may be synthetic test data rather than "
+                                   "observed activity; its source in a deployment is not recorded here.")
+                uncertainty.append("Times are derived from the dataset's step counter (hours after a start 30 days "
+                                   "before this analysis); they are not real transaction times.")
             if description_boost:
                 uncertainty.append(f"Keywords in the description raised the score by {description_boost:.2f}; keywords are not evidence.")
             uncertainty.append("The conclusion text is written by an orchestrator, an AI model or a template from the score; it adds no evidence.")

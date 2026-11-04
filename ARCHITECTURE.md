@@ -8,7 +8,7 @@ a stage that has no implementation yet, the stage is marked **not built** with t
 | Stage (task brief) | What implements it here | Status |
 |---|---|---|
 | Security signal | HTTP requests to the API; the request context and RBAC middleware (`cybercrime/backend/main.py:557-837`) | built |
-| Intelligence | Incident analysis (`app/api/v1/endpoints/incidents.py`; recorded data only, with confidence and uncertainty), ML fraud prediction (`ml_training/`); failed-login detection rule (`app/core/threat_detection.py`) | built; rule-based |
+| Intelligence | Incident analysis (`app/api/v1/endpoints/incidents.py`; the system's own `fraud_transactions` dataset only, with confidence, uncertainty and the dataset's provenance), ML fraud prediction (`ml_training/`); failed-login detection rule (`app/core/threat_detection.py`) | built; rule-based |
 | Decision support | `POST /api/v1/authz/check` (`endpoints/authz.py`), `POST /api/v1/protected/access` (`endpoints/protected_access.py`) | built |
 | Contract | Versioned request/response models (contract_version 1.0.0); frozen `cybercrime/openapi.yaml` | built |
 | Controlled execution | Cybersecurity does **not** execute containment. VAJRA executes authority transitions; TANTRA owns approval | boundary |

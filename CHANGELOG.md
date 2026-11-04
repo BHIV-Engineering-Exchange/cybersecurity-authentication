@@ -10,16 +10,21 @@ review before merge. Unit tests: `cybercrime/backend/test_lane_fixes.py`. Runtim
   (reviewed by a superadmin). `rbac-permissions.json` no longer lists register as public.
 - **CYB-05:** login answers "Invalid email or password." for both an unknown email and a wrong password, and checks a
   dummy hash for unknown emails, so timing does not reveal accounts. "Account is deactivated" is shown only after the
-  correct password.
-- **CYB-04:** every failed login writes a canonical `auth.login` DENIED security event.
+  correct password. Login is now a plain (sync) route, so bcrypt no longer blocks the event loop.
+- **CYB-04:** every failed login writes a canonical `auth.login` DENIED security event. An unknown email is recorded
+  only as a keyed hash (HMAC with the server key).
+- **Login throttle (new):** more than `LOGIN_MAX_ATTEMPTS_PER_MINUTE` attempts (default 20) for one email in a minute
+  answer `429` before any password check and write nothing to the database (per process).
 - **CYB-02:** Tier 1 permission revocation is stored (`revoked_permissions`) and enforced by the RBAC middleware
   (`403 PERMISSION_REVOKED`) and by `/api/v1/authz/check`. New `POST /api/v1/access/restore` undoes it. `superadmin` and
   `public` cannot be revoked.
-- **CYB-06 / CYB-03:** wallet incident analysis uses recorded transactions only. It never mixes in generated data, and
-  it no longer shifts real timestamps. The response adds `confidence`, `uncertainty`, `data_basis` and
-  `observed_tx_count`; each transaction gets `synthetic`. Generated demo data exists only with
-  `INCIDENT_SYNTHETIC_DEMO=true` (labelled synthetic). With no recorded data, `risk_level` is `INSUFFICIENT DATA`: the
-  frontends must handle this new value.
+- **CYB-06 / CYB-03:** wallet incident analysis reads only the system's own transaction dataset (`fraud_transactions`);
+  it never generates or mixes in data at analysis time, and no longer shifts timestamps. The response adds
+  `confidence`, `uncertainty`, `data_basis` (`recorded`, `none`, `synthetic_demo`) and `observed_tx_count`; each
+  transaction gets `synthetic`. The uncertainty list states that this repository fills `fraud_transactions` from a
+  generator script (so it may be synthetic test data) and that times come from the dataset's step counter. Generated
+  demo data exists only with `INCIDENT_SYNTHETIC_DEMO=true` (labelled synthetic). With no records, `risk_level` is
+  `INSUFFICIENT DATA`: the frontends must handle this new value.
 - **CYB-07:** the catch-all OPTIONS route is removed (the CORS middleware answers preflight), so a collection route
   without the trailing slash redirects (307) instead of 405.
 - **CYB-08:** the evidence upload response reports `bucket_status` (`stored`, `unavailable`, `not_configured`).
@@ -34,8 +39,9 @@ review before merge. Unit tests: `cybercrime/backend/test_lane_fixes.py`. Runtim
 ### Added
 - **Failed-login detection and correlation** (10-day proof C; Shivam and Aryan Dias to review):
   - `app/core/threat_detection.py`: rule `auth.repeated_failed_login` v1.0.0 (5 or more failed logins for one account
-    within 10 minutes) opens one `security_incidents` row per account and window, with severity, confidence,
-    uncertainty, rationale and the evidence event ids, and writes a `threat.detected` event. It never blocks anyone.
+    within 10 minutes; wrong passwords only, not deactivated accounts) opens one `security_incidents` row per account
+    and window, with severity, confidence, uncertainty, rationale and up to 50 evidence event ids, and writes a
+    `threat.detected` event. Its cost per failed login is bounded. It never blocks anyone.
   - `GET /api/v1/threats/incidents` (superadmin) lists the incidents.
 - Verification: check P-C2 now tests detection and correlation instead of being BLOCKED; O-01 and S6-04 test CYB-12 and
   CYB-08.

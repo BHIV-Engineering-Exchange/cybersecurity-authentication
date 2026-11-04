@@ -231,11 +231,13 @@ class IncidentReportResponse(BaseModel):
     transactions: Optional[List[TransactionDetail]] = None
     system_conclusion: str
     report_id: Optional[str] = None  # MongoDB document ID
-    # How far the result can be trusted (CYB-03). confidence is a rule of thumb (0-1) based on how much recorded data
+    # How far the result can be trusted (CYB-03). confidence is a rule of thumb (0-1) based on how many records
     # was analysed, not a calibrated probability; uncertainty lists what is missing or assumed.
     confidence: float = 0.0
     uncertainty: List[str] = []
-    data_basis: str = "observed"  # observed | none (nothing recorded) | synthetic_demo (generated, never evidence)
+    # recorded (rows in the system's fraud_transactions dataset; provenance in uncertainty) | none (no rows) |
+    # synthetic_demo (generated at analysis time, never evidence)
+    data_basis: str = "recorded"
     observed_tx_count: int = 0
 
 

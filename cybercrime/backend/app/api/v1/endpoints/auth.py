@@ -3,8 +3,12 @@ Authentication endpoints
 """
 
 import hashlib
+import hmac
+import threading
+import time
 import uuid
-from typing import Optional
+from collections import deque
+from typing import Dict, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -35,11 +39,38 @@ def _timing_dummy_hash() -> str:
     return _dummy_hash
 
 
+def _email_key(email: str) -> str:
+    """Keyed hash of an attempted email (HMAC with the server key): stable, but not reversible from a list of emails."""
+    return hmac.new(settings.SECRET_KEY.encode("utf-8"), email.encode("utf-8"), hashlib.sha256).hexdigest()[:16]
+
+
 def _account_ref(email: str, user: Optional[User]) -> str:
-    """The attacked account: its user id, or a hash of the attempted email (the email itself is not stored)."""
+    """The attacked account: its user id, or the keyed hash of the attempted email (the email itself is not stored)."""
     if user is not None:
         return f"cc_usr_{user.id}"
-    return "unknown:" + hashlib.sha256(email.encode("utf-8")).hexdigest()[:16]
+    return "unknown:" + _email_key(email)
+
+
+# Per-account login throttle: at most LOGIN_MAX_ATTEMPTS_PER_MINUTE attempts per attempted email, per process.
+# A throttled attempt is answered 429 before any password check and writes nothing to the database.
+_login_lock = threading.Lock()
+_login_windows: Dict[str, deque] = {}
+
+
+def _login_allowed(email: str) -> bool:
+    limit = settings.LOGIN_MAX_ATTEMPTS_PER_MINUTE
+    if limit <= 0:
+        return True
+    key = _email_key(email)
+    now = time.monotonic()
+    with _login_lock:
+        window = _login_windows.setdefault(key, deque())
+        while window and now - window[0] > 60.0:
+            window.popleft()
+        if len(window) >= limit:
+            return False
+        window.append(now)
+        return True
 
 
 def _record_failed_login(db: Session, request: Request, *, email: str, user: Optional[User], reason_code: str) -> None:
@@ -52,7 +83,7 @@ def _record_failed_login(db: Session, request: Request, *, email: str, user: Opt
     request_id = getattr(request.state, "request_id", None)
     account_ref = _account_ref(email, user)
     try:
-        emit_canonical_event(
+        event = emit_canonical_event(
             event_type="auth.login", action="login",
             actor_id="anonymous", actor_type="anonymous", role="public", authenticated=False, auth_method="password",
             resource_type="user", resource_id=account_ref,
@@ -66,8 +97,11 @@ def _record_failed_login(db: Session, request: Request, *, email: str, user: Opt
                        message="Could not store the failed-login security event; the login is still refused.",
                        trace_id=trace_id, request_id=request_id, details={"error": type(exc).__name__})
         return
+    if reason_code != "INVALID_CREDENTIALS":  # the rule counts wrong passwords only, not deactivated accounts
+        return
     try:
-        detect_and_correlate_failed_logins(db, account_ref=account_ref, trace_id=trace_id, request_id=request_id)
+        detect_and_correlate_failed_logins(db, account_ref=account_ref, trace_id=trace_id, request_id=request_id,
+                                           event_id=event.event_id)
     except Exception as exc:
         db.rollback()
         emit_audit_log(action="threat_detection.error", status="error",
@@ -76,7 +110,7 @@ def _record_failed_login(db: Session, request: Request, *, email: str, user: Opt
 
 
 @router.post("/register", response_model=UserResponse)
-async def register(user: UserCreate, request: Request, db: Session = Depends(get_db)):
+def register(user: UserCreate, request: Request, db: Session = Depends(get_db)):
     """Create an investigator account directly (superadmin only).
 
     Public sign-up is POST /api/v1/access-requests/request, which a superadmin reviews. This route used to be public
@@ -111,10 +145,25 @@ async def register(user: UserCreate, request: Request, db: Session = Depends(get
 
 
 @router.post("/login", response_model=Token)
-async def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    """Login and get access token"""
+def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    """Login and get access token.
+
+    A plain def: bcrypt and the database run in a worker thread, not on the event loop.
+    """
     # Normalize email (lowercase, strip whitespace)
     email = form_data.username.lower().strip()
+
+    if not _login_allowed(email):
+        emit_audit_log(action="auth.login.throttled", status="warning",
+                       message="Too many login attempts for one account; refused before any password check.",
+                       trace_id=getattr(request.state, "trace_id", None),
+                       request_id=getattr(request.state, "request_id", None),
+                       details={"account_key": _email_key(email)})
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            detail="Too many login attempts. Try again in a minute.",
+            headers={"Retry-After": "60"},
+        )
 
     user = db.query(User).filter(User.email == email).first()
     password_ok = verify_password(form_data.password, user.hashed_password if user else _timing_dummy_hash())

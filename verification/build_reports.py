@@ -415,7 +415,8 @@ ROWS = [
      ["S8-01", "S8-02", "S8-03"]),
     ("10-day - mandatory proof", "A NORMAL: user -> identity -> consent -> authorised access -> evidence", ["P-A"]),
     ("10-day - mandatory proof", "B REVOCATION: active permission -> revoke -> future request denied -> evidence", ["S2-01", "S4-05"]),
-    ("10-day - mandatory proof", "C ATTACK: threat -> detect -> correlate -> govern -> contain -> evidence", ["P-C1", "P-C2", "P-C3"]),
+    ("10-day - mandatory proof", "C ATTACK: threat -> detect -> correlate -> govern -> contain -> evidence", ["P-C1", "P-C2", "P-C3"],
+     {"cap": "the govern step (TANTRA approval) was played by the harness (SIMULATED); the approval contract is UNKNOWN"}),
     ("10-day - mandatory proof", "D RECOVERY: failure -> candidate -> verify -> replay/integrity -> rebuild -> reinstate",
      ["S7-02", "S7-03", "S7-04", "S7-05", "S8-03"]),
     ("Task 1 section M - live path", "Input signal / data-access event -> Cybersecurity processing -> decision", ["S1-05", "P-A"],
@@ -511,7 +512,8 @@ def readiness_board(by_id) -> list[tuple]:
         ("Protected access with VAJRA consent (new bridge)", "cybersecurity-authentication", "Rajaryan (review), Hemanth (built)",
          st("P-A", "S1-05", "S2-01", "S4-01", "S4-04", "S4-05", "S6-01")),
         ("Evidence: local audit + VAJRA record", "cybersecurity-authentication + VAJRA", "Rajaryan / Prakash", st("S8-01", "S6-03")),
-        ("Wallet incident analysis (existing intelligence)", "cybersecurity-authentication", "Shivam", st("S3-01", "S3-03")),
+        ("Wallet incident analysis (existing intelligence; checks cover wallets with no records, unit tests the recorded-data path)",
+         "cybersecurity-authentication", "Shivam", st("S3-01", "S3-03")),
         ("Threat assessment of access signals (rule auth.repeated_failed_login)",
          "cybersecurity-authentication (app/core/threat_detection.py)", "Shivam (review); built by Hemanth", st("P-C1", "P-C2")),
         ("Correlation into incidents (security_incidents)", "cybersecurity-authentication (app/core/threat_detection.py)",
@@ -764,10 +766,15 @@ def probe_effects(samples: dict, evidence: Optional[Path] = None) -> list[str]:
     return lines
 
 
-def previous_run_calls(evidence: Path) -> list[dict]:
-    """TANTRA calls made by the archived earlier live run (written when it was archived; see previous_runs/)."""
-    f = previous_run_dir(evidence) / "tantra_calls.json"
-    return json.loads(f.read_text(encoding="utf-8")) if f.exists() else []
+def archived_runs(evidence: Path, current_run: str) -> list[tuple[str, list[dict]]]:
+    """(run id, TANTRA calls) of each earlier run archived under previous_runs/, oldest first."""
+    root = evidence / "previous_runs"
+    runs = []
+    for folder in sorted(root.iterdir()) if root.is_dir() else []:
+        f = folder / "tantra_calls.json"
+        if folder.name != current_run and f.exists():
+            runs.append((folder.name, json.loads(f.read_text(encoding="utf-8"))))
+    return runs
 
 
 def outside_run_calls(evidence: Path) -> tuple[list[dict], list[str]]:
@@ -856,15 +863,16 @@ def live_tantra_calls(meta, samples, evidence: Path) -> str:
     if effects:
         lines += ["", "## What the single ledger write caused inside TANTRA (from TANTRA's own reply, check S8-02)", "", *effects]
     host = meta["mode"]["tantra_base"].split("://", 1)[-1].split("/")[0].split(":")[0]
-    earlier = previous_run_calls(evidence) if meta["run_id"] != PREVIOUS_LIVE_RUN else []
-    if earlier:
-        lines += ["", f"## Calls made by the earlier verification run {PREVIOUS_LIVE_RUN} (same day)", "",
-                  f"Archived in `previous_runs/{PREVIOUS_LIVE_RUN}/` (that run's full call list: its LIVE_TANTRA_CALLS.md).", "",
+    earlier_runs = archived_runs(evidence, meta["run_id"])
+    for run_id, calls in earlier_runs:
+        lines += ["", f"## Calls made by the earlier verification run {run_id} (same day)", "",
+                  f"Archived in `previous_runs/{run_id}/` (that run's full call list: its LIVE_TANTRA_CALLS.md).", "",
                   "| UTC (reply received) | Source | Check | Method | Path | HTTP | Ledger write? |",
                   "|---|---|---|---|---|---|---|"]
         lines += [f"| {c['utc']} | {c['source']} | {c.get('check') or ''} | {c['method']} | `{c['path']}` | {c['http']} | "
-                  f"{'YES' if c.get('ledger_write') else 'no'} |" for c in earlier]
-    earlier_writes = sum(1 for c in earlier if c.get("ledger_write"))
+                  + ("YES" if c.get("ledger_write") else
+                     "replay check (TANTRA may store a validation record)" if "/karma/verify" in str(c["path"]) else "no")
+                  + " |" for c in calls]
     outside, notes = outside_run_calls(evidence)
     if outside:
         lines += ["", "## Calls made by hand on the same day, outside this run", "",
@@ -876,7 +884,8 @@ def live_tantra_calls(meta, samples, evidence: Path) -> str:
             lines += ["", *notes]
     to_tantra = [c for c in outside if host and host in str(c["url"])]
     lines += ["", f"Ledger writes to TANTRA in this run: **{writes}**."
-              + (f" In the earlier run {PREVIOUS_LIVE_RUN}: **{earlier_writes}** ({len(earlier)} TANTRA calls)." if earlier else "")
+              + "".join(f" In the earlier run {run_id}: **{sum(1 for c in calls if c.get('ledger_write'))}** "
+                        f"({len(calls)} TANTRA calls)." for run_id, calls in earlier_runs)
               + " Outside the runs, to TANTRA: "
               f"{sum(1 for c in to_tantra if c['method'] == 'GET')} read-only GET(s), "
               f"{sum(1 for c in to_tantra if '/validate/' in str(c['url']))} /validate call(s), "

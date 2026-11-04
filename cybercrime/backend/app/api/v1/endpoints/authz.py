@@ -77,9 +77,9 @@ async def check_authorization(
     Conforms to Phase 2 Access Control Contract POST /api/v1/authz/check.
     Requires verified authenticated caller.
     """
+    # The middleware's id is the checked form of X-Trace-Id (CYB-15); the raw header is not trusted.
     trace_id = (
-        x_trace_id
-        or getattr(request.state, "trace_id", None)
+        getattr(request.state, "trace_id", None)
         or f"trace-{uuid.uuid4().hex[:16]}"
     )
     request_id = getattr(request.state, "request_id", None) or f"req-{uuid.uuid4().hex[:12]}"

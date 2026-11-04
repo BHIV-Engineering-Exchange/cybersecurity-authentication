@@ -75,8 +75,7 @@ def restore_permission(req: RestoreRequest, request: Request, db: Session = Depe
     row = db.query(RevokedPermission).filter(RevokedPermission.role == role, RevokedPermission.action == action).first()
     restore_status = "RESTORED" if row else "NOT_REVOKED"
     if row:
-        db.delete(row)
-        db.commit()
+        db.delete(row)  # committed together with the audit event below; if that write fails, both roll back
     event = emit_canonical_event(
         event_type="access.restored", action="update",
         actor_id=f"cc_usr_{current_user.id}", role="superadmin",
@@ -128,9 +127,9 @@ async def revoke_access(
     or Tier 3 (token invalidation) revocations.
     Conforms to Phase 2 Access Control Contract POST /api/v1/access/revoke.
     """
+    # The middleware's id is the checked form of X-Trace-Id (CYB-15); the raw header is not trusted.
     trace_id = (
-        x_trace_id
-        or getattr(request.state, "trace_id", None)
+        getattr(request.state, "trace_id", None)
         or f"trace-{uuid.uuid4().hex[:16]}"
     )
     request_id = getattr(request.state, "request_id", None) or f"req-{uuid.uuid4().hex[:12]}"
@@ -237,9 +236,9 @@ async def revoke_access(
         if db.query(RevokedPermission).filter(RevokedPermission.role == role, RevokedPermission.action == action).first():
             revocation_status = "ALREADY_INACTIVE"
         else:
+            # Committed together with the audit event below; if that write fails, the revocation rolls back too.
             db.add(RevokedPermission(role=role, action=action, revocation_id=revocation_id,
                                      reason=req.reason, revoked_by=revoking_actor))
-            db.commit()
             revocation_status = "REVOKED"
 
     else:

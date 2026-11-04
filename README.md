@@ -60,6 +60,7 @@ python verification/build_reports.py
 | `BHIV_CORE_EVENT_URL`, `BHIV_BUCKET_EVIDENCE_URL` | Earlier BHIV Core/Bucket hooks used by evidence upload. |
 | `PROTECTED_ACCESS_RATE_LIMIT_PER_MINUTE` | Per-caller limit on protected access (default 60; per process). |
 | `INCIDENT_SYNTHETIC_DEMO` | `true` only for demos: wallets with no history get generated data, labelled synthetic. Default `false`. |
+| `LOGIN_MAX_ATTEMPTS_PER_MINUTE` | Login attempts per email per minute before `429` (default 20; per process). |
 
 Contracts, errors and statuses: [INTEGRATION.md](INTEGRATION.md). Responsibilities and limits: [BCAES_ALIGNMENT.md](BCAES_ALIGNMENT.md).
 

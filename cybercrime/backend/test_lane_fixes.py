@@ -263,3 +263,83 @@ def test_protected_access_is_rate_limited_per_caller(monkeypatch):
     codes = [client.post("/api/v1/protected/access", json=body, headers=_auth(caller)).status_code for _ in range(3)]
     assert codes[:2] == [200, 200]  # VAJRA not configured: DENY decisions, still answered
     assert codes[2] == 429
+
+
+# ------------------------------------------------------------------ audit iteration 6 follow-ups
+
+def test_recorded_dataset_path_states_provenance(investigator):
+    from app.db.models import FraudTransaction
+    wallet = "CREC" + uuid.uuid4().hex[:10]
+    db = SessionLocal()
+    for step, (orig, dest, amount) in enumerate([(wallet, "C1", 900.0), ("C2", wallet, 1200.0), (wallet, "M3", 50.0)], 1):
+        db.add(FraudTransaction(step=step, type="TRANSFER", amount=amount, name_orig=orig, old_balance_orig=0.0,
+                                new_balance_orig=0.0, name_dest=dest, is_fraud=0))
+    db.commit()
+    db.close()
+    body = client.post("/api/v1/incidents/analyze", headers=_auth(investigator), json={
+        "wallet_address": wallet, "description": "routine check (synthetic)"}).json()
+    assert body["data_basis"] == "recorded" and body["observed_tx_count"] == 3
+    assert body["transactions"] and not any(t["synthetic"] for t in body["transactions"])
+    assert 0 < body["confidence"] <= 0.8
+    text = " ".join(body["uncertainty"])
+    assert "generator script" in text and "step counter" in text  # provenance and invented times are disclosed
+
+
+def test_login_is_throttled_per_account_without_db_writes(monkeypatch):
+    monkeypatch.setattr(settings, "LOGIN_MAX_ATTEMPTS_PER_MINUTE", 3)
+    email = f"throttle-{uuid.uuid4().hex[:8]}@bhiv-verification.example"
+    codes = [_login(email, "x").status_code for _ in range(4)]
+    assert codes == [401, 401, 401, 429]
+    from app.api.v1.endpoints.auth import _account_ref
+    db = SessionLocal()
+    stored = db.query(AuditLog).filter(AuditLog.action == "auth.login:login",
+                                       AuditLog.entity_id == _account_ref(email, None)).count()
+    db.close()
+    assert stored == 3  # the throttled attempt wrote nothing
+
+
+def test_unknown_email_identifier_is_keyed():
+    import hashlib
+    from app.api.v1.endpoints.auth import _account_ref
+    email = "someone@bhiv-verification.example"
+    ref = _account_ref(email, None)
+    assert ref.startswith("unknown:") and ref != "unknown:" + hashlib.sha256(email.encode()).hexdigest()[:16]
+
+
+def test_deactivated_account_attempts_are_not_counted_as_an_attack():
+    user = _user("investigator", password="Right-pass-1", active=False)
+    for _ in range(THRESHOLD + 1):
+        assert _login(user.email, "Right-pass-1").status_code == 401  # correct password, inactive account
+    db = SessionLocal()
+    count = db.query(SecurityIncident).filter(SecurityIncident.target_ref == f"cc_usr_{user.id}").count()
+    db.close()
+    assert count == 0
+
+
+def test_restore_is_undone_if_its_audit_event_cannot_be_written(superadmin, monkeypatch):
+    from app.api.v1.endpoints import access as access_module
+    assert _revoke(superadmin, "investigator", "delete").json()["status"] == "REVOKED"
+    try:
+        def failing_emit(**kwargs):
+            raise RuntimeError("audit store unavailable (unit test)")
+        monkeypatch.setattr(access_module, "emit_canonical_event", failing_emit)
+        r = TestClient(app, raise_server_exceptions=False).post(
+            "/api/v1/access/restore", headers=_auth(superadmin),
+            json={"contract_version": "1.0.0", "role": "investigator", "action": "delete", "reason": "unit test restore (synthetic)"})
+        assert r.status_code == 500
+        db = SessionLocal()
+        still_revoked = db.query(RevokedPermission).filter(RevokedPermission.role == "investigator",
+                                                           RevokedPermission.action == "delete").count()
+        db.close()
+        assert still_revoked == 1  # no un-audited change
+    finally:
+        monkeypatch.undo()
+        assert _restore(superadmin, "investigator", "delete").json()["status"] == "RESTORED"
+
+
+def test_authz_check_does_not_echo_a_bad_trace_id(investigator):
+    bad = "bad trace with spaces"
+    r = client.post("/api/v1/authz/check", headers={**_auth(investigator), "X-Trace-Id": bad}, json={
+        "contract_version": "1.0.0", "subject": {"actor_id": f"cc_usr_{investigator.id}", "role": "investigator"},
+        "action": "read", "resource": {"type": "evidence", "id": "EV-1"}})
+    assert r.status_code == 200 and r.json()["trace_id"] != bad

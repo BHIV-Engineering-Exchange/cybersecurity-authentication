@@ -115,7 +115,9 @@ review). Details: CHANGELOG.md and DEFECTS.md.
   rehearsals that write nothing. Using that lane against the live node needs the VAJRA token and the VAJRA owner's
   agreement.
 - **Is the threat intelligence trustworthy?** More than before, but it is still rule-based. Since 2026-11-04 the
-  incident analysis uses recorded transactions only, and states its confidence and uncertainty (CYB-06, CYB-03).
+  incident analysis reads only the system's own transaction dataset, and states its confidence and uncertainty
+  (CYB-06, CYB-03). That dataset is filled by a generator script in this repository, so treat its results as test
+  results until real data is loaded.
   Failed-login detection is a count rule, not a model. Generated demo data exists only with
   `INCIDENT_SYNTHETIC_DEMO=true`, and is labelled synthetic.
 - **How do I undo a permission revocation?** `POST /api/v1/access/restore` as a superadmin.
