@@ -1,16 +1,16 @@
 {
   "meta": {
-    "run_id": "20261104T103939Z",
-    "started_utc": "2026-11-04T10:39:53Z",
-    "finished_utc": "2026-11-04T10:42:12Z",
-    "command": "python verification/run_verification.py --vajra-bin ../.vajra-local/bin/vajra-relay.exe --vajra-repo ../bhiv-VAJRA_Blockchain --tantra live --tantra-base http://163.128.209.18 --allow-live-tantra-write --work-root C:/tmp --out evidence_packet",
+    "run_id": "20261104T133229Z",
+    "started_utc": "2026-11-04T13:32:47Z",
+    "finished_utc": "2026-11-04T13:34:57Z",
+    "command": "python verification/run_verification.py --vajra-bin ../.vajra-local/bin/vajra-relay.exe --vajra-repo ../bhiv-VAJRA_Blockchain --tantra live --tantra-base http://163.128.209.18 --work-root C:/tmp --out C:/tmp/cyber-p0-rerun-133229",
     "mode": {
       "tantra": "live",
       "tantra_base": "http://163.128.209.18",
-      "live_tantra_write_allowed": true
+      "live_tantra_write_allowed": false
     },
     "versions": {
-      "cybersecurity_repo_commit": "59d2d639a3784353fb45e4610cfa362ea9064e24 (+ uncommitted changes)",
+      "cybersecurity_repo_commit": "4d1c687248fc1ee4a3d4be32233af75658298239",
       "vajra_repo_commit": "07d683c3656b936152367989e8458d18941471a7",
       "python": "3.12.7",
       "os": "Windows-11-10.0.26300-SP0"
@@ -18,105 +18,105 @@
     "services": {
       "cybersecurity-api": [
         {
-          "utc": "2026-11-04T10:39:46Z",
-          "seconds_to_healthy": 3.77,
-          "pid": 2688
+          "utc": "2026-11-04T13:32:40Z",
+          "seconds_to_healthy": 5.47,
+          "pid": 29924
         },
         {
-          "utc": "2026-11-04T10:40:11Z",
-          "seconds_to_healthy": 3.72,
-          "pid": 20340
+          "utc": "2026-11-04T13:33:08Z",
+          "seconds_to_healthy": 4.44,
+          "pid": 27572
         },
         {
-          "utc": "2026-11-04T10:40:24Z",
-          "seconds_to_healthy": 3.88,
-          "pid": 20976
+          "utc": "2026-11-04T13:33:23Z",
+          "seconds_to_healthy": 5.0,
+          "pid": 7920
         },
         {
-          "utc": "2026-11-04T10:41:04Z",
-          "seconds_to_healthy": 3.84,
-          "pid": 26496
+          "utc": "2026-11-04T13:33:41Z",
+          "seconds_to_healthy": 4.8,
+          "pid": 16056
         },
         {
-          "utc": "2026-11-04T10:41:12Z",
-          "seconds_to_healthy": 3.84,
-          "pid": 25064
+          "utc": "2026-11-04T13:33:49Z",
+          "seconds_to_healthy": 4.31,
+          "pid": 17544
         },
         {
-          "utc": "2026-11-04T10:41:29Z",
-          "seconds_to_healthy": 3.72,
-          "pid": 18404
+          "utc": "2026-11-04T13:34:07Z",
+          "seconds_to_healthy": 3.92,
+          "pid": 21204
         },
         {
-          "utc": "2026-11-04T10:41:32Z",
-          "seconds_to_healthy": 3.69,
-          "pid": 21596
+          "utc": "2026-11-04T13:34:12Z",
+          "seconds_to_healthy": 4.91,
+          "pid": 18464
         },
         {
-          "utc": "2026-11-04T10:41:42Z",
-          "seconds_to_healthy": 3.66,
-          "pid": 27704
+          "utc": "2026-11-04T13:34:23Z",
+          "seconds_to_healthy": 4.34,
+          "pid": 18252
         },
         {
-          "utc": "2026-11-04T10:41:46Z",
-          "seconds_to_healthy": 3.69,
-          "pid": 26812
+          "utc": "2026-11-04T13:34:27Z",
+          "seconds_to_healthy": 4.0,
+          "pid": 8600
         },
         {
-          "utc": "2026-11-04T10:41:51Z",
-          "seconds_to_healthy": 3.67,
-          "pid": 27904
+          "utc": "2026-11-04T13:34:33Z",
+          "seconds_to_healthy": 4.39,
+          "pid": 7972
         },
         {
-          "utc": "2026-11-04T10:41:55Z",
-          "seconds_to_healthy": 3.7,
-          "pid": 13732
+          "utc": "2026-11-04T13:34:38Z",
+          "seconds_to_healthy": 4.95,
+          "pid": 19208
         },
         {
-          "utc": "2026-11-04T10:41:59Z",
-          "seconds_to_healthy": 3.7,
-          "pid": 9888
+          "utc": "2026-11-04T13:34:44Z",
+          "seconds_to_healthy": 4.34,
+          "pid": 1608
         }
       ],
       "vajra-relay-node": [
         {
-          "utc": "2026-11-04T10:39:42Z",
-          "seconds_to_healthy": 0.78,
-          "pid": 12648
+          "utc": "2026-11-04T13:32:34Z",
+          "seconds_to_healthy": 0.84,
+          "pid": 13424
         },
         {
-          "utc": "2026-11-04T10:42:08Z",
-          "seconds_to_healthy": 0.53,
-          "pid": 10752
+          "utc": "2026-11-04T13:34:53Z",
+          "seconds_to_healthy": 0.69,
+          "pid": 25488
         },
         {
-          "utc": "2026-11-04T10:42:09Z",
-          "seconds_to_healthy": 0.56,
-          "pid": 26432
+          "utc": "2026-11-04T13:34:53Z",
+          "seconds_to_healthy": 0.61,
+          "pid": 6372
         },
         {
-          "utc": "2026-11-04T10:42:11Z",
-          "seconds_to_healthy": 0.58,
-          "pid": 12968
+          "utc": "2026-11-04T13:34:56Z",
+          "seconds_to_healthy": 0.66,
+          "pid": 20992
         },
         {
-          "utc": "2026-11-04T10:42:11Z",
-          "seconds_to_healthy": 0.48,
-          "pid": 13316
+          "utc": "2026-11-04T13:34:56Z",
+          "seconds_to_healthy": 0.7,
+          "pid": 28248
         },
         {
-          "utc": "2026-11-04T10:42:12Z",
-          "seconds_to_healthy": 0.59,
-          "pid": 20256
+          "utc": "2026-11-04T13:34:57Z",
+          "seconds_to_healthy": 0.66,
+          "pid": 4932
         }
       ]
     },
     "summary": {
-      "PASS": 36,
-      "FAIL": 9,
+      "PASS": 42,
+      "FAIL": 3,
       "ERROR": 0,
-      "BLOCKED": 1,
-      "SKIPPED": 0
+      "BLOCKED": 0,
+      "SKIPPED": 1
     },
     "total": 46
   },
@@ -156,6 +156,12 @@
           "ok": true
         },
         {
+          "what": "anonymous health shows no server file-system paths",
+          "expected": false,
+          "actual": false,
+          "ok": true
+        },
+        {
           "what": "system health: database ok",
           "expected": true,
           "actual": true,
@@ -183,8 +189,8 @@
       "trace_ids": [],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:39:53Z",
-      "duration_ms": 797
+      "started_utc": "2026-11-04T13:32:47Z",
+      "duration_ms": 937
     },
     {
       "id": "O-02",
@@ -240,8 +246,8 @@
       "trace_ids": [],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:39:53Z",
-      "duration_ms": 1530
+      "started_utc": "2026-11-04T13:32:48Z",
+      "duration_ms": 1609
     },
     {
       "id": "S1-01",
@@ -271,14 +277,14 @@
         },
         {
           "what": "X-Trace-Id echoed",
-          "expected": "58a92b86-47d4-4087-ad4a-702a2d451d38",
-          "actual": "58a92b86-47d4-4087-ad4a-702a2d451d38",
+          "expected": "f55cc7f8-eb12-45a6-8cfc-3301c57118e5",
+          "actual": "f55cc7f8-eb12-45a6-8cfc-3301c57118e5",
           "ok": true
         },
         {
           "what": "trace_id in error body",
-          "expected": "58a92b86-47d4-4087-ad4a-702a2d451d38",
-          "actual": "58a92b86-47d4-4087-ad4a-702a2d451d38",
+          "expected": "f55cc7f8-eb12-45a6-8cfc-3301c57118e5",
+          "actual": "f55cc7f8-eb12-45a6-8cfc-3301c57118e5",
           "ok": true
         },
         {
@@ -313,12 +319,12 @@
         }
       ],
       "trace_ids": [
-        "58a92b86-47d4-4087-ad4a-702a2d451d38"
+        "f55cc7f8-eb12-45a6-8cfc-3301c57118e5"
       ],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:39:55Z",
-      "duration_ms": 62
+      "started_utc": "2026-11-04T13:32:50Z",
+      "duration_ms": 77
     },
     {
       "id": "S1-02",
@@ -348,12 +354,12 @@
         }
       ],
       "trace_ids": [
-        "cffd7518-93d9-4678-ab4c-f1d245415666"
+        "925bfc81-286e-4a0e-b5bf-44bb4f147a30"
       ],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:39:55Z",
-      "duration_ms": 0
+      "started_utc": "2026-11-04T13:32:50Z",
+      "duration_ms": 15
     },
     {
       "id": "S1-03",
@@ -395,11 +401,11 @@
         }
       ],
       "trace_ids": [
-        "b286b85e-12c6-43c5-bab8-754610201ceb"
+        "51462878-21b0-4871-97ff-c105d1ba0e32"
       ],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:39:55Z",
+      "started_utc": "2026-11-04T13:32:50Z",
       "duration_ms": 47
     },
     {
@@ -423,12 +429,12 @@
         }
       ],
       "trace_ids": [
-        "b04675b6-f5ce-481a-9a5a-d3a730c60f46"
+        "36dd0fab-9c50-414a-a8e1-aa9490b34db8"
       ],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:39:55Z",
-      "duration_ms": 0
+      "started_utc": "2026-11-04T13:32:50Z",
+      "duration_ms": 15
     },
     {
       "id": "S1-06",
@@ -470,14 +476,14 @@
         }
       ],
       "trace_ids": [
-        "a57a92fc-8c73-427c-a118-ffd21c7d3146",
-        "1f200fed-1cc6-4dcd-97b2-73ad422b19c9",
-        "38d405b0-8f9b-492a-8b35-c910c10b8dec"
+        "439c1290-a6ca-47a8-9348-9bddaca6e51d",
+        "01bfbdeb-3fc8-4672-b4bd-f3f2ea53e56d",
+        "e0c3e02a-1dea-4948-9907-a8e747e4ee7c"
       ],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:39:55Z",
-      "duration_ms": 15
+      "started_utc": "2026-11-04T13:32:50Z",
+      "duration_ms": 16
     },
     {
       "id": "V-01",
@@ -496,31 +502,31 @@
         {
           "what": "POST /api/admin/add-tokens without credentials is refused",
           "expected": "401 or 403",
-          "actual": "200 (request accepted)",
+          "actual": "200, handler ran; reply: {\"error\":\"token BHX not found\",\"success\":false}",
           "ok": false
         },
         {
           "what": "POST /api/v1/permission/grant without credentials is refused",
           "expected": "401 or 403",
-          "actual": "201 (request accepted)",
+          "actual": "201, handler ran; reply: {\"commitment\":\"2ea2808d8d18edb56324e7c94e11560e3b923615a0026398357943cfac2162ac\",\"permission_id\":\"perm-cyber-p0-test-subj-\",\"record\":{\"permission_id\":\"perm-cybe",
           "ok": false
         },
         {
           "what": "POST /api/cybercrime/freeze without credentials is refused",
           "expected": "401 or 403",
-          "actual": "200 (request accepted)",
+          "actual": "200, handler ran; reply: {\"success\":true}",
           "ok": false
         }
       ],
       "trace_ids": [
-        "c69962a0-7b0d-4316-8128-481614ed27db"
+        "aeca3744-3342-4eb2-95e0-432511cb981b"
       ],
       "notes": [],
       "defects": [
         "VAJ-06"
       ],
-      "started_utc": "2026-11-04T10:39:55Z",
-      "duration_ms": 16
+      "started_utc": "2026-11-04T13:32:50Z",
+      "duration_ms": 15
     },
     {
       "id": "V-02",
@@ -567,11 +573,11 @@
         }
       ],
       "trace_ids": [
-        "0472e112-ceb5-4fe0-979e-ee820d19442c",
-        "ea73f7bf-5496-40aa-ad58-c8779d734820",
-        "3584deaf-efca-4171-adec-7f777ed650ad",
-        "e48610b4-5720-4e49-a3c8-b62fd9be33b1",
-        "b6d1eb70-cec0-4a0e-9ec8-d30d0d40e17b"
+        "f7b208ff-1d79-4c85-aec4-37d99125a583",
+        "08087568-c16b-4d4e-aca0-ab5ab206de97",
+        "15b28bd0-0614-48b9-a9a8-cf81fddc10aa",
+        "3b78ef08-613d-4a8f-be55-ed947a4d3382",
+        "4aab88d2-d029-4b85-94da-f605209eb16b"
       ],
       "notes": [
         "permission ids: ['perm-cyber-p0-test-long-', 'perm-cyber-p0-test-long-']; revoke(beta) -> HTTP 200"
@@ -579,8 +585,8 @@
       "defects": [
         "VAJ-07"
       ],
-      "started_utc": "2026-11-04T10:39:55Z",
-      "duration_ms": 0
+      "started_utc": "2026-11-04T13:32:50Z",
+      "duration_ms": 15
     },
     {
       "id": "S1-05",
@@ -640,12 +646,12 @@
         }
       ],
       "trace_ids": [
-        "eca2c9bc-262d-48f3-bbff-3f05c3e0ea9f"
+        "3ac6921e-998e-4546-a949-1cb98382c194"
       ],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:39:55Z",
-      "duration_ms": 1327
+      "started_utc": "2026-11-04T13:32:50Z",
+      "duration_ms": 1515
     },
     {
       "id": "S1-04",
@@ -659,26 +665,22 @@
         "cybersecurity"
       ],
       "evidence_level": "OFFLINE-VERIFIED",
-      "status": "FAIL",
+      "status": "PASS",
       "expectations": [
         {
           "what": "anonymous self-registration does not yield investigator data access",
           "expected": "registration refused (401/403), account pending (login 401/403), or data access 401/403",
-          "actual": "register=200, login=200, GET /api/v1/cases/=200",
-          "ok": false
+          "actual": "register=401, login=401, GET /api/v1/cases/=None",
+          "ok": true
         }
       ],
-      "trace_ids": [
-        "2a57ea1f-d72b-4e80-b6a5-f2da37475990"
-      ],
+      "trace_ids": [],
       "notes": [
-        "public register returned HTTP 200, role=investigator, is_active=True"
+        "public register returned HTTP 401, role=None, is_active=None"
       ],
-      "defects": [
-        "CYB-01"
-      ],
-      "started_utc": "2026-11-04T10:39:56Z",
-      "duration_ms": 1077
+      "defects": [],
+      "started_utc": "2026-11-04T13:32:52Z",
+      "duration_ms": 1250
     },
     {
       "id": "S2-01",
@@ -696,13 +698,13 @@
       "status": "PASS",
       "expectations": [
         {
-          "what": "VAJRA GRANT transition accepted for cyber-p0-test-revocable-user-a409974e2d",
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-revocable-user-8c03db452e",
           "expected": 200,
           "actual": 200,
           "ok": true
         },
         {
-          "what": "VAJRA USE transition accepted for cyber-p0-test-revocable-user-a409974e2d",
+          "what": "VAJRA USE transition accepted for cyber-p0-test-revocable-user-8c03db452e",
           "expected": 200,
           "actual": 200,
           "ok": true
@@ -751,18 +753,18 @@
         }
       ],
       "trace_ids": [
-        "68e35b63-fe66-4727-9c38-259f1456dfe3",
-        "6ee9b018-1a74-4225-8f26-974cee303cd2",
-        "f1732ec9-42e8-4339-8ce8-75fe45cb64fd",
-        "1eb62ded-4a50-406f-a278-1a72a73b2cd4",
-        "b2eddb78-2185-4670-8ba3-24fc57744321",
-        "3104e5ce-4f76-45fc-bf23-602a10c01eb2",
-        "465934d1-92af-4ca3-baa7-804c6dc4df26"
+        "3172c249-2fea-40e3-8a2b-447be0685f5b",
+        "a5cb1a93-d27c-479b-a82b-fac175e28938",
+        "1a99bfec-7d80-4083-89be-187098e520ab",
+        "321303c2-7798-48ee-a6c6-11033ddc0d91",
+        "9b47b68f-090d-4aa5-b2e7-f122314fa360",
+        "37e2659b-5520-4114-83a1-df66e6bb64fc",
+        "22c9d65c-3c95-4cbc-8762-69c5804bc17c"
       ],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:39:58Z",
-      "duration_ms": 4077
+      "started_utc": "2026-11-04T13:32:53Z",
+      "duration_ms": 4640
     },
     {
       "id": "S4-01",
@@ -779,13 +781,13 @@
       "status": "PASS",
       "expectations": [
         {
-          "what": "VAJRA GRANT transition accepted for cyber-p0-test-dup-e372812921",
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-dup-376df00dca",
           "expected": 200,
           "actual": 200,
           "ok": true
         },
         {
-          "what": "VAJRA USE transition accepted for cyber-p0-test-dup-e372812921",
+          "what": "VAJRA USE transition accepted for cyber-p0-test-dup-376df00dca",
           "expected": 200,
           "actual": 200,
           "ok": true
@@ -804,14 +806,14 @@
         },
         {
           "what": "same decision id (no second decision)",
-          "expected": "05d739a2b34348f7ab23ffbb0a2e2318",
-          "actual": "05d739a2b34348f7ab23ffbb0a2e2318",
+          "expected": "de9c70046c6648d3b08f061fed847fa5",
+          "actual": "de9c70046c6648d3b08f061fed847fa5",
           "ok": true
         },
         {
           "what": "same audit event",
-          "expected": "c1cea1b0-926a-476f-9ba6-50c73e499a37",
-          "actual": "c1cea1b0-926a-476f-9ba6-50c73e499a37",
+          "expected": "ac26cae0-1d2b-4b98-b3dd-45d435fdb498",
+          "actual": "ac26cae0-1d2b-4b98-b3dd-45d435fdb498",
           "ok": true
         },
         {
@@ -828,15 +830,15 @@
         }
       ],
       "trace_ids": [
-        "f024b98a-24c7-4590-b245-fede5b6ad9e9",
-        "1469c4d2-3728-4cfc-8444-f6ac2106e133",
-        "8bfd3501-821c-4275-bbb2-78ae6aa7ce07",
-        "7c330e7f-79fd-4f3a-a5d5-1897ff19930c"
+        "7681998a-6741-4b50-970c-5393559b5933",
+        "0ca9db34-acb2-441f-8945-2c72068f4dcf",
+        "5d99f118-c1bc-4df8-869d-70d157397560",
+        "e31b504e-5b36-43f4-b028-3a18770ede6e"
       ],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:40:02Z",
-      "duration_ms": 2141
+      "started_utc": "2026-11-04T13:32:57Z",
+      "duration_ms": 2344
     },
     {
       "id": "S4-02",
@@ -877,11 +879,11 @@
         }
       ],
       "trace_ids": [
-        "6521cebd-e576-4038-ac2c-2dfe11f5221f"
+        "be2a5426-90e9-43be-9c49-61f324668b6f"
       ],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:40:04Z",
+      "started_utc": "2026-11-04T13:33:00Z",
       "duration_ms": 30
     },
     {
@@ -899,13 +901,13 @@
       "status": "PASS",
       "expectations": [
         {
-          "what": "VAJRA GRANT transition accepted for cyber-p0-test-key-owner-c6d8e4859e",
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-key-owner-7c5f555140",
           "expected": 200,
           "actual": 200,
           "ok": true
         },
         {
-          "what": "VAJRA USE transition accepted for cyber-p0-test-key-owner-c6d8e4859e",
+          "what": "VAJRA USE transition accepted for cyber-p0-test-key-owner-7c5f555140",
           "expected": 200,
           "actual": 200,
           "ok": true
@@ -936,15 +938,15 @@
         }
       ],
       "trace_ids": [
-        "bb1f4cee-2bef-4014-a307-efdff234f036",
-        "7a42e00a-d730-488b-b9f6-ebec7a6ff694",
-        "6d43ec7f-13f7-4470-997a-9f789d3c0ac2",
-        "beaedac1-7af2-4250-835b-a4116b711eee"
+        "a2bab810-c4da-45e7-bb62-0d6dc5d2613f",
+        "dbc33d6a-de64-409a-907c-52467a4b87fa",
+        "70d6d0b6-830f-4d14-90cd-00896489539b",
+        "48cf50cb-f863-44dd-8749-e2ab428e66b8"
       ],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:40:04Z",
-      "duration_ms": 1469
+      "started_utc": "2026-11-04T13:33:00Z",
+      "duration_ms": 1625
     },
     {
       "id": "S4-05",
@@ -962,13 +964,13 @@
       "status": "PASS",
       "expectations": [
         {
-          "what": "VAJRA GRANT transition accepted for cyber-p0-test-replay-after-revoke-7095602db5",
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-replay-after-revoke-4ffa7ace68",
           "expected": 200,
           "actual": 200,
           "ok": true
         },
         {
-          "what": "VAJRA USE transition accepted for cyber-p0-test-replay-after-revoke-7095602db5",
+          "what": "VAJRA USE transition accepted for cyber-p0-test-replay-after-revoke-4ffa7ace68",
           "expected": 200,
           "actual": 200,
           "ok": true
@@ -1005,16 +1007,16 @@
         }
       ],
       "trace_ids": [
-        "5aeb2f40-bed4-462e-b29c-93ffd9ca4014",
-        "36cb2446-e036-49f8-993c-1b9f694f1424",
-        "edb6e306-9343-4f60-947d-667204ff61e3",
-        "784693eb-a084-4744-9981-11d59c03eba9",
-        "ea7af5cc-8f43-42c0-95bf-9ad2f310eee8"
+        "edcb907e-e43a-424d-a13f-6f94790452f5",
+        "b9b51e5e-a046-4bb1-bb87-838e3cb8a8b5",
+        "539cc815-5b77-4574-8068-8dcf2febf8fb",
+        "e770652b-bdef-4632-8056-1a187a3faf2c",
+        "6b5136ce-0010-41ec-915e-b64429ba81ad"
       ],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:40:05Z",
-      "duration_ms": 2000
+      "started_utc": "2026-11-04T13:33:01Z",
+      "duration_ms": 2282
     },
     {
       "id": "P-A",
@@ -1039,13 +1041,13 @@
           "ok": true
         },
         {
-          "what": "VAJRA GRANT transition accepted for cyber-p0-test-consenting-user-754e175ba5",
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-consenting-user-5db9e34290",
           "expected": 200,
           "actual": 200,
           "ok": true
         },
         {
-          "what": "VAJRA USE transition accepted for cyber-p0-test-consenting-user-754e175ba5",
+          "what": "VAJRA USE transition accepted for cyber-p0-test-consenting-user-5db9e34290",
           "expected": 200,
           "actual": 200,
           "ok": true
@@ -1088,17 +1090,17 @@
         }
       ],
       "trace_ids": [
-        "3b04c3cf-ef74-489b-b9df-91126a3a53cb",
-        "da95932d-7cf7-4d1a-a3cc-be1ae60afce1",
-        "85cd0e37-a191-4609-a271-a7f0f3454fbc",
-        "cyber-p0-test-4d0b8bc8-fd4d-4198-9442-9bc3a7cc28fd"
+        "4b4861a3-4a79-41ae-8436-f87c3bfd278e",
+        "41795f97-81d0-403e-b57f-0ac0f7ff1a24",
+        "9799fc7a-db60-495d-a161-e1045fd2e5d2",
+        "cyber-p0-test-2bac3fe6-29e1-4c70-b81d-ca01188a9127"
       ],
       "notes": [
         "TANTRA evidence status: CONTRACT_REJECTED (event_type_not_registered); evidence.complete=False, gaps=['tantra']"
       ],
       "defects": [],
-      "started_utc": "2026-11-04T10:40:11Z",
-      "duration_ms": 2937
+      "started_utc": "2026-11-04T13:33:08Z",
+      "duration_ms": 3015
     },
     {
       "id": "S8-01",
@@ -1117,27 +1119,27 @@
       "status": "PASS",
       "expectations": [
         {
-          "what": "VAJRA GRANT transition accepted for cyber-p0-test-traced-3edd842050",
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-traced-fbb67a88d0",
           "expected": 200,
           "actual": 200,
           "ok": true
         },
         {
-          "what": "VAJRA USE transition accepted for cyber-p0-test-traced-3edd842050",
+          "what": "VAJRA USE transition accepted for cyber-p0-test-traced-fbb67a88d0",
           "expected": 200,
           "actual": 200,
           "ok": true
         },
         {
           "what": "response header trace",
-          "expected": "cyber-p0-test-80c17aba-e107-426e-af95-7904ea5c1eb1",
-          "actual": "cyber-p0-test-80c17aba-e107-426e-af95-7904ea5c1eb1",
+          "expected": "cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77",
+          "actual": "cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77",
           "ok": true
         },
         {
           "what": "response body trace",
-          "expected": "cyber-p0-test-80c17aba-e107-426e-af95-7904ea5c1eb1",
-          "actual": "cyber-p0-test-80c17aba-e107-426e-af95-7904ea5c1eb1",
+          "expected": "cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77",
+          "actual": "cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77",
           "ok": true
         },
         {
@@ -1148,8 +1150,8 @@
         },
         {
           "what": "audit event id matches the response",
-          "expected": "bbe66d6d-5ab4-4f3d-8e42-11fc61c0ecbd",
-          "actual": "bbe66d6d-5ab4-4f3d-8e42-11fc61c0ecbd",
+          "expected": "0a96efea-4d21-4720-be42-ed3d3df49b52",
+          "actual": "0a96efea-4d21-4720-be42-ed3d3df49b52",
           "ok": true
         },
         {
@@ -1160,8 +1162,8 @@
         },
         {
           "what": "audit record points to the VAJRA row",
-          "expected": "cyber-p0-test-80c17aba-e107-426e-af95-7904ea5c1eb1::1a5b84c3e2b243b2b5de34dab842fb31",
-          "actual": "cyber-p0-test-80c17aba-e107-426e-af95-7904ea5c1eb1::1a5b84c3e2b243b2b5de34dab842fb31",
+          "expected": "cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77::364826d5b0d04140ab72965389a1e092",
+          "actual": "cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77::364826d5b0d04140ab72965389a1e092",
           "ok": true
         },
         {
@@ -1172,8 +1174,8 @@
         },
         {
           "what": "VAJRA evidence hash matches the response",
-          "expected": "sha256:97724ad07d01e82eaac19ae146b5f30466f6646d717cf82a2a44695a1d525adc",
-          "actual": "sha256:97724ad07d01e82eaac19ae146b5f30466f6646d717cf82a2a44695a1d525adc",
+          "expected": "sha256:83865c8477b957be6b68940fa4f47a6aab7e2e4dbed17194d5e8d54eff87ac91",
+          "actual": "sha256:83865c8477b957be6b68940fa4f47a6aab7e2e4dbed17194d5e8d54eff87ac91",
           "ok": true
         },
         {
@@ -1190,14 +1192,14 @@
         }
       ],
       "trace_ids": [
-        "f60a7d8f-6c4e-400f-bc3b-8c765c79812d",
-        "1aad3306-7bf4-4077-82ed-94454e701ff4",
-        "cyber-p0-test-80c17aba-e107-426e-af95-7904ea5c1eb1"
+        "76f08f60-5cc1-4a35-b6d6-938da3508fe3",
+        "38fbe149-1856-4d87-b5b0-0495c043e836",
+        "cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77"
       ],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:40:14Z",
-      "duration_ms": 2609
+      "started_utc": "2026-11-04T13:33:11Z",
+      "duration_ms": 2844
     },
     {
       "id": "S5-01",
@@ -1216,13 +1218,13 @@
       "status": "PASS",
       "expectations": [
         {
-          "what": "VAJRA GRANT transition accepted for cyber-p0-test-tantra-gate-193dc5846d",
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-tantra-gate-e9e1c9664e",
           "expected": 200,
           "actual": 200,
           "ok": true
         },
         {
-          "what": "VAJRA USE transition accepted for cyber-p0-test-tantra-gate-193dc5846d",
+          "what": "VAJRA USE transition accepted for cyber-p0-test-tantra-gate-e9e1c9664e",
           "expected": 200,
           "actual": 200,
           "ok": true
@@ -1265,16 +1267,16 @@
         }
       ],
       "trace_ids": [
-        "5c8cc7c4-a63f-499f-be6c-f32b54dcfdd0",
-        "0672d37b-2608-4e89-abe2-a7711a7ca60f",
-        "cyber-p0-test-35797205-3f70-438f-ae00-dd5382899ff0"
+        "9f940ec9-716b-45bc-9dbf-b186cf9b6a95",
+        "b31b58cd-147f-4c64-a454-a12273558641",
+        "cyber-p0-test-3d551675-ca1a-4a29-a940-b6a4a6b8de02"
       ],
       "notes": [
         "TANTRA registered event types reported by the live gate: ['adaptive_decision', 'bucket_memory_saved', 'integrity_probe', 'review_completed', 'task_submit', 'task_submit_failed', 'truth_classification']"
       ],
       "defects": [],
-      "started_utc": "2026-11-04T10:40:17Z",
-      "duration_ms": 3125
+      "started_utc": "2026-11-04T13:33:14Z",
+      "duration_ms": 3577
     },
     {
       "id": "S5-04",
@@ -1304,12 +1306,12 @@
         }
       ],
       "trace_ids": [
-        "cyber-p0-test-170472ee-ff37-4d46-b06c-235ce4c4f7bf"
+        "cyber-p0-test-0bdb00db-bafc-47dd-be15-d044e8f6acbb"
       ],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:40:24Z",
-      "duration_ms": 1109
+      "started_utc": "2026-11-04T13:33:23Z",
+      "duration_ms": 562
     },
     {
       "id": "S8-02",
@@ -1324,37 +1326,16 @@
         "cybersecurity",
         "tantra-live"
       ],
-      "evidence_level": "LIVE-VERIFIED (TANTRA registered integrity_probe contract; sent by the module's client code in-process)",
-      "status": "PASS",
-      "expectations": [
-        {
-          "what": "TANTRA ledger write",
-          "expected": "RECORDED",
-          "actual": "RECORDED",
-          "ok": true
-        },
-        {
-          "what": "TANTRA replay verification",
-          "expected": "MATCH",
-          "actual": "MATCH",
-          "ok": true
-        },
-        {
-          "what": "TANTRA forwarded to PRANA",
-          "expected": "forwarded",
-          "actual": "forwarded",
-          "ok": true
-        }
-      ],
-      "trace_ids": [
-        "cyber-p0-test-80c17aba-e107-426e-af95-7904ea5c1eb1"
-      ],
+      "evidence_level": "NOT RUN (skipped in this mode)",
+      "status": "SKIPPED",
+      "expectations": [],
+      "trace_ids": [],
       "notes": [
-        "karma_event_id=388ac0bb-c817-40ee-8877-84a39ab8d2b3 payload_hash=d09bb3d448f661e72de55851912ff9ac0d85ff4122b2273c05348d762fabf2bb"
+        "live TANTRA write not enabled (--allow-live-tantra-write); nothing sent"
       ],
       "defects": [],
-      "started_utc": "2026-11-04T10:40:25Z",
-      "duration_ms": 25922
+      "started_utc": "2026-11-04T13:33:23Z",
+      "duration_ms": 0
     },
     {
       "id": "S3-01",
@@ -1368,7 +1349,7 @@
         "cybersecurity"
       ],
       "evidence_level": "OFFLINE-VERIFIED",
-      "status": "FAIL",
+      "status": "PASS",
       "expectations": [
         {
           "what": "analysis returned",
@@ -1379,21 +1360,19 @@
         {
           "what": "structured confidence/uncertainty field present",
           "expected": true,
-          "actual": false,
-          "ok": false
+          "actual": true,
+          "ok": true
         }
       ],
       "trace_ids": [
-        "f176aa48-3db7-47ca-a53b-0bac514b40de"
+        "92a19b2f-7761-4f06-b8b3-f40bc6d4df58"
       ],
       "notes": [
-        "output fields: ['detected_patterns', 'graph_data', 'report_id', 'risk_level', 'risk_score', 'summary', 'system_conclusion', 'timeline', 'transactions', 'wallet']; risk_score=0.6, risk_level=HIGH; system_conclusion='This wallet exhibits behavior consistent with money laundering via layering, involving rapid fund aggregation followed by multi-hop transfers through intermedia'"
+        "output fields: ['confidence', 'data_basis', 'detected_patterns', 'graph_data', 'observed_tx_count', 'report_id', 'risk_level', 'risk_score', 'summary', 'system_conclusion', 'timeline', 'transactions', 'uncertainty', 'wallet']; risk_score=0.0, risk_level=INSUFFICIENT DATA; system_conclusion='No transaction records were found for this wallet, so no fraud assessment was made. Add transaction data or evidence and analyse again.'"
       ],
-      "defects": [
-        "CYB-03"
-      ],
-      "started_utc": "2026-11-04T10:40:51Z",
-      "duration_ms": 155
+      "defects": [],
+      "started_utc": "2026-11-04T13:33:23Z",
+      "duration_ms": 187
     },
     {
       "id": "S3-02",
@@ -1429,13 +1408,13 @@
         }
       ],
       "trace_ids": [
-        "d4d87a70-1fbe-41fe-bda9-26bf67c8db35"
+        "51f5463e-addc-4bd9-bed3-15d09c7d3b9b"
       ],
       "notes": [
         "heuristic check: based on the audit store and the response fields (absence of recorded actions)"
       ],
       "defects": [],
-      "started_utc": "2026-11-04T10:40:51Z",
+      "started_utc": "2026-11-04T13:33:23Z",
       "duration_ms": 62
     },
     {
@@ -1451,7 +1430,7 @@
         "cybersecurity"
       ],
       "evidence_level": "OFFLINE-VERIFIED",
-      "status": "FAIL",
+      "status": "PASS",
       "expectations": [
         {
           "what": "analysis returned",
@@ -1462,31 +1441,24 @@
         {
           "what": "no unlabelled transactions are reported for a wallet with no history",
           "expected": "0 transactions, or every transaction labelled synthetic",
-          "actual": "16 transactions, labelled synthetic: False",
-          "ok": false
+          "actual": "0 transactions, labelled synthetic: True",
+          "ok": true
         },
         {
           "what": "no fraud pattern asserted without observed data",
           "expected": [],
-          "actual": [
-            "Money Laundering (Layering)",
-            "Multiple Hop Transfers",
-            "Circular Movement",
-            "High Transaction Frequency"
-          ],
-          "ok": false
+          "actual": [],
+          "ok": true
         }
       ],
       "trace_ids": [
-        "e66c431e-2e24-4a56-a958-b00a629466b1"
+        "b411eef8-85df-4f74-91e7-aa84dc0c6479"
       ],
       "notes": [
-        "returned 16 transactions, patterns=['Money Laundering (Layering)', 'Multiple Hop Transfers', 'Circular Movement', 'High Transaction Frequency'], risk=HIGH; conclusion='This wallet exhibits behavior consistent with money laundering via layering, involving rapid fund aggregation followed by multi-hop transfer'"
+        "returned 0 transactions, patterns=[], risk=INSUFFICIENT DATA; conclusion='No transaction records were found for this wallet, so no fraud assessment was made. Add transaction data or evidence and analyse again.'"
       ],
-      "defects": [
-        "CYB-06"
-      ],
-      "started_utc": "2026-11-04T10:40:51Z",
+      "defects": [],
+      "started_utc": "2026-11-04T13:33:23Z",
       "duration_ms": 31
     },
     {
@@ -1513,16 +1485,20 @@
           "expected": "pending",
           "actual": "pending",
           "ok": true
+        },
+        {
+          "what": "upload reports the Bucket outcome (Bucket not configured in this run)",
+          "expected": "not_configured",
+          "actual": "not_configured",
+          "ok": true
         }
       ],
       "trace_ids": [
-        "3944e34b-3d4d-4af4-a2b7-0b0defe513a5"
+        "e7297fef-aae8-433b-94f7-41f8799e1b9f"
       ],
-      "notes": [
-        "the upload response has no field that reports the Bucket outcome; the outcome is only in the service log (CYB-08)"
-      ],
+      "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:40:51Z",
+      "started_utc": "2026-11-04T13:33:23Z",
       "duration_ms": 62
     },
     {
@@ -1538,7 +1514,7 @@
         "cybersecurity"
       ],
       "evidence_level": "OFFLINE-VERIFIED",
-      "status": "FAIL",
+      "status": "PASS",
       "expectations": [
         {
           "what": "every failed attempt denied",
@@ -1563,49 +1539,128 @@
         {
           "what": "failed logins recorded as security events in the audit store",
           "expected": ">= 6",
-          "actual": 0,
-          "ok": false
+          "actual": 7,
+          "ok": true
         },
         {
           "what": "login error does not reveal whether the account exists",
           "expected": true,
-          "actual": false,
-          "ok": false
+          "actual": true,
+          "ok": true
         }
       ],
       "trace_ids": [],
       "notes": [
         "correct password after 6 failures: HTTP 200 (no lockout or step-up observed)"
       ],
-      "defects": [
-        "CYB-04",
-        "CYB-05"
-      ],
-      "started_utc": "2026-11-04T10:40:51Z",
-      "duration_ms": 4234
+      "defects": [],
+      "started_utc": "2026-11-04T13:33:24Z",
+      "duration_ms": 6030
     },
     {
       "id": "P-C2",
-      "title": "Proof C ATTACK (intelligence): detection and correlation of the attack",
+      "title": "Proof C ATTACK (intelligence): the failed logins are detected and correlated into one incident for review",
       "scenario": "Mandatory proof C (10-day)",
       "refs": [
         "10-day 20.C",
         "EOD Shivam threat assessment",
-        "EOD Aryan correlation"
+        "EOD Aryan correlation",
+        "10-day rule 8 no silent authority"
       ],
       "systems": [
         "cybersecurity"
       ],
-      "evidence_level": "BLOCKED-EXTERNAL (nothing executed)",
-      "status": "BLOCKED",
-      "expectations": [],
-      "trace_ids": [],
+      "evidence_level": "OFFLINE-VERIFIED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "incident list readable by a superadmin",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "one open incident correlates the failed logins on the attacked account",
+          "expected": 1,
+          "actual": 1,
+          "ok": true
+        },
+        {
+          "what": "incident links >= 5 failed-login security events found in the audit store",
+          "expected": ">= 5",
+          "actual": 7,
+          "ok": true
+        },
+        {
+          "what": "confidence stated (0-1)",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "uncertainty stated",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "rule id and version recorded",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "left open for human review (no autonomous action)",
+          "expected": [
+            "open",
+            true
+          ],
+          "actual": [
+            "open",
+            true
+          ],
+          "ok": true
+        },
+        {
+          "what": "one threat.detected security event for the incident",
+          "expected": 1,
+          "actual": 1,
+          "ok": true
+        },
+        {
+          "what": "observed facts kept apart from the inference",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "evidence gaps and a proposed next action stated (no action taken)",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "TANTRA-compatible response envelope prepared, marked not sent (no contract yet)",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "attacked account still usable (detection blocks no one)",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "41426103-a2a4-4b71-83ac-f69e680a8852"
+      ],
       "notes": [
-        "No threat-assessment or correlation component consumes authentication/access signals in this repository at the tested commit. The existing incident analysis is wallet-based (and has defects CYB-03, CYB-06); fraud-evidence-system has case-linking correlation that is not wired to these signals. Owners: Shivam (threat assessment), Aryan Dias (correlation); raised in the EOD report of 2026-11-04."
+        "incident 5af465e3-45d2-59cb-8d5b-762c584605c6: 7 events, severity medium, confidence 0.7; uncertainty: ['Rule-based count (7 failed logins linked; 5 within 10 minutes open an incident); not a trained model, and the confidence is a fixed function of the count, not a calibrated probability.', 'Cannot tell an attacker from a user who forgot the password.', 'Source addresses are recorded in each event; no IP reputation or geolocation data is used.']"
       ],
       "defects": [],
-      "started_utc": "2026-11-04T10:40:55Z",
-      "duration_ms": 0
+      "started_utc": "2026-11-04T13:33:30Z",
+      "duration_ms": 640
     },
     {
       "id": "P-C3",
@@ -1623,13 +1678,13 @@
       "status": "PASS",
       "expectations": [
         {
-          "what": "VAJRA GRANT transition accepted for cyber-p0-test-compromised-actor-1f0a2bef03",
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-compromised-actor-8a9e943d6d",
           "expected": 200,
           "actual": 200,
           "ok": true
         },
         {
-          "what": "VAJRA USE transition accepted for cyber-p0-test-compromised-actor-1f0a2bef03",
+          "what": "VAJRA USE transition accepted for cyber-p0-test-compromised-actor-8a9e943d6d",
           "expected": 200,
           "actual": 200,
           "ok": true
@@ -1678,20 +1733,20 @@
         }
       ],
       "trace_ids": [
-        "52b93057-e71f-48a8-84d3-9c403ffe9fc2",
-        "089ca3d7-2de7-480e-a4e5-5d8b2b0b9acc",
-        "41e4b60d-3d3c-4339-a78b-2bd8b4c60ef3",
-        "5f82f928-409e-4cb6-af25-4dfa2efe9efb",
-        "97c0152b-f785-4291-a591-81df80cd9d2e",
-        "87dbbb07-9e39-4cb9-8744-460a34c9ec30",
-        "c8d2383a-3cbf-4952-aebf-4fc552c0d144"
+        "6604e186-cd8e-4db4-96e4-7e4a1d687599",
+        "7a84b566-61e5-400e-b9b2-e41d3ff7be27",
+        "0ac6868c-a9b3-49ae-b2f1-c176d3efd367",
+        "7c57a670-e7a6-4b5d-acc0-40d5232952c4",
+        "e0399402-dcec-497d-a72b-fc05f01186e3",
+        "8e150188-2917-48ba-92f2-9bd5f9e24936",
+        "5f245e4c-6d27-40b8-863d-0a2234e2bd98"
       ],
       "notes": [
         "Cybersecurity did not execute the containment; the transitions were issued by the harness standing in for TANTRA."
       ],
       "defects": [],
-      "started_utc": "2026-11-04T10:40:55Z",
-      "duration_ms": 4046
+      "started_utc": "2026-11-04T13:33:30Z",
+      "duration_ms": 4782
     },
     {
       "id": "S2-02",
@@ -1739,13 +1794,13 @@
         }
       ],
       "trace_ids": [
-        "84a23aea-358a-4a4e-a16f-7feee03041dc",
-        "b1ea292c-f419-4089-99e2-63134705a0e1",
-        "ec8747a3-6e4c-4c28-9ec8-e72887843705"
+        "f5cde5d5-642b-47f5-a043-7a4ef51d9fd7",
+        "ceccfc89-234e-4feb-94ca-6181f3aa7c26",
+        "30b7ed4d-58e0-45ce-ad16-4e067d049f38"
       ],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:40:59Z",
+      "started_utc": "2026-11-04T13:33:35Z",
       "duration_ms": 62
     },
     {
@@ -1787,20 +1842,20 @@
         },
         {
           "what": "trace id carried in denial",
-          "expected": "6d7901d5-7a8f-4376-b116-a765b7b29c48",
-          "actual": "6d7901d5-7a8f-4376-b116-a765b7b29c48",
+          "expected": "57ae38ff-084b-45c3-a8d1-cd0cb82a2718",
+          "actual": "57ae38ff-084b-45c3-a8d1-cd0cb82a2718",
           "ok": true
         }
       ],
       "trace_ids": [
-        "3e30f1ef-f68d-4a43-b19a-f26652ff6fb9",
-        "42f8266e-0252-4526-8e6f-7c5861c87e0f",
-        "6d7901d5-7a8f-4376-b116-a765b7b29c48"
+        "1b44148f-932b-4332-9170-f29e1c0ed58c",
+        "7ac72eab-74ac-4772-b643-4098328f1789",
+        "57ae38ff-084b-45c3-a8d1-cd0cb82a2718"
       ],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:40:59Z",
-      "duration_ms": 32
+      "started_utc": "2026-11-04T13:33:35Z",
+      "duration_ms": 47
     },
     {
       "id": "S4-03",
@@ -1829,13 +1884,13 @@
         }
       ],
       "trace_ids": [
-        "645079a0-64d2-4614-bf56-267ebb16809c",
-        "beb707cf-9a78-4c16-88bb-5ef3639c7bb7"
+        "48f4ae8c-3546-49ff-b806-0535eba0572e",
+        "ce4db94b-f3bb-4a53-9a86-35b9fd9931a4"
       ],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:40:59Z",
-      "duration_ms": 62
+      "started_utc": "2026-11-04T13:33:35Z",
+      "duration_ms": 47
     },
     {
       "id": "S7-01",
@@ -1883,18 +1938,18 @@
         }
       ],
       "trace_ids": [
-        "974d1e4b-afaa-4142-a233-22dfc73e0722",
-        "08d34ff3-4f3f-4aa6-8b47-4788cd9abc77",
-        "09fd01c1-e489-4a24-8277-5f5cc9171ca6",
-        "f3953e26-a4db-46f4-a829-2ef9186cca0b",
-        "00bfbefc-4585-4dfb-9a65-2d83a61bafab"
+        "38cecec4-d1e5-4d10-8e3f-532e24119e2d",
+        "7d16cbc6-834c-457f-acff-7023958c1629",
+        "a9ea32de-205a-40ce-b3aa-1917434dda39",
+        "6b8e9223-a1a4-43fc-bc16-6a625f544856",
+        "0d7f2d82-8774-4be2-8c93-ff69f7b93213"
       ],
       "notes": [
-        "cyber service healthy 3.84 s after a crash-restart"
+        "cyber service healthy 4.8 s after a crash-restart"
       ],
       "defects": [],
-      "started_utc": "2026-11-04T10:40:59Z",
-      "duration_ms": 4655
+      "started_utc": "2026-11-04T13:33:35Z",
+      "duration_ms": 5640
     },
     {
       "id": "S7-02",
@@ -1912,13 +1967,13 @@
       "status": "PASS",
       "expectations": [
         {
-          "what": "VAJRA GRANT transition accepted for cyber-p0-test-recovering-actor-5181d36fdc",
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-recovering-actor-64468e69ea",
           "expected": 200,
           "actual": 200,
           "ok": true
         },
         {
-          "what": "VAJRA USE transition accepted for cyber-p0-test-recovering-actor-5181d36fdc",
+          "what": "VAJRA USE transition accepted for cyber-p0-test-recovering-actor-64468e69ea",
           "expected": 200,
           "actual": 200,
           "ok": true
@@ -1979,22 +2034,22 @@
         }
       ],
       "trace_ids": [
-        "fbbdcb33-5e36-467f-a215-bc88ab137bca",
-        "127ef973-8b6c-42d7-95fe-1228b9cc8387",
-        "815e7922-f91f-4127-bef6-f225a1abad88",
-        "66b2863d-59d5-485c-a58c-132d301fc27f",
-        "b783af0e-01cc-4f62-a2b1-814d035fc708",
-        "7214ae15-b38a-4939-bbf9-2866db05c0aa",
-        "ba85947f-03e6-4432-b32f-4da7e742bc23",
-        "0303acfc-9248-4a8d-bdc8-02ba38702918",
-        "f3ae9694-a4ac-4986-bf57-f9415b4bbf3a",
-        "730251f1-63b0-4ce7-bbf6-28549f7558dc",
-        "5c834153-d4d0-402f-bfde-f96676e4be45"
+        "44c8f950-bd89-448e-b659-459c818c8bd9",
+        "847fab12-4b91-4a80-ab7b-8598edad3808",
+        "fc744821-d627-432d-8162-29f99ea2b430",
+        "9fe400b1-47e7-458d-8a67-1976cca23f3e",
+        "10b670f1-1a38-40bf-be18-640411851a42",
+        "a5c7027f-3b36-4f9f-93e8-df6899471f6d",
+        "322fb6bb-7c62-42bf-b1f4-e8991652b0e3",
+        "dd7144d2-5d9d-4778-918e-93506e9e5271",
+        "2489e560-4441-4385-8834-eee7135f4857",
+        "21f00b4c-aac2-42ca-a03c-f66a9640c42a",
+        "f681e728-f1f9-453e-bbd8-78d818ea0978"
       ],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:41:04Z",
-      "duration_ms": 4077
+      "started_utc": "2026-11-04T13:33:41Z",
+      "duration_ms": 4265
     },
     {
       "id": "S7-04",
@@ -2029,8 +2084,8 @@
         "informational only: a candidate copied from the node's own package -> qualified=False; VAJRA counts placeholder signature strings, so this is not cryptographic proof (VAJ-05)"
       ],
       "defects": [],
-      "started_utc": "2026-11-04T10:41:08Z",
-      "duration_ms": 0
+      "started_utc": "2026-11-04T13:33:45Z",
+      "duration_ms": 15
     },
     {
       "id": "S5-02",
@@ -2047,13 +2102,13 @@
       "status": "PASS",
       "expectations": [
         {
-          "what": "VAJRA GRANT transition accepted for cyber-p0-test-tantra-down-9ef613df26",
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-tantra-down-e7450e0266",
           "expected": 200,
           "actual": 200,
           "ok": true
         },
         {
-          "what": "VAJRA USE transition accepted for cyber-p0-test-tantra-down-9ef613df26",
+          "what": "VAJRA USE transition accepted for cyber-p0-test-tantra-down-e7450e0266",
           "expected": 200,
           "actual": 200,
           "ok": true
@@ -2090,14 +2145,14 @@
         }
       ],
       "trace_ids": [
-        "d2c73b2f-73e2-4542-8138-683b9041a6c2",
-        "b9f1889e-9249-4d45-a4d3-41d11db0203f",
-        "cbdbeb53-6fb2-4966-aeac-8aeda6532009"
+        "79855f47-fc87-4837-bd14-cc5cd3c39dd6",
+        "045864ae-4b70-4628-8a25-4b363eb5c66b",
+        "c87f21d3-3ce4-4a4c-9a80-79e8b52b2049"
       ],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:41:08Z",
-      "duration_ms": 20469
+      "started_utc": "2026-11-04T13:33:45Z",
+      "duration_ms": 22031
     },
     {
       "id": "S5-05",
@@ -2114,13 +2169,13 @@
       "status": "PASS",
       "expectations": [
         {
-          "what": "VAJRA GRANT transition accepted for cyber-p0-test-slow-peer-ea8498b7c8",
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-slow-peer-cdf05ce687",
           "expected": 200,
           "actual": 200,
           "ok": true
         },
         {
-          "what": "VAJRA USE transition accepted for cyber-p0-test-slow-peer-ea8498b7c8",
+          "what": "VAJRA USE transition accepted for cyber-p0-test-slow-peer-cdf05ce687",
           "expected": 200,
           "actual": 200,
           "ok": true
@@ -2128,7 +2183,7 @@
         {
           "what": "/health answered while a protected request waits on the slow peer",
           "expected": "< 1.5 s",
-          "actual": "0.03 s (HTTP 200)",
+          "actual": "0.0 s (HTTP 200)",
           "ok": true
         },
         {
@@ -2139,16 +2194,16 @@
         }
       ],
       "trace_ids": [
-        "0d880477-debb-449c-a584-1db122123f41",
-        "a157b02d-9312-417c-a6cd-4117130ee114",
-        "0bb238f5-8378-420f-90de-f3b58fa509fa"
+        "429eaa8c-7d1d-4a1e-9404-0d93795b6327",
+        "424c941c-36cd-4915-b2ed-83ae583bda74",
+        "e36e62d6-03f5-4ea9-9986-a91db05d8d85"
       ],
       "notes": [
-        "protected request took 6.25 s with a 4 s peer timeout"
+        "protected request took 6.52 s with a 4 s peer timeout"
       ],
       "defects": [],
-      "started_utc": "2026-11-04T10:41:29Z",
-      "duration_ms": 13594
+      "started_utc": "2026-11-04T13:34:07Z",
+      "duration_ms": 15812
     },
     {
       "id": "S6-01",
@@ -2165,13 +2220,13 @@
       "status": "PASS",
       "expectations": [
         {
-          "what": "VAJRA GRANT transition accepted for cyber-p0-test-evidence-refused-d3230e3ca9",
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-evidence-refused-5ee3edabda",
           "expected": 200,
           "actual": 200,
           "ok": true
         },
         {
-          "what": "VAJRA USE transition accepted for cyber-p0-test-evidence-refused-d3230e3ca9",
+          "what": "VAJRA USE transition accepted for cyber-p0-test-evidence-refused-5ee3edabda",
           "expected": 200,
           "actual": 200,
           "ok": true
@@ -2208,20 +2263,20 @@
         },
         {
           "what": "audit keeps the tentative ALLOW and the superseding DENY that points to it",
-          "expected": "ab97dda4-96b5-491b-bc80-cdb33eef9cc3",
-          "actual": "ab97dda4-96b5-491b-bc80-cdb33eef9cc3",
+          "expected": "2d097ee8-3907-485a-9dcb-42efb7c3bf35",
+          "actual": "2d097ee8-3907-485a-9dcb-42efb7c3bf35",
           "ok": true
         }
       ],
       "trace_ids": [
-        "19d33294-a71d-4205-ba3f-15854fd21b23",
-        "17528ea9-1ef3-4c95-ae3d-ec87df955939",
-        "cb05a5b4-a768-46e1-8f6e-0c9304dfafb6"
+        "63a9fd1c-d317-481e-b906-9cec335edd00",
+        "9c1525de-5a6a-4507-91ba-7d2efe401032",
+        "fcb68b86-f049-4793-af30-0c25cb278443"
       ],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:41:42Z",
-      "duration_ms": 8811
+      "started_utc": "2026-11-04T13:34:23Z",
+      "duration_ms": 10250
     },
     {
       "id": "S6-03",
@@ -2238,13 +2293,13 @@
       "status": "PASS",
       "expectations": [
         {
-          "what": "VAJRA GRANT transition accepted for cyber-p0-test-audit-down-358d351493",
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-audit-down-7e16f6efe3",
           "expected": 200,
           "actual": 200,
           "ok": true
         },
         {
-          "what": "VAJRA USE transition accepted for cyber-p0-test-audit-down-358d351493",
+          "what": "VAJRA USE transition accepted for cyber-p0-test-audit-down-7e16f6efe3",
           "expected": 200,
           "actual": 200,
           "ok": true
@@ -2275,14 +2330,14 @@
         }
       ],
       "trace_ids": [
-        "67b24b31-44b6-44ee-8391-76d8bd0084cd",
-        "9ae0a9fa-ca2e-46d3-8d25-79827cebdfc9",
-        "11edc09a-cbf4-483a-920c-bf2a3a4ef718"
+        "595f2cc0-83da-4c92-b2bd-398efab1080b",
+        "53b7bebe-5a94-48ee-98ea-2b4322528673",
+        "64b90df9-a4e2-49ff-b4bf-db9904e16414"
       ],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:41:51Z",
-      "duration_ms": 8407
+      "started_utc": "2026-11-04T13:34:33Z",
+      "duration_ms": 10359
     },
     {
       "id": "S6-02",
@@ -2325,12 +2380,12 @@
         }
       ],
       "trace_ids": [
-        "7e1cb4f5-fe21-4f8c-ad7d-f6637e304aaf"
+        "7d501ac8-a34a-4ab8-a559-832007040d17"
       ],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:41:59Z",
-      "duration_ms": 8812
+      "started_utc": "2026-11-04T13:34:44Z",
+      "duration_ms": 9202
     },
     {
       "id": "S7-03",
@@ -2348,13 +2403,13 @@
       "status": "PASS",
       "expectations": [
         {
-          "what": "VAJRA GRANT transition accepted for cyber-p0-test-survivor-41244a5e8b",
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-survivor-cb709b7af4",
           "expected": 200,
           "actual": 200,
           "ok": true
         },
         {
-          "what": "VAJRA USE transition accepted for cyber-p0-test-survivor-41244a5e8b",
+          "what": "VAJRA USE transition accepted for cyber-p0-test-survivor-cb709b7af4",
           "expected": 200,
           "actual": 200,
           "ok": true
@@ -2379,16 +2434,16 @@
         }
       ],
       "trace_ids": [
-        "c7727e56-a7fa-4c40-9ee0-35f29760cfb1",
-        "681b2dc0-2e9c-47cf-bb8b-ef839745564b",
-        "bb9fe35b-4cf0-4e21-bc2f-01f690dbada5"
+        "618a5f44-2a31-46a3-a09c-7e8cb18d9c2f",
+        "a0325a2e-9591-4255-95e8-3558a4c29589",
+        "d5054e02-54b1-4fbb-af6f-be59a54554ab"
       ],
       "notes": [
-        "VAJRA node healthy 0.56 s after a crash-restart"
+        "VAJRA node healthy 0.61 s after a crash-restart"
       ],
       "defects": [],
-      "started_utc": "2026-11-04T10:42:08Z",
-      "duration_ms": 1875
+      "started_utc": "2026-11-04T13:34:53Z",
+      "duration_ms": 2140
     },
     {
       "id": "S7-05",
@@ -2405,13 +2460,13 @@
       "status": "FAIL",
       "expectations": [
         {
-          "what": "VAJRA GRANT transition accepted for cyber-p0-test-persistence-709194cd84",
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-persistence-c74266ac08",
           "expected": 200,
           "actual": 200,
           "ok": true
         },
         {
-          "what": "VAJRA USE transition accepted for cyber-p0-test-persistence-709194cd84",
+          "what": "VAJRA USE transition accepted for cyber-p0-test-persistence-c74266ac08",
           "expected": 200,
           "actual": 200,
           "ok": true
@@ -2424,15 +2479,15 @@
         }
       ],
       "trace_ids": [
-        "8af89246-4a8b-41b1-bd5c-1b7706d83075",
-        "a4a9e71d-8465-4e14-a5be-0b15c88ccf4c"
+        "925812ad-beb4-4a03-965a-dbba60260ba1",
+        "d6543d88-9f63-44bf-af59-d0c1ecdb3e20"
       ],
       "notes": [],
       "defects": [
         "VAJ-02"
       ],
-      "started_utc": "2026-11-04T10:42:10Z",
-      "duration_ms": 625
+      "started_utc": "2026-11-04T13:34:55Z",
+      "duration_ms": 734
     },
     {
       "id": "S8-03",
@@ -2472,8 +2527,8 @@
         "chain-integrity after tamper: HTTP 409 {'broken_at': 0, 'error': 'truth store chain integrity violation detected \u2014 possible tampering', 'intact': False, 'success': False}"
       ],
       "defects": [],
-      "started_utc": "2026-11-04T10:42:11Z",
-      "duration_ms": 1172
+      "started_utc": "2026-11-04T13:34:56Z",
+      "duration_ms": 1500
     },
     {
       "id": "S5-03",
@@ -2505,8 +2560,8 @@
       "trace_ids": [],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:42:12Z",
-      "duration_ms": 30
+      "started_utc": "2026-11-04T13:34:57Z",
+      "duration_ms": 47
     },
     {
       "id": "O-03",
@@ -2572,12 +2627,12 @@
         }
       ],
       "trace_ids": [
-        "87ae6a1c-80d9-41db-8740-584fc22b0890"
+        "7f57f480-3a5d-4fb6-bf55-9dcbce2a3a01"
       ],
       "notes": [],
       "defects": [],
-      "started_utc": "2026-11-04T10:42:12Z",
-      "duration_ms": 16
+      "started_utc": "2026-11-04T13:34:57Z",
+      "duration_ms": 30
     },
     {
       "id": "O-04",
@@ -2590,24 +2645,22 @@
         "cybersecurity"
       ],
       "evidence_level": "OFFLINE-VERIFIED",
-      "status": "FAIL",
+      "status": "PASS",
       "expectations": [
         {
           "what": "GET /api/v1/cases (no slash) by an authorised investigator",
           "expected": "200 or 307",
-          "actual": 405,
-          "ok": false
+          "actual": 307,
+          "ok": true
         }
       ],
       "trace_ids": [
-        "420c4a61-fa9d-417a-bc2e-215ba0b9e67d"
+        "422b998c-6269-480f-8e4f-8ae96b6d2bc6"
       ],
       "notes": [],
-      "defects": [
-        "CYB-07"
-      ],
-      "started_utc": "2026-11-04T10:42:12Z",
-      "duration_ms": 15
+      "defects": [],
+      "started_utc": "2026-11-04T13:34:57Z",
+      "duration_ms": 0
     },
     {
       "id": "S2-04",
@@ -2620,7 +2673,7 @@
         "cybersecurity"
       ],
       "evidence_level": "OFFLINE-VERIFIED",
-      "status": "FAIL",
+      "status": "PASS",
       "expectations": [
         {
           "what": "revocation reported",
@@ -2631,27 +2684,25 @@
         {
           "what": "investigator read after 'read' was revoked",
           "expected": "403 (denied)",
-          "actual": 200,
-          "ok": false
+          "actual": 403,
+          "ok": true
         },
         {
           "what": "authz decision for investigator read after revocation",
           "expected": "DENY",
-          "actual": "ALLOW",
-          "ok": false
+          "actual": "DENY",
+          "ok": true
         }
       ],
       "trace_ids": [
-        "e7693276-26f1-4b6c-a478-eb66b6e3acd5",
-        "e39b285c-7b71-4833-8544-5312a47b6c57",
-        "3f5d5cdd-6a39-400b-ae83-db3df574232b"
+        "7938025a-c17b-4c44-b539-c3a664c9dfe1",
+        "cf3a74c7-d25d-4ae6-94be-587c56a96920",
+        "1c511f77-af3b-4e26-adfb-f76b66ed0fdb"
       ],
       "notes": [],
-      "defects": [
-        "CYB-02"
-      ],
-      "started_utc": "2026-11-04T10:42:12Z",
-      "duration_ms": 77
+      "defects": [],
+      "started_utc": "2026-11-04T13:34:57Z",
+      "duration_ms": 109
     }
   ]
 }

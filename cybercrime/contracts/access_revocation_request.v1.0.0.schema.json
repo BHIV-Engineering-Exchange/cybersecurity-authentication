@@ -1,0 +1,95 @@
+{
+  "$defs": {
+    "RevocationTargetModel": {
+      "properties": {
+        "action": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Action"
+        },
+        "actor_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Actor Id"
+        },
+        "jti": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Jti"
+        },
+        "role": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Role"
+        }
+      },
+      "title": "RevocationTargetModel",
+      "type": "object"
+    }
+  },
+  "$id": "bhiv-cybersecurity/access_revocation_request/1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "contract_version": {
+      "default": "1.0.0",
+      "title": "Contract Version",
+      "type": "string"
+    },
+    "reason": {
+      "maxLength": 256,
+      "minLength": 10,
+      "title": "Reason",
+      "type": "string"
+    },
+    "requested_by": {
+      "title": "Requested By",
+      "type": "string"
+    },
+    "revocation_type": {
+      "title": "Revocation Type",
+      "type": "string"
+    },
+    "target": {
+      "$ref": "#/$defs/RevocationTargetModel"
+    }
+  },
+  "required": [
+    "revocation_type",
+    "target",
+    "reason",
+    "requested_by"
+  ],
+  "title": "RevocationRequest",
+  "type": "object",
+  "x-contract-version": "1.0.0",
+  "x-description": "POST /api/v1/access/revoke request",
+  "x-owner": "Kaushlendra"
+}

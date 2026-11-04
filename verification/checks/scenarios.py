@@ -176,6 +176,11 @@ def o01_health(ctx: Context):
     anon = cyber(ctx).get("/api/v1/system/health")
     ctx.expect("cyber /api/v1/system/health status (anonymous)", 200, anon.status_code)
     ctx.expect("anonymous health hides VAJRA/TANTRA topology", False, "bhiv_runtime" in (anon.json() or {}))
+    anon_text = json.dumps(anon.json() or {})
+    has_paths = '"path"' in anon_text or '"buffer_path"' in anon_text
+    ctx.expect("anonymous health shows no server file-system paths", False, has_paths)
+    if has_paths:
+        ctx.defect("CYB-12")
     body = admin_health(ctx)
     ctx.expect("system health: database ok", True, body.get("database", {}).get("ok"))
     ctx.expect("superadmin health: VAJRA API reachable", True,
@@ -831,7 +836,10 @@ def s6_04(ctx: Context):
                         data={"wallet_id": "0xSYNTHETIC-WALLET", "title": "P0 synthetic evidence", "risk_level": "low"})
     ctx.require("upload accepted", 200, r.status_code)
     ctx.expect("anchor status is not claimed", "pending", r.json().get("anchor_status"))
-    ctx.note("the upload response has no field that reports the Bucket outcome; the outcome is only in the service log (CYB-08)")
+    ctx.expect("upload reports the Bucket outcome (Bucket not configured in this run)", "not_configured",
+               r.json().get("bucket_status"))
+    if r.json().get("bucket_status") is None:
+        ctx.defect("CYB-08")
 
 
 # ------------------------------------------------------------------------------------------- Proof C attack
@@ -858,14 +866,49 @@ def proof_c1(ctx: Context):
         ctx.defect("CYB-05")
 
 
-@check(id="P-C2", title="Proof C ATTACK (intelligence): detection and correlation of the attack", scenario="Mandatory proof C (10-day)",
-       refs=["10-day 20.C", "EOD Shivam threat assessment", "EOD Aryan correlation"], systems=[CYBER],
-       evidence_level="BLOCKED-EXTERNAL")
+@check(id="P-C2", title="Proof C ATTACK (intelligence): the failed logins are detected and correlated into one incident for review",
+       scenario="Mandatory proof C (10-day)",
+       refs=["10-day 20.C", "EOD Shivam threat assessment", "EOD Aryan correlation", "10-day rule 8 no silent authority"],
+       systems=[CYBER], evidence_level=OFFLINE)
 def proof_c2(ctx: Context):
-    raise Blocked("No threat-assessment or correlation component consumes authentication/access signals in this repository "
-                  "at the tested commit. The existing incident analysis is wallet-based (and has defects CYB-03, CYB-06); "
-                  "fraud-evidence-system has case-linking correlation that is not wired to these signals. "
-                  "Owners: Shivam (threat assessment), Aryan Dias (correlation); raised in the EOD report of 2026-11-04.")
+    # Runs after P-C1, whose failed logins against investigator_a are the attack signal.
+    victim = ctx.data["users"]["investigator_a"]
+    target = f"cc_usr_{victim['id']}"
+    r = cyber(ctx).get("/api/v1/threats/incidents", params={"status_filter": "open"},
+                       headers=auth(token_of(ctx, "superadmin"), ctx.new_trace()))
+    ctx.require("incident list readable by a superadmin", 200, r.status_code)
+    mine = [i for i in r.json() if i.get("target_ref") == target and i.get("rule_id") == "auth.repeated_failed_login"]
+    ctx.expect("one open incident correlates the failed logins on the attacked account", 1, len(mine))
+    if not mine:
+        return
+    incident = mine[0]
+    rows = audit_rows(ctx, limit=2000)
+    failed = {row["_details"].get("event_id") for row in rows
+              if row["action"] == "auth.login:login" and row["status"] == "denied"
+              and (row["_details"].get("resource") or {}).get("resource_id") == target}
+    linked = set(incident.get("evidence_event_ids") or []) & failed
+    ctx.expect("incident links >= 5 failed-login security events found in the audit store", ">= 5", len(linked),
+               ok=len(linked) >= 5)
+    confidence = incident.get("confidence")
+    ctx.expect("confidence stated (0-1)", True, isinstance(confidence, (int, float)) and 0 < confidence <= 1)
+    ctx.expect("uncertainty stated", True, bool(incident.get("uncertainty")))
+    ctx.expect("rule id and version recorded", True, bool(incident.get("rule_id") and incident.get("rule_version")))
+    ctx.expect("left open for human review (no autonomous action)", ["open", True],
+               [incident.get("status"), incident.get("requires_human_review")])
+    detected = [row for row in rows if row["action"] == "threat.detected:escalate"
+                and (row["_details"].get("metadata") or {}).get("incident_id") == incident.get("incident_id")]
+    ctx.expect("one threat.detected security event for the incident", 1, len(detected))
+    ctx.expect("observed facts kept apart from the inference", True,
+               bool(incident.get("observed_facts")) and bool(incident.get("inference")))
+    ctx.expect("evidence gaps and a proposed next action stated (no action taken)", True,
+               bool(incident.get("evidence_gaps")) and "No automatic action" in str(incident.get("proposed_next_action")))
+    envelope = incident.get("tantra_response_envelope") or {}
+    ctx.expect("TANTRA-compatible response envelope prepared, marked not sent (no contract yet)", True,
+               bool(envelope.get("registry_reference")) and str(incident.get("tantra_status", "")).startswith("NOT SENT"))
+    ctx.expect("attacked account still usable (detection blocks no one)", 200,
+               login(ctx, victim["email"], victim["password"]).status_code)
+    ctx.note(f"incident {incident.get('incident_id')}: {incident.get('event_count')} events, severity "
+             f"{incident.get('severity')}, confidence {confidence}; uncertainty: {incident.get('uncertainty')}")
 
 
 @check(id="P-C3", title="Proof C ATTACK (containment): ISOLATE/TERMINATE at VAJRA blocks the actor",

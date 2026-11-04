@@ -589,6 +589,11 @@ components:
           - type: 'null'
           default: pending
           title: Anchor Status
+        bucket_status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Bucket Status
         case_id:
           anyOf:
           - type: integer
@@ -744,6 +749,14 @@ components:
       type: object
     IncidentReportResponse:
       properties:
+        confidence:
+          default: 0.0
+          title: Confidence
+          type: number
+        data_basis:
+          default: observed
+          title: Data Basis
+          type: string
         detected_patterns:
           items:
             type: string
@@ -754,6 +767,10 @@ components:
             $ref: '#/components/schemas/GraphEdge'
           title: Graph Data
           type: array
+        observed_tx_count:
+          default: 0
+          title: Observed Tx Count
+          type: integer
         report_id:
           anyOf:
           - type: string
@@ -782,6 +799,12 @@ components:
             type: array
           - type: 'null'
           title: Transactions
+        uncertainty:
+          default: []
+          items:
+            type: string
+          title: Uncertainty
+          type: array
         wallet:
           title: Wallet
           type: string
@@ -1112,6 +1135,58 @@ components:
       - id
       title: ResourceCheckModel
       type: object
+    RestoreRequest:
+      properties:
+        action:
+          title: Action
+          type: string
+        contract_version:
+          default: 1.0.0
+          title: Contract Version
+          type: string
+        reason:
+          maxLength: 256
+          minLength: 10
+          title: Reason
+          type: string
+        role:
+          title: Role
+          type: string
+      required:
+      - role
+      - action
+      - reason
+      title: RestoreRequest
+      type: object
+    RestoreResponse:
+      properties:
+        action:
+          title: Action
+          type: string
+        audit_event_id:
+          title: Audit Event Id
+          type: string
+        contract_version:
+          default: 1.0.0
+          title: Contract Version
+          type: string
+        role:
+          title: Role
+          type: string
+        status:
+          title: Status
+          type: string
+        trace_id:
+          title: Trace Id
+          type: string
+      required:
+      - status
+      - role
+      - action
+      - trace_id
+      - audit_event_id
+      title: RestoreResponse
+      type: object
     RevocationRequest:
       properties:
         contract_version:
@@ -1426,6 +1501,10 @@ components:
         suspicious:
           default: false
           title: Suspicious
+          type: boolean
+        synthetic:
+          default: false
+          title: Synthetic
           type: boolean
         timestamp:
           anyOf:
@@ -1937,6 +2016,32 @@ paths:
       summary: Review Access Request
       tags:
       - access-requests
+  /api/v1/access/restore:
+    post:
+      description: Undo a Tier 1 permission revocation (superadmin only).
+      operationId: restore_permission_api_v1_access_restore_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RestoreRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestoreResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Restore Permission
+      tags:
+      - access-control
   /api/v1/access/revoke:
     post:
       description: 'Executes Tier 1 (permission modification), Tier 2 (account deactivation),
@@ -2058,7 +2163,13 @@ paths:
       - authentication
   /api/v1/auth/register:
     post:
-      description: Register a new user
+      description: 'Create an investigator account directly (superadmin only).
+
+
+        Public sign-up is POST /api/v1/access-requests/request, which a superadmin
+        reviews. This route used to be public
+
+        and gave any stranger an active investigator account at once (CYB-01).'
       operationId: register_api_v1_auth_register_post
       requestBody:
         content:
@@ -4084,6 +4195,75 @@ paths:
       summary: Flush Queue
       tags:
       - system-health
+  /api/v1/threats/incidents:
+    get:
+      description: Newest first. `status_filter=open` lists incidents still awaiting
+        review.
+      operationId: list_incidents_api_v1_threats_incidents_get
+      parameters:
+      - in: query
+        name: status_filter
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Status Filter
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  additionalProperties: true
+                  type: object
+                title: Response List Incidents Api V1 Threats Incidents Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: List Incidents
+      tags:
+      - threat-detection
+  /api/v1/threats/incidents/{incident_id}:
+    get:
+      operationId: get_incident_api_v1_threats_incidents__incident_id__get
+      parameters:
+      - in: path
+        name: incident_id
+        required: true
+        schema:
+          title: Incident Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                title: Response Get Incident Api V1 Threats Incidents  Incident Id  Get
+                type: object
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Incident
+      tags:
+      - threat-detection
   /api/v1/transactions/:
     get:
       description: Get all transactions
@@ -4804,14 +4984,3 @@ paths:
               schema: {}
           description: Successful Response
       summary: Health Check
-  /{full_path}:
-    options:
-      description: Handle all OPTIONS requests explicitly
-      operationId: options_handler__full_path__options
-      responses:
-        '200':
-          content:
-            application/json:
-              schema: {}
-          description: Successful Response
-      summary: Options Handler

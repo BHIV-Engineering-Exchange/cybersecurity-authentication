@@ -11,6 +11,24 @@ from pathlib import Path
 from typing import Iterable, List, Optional
 
 
+# Tier 1 permission revocation works on role:action pairs; the RBAC middleware enforces them per HTTP method.
+ACTION_METHODS = {
+    "read": ("GET", "HEAD"),
+    "create": ("POST",),
+    "update": ("PUT", "PATCH"),
+    "delete": ("DELETE",),
+}
+NON_REVOCABLE_ROLES = ("superadmin", "public")  # revoking these would lock out administration or login
+
+
+def action_for_method(method: str) -> Optional[str]:
+    method = (method or "").upper()
+    for action, methods in ACTION_METHODS.items():
+        if method in methods:
+            return action
+    return None
+
+
 @dataclass(frozen=True)
 class PermissionRule:
     role: str

@@ -1,0 +1,178 @@
+{
+  "$id": "bhiv-cybersecurity/security_incident/1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Contract security_incident v1.0.0: one correlated incident, explained (facts apart from inference).",
+  "properties": {
+    "confidence": {
+      "title": "Confidence",
+      "type": "number"
+    },
+    "correlation_key": {
+      "title": "Correlation Key",
+      "type": "string"
+    },
+    "created_at": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Created At"
+    },
+    "event_count": {
+      "title": "Event Count",
+      "type": "integer"
+    },
+    "evidence_event_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Event Ids",
+      "type": "array"
+    },
+    "evidence_gaps": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Gaps",
+      "type": "array"
+    },
+    "first_seen_at": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "First Seen At"
+    },
+    "incident_id": {
+      "title": "Incident Id",
+      "type": "string"
+    },
+    "inference": {
+      "title": "Inference",
+      "type": "string"
+    },
+    "last_seen_at": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Last Seen At"
+    },
+    "observed_facts": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Observed Facts",
+      "type": "array"
+    },
+    "proposed_next_action": {
+      "title": "Proposed Next Action",
+      "type": "string"
+    },
+    "rationale": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Rationale"
+    },
+    "requires_human_review": {
+      "title": "Requires Human Review",
+      "type": "boolean"
+    },
+    "rule_id": {
+      "title": "Rule Id",
+      "type": "string"
+    },
+    "rule_version": {
+      "title": "Rule Version",
+      "type": "string"
+    },
+    "severity": {
+      "title": "Severity",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "tantra_response_envelope": {
+      "additionalProperties": true,
+      "title": "Tantra Response Envelope",
+      "type": "object"
+    },
+    "tantra_status": {
+      "title": "Tantra Status",
+      "type": "string"
+    },
+    "target_ref": {
+      "title": "Target Ref",
+      "type": "string"
+    },
+    "threat_type": {
+      "title": "Threat Type",
+      "type": "string"
+    },
+    "trace_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Trace Ids",
+      "type": "array"
+    },
+    "uncertainty": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Uncertainty",
+      "type": "array"
+    }
+  },
+  "required": [
+    "incident_id",
+    "correlation_key",
+    "rule_id",
+    "rule_version",
+    "threat_type",
+    "target_ref",
+    "severity",
+    "confidence",
+    "uncertainty",
+    "status",
+    "requires_human_review",
+    "event_count",
+    "evidence_event_ids",
+    "trace_ids",
+    "observed_facts",
+    "inference",
+    "evidence_gaps",
+    "proposed_next_action",
+    "tantra_response_envelope",
+    "tantra_status"
+  ],
+  "title": "SecurityIncidentView",
+  "type": "object",
+  "x-contract-version": "1.0.0",
+  "x-description": "GET /api/v1/threats/incidents item",
+  "x-owner": "Aryan Dias / Shivam"
+}

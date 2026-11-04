@@ -1,0 +1,264 @@
+{
+  "$defs": {
+    "GraphEdge": {
+      "properties": {
+        "amount": {
+          "title": "Amount",
+          "type": "number"
+        },
+        "from": {
+          "title": "From",
+          "type": "string"
+        },
+        "to": {
+          "title": "To",
+          "type": "string"
+        }
+      },
+      "required": [
+        "from",
+        "to",
+        "amount"
+      ],
+      "title": "GraphEdge",
+      "type": "object"
+    },
+    "TimelineEntry": {
+      "properties": {
+        "amount": {
+          "title": "Amount",
+          "type": "number"
+        },
+        "time": {
+          "title": "Time",
+          "type": "string"
+        },
+        "timestamp": {
+          "title": "Timestamp",
+          "type": "string"
+        }
+      },
+      "required": [
+        "time",
+        "amount",
+        "timestamp"
+      ],
+      "title": "TimelineEntry",
+      "type": "object"
+    },
+    "TransactionDetail": {
+      "properties": {
+        "amount": {
+          "title": "Amount",
+          "type": "number"
+        },
+        "direction": {
+          "title": "Direction",
+          "type": "string"
+        },
+        "from_address": {
+          "title": "From Address",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "integer"
+        },
+        "suspicious": {
+          "default": false,
+          "title": "Suspicious",
+          "type": "boolean"
+        },
+        "synthetic": {
+          "default": false,
+          "title": "Synthetic",
+          "type": "boolean"
+        },
+        "timestamp": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Timestamp"
+        },
+        "to_address": {
+          "title": "To Address",
+          "type": "string"
+        },
+        "type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Type"
+        }
+      },
+      "required": [
+        "id",
+        "from_address",
+        "to_address",
+        "amount",
+        "direction"
+      ],
+      "title": "TransactionDetail",
+      "type": "object"
+    },
+    "TransactionSummary": {
+      "properties": {
+        "pattern_type": {
+          "title": "Pattern Type",
+          "type": "string"
+        },
+        "total_in": {
+          "title": "Total In",
+          "type": "number"
+        },
+        "total_out": {
+          "title": "Total Out",
+          "type": "number"
+        },
+        "tx_count": {
+          "title": "Tx Count",
+          "type": "integer"
+        },
+        "unique_receivers": {
+          "title": "Unique Receivers",
+          "type": "integer"
+        },
+        "unique_senders": {
+          "title": "Unique Senders",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "total_in",
+        "total_out",
+        "tx_count",
+        "unique_senders",
+        "unique_receivers",
+        "pattern_type"
+      ],
+      "title": "TransactionSummary",
+      "type": "object"
+    }
+  },
+  "$id": "bhiv-cybersecurity/incident_report_response/1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "confidence": {
+      "default": 0.0,
+      "title": "Confidence",
+      "type": "number"
+    },
+    "data_basis": {
+      "default": "recorded",
+      "title": "Data Basis",
+      "type": "string"
+    },
+    "detected_patterns": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Detected Patterns",
+      "type": "array"
+    },
+    "graph_data": {
+      "items": {
+        "$ref": "#/$defs/GraphEdge"
+      },
+      "title": "Graph Data",
+      "type": "array"
+    },
+    "observed_tx_count": {
+      "default": 0,
+      "title": "Observed Tx Count",
+      "type": "integer"
+    },
+    "report_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Report Id"
+    },
+    "risk_level": {
+      "title": "Risk Level",
+      "type": "string"
+    },
+    "risk_score": {
+      "title": "Risk Score",
+      "type": "number"
+    },
+    "summary": {
+      "$ref": "#/$defs/TransactionSummary"
+    },
+    "system_conclusion": {
+      "title": "System Conclusion",
+      "type": "string"
+    },
+    "timeline": {
+      "items": {
+        "$ref": "#/$defs/TimelineEntry"
+      },
+      "title": "Timeline",
+      "type": "array"
+    },
+    "transactions": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/TransactionDetail"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Transactions"
+    },
+    "uncertainty": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Uncertainty",
+      "type": "array"
+    },
+    "wallet": {
+      "title": "Wallet",
+      "type": "string"
+    }
+  },
+  "required": [
+    "wallet",
+    "risk_score",
+    "risk_level",
+    "detected_patterns",
+    "summary",
+    "graph_data",
+    "timeline",
+    "system_conclusion"
+  ],
+  "title": "IncidentReportResponse",
+  "type": "object",
+  "x-contract-version": "1.0.0",
+  "x-description": "POST /api/v1/incidents/analyze response",
+  "x-owner": "Shivam"
+}

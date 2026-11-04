@@ -40,6 +40,14 @@
       "http": "not recorded (page rendered)",
       "what": "screenshot 07 (headless browser; image withdrawn from the packet, see SCREENSHOTS_INDEX.md)",
       "time_source": "capture stamp in screenshots/SCREENSHOTS_INDEX.md"
+    },
+    {
+      "utc": "2026-11-04T12:09:24Z (shortly after)",
+      "method": "GET",
+      "url": "http://163.128.209.18:8101/health",
+      "http": "not recorded (page rendered)",
+      "what": "screenshot 06, second capture after the fixes (headless browser)",
+      "time_source": "capture stamp in screenshots/SCREENSHOTS_INDEX.md"
     }
   ],
   "not_recorded": "An earlier attempt of the same screenshot script, a minute or two before 10:43Z, failed to save its images. If its browser reached the two TANTRA pages, that adds up to 2 more read-only GETs. No ledger write was possible from it."

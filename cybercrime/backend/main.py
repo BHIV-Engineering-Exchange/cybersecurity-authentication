@@ -17,11 +17,22 @@ import yaml
 from app.core.config import settings
 from app.api.v1.api import api_router
 from app.db.database import engine, Base, SessionLocal
-from app.db.models import User
+from app.db.models import RevokedPermission, User
 from app.core.security import get_password_hash, decode_access_token
 from app.core.audit_logging import configure_logging, emit_audit_log
 from app.core.error_responses import build_error_response
-from app.core.rbac import load_rbac_policy, extract_path_id
+from app.core.rbac import NON_REVOCABLE_ROLES, action_for_method, load_rbac_policy, extract_path_id
+import re as _re
+
+# Trace and request ids from callers are echoed in headers and logs, so only this safe form is accepted;
+# anything else is replaced by a fresh UUID (the raw value is never echoed).
+_SAFE_ID_RE = _re.compile(r"^[A-Za-z0-9._:-]{1,128}$")
+
+
+def _safe_header_id(value):
+    if value and _SAFE_ID_RE.match(value):
+        return value
+    return str(uuid4())
 
 
 def init_superadmin():
@@ -507,15 +518,9 @@ print(f"[INFO] CORS Origins configured: {cors_origins}")
 print(f"[INFO] CORS Regex pattern: https://.*\\.onrender\\.com")
 print(f"[INFO] Production mode: {is_production}")
 
-# Explicit OPTIONS handler for all routes
-@app.options("/{full_path:path}")
-async def options_handler(request: Request):
-    """Handle all OPTIONS requests explicitly"""
-    origin = request.headers.get("origin")
-    response = JSONResponse(content={}, status_code=200)
-    add_cors_headers(response, origin)
-    response.headers["Access-Control-Max-Age"] = "3600"
-    return response
+# Preflight OPTIONS requests are answered by cors_early_middleware below. A catch-all OPTIONS route used to sit
+# here; it made every path "partly match", so a GET without the trailing slash got 405 instead of the 307 redirect
+# (CYB-07).
 
 # CORS middleware - will be added at the end so it runs first (FastAPI middleware runs in reverse order)
 
@@ -556,8 +561,8 @@ async def cors_early_middleware(request: Request, call_next):
 
 @app.middleware("http")
 async def request_context_middleware(request: Request, call_next):
-    request_id = request.headers.get("X-Request-Id") or str(uuid4())
-    trace_id = request.headers.get("X-Trace-Id") or str(uuid4())
+    request_id = getattr(request.state, "request_id", None) or _safe_header_id(request.headers.get("X-Request-Id"))
+    trace_id = getattr(request.state, "trace_id", None) or _safe_header_id(request.headers.get("X-Trace-Id"))
     request.state.request_id = request_id
     request.state.trace_id = trace_id
     origin = request.headers.get("origin")
@@ -618,13 +623,53 @@ app.add_middleware(
     expose_headers=["*"],
 )
 
+def _rbac_denial(request: Request, *, role: str, user_id, status_code: int, code: str, message: str) -> JSONResponse:
+    """Deny a request in the RBAC middleware: structured log line, canonical authz.decision event, error contract."""
+    origin = request.headers.get("origin")
+    req_id = getattr(request.state, "request_id", None)
+    trc_id = getattr(request.state, "trace_id", None)
+    emit_audit_log(
+        action="rbac.deny", status="warning", message=f"RBAC denied request: {code}.",
+        request_id=req_id, trace_id=trc_id, path=request.url.path, method=request.method,
+        ip_address=request.client.host if request.client else None,
+        details={"role": role, "code": code, "user_id": user_id},
+    )
+    try:
+        from app.core.canonical_event import emit_canonical_event
+        audit_db = SessionLocal()
+        try:
+            emit_canonical_event(
+                event_type="authz.decision",
+                action=action_for_method(request.method) or "read",
+                actor_id=f"cc_usr_{user_id}" if user_id else "anonymous",
+                role=role, authenticated=(role != "public"),
+                resource_type="policy", resource_id=request.url.path,
+                outcome_status="DENIED", status_code=status_code, reason_code=code, message=message,
+                trace_id=trc_id or "trace-unknown", request_id=req_id, policy_id="rbac_permissions_v1",
+                metadata={"path": request.url.path, "method": request.method, "role": role},
+                db_session=audit_db, fail_on_persist_error=False,
+            )
+        finally:
+            audit_db.close()
+    except Exception:
+        pass
+    payload = build_error_response(code=code, message=message, request_id=req_id, trace_id=trc_id, status_code=status_code)
+    response = JSONResponse(status_code=status_code, content=payload)
+    add_cors_headers(response, origin)
+    if req_id:
+        response.headers["X-Request-Id"] = req_id
+    if trc_id:
+        response.headers["X-Trace-Id"] = trc_id
+    return response
+
+
 @app.middleware("http")
 async def rbac_middleware(request: Request, call_next):
     if request.method.upper() == "OPTIONS":
         return await call_next(request)
 
-    req_id = getattr(request.state, "request_id", None) or request.headers.get("X-Request-Id") or str(uuid4())
-    trc_id = getattr(request.state, "trace_id", None) or request.headers.get("X-Trace-Id") or str(uuid4())
+    req_id = getattr(request.state, "request_id", None) or _safe_header_id(request.headers.get("X-Request-Id"))
+    trc_id = getattr(request.state, "trace_id", None) or _safe_header_id(request.headers.get("X-Trace-Id"))
     request.state.request_id = req_id
     request.state.trace_id = trc_id
 
@@ -651,6 +696,7 @@ async def rbac_middleware(request: Request, call_next):
     role = "public"
     user_id = None
     token_invalid = False
+    revoked_actions = set()  # Tier 1 revocations for the caller's role (CYB-02); None = could not be read
     if token:
         payload = decode_access_token(token)
         if payload:
@@ -700,6 +746,12 @@ async def rbac_middleware(request: Request, call_next):
                     else:
                         role = user.role or role
                         request.state.current_user = user
+                        if role not in NON_REVOCABLE_ROLES:
+                            try:
+                                revoked_actions = {row.action for row in db.query(RevokedPermission.action)
+                                                   .filter(RevokedPermission.role == role).all()}
+                            except Exception:
+                                revoked_actions = None  # unknown -> fail closed below
                 finally:
                     db.close()
         else:
@@ -773,6 +825,18 @@ async def rbac_middleware(request: Request, call_next):
         if trc_id:
             response.headers["X-Trace-Id"] = trc_id
         return response
+
+    # Tier 1 permission revocation: a stored role:action pair is denied from the next request on (CYB-02).
+    requested_action = action_for_method(request.method)
+    if revoked_actions is None or (requested_action and requested_action in revoked_actions):
+        unavailable = revoked_actions is None
+        return _rbac_denial(
+            request, role=role, user_id=user_id,
+            status_code=503 if unavailable else 403,
+            code="POLICY_UNAVAILABLE" if unavailable else "PERMISSION_REVOKED",
+            message=("Access control state is unavailable." if unavailable
+                     else f"Access denied: '{role}:{requested_action}' has been revoked."),
+        )
 
     if role == "investigator" and user_id is not None:
         path_id = extract_path_id(request.url.path, "investigators")

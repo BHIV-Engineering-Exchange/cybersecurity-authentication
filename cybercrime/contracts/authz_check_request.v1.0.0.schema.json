@@ -1,0 +1,99 @@
+{
+  "$defs": {
+    "ResourceCheckModel": {
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "owner_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Owner Id"
+        },
+        "type": {
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "id"
+      ],
+      "title": "ResourceCheckModel",
+      "type": "object"
+    },
+    "SubjectModel": {
+      "properties": {
+        "actor_id": {
+          "title": "Actor Id",
+          "type": "string"
+        },
+        "is_active": {
+          "default": true,
+          "title": "Is Active",
+          "type": "boolean"
+        },
+        "role": {
+          "title": "Role",
+          "type": "string"
+        }
+      },
+      "required": [
+        "actor_id",
+        "role"
+      ],
+      "title": "SubjectModel",
+      "type": "object"
+    }
+  },
+  "$id": "bhiv-cybersecurity/authz_check_request/1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "action": {
+      "title": "Action",
+      "type": "string"
+    },
+    "context": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Context"
+    },
+    "contract_version": {
+      "default": "1.0.0",
+      "title": "Contract Version",
+      "type": "string"
+    },
+    "resource": {
+      "$ref": "#/$defs/ResourceCheckModel"
+    },
+    "subject": {
+      "$ref": "#/$defs/SubjectModel"
+    }
+  },
+  "required": [
+    "subject",
+    "action",
+    "resource"
+  ],
+  "title": "AuthzCheckRequest",
+  "type": "object",
+  "x-contract-version": "1.0.0",
+  "x-description": "POST /api/v1/authz/check request",
+  "x-owner": "Kaushlendra"
+}

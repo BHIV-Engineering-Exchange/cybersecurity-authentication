@@ -2,13 +2,13 @@
   {
     "check_id": "S5-04",
     "system": "tantra-live",
-    "utc": "2026-11-04T10:40:25Z",
-    "elapsed_ms": 1109,
+    "utc": "2026-11-04T13:33:23Z",
+    "elapsed_ms": 562,
     "request": {
       "method": "POST",
       "url": "http://163.128.209.18:8101/validate/prana/ingress",
       "headers": {
-        "x-trace-id": "cyber-p0-test-170472ee-ff37-4d46-b06c-235ce4c4f7bf",
+        "x-trace-id": "cyber-p0-test-0bdb00db-bafc-47dd-be15-d044e8f6acbb",
         "content-type": "application/json"
       },
       "body": {
@@ -17,7 +17,7 @@
           "event_type": "integrity_probe",
           "version": "1.0.0"
         },
-        "submission_id": "cyber-p0-test-170472ee-ff37-4d46-b06c-235ce4c4f7bf",
+        "submission_id": "cyber-p0-test-0bdb00db-bafc-47dd-be15-d044e8f6acbb",
         "event_type": "integrity_probe",
         "timestamp": "2026-11-04T00:00:00Z",
         "source_system": "cybersecurity"

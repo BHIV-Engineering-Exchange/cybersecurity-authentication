@@ -1,0 +1,40 @@
+{
+  "runs": 50,
+  "started_utc": "2026-11-04T13:27:57Z",
+  "finished_utc": "2026-11-04T13:32:10Z",
+  "python": "3.12.7",
+  "os": "Windows-11-10.0.26300-SP0",
+  "hash_seed": "random per process (PYTHONHASHSEED not set)",
+  "targets": {
+    "canonical_event_sha256": {
+      "distinct_digests": 1,
+      "digests": {
+        "0046f13639e8f9194658ee73e4200316bb22872af5b398156580bd891531a3a1": 50
+      }
+    },
+    "openapi_contract": {
+      "distinct_digests": 1,
+      "digests": {
+        "dc8c1bd28b6ce64c87ed0fad50cd2815172a80c983476fa719f8b022977cf487": 50
+      }
+    },
+    "rbac_decision_matrix": {
+      "distinct_digests": 1,
+      "digests": {
+        "a6cb19ca1f4f18d2bb3e7ed9a4bacf76c01379ad891c232b8d409ddcf7306bff": 50
+      }
+    },
+    "tantra_envelope": {
+      "distinct_digests": 1,
+      "digests": {
+        "ec67432d6903acfdd716e0e64190f4e0c44a5c0977182a23f7c87d51c89c71fb": 50
+      }
+    },
+    "threat_assessment": {
+      "distinct_digests": 1,
+      "digests": {
+        "a7ec63752036679950dd395fb5ed1f3a2d1259dafa54e8642a5f1bd1b64b5305": 50
+      }
+    }
+  }
+}

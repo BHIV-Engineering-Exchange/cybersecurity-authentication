@@ -2,7 +2,9 @@
 Database models
 """
 
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, ForeignKey, Float
+import json
+
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, ForeignKey, Float, UniqueConstraint
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from app.db.database import Base
@@ -455,3 +457,74 @@ class ProtectedAccessDecision(Base):
     decision = Column(String, nullable=False)  # PENDING while in flight, then ALLOW or DENY
     response_json = Column(Text, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+
+class RevokedPermission(Base):
+    """Tier 1 permission revocation (POST /api/v1/access/revoke, revocation_type=permission_revocation).
+
+    A stored role:action pair is denied by the RBAC middleware and by POST /api/v1/authz/check until a superadmin
+    restores it (POST /api/v1/access/restore). Actions map to HTTP methods: read=GET/HEAD, create=POST,
+    update=PUT/PATCH, delete=DELETE.
+    """
+    __tablename__ = "revoked_permissions"
+    __table_args__ = (UniqueConstraint("role", "action", name="uq_revoked_permission_role_action"),)
+
+    id = Column(Integer, primary_key=True, index=True)
+    role = Column(String, nullable=False, index=True)
+    action = Column(String, nullable=False)
+    revocation_id = Column(String, nullable=False)
+    reason = Column(String, nullable=True)
+    revoked_by = Column(String, nullable=True)
+    revoked_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+
+class SecurityIncident(Base):
+    """A correlated security incident opened by rule-based detection (app/core/threat_detection.py).
+
+    Decision support only: it never blocks, deactivates or contains anything. A human reviews it; containment needs
+    governance approval and VAJRA.
+    """
+    __tablename__ = "security_incidents"
+
+    id = Column(Integer, primary_key=True, index=True)
+    incident_id = Column(String, unique=True, index=True, nullable=False)
+    correlation_key = Column(String, index=True, nullable=False)  # <rule_id>:<target_ref>
+    rule_id = Column(String, nullable=False)
+    rule_version = Column(String, nullable=False)
+    threat_type = Column(String, nullable=False)
+    target_ref = Column(String, nullable=False)  # cc_usr_<id>, or unknown:<sha256 prefix> for unknown accounts
+    severity = Column(String, nullable=False)
+    confidence = Column(Float, nullable=False)
+    uncertainty = Column(Text, nullable=False, default="[]")  # JSON list of plain-language caveats
+    rationale = Column(Text, nullable=True)
+    status = Column(String, nullable=False, default="open")
+    requires_human_review = Column(Boolean, nullable=False, default=True)
+    event_count = Column(Integer, nullable=False, default=0)
+    evidence_event_ids = Column(Text, nullable=False, default="[]")  # JSON list of canonical event ids
+    trace_ids = Column(Text, nullable=False, default="[]")  # JSON list
+    first_seen_at = Column(DateTime, nullable=False)
+    last_seen_at = Column(DateTime, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+    def to_dict(self):
+        return {
+            "incident_id": self.incident_id,
+            "correlation_key": self.correlation_key,
+            "rule_id": self.rule_id,
+            "rule_version": self.rule_version,
+            "threat_type": self.threat_type,
+            "target_ref": self.target_ref,
+            "severity": self.severity,
+            "confidence": self.confidence,
+            "uncertainty": json.loads(self.uncertainty or "[]"),
+            "rationale": self.rationale,
+            "status": self.status,
+            "requires_human_review": self.requires_human_review,
+            "event_count": self.event_count,
+            "evidence_event_ids": json.loads(self.evidence_event_ids or "[]"),
+            "trace_ids": json.loads(self.trace_ids or "[]"),
+            "first_seen_at": self.first_seen_at.isoformat() + "Z" if self.first_seen_at else None,
+            "last_seen_at": self.last_seen_at.isoformat() + "Z" if self.last_seen_at else None,
+            "created_at": self.created_at.isoformat() + "Z" if self.created_at else None,
+        }

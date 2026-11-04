@@ -1,0 +1,304 @@
+{
+  "$defs": {
+    "ActorModel": {
+      "properties": {
+        "actor_id": {
+          "title": "Actor Id",
+          "type": "string"
+        },
+        "actor_type": {
+          "default": "user",
+          "title": "Actor Type",
+          "type": "string"
+        },
+        "auth_method": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "bearer_jwt",
+          "title": "Auth Method"
+        },
+        "authenticated": {
+          "default": true,
+          "title": "Authenticated",
+          "type": "boolean"
+        },
+        "display_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Display Name"
+        },
+        "role": {
+          "default": "investigator",
+          "title": "Role",
+          "type": "string"
+        }
+      },
+      "required": [
+        "actor_id"
+      ],
+      "title": "ActorModel",
+      "type": "object"
+    },
+    "OutcomeModel": {
+      "properties": {
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "reason_code": {
+          "title": "Reason Code",
+          "type": "string"
+        },
+        "status": {
+          "title": "Status",
+          "type": "string"
+        },
+        "status_code": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Status Code"
+        }
+      },
+      "required": [
+        "status",
+        "reason_code",
+        "message"
+      ],
+      "title": "OutcomeModel",
+      "type": "object"
+    },
+    "PolicyReferenceModel": {
+      "properties": {
+        "boundary_checked": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Boundary Checked"
+        },
+        "enforcement_mode": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "mandatory",
+          "title": "Enforcement Mode"
+        },
+        "policy_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Policy Id"
+        },
+        "rule_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rule Name"
+        }
+      },
+      "title": "PolicyReferenceModel",
+      "type": "object"
+    },
+    "ResourceModel": {
+      "properties": {
+        "case_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Case Id"
+        },
+        "integrity_hash": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Integrity Hash"
+        },
+        "resource_id": {
+          "title": "Resource Id",
+          "type": "string"
+        },
+        "resource_type": {
+          "title": "Resource Type",
+          "type": "string"
+        },
+        "target_address": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target Address"
+        }
+      },
+      "required": [
+        "resource_type",
+        "resource_id"
+      ],
+      "title": "ResourceModel",
+      "type": "object"
+    }
+  },
+  "$id": "bhiv-cybersecurity/canonical_security_event/1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "action": {
+      "title": "Action",
+      "type": "string"
+    },
+    "actor": {
+      "$ref": "#/$defs/ActorModel"
+    },
+    "event_id": {
+      "title": "Event Id",
+      "type": "string"
+    },
+    "event_type": {
+      "title": "Event Type",
+      "type": "string"
+    },
+    "extensions": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Extensions"
+    },
+    "metadata": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Metadata"
+    },
+    "outcome": {
+      "$ref": "#/$defs/OutcomeModel"
+    },
+    "policy_reference": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PolicyReferenceModel"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "request_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Request Id"
+    },
+    "resource": {
+      "$ref": "#/$defs/ResourceModel"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_system": {
+      "default": "cybercrime",
+      "title": "Source System",
+      "type": "string"
+    },
+    "timestamp": {
+      "title": "Timestamp",
+      "type": "string"
+    },
+    "trace_id": {
+      "title": "Trace Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "event_type",
+    "trace_id",
+    "actor",
+    "action",
+    "resource",
+    "outcome"
+  ],
+  "title": "CanonicalSecurityEvent",
+  "type": "object",
+  "x-contract-version": "1.0.0",
+  "x-description": "Every security event the module records (audit store, logs, TANTRA payload source)",
+  "x-owner": "Kaushlendra"
+}

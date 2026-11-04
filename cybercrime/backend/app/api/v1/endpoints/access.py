@@ -14,12 +14,80 @@ from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
 from app.db.database import get_db
-from app.db.models import User
+from app.db.models import RevokedPermission, User
+from app.core.rbac import ACTION_METHODS, NON_REVOCABLE_ROLES
 from app.core.security import revoke_jti
 from app.core.canonical_event import emit_canonical_event
 
 
 router = APIRouter()
+
+
+def _validated_role_action(request: Request, role: str, action: str) -> tuple[str, str]:
+    """A role:action pair that Tier 1 revocation may change (never superadmin or public)."""
+    role, action = role.strip().lower(), action.strip().lower()
+    policy = getattr(request.app.state, "rbac_policy", None)
+    known_roles = set(policy.roles) if policy is not None else {"investigator"}
+    if role in NON_REVOCABLE_ROLES or role not in known_roles:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"target.role must be one of {sorted(known_roles - set(NON_REVOCABLE_ROLES))}",
+        )
+    if action not in ACTION_METHODS:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"target.action must be one of {sorted(ACTION_METHODS)}",
+        )
+    return role, action
+
+
+class RestoreRequest(BaseModel):
+    contract_version: str = "1.0.0"
+    role: str
+    action: str
+    reason: str = Field(..., min_length=10, max_length=256)
+
+
+class RestoreResponse(BaseModel):
+    contract_version: str = "1.0.0"
+    status: str  # RESTORED or NOT_REVOKED
+    role: str
+    action: str
+    trace_id: str
+    audit_event_id: str
+
+
+@router.post("/restore", response_model=RestoreResponse, status_code=status.HTTP_200_OK)
+def restore_permission(req: RestoreRequest, request: Request, db: Session = Depends(get_db)):
+    """Undo a Tier 1 permission revocation (superadmin only)."""
+    trace_id = getattr(request.state, "trace_id", None) or f"trace-{uuid.uuid4().hex[:16]}"
+    request_id = getattr(request.state, "request_id", None) or f"req-{uuid.uuid4().hex[:12]}"
+    current_user = getattr(request.state, "current_user", None)
+    if not current_user:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Authentication required.",
+                            headers={"WWW-Authenticate": "Bearer"})
+    if current_user.role != "superadmin":
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Only superadmin may restore permissions.")
+    if req.contract_version != "1.0.0":
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail=f"Unsupported contract_version: {req.contract_version}. Must equal '1.0.0'")
+    role, action = _validated_role_action(request, req.role, req.action)
+    row = db.query(RevokedPermission).filter(RevokedPermission.role == role, RevokedPermission.action == action).first()
+    restore_status = "RESTORED" if row else "NOT_REVOKED"
+    if row:
+        db.delete(row)  # committed together with the audit event below; if that write fails, both roll back
+    event = emit_canonical_event(
+        event_type="access.restored", action="update",
+        actor_id=f"cc_usr_{current_user.id}", role="superadmin",
+        resource_type="policy", resource_id=f"{role}:{action}",
+        outcome_status="SUCCESS", status_code=200, reason_code="PERMISSION_RESTORED" if row else "NOT_REVOKED",
+        message=f"Permission '{role}:{action}' {'restored' if row else 'was not revoked'}. Reason: {req.reason}",
+        trace_id=trace_id, request_id=request_id, policy_id="rbac_permissions_v1",
+        metadata={"status": restore_status, "administrative_reason": req.reason},
+        db_session=db, fail_on_persist_error=True,
+    )
+    return RestoreResponse(status=restore_status, role=role, action=action, trace_id=trace_id,
+                           audit_event_id=event.event_id)
 
 
 class RevocationTargetModel(BaseModel):
@@ -59,9 +127,9 @@ async def revoke_access(
     or Tier 3 (token invalidation) revocations.
     Conforms to Phase 2 Access Control Contract POST /api/v1/access/revoke.
     """
+    # The middleware's id is the checked form of X-Trace-Id (CYB-15); the raw header is not trusted.
     trace_id = (
-        x_trace_id
-        or getattr(request.state, "trace_id", None)
+        getattr(request.state, "trace_id", None)
         or f"trace-{uuid.uuid4().hex[:16]}"
     )
     request_id = getattr(request.state, "request_id", None) or f"req-{uuid.uuid4().hex[:12]}"
@@ -161,9 +229,17 @@ async def revoke_access(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="target.role and target.action are required for permission_revocation",
             )
-        target_resource_id = f"{req.target.role}:{req.target.action}"
+        role, action = _validated_role_action(request, req.target.role, req.target.action)
+        target_resource_id = f"{role}:{action}"
         resource_type = "policy"
-        revocation_status = "REVOKED"
+        # Stored, so the RBAC middleware and /authz/check deny it from the next request on (CYB-02).
+        if db.query(RevokedPermission).filter(RevokedPermission.role == role, RevokedPermission.action == action).first():
+            revocation_status = "ALREADY_INACTIVE"
+        else:
+            # Committed together with the audit event below; if that write fails, the revocation rolls back too.
+            db.add(RevokedPermission(role=role, action=action, revocation_id=revocation_id,
+                                     reason=req.reason, revoked_by=revoking_actor))
+            revocation_status = "REVOKED"
 
     else:
         raise HTTPException(

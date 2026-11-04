@@ -2,14 +2,14 @@
   {
     "check_id": "S2-04",
     "system": "cybersecurity",
-    "utc": "2026-11-04T10:42:12Z",
-    "elapsed_ms": 30,
+    "utc": "2026-11-04T13:34:57Z",
+    "elapsed_ms": 47,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:51300/api/v1/access/revoke",
+      "url": "http://127.0.0.1:62513/api/v1/access/revoke",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "e7693276-26f1-4b6c-a478-eb66b6e3acd5",
+        "x-trace-id": "7938025a-c17b-4c44-b539-c3a664c9dfe1",
         "content-type": "application/json"
       },
       "body": {
@@ -27,55 +27,64 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "9c8c460e-6d72-4092-9be2-a0b75848995c",
-        "x-trace-id": "e7693276-26f1-4b6c-a478-eb66b6e3acd5"
+        "x-request-id": "6b7a3322-16b7-4cb0-8c57-03787ecd79c5",
+        "x-trace-id": "7938025a-c17b-4c44-b539-c3a664c9dfe1"
       },
       "body": {
         "contract_version": "1.0.0",
-        "revocation_id": "c1a6813d-97ce-467b-9d1f-1cbb8ec24f41",
+        "revocation_id": "a41c4d78-2cc2-4026-abf3-344fcc70f0af",
         "revocation_type": "permission_revocation",
         "status": "REVOKED",
-        "effective_at": "2026-11-04T10:42:12.548Z",
-        "trace_id": "e7693276-26f1-4b6c-a478-eb66b6e3acd5",
-        "audit_event_id": "ceec634f-857c-4e1d-83f1-78111e2e3d2c"
+        "effective_at": "2026-11-04T13:34:57.707Z",
+        "trace_id": "7938025a-c17b-4c44-b539-c3a664c9dfe1",
+        "audit_event_id": "24065357-fbb6-4450-ae18-01e8dcf5c468"
       }
     }
   },
   {
     "check_id": "S2-04",
     "system": "cybersecurity",
-    "utc": "2026-11-04T10:42:12Z",
-    "elapsed_ms": 15,
+    "utc": "2026-11-04T13:34:57Z",
+    "elapsed_ms": 30,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:51300/api/v1/cases/",
+      "url": "http://127.0.0.1:62513/api/v1/cases/",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "e39b285c-7b71-4833-8544-5312a47b6c57"
+        "x-trace-id": "cf3a74c7-d25d-4ae6-94be-587c56a96920"
       },
       "body": null
     },
     "response": {
-      "status": 200,
+      "status": 403,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "47bce8c4-36e7-4f1f-b850-9e753176e406",
-        "x-trace-id": "e39b285c-7b71-4833-8544-5312a47b6c57"
+        "x-request-id": "fd53e2b7-6408-46ea-8a82-facd568f2bc6",
+        "x-trace-id": "cf3a74c7-d25d-4ae6-94be-587c56a96920"
       },
-      "body": []
+      "body": {
+        "error": true,
+        "code": "PERMISSION_REVOKED",
+        "status_code": 403,
+        "message": "Access denied: 'investigator:read' has been revoked.",
+        "trace_id": "cf3a74c7-d25d-4ae6-94be-587c56a96920",
+        "request_id": "fd53e2b7-6408-46ea-8a82-facd568f2bc6",
+        "timestamp": "2026-11-04T13:34:57.750Z",
+        "details": []
+      }
     }
   },
   {
     "check_id": "S2-04",
     "system": "cybersecurity",
-    "utc": "2026-11-04T10:42:12Z",
+    "utc": "2026-11-04T13:34:57Z",
     "elapsed_ms": 32,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:51300/api/v1/authz/check",
+      "url": "http://127.0.0.1:62513/api/v1/authz/check",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "3f5d5cdd-6a39-400b-ae83-db3df574232b",
+        "x-trace-id": "1c511f77-af3b-4e26-adfb-f76b66ed0fdb",
         "content-type": "application/json"
       },
       "body": {
@@ -95,16 +104,16 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "553d8645-18a7-4424-95ae-cb033c5e2533",
-        "x-trace-id": "3f5d5cdd-6a39-400b-ae83-db3df574232b"
+        "x-request-id": "5cc72e18-25ae-4730-942a-7de5708e3055",
+        "x-trace-id": "1c511f77-af3b-4e26-adfb-f76b66ed0fdb"
       },
       "body": {
         "contract_version": "1.0.0",
-        "decision": "ALLOW",
-        "reason_code": "ALLOWED_BY_POLICY",
-        "reason": "Investigator role authorized for action 'read' on resource 'evidence'.",
-        "trace_id": "3f5d5cdd-6a39-400b-ae83-db3df574232b",
-        "evaluated_at": "2026-11-04T10:42:12.597Z",
+        "decision": "DENY",
+        "reason_code": "PERMISSION_REVOKED",
+        "reason": "Access denied: 'investigator:read' was revoked (revocation a41c4d78-2cc2-4026-abf3-344fcc70f0af).",
+        "trace_id": "1c511f77-af3b-4e26-adfb-f76b66ed0fdb",
+        "evaluated_at": "2026-11-04T13:34:57.779Z",
         "policy_applied": "rbac_permissions_v1"
       }
     }

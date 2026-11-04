@@ -1,5 +1,88 @@
 # Changelog
 
+## 2026-11-04 (evening) - Remaining P0 items for other members (Hemanth, for the owners' review)
+
+A check of the P0 task against every member's assignment found these items still open in this repository. Each is
+built for its owner's review.
+
+- **Aryan (correlation and explainability):** every incident from `GET /api/v1/threats/incidents` now carries:
+  - `observed_facts` (kept apart from the `inference`);
+  - `evidence_gaps` and a `proposed_next_action` (nothing is acted on);
+  - a TANTRA-compatible `tantra_response_envelope`, marked NOT SENT until TANTRA registers a contract (TAN-01).
+
+  Incident ids are deterministic (UUIDv5 of the correlation key and the first linked event). A re-delivered event is
+  not counted twice. The response follows the new `security_incident` contract.
+- **Shivam (threat intelligence):** `cybercrime/backend/fixtures/threat_scenarios.json` holds a first-release threat
+  taxonomy (12 classes) and 15 synthetic scenarios covering the shared threat scenarios, each with its real coverage:
+  - covered: 4;
+  - partial: 2;
+  - not covered: 9, each with the gap stated.
+
+  `test_threat_scenarios.py` runs the runnable ones against the API. It also proves the declared password-spray gap.
+- **Kaushlendra (contracts and security state):**
+  - `cybercrime/contracts/` holds 12 versioned JSON Schema contracts, generated from the models the API uses;
+    `test_contract_schemas.py` fails on drift.
+  - `cybercrime/backend/requirements.lock.txt` pins the exact versions of the verified environment.
+  - `verification/determinism_check.py` gives 50-run SHA-256 evidence for the module's deterministic functions.
+  - T-GOV-F02 is **not** closed: the Parikshak `incorrect_logic` logs are not in any repository available to us. The
+    blocker and owner are in `evidence_packet/test_results/DETERMINISM_50_RUNS.md`.
+- **VAJRA (from the Cybersecurity side):** `evidence_packet/architecture_and_integration_maps/VAJRA_CAPABILITY_MAP.md`
+  maps each VAJRA capability we use to the checks that test it.
+
+Still not in this repository: the VAJRA end-user journey (VAJRA's UI), Brahmanda events (no repository), TANTRA's
+security contract, the VM.
+
+## 2026-11-04 (afternoon) - Fixes in other lanes and failed-login detection (Hemanth, for the owners' review)
+
+At the team's request, open defects in other lanes were fixed in this repository. Each fix is for its lane owner to
+review before merge. Unit tests: `cybercrime/backend/test_lane_fixes.py`. Runtime checks: see DEFECTS.md.
+
+### Changed (behaviour)
+- **CYB-01:** `POST /api/v1/auth/register` is superadmin-only. Public sign-up stays `POST /api/v1/access-requests/request`
+  (reviewed by a superadmin). `rbac-permissions.json` no longer lists register as public.
+- **CYB-05:** login answers "Invalid email or password." for both an unknown email and a wrong password, and checks a
+  dummy hash for unknown emails, so timing does not reveal accounts. "Account is deactivated" is shown only after the
+  correct password. Login is now a plain (sync) route, so bcrypt no longer blocks the event loop.
+- **CYB-04:** every failed login writes a canonical `auth.login` DENIED security event. An unknown email is recorded
+  only as a keyed hash (HMAC with the server key).
+- **Login throttle (new):** more than `LOGIN_MAX_ATTEMPTS_PER_MINUTE` attempts (default 20) for one email in a minute
+  answer `429` before any password check and write nothing to the database (per process).
+- **CYB-02:** Tier 1 permission revocation is stored (`revoked_permissions`) and enforced by the RBAC middleware
+  (`403 PERMISSION_REVOKED`) and by `/api/v1/authz/check`. New `POST /api/v1/access/restore` undoes it. `superadmin` and
+  `public` cannot be revoked.
+- **CYB-06 / CYB-03:** wallet incident analysis reads only the system's own transaction dataset (`fraud_transactions`);
+  it never generates or mixes in data at analysis time, and no longer shifts timestamps. The response adds
+  `confidence`, `uncertainty`, `data_basis` (`recorded`, `none`, `synthetic_demo`) and `observed_tx_count`; each
+  transaction gets `synthetic`. The uncertainty list states that this repository fills `fraud_transactions` from a
+  generator script (so it may be synthetic test data) and that times come from the dataset's step counter. Generated
+  demo data exists only with `INCIDENT_SYNTHETIC_DEMO=true` (labelled synthetic). With no records, `risk_level` is
+  `INSUFFICIENT DATA`: the frontends must handle this new value.
+- **CYB-07:** the catch-all OPTIONS route is removed (the CORS middleware answers preflight), so a collection route
+  without the trailing slash redirects (307) instead of 405.
+- **CYB-08:** the evidence upload response reports `bucket_status` (`stored`, `unavailable`, `not_configured`).
+- **CYB-09:** the Bucket API key is sent in an `X-API-Key` header, not in the JSON body. The Bucket owner must confirm
+  this header.
+- **CYB-12:** anonymous `GET /api/v1/system/health` no longer shows file-system paths or raw database errors.
+- **CYB-14:** `POST /api/v1/protected/access` is rate limited per caller (`PROTECTED_ACCESS_RATE_LIMIT_PER_MINUTE`,
+  default 60, per process); excess answers `429 RATE_LIMITED`.
+- **CYB-15:** `X-Trace-Id` / `X-Request-Id` are echoed only in a safe form; anything else is replaced by a fresh UUID.
+  Protected access still refuses a malformed trace id with 400.
+
+### Added
+- **Failed-login detection and correlation** (10-day proof C; Shivam and Aryan Dias to review):
+  - `app/core/threat_detection.py`: rule `auth.repeated_failed_login` v1.0.0 (5 or more failed logins for one account
+    within 10 minutes; wrong passwords only, not deactivated accounts) opens one `security_incidents` row per account
+    and window, with severity, confidence, uncertainty, rationale and up to 50 evidence event ids, and writes a
+    `threat.detected` event. Its cost per failed login is bounded. It never blocks anyone.
+  - `GET /api/v1/threats/incidents` (superadmin) lists the incidents.
+- Verification: check P-C2 now tests detection and correlation instead of being BLOCKED; O-01 and S6-04 test CYB-12 and
+  CYB-08.
+- `cybercrime/openapi.yaml` regenerated: 95 paths, 103 operations.
+
+### Not changed
+- CYB-13 (scope and caller binding) needs a scope-aware VAJRA contract and a team decision.
+- VAJRA and TANTRA defects are reported to their owners, not fixed here.
+
 ## 2026-11-04 - P0 verification, evidence and BHIV runtime bridge (Hemanth)
 
 ### Added

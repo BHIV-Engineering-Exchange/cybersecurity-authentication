@@ -1,6 +1,6 @@
 # Screenshots
 
-Captured 20261104T104326Z (UTC) by `verification/capture_screenshots.py` with headless msedge. Each image is a real HTTP response from a running process; only images that were actually captured are listed.
+Captured 20261104T120924Z (UTC) by `verification/capture_screenshots.py` with headless msedge. Each image is a real HTTP response from a running process; only images that were actually captured are listed.
 
 | File | What it shows | Source |
 |---|---|---|
@@ -15,11 +15,9 @@ Ports are random free local ports. Subjects shown start with `cyber-p0-test-`; a
 
 ## Manual record (added after generation)
 
-- **Withdrawn after capture (2026-11-04):** `07_tantra_live_prana_system_health.png` (live TANTRA `prana/system/health`,
-  read-only GET). It shows TANTRA's internal service addresses and registry URL. It stays out of this packet until the
-  TANTRA team agrees to publish it. The GET itself is listed in `test_results/LIVE_TANTRA_CALLS.md`.
-- **Secret/PII review 1 (2026-11-04):** the implementer's assistant (Claude, working for Hemanth) viewed all 7 captured
-  images. No tokens, passwords, keys, user names or personal data were found. Image 01 shows temporary run folders under
-  `C:\tmp`.
-- **Secret/PII review 2 (2026-11-04):** the independent auditor agent (audit iteration 4) viewed all 7 images. It found no
-  secrets, tokens or personal data, and flagged image 07 for TANTRA's internal addresses, which led to the withdrawal above.
+- **Secret/PII review (2026-11-04):** the implementer's assistant (Claude, working for Hemanth) viewed all 6 images.
+  No tokens, passwords, keys, user names, personal data or internal service addresses were found. Image 01 is the
+  anonymous health reply, which no longer shows file-system paths. Image 03 shows synthetic local VAJRA rows.
+- **Earlier capture (10:43:26Z, same day):** it also took TANTRA's `prana/system/health` page (image 07). That image
+  shows TANTRA's internal service addresses, so it was withheld from this packet until TANTRA agrees to publish it.
+  Its GET is listed in `test_results/LIVE_TANTRA_CALLS.md`.

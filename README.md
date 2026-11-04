@@ -58,6 +58,13 @@ python verification/build_reports.py
 | `TANTRA_VALIDATION_URL`, `TANTRA_KARMA_URL`, `TANTRA_PRANA_URL` | TANTRA layer services (validation, karma ledger, PRANA replay). |
 | `TANTRA_EVENT_TYPE` | Event type sent to TANTRA; must be registered by TANTRA first. |
 | `BHIV_CORE_EVENT_URL`, `BHIV_BUCKET_EVIDENCE_URL` | Earlier BHIV Core/Bucket hooks used by evidence upload. |
+| `PROTECTED_ACCESS_RATE_LIMIT_PER_MINUTE` | Per-caller limit on protected access (default 60; per process). |
+| `INCIDENT_SYNTHETIC_DEMO` | `true` only for demos: wallets with no history get generated data, labelled synthetic. Default `false`. |
+| `LOGIN_MAX_ATTEMPTS_PER_MINUTE` | Login attempts per email per minute before `429` (default 20; per process). |
+
+Versioned API and event contracts (JSON Schema) are in [cybercrime/contracts/](cybercrime/contracts/README.md). For the
+exact dependency versions used in verification: `pip install -r cybercrime/backend/requirements.lock.txt`. Synthetic
+threat scenarios and their coverage: `cybercrime/backend/fixtures/threat_scenarios.json`.
 
 Contracts, errors and statuses: [INTEGRATION.md](INTEGRATION.md). Responsibilities and limits: [BCAES_ALIGNMENT.md](BCAES_ALIGNMENT.md).
 
@@ -70,11 +77,12 @@ VAJRA's verify contract has no scope (CYB-13).
 TANTRA's contract gate answers live, but TANTRA has no registered contract for cybersecurity events yet, so security
 decisions are not in the TANTRA ledger.
 
-Two things that touch these signals are not in place yet:
+Repeated failed logins for one account are detected by a rule and correlated into one open incident for human review
+(`GET /api/v1/threats/incidents`). This is rule-based decision support; it blocks no one. Whether TANTRA's
+authority-validation route is the approval step for security responses is UNKNOWN.
 
-- **Correlation.** Nothing correlates authentication or access signals. fraud-evidence-system has case-linking
-  correlation, but it is not wired in.
-- **Approval.** Whether TANTRA's authority-validation route is the approval step for security responses is UNKNOWN.
+On 2026-11-04 the open defects in other lanes (CYB-01 to CYB-09, CYB-12, CYB-14, CYB-15) were fixed for their owners'
+review; see CHANGELOG.md.
 
 No VM reference has been provided.
 
