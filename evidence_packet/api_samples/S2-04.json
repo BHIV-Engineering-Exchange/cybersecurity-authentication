@@ -1,0 +1,112 @@
+[
+  {
+    "check_id": "S2-04",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T10:42:12Z",
+    "elapsed_ms": 30,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:51300/api/v1/access/revoke",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "e7693276-26f1-4b6c-a478-eb66b6e3acd5",
+        "content-type": "application/json"
+      },
+      "body": {
+        "contract_version": "1.0.0",
+        "revocation_type": "permission_revocation",
+        "target": {
+          "role": "investigator",
+          "action": "read"
+        },
+        "reason": "revoke investigator read (P0 verification, synthetic)",
+        "requested_by": "cc_usr_1"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "9c8c460e-6d72-4092-9be2-a0b75848995c",
+        "x-trace-id": "e7693276-26f1-4b6c-a478-eb66b6e3acd5"
+      },
+      "body": {
+        "contract_version": "1.0.0",
+        "revocation_id": "c1a6813d-97ce-467b-9d1f-1cbb8ec24f41",
+        "revocation_type": "permission_revocation",
+        "status": "REVOKED",
+        "effective_at": "2026-11-04T10:42:12.548Z",
+        "trace_id": "e7693276-26f1-4b6c-a478-eb66b6e3acd5",
+        "audit_event_id": "ceec634f-857c-4e1d-83f1-78111e2e3d2c"
+      }
+    }
+  },
+  {
+    "check_id": "S2-04",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T10:42:12Z",
+    "elapsed_ms": 15,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:51300/api/v1/cases/",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "e39b285c-7b71-4833-8544-5312a47b6c57"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "47bce8c4-36e7-4f1f-b850-9e753176e406",
+        "x-trace-id": "e39b285c-7b71-4833-8544-5312a47b6c57"
+      },
+      "body": []
+    }
+  },
+  {
+    "check_id": "S2-04",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T10:42:12Z",
+    "elapsed_ms": 32,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:51300/api/v1/authz/check",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "3f5d5cdd-6a39-400b-ae83-db3df574232b",
+        "content-type": "application/json"
+      },
+      "body": {
+        "contract_version": "1.0.0",
+        "subject": {
+          "actor_id": "cc_usr_2",
+          "role": "investigator"
+        },
+        "action": "read",
+        "resource": {
+          "type": "evidence",
+          "id": "EV-1"
+        }
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "553d8645-18a7-4424-95ae-cb033c5e2533",
+        "x-trace-id": "3f5d5cdd-6a39-400b-ae83-db3df574232b"
+      },
+      "body": {
+        "contract_version": "1.0.0",
+        "decision": "ALLOW",
+        "reason_code": "ALLOWED_BY_POLICY",
+        "reason": "Investigator role authorized for action 'read' on resource 'evidence'.",
+        "trace_id": "3f5d5cdd-6a39-400b-ae83-db3df574232b",
+        "evaluated_at": "2026-11-04T10:42:12.597Z",
+        "policy_applied": "rbac_permissions_v1"
+      }
+    }
+  }
+]

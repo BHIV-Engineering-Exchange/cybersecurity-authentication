@@ -1,0 +1,151 @@
+[
+  {
+    "check_id": "S6-02",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T10:42:05Z",
+    "elapsed_ms": 5546,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:51300/api/v1/protected/access",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "7e1cb4f5-fe21-4f8c-ad7d-f6637e304aaf",
+        "content-type": "application/json"
+      },
+      "body": {
+        "contract_version": "1.0.0",
+        "vajra_subject": "cyber-p0-test-vajra-down-cb7e4491d2",
+        "action": "read",
+        "resource": {
+          "type": "evidence",
+          "id": "EV-P0-0001"
+        },
+        "purpose": "P0 verification (synthetic)"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "bdd627a8-7e78-49d7-b86d-15dd770cb53a",
+        "x-trace-id": "7e1cb4f5-fe21-4f8c-ad7d-f6637e304aaf"
+      },
+      "body": {
+        "contract_version": "1.0.0",
+        "decision": "DENY",
+        "reason_code": "VAJRA_UNAVAILABLE",
+        "reason": "Access denied: VAJRA authority could not be confirmed (UNAVAILABLE).",
+        "decision_id": "761cd048c0fb4f9795ebdf7dc5142b50",
+        "trace_id": "7e1cb4f5-fe21-4f8c-ad7d-f6637e304aaf",
+        "request_id": "bdd627a8-7e78-49d7-b86d-15dd770cb53a",
+        "idempotency_key": null,
+        "duplicate": false,
+        "actor_id": "cc_usr_2",
+        "action": "read",
+        "resource": {
+          "type": "evidence",
+          "id": "EV-P0-0001"
+        },
+        "vajra": {
+          "subject_ref": "subj_sha256_d218d00ee85a4b9b",
+          "status": "UNAVAILABLE",
+          "is_authorized": null,
+          "current_state": null,
+          "scope_checked": false
+        },
+        "evidence": {
+          "local_audit_event_id": "724dd758-3a38-44bb-beb0-c090d1c9e115",
+          "superseded_audit_event_id": null,
+          "vajra": {
+            "status": "UNAVAILABLE",
+            "http_status": null,
+            "detail": "ConnectError"
+          },
+          "tantra": {
+            "status": "NOT_CONFIGURED",
+            "http_status": null,
+            "detail": "TANTRA_VALIDATION_URL is not set"
+          },
+          "complete": false,
+          "gaps": [
+            "vajra",
+            "tantra"
+          ]
+        },
+        "policy_applied": "vajra_authority_v1",
+        "evaluated_at": "2026-11-04T10:42:00.091Z"
+      }
+    }
+  },
+  {
+    "check_id": "S6-02",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T10:42:08Z",
+    "elapsed_ms": 2703,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:51300/api/v1/system/health",
+      "headers": {
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "a0f4b005-0041-44ef-a0a4-1444f4bdd12a",
+        "x-trace-id": "476acc93-47dd-4308-8b0d-e72dd4b1d0a0"
+      },
+      "body": {
+        "status": "healthy",
+        "database": {
+          "ok": true,
+          "error": null
+        },
+        "integrations": {
+          "storage": {
+            "path": "C:\\tmp\\cyber-p0-verify-20261104T103939Z-paj3nl11\\evidence_storage",
+            "exists": true,
+            "writable": true
+          },
+          "event_queue": {
+            "buffer_path": "C:\\tmp\\cyber-p0-verify-20261104T103939Z-paj3nl11\\event_buffer\\events.jsonl",
+            "buffer_exists": true,
+            "buffered_events": 1,
+            "kafka_configured": false,
+            "kafka_topic": "cybercrime-governance-events"
+          },
+          "bucket": {
+            "configured": false
+          },
+          "core": {
+            "configured": false
+          }
+        },
+        "bhiv_runtime": {
+          "tantra": {
+            "validation": {
+              "configured": false
+            },
+            "karma": {
+              "configured": false
+            },
+            "prana": {
+              "configured": false
+            },
+            "event_type": "security_decision"
+          },
+          "vajra": {
+            "api": {
+              "configured": true,
+              "reachable": false,
+              "error": "ConnectError"
+            },
+            "write_token_configured": true
+          }
+        }
+      }
+    }
+  }
+]

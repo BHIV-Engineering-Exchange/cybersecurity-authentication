@@ -1,0 +1,775 @@
+# Raw output: fraud-evidence-system backend Jest, run 1 (the first run after npm ci on this machine)
+# cwd: fraud-evidence-system/Backend ; command: npm ci && npx jest --forceExit ; repo commit 59d2d63 (subsystem unchanged by this change); first run after npm ci (the MongoDB test binary was already cached by npm ci)
+2026-11-04T08:16:42Z
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+PASS tests/rbac.test.js (10.249 s)
+  ● Console
+
+    console.info
+      [AUDIT] access_granted: test@example.com (investigator) - SUCCESS {
+        resource: '/test',
+        ip: '::ffff:127.0.0.1',
+        details: { permissions: [ 'evidence.view' ], auditLevel: 'standard' }
+      }
+
+      at logAccessAttempt (middleware/productionRBAC.js:250:22)
+
+    console.warn
+      [AUDIT] insufficient_permissions: test@example.com (investigator) - FAILED {
+        resource: '/test',
+        ip: '::ffff:127.0.0.1',
+        details: {
+          requiredPermissions: [ 'evidence.delete' ],
+          userRole: 'investigator',
+          allowedRoles: [ 'superadmin' ]
+        }
+      }
+
+    [0m [90m 248 |[39m     [90m// Log to console for monitoring[39m
+     [90m 249 |[39m     [36mconst[39m logLevel [33m=[39m success [33m?[39m [32m'info'[39m [33m:[39m [32m'warn'[39m[33m;[39m
+    [31m[1m>[22m[39m[90m 250 |[39m     console[logLevel]([32m`[AUDIT] ${action}: ${user.email} (${user.role}) - ${success ? 'SUCCESS' : 'FAILED'}`[39m[33m,[39m {
+     [90m     |[39m                      [31m[1m^[22m[39m
+     [90m 251 |[39m       resource[33m:[39m req[33m.[39moriginalUrl[33m,[39m
+     [90m 252 |[39m       ip[33m:[39m req[33m.[39mip[33m,[39m
+     [90m 253 |[39m       details[0m
+
+      at logAccessAttempt (middleware/productionRBAC.js:250:22)
+      at middleware/productionRBAC.js:84:9
+
+    console.warn
+      [AUDIT] account_deactivated: test@example.com (investigator) - FAILED { resource: '/test', ip: '::ffff:127.0.0.1', details: {} }
+
+    [0m [90m 248 |[39m     [90m// Log to console for monitoring[39m
+     [90m 249 |[39m     [36mconst[39m logLevel [33m=[39m success [33m?[39m [32m'info'[39m [33m:[39m [32m'warn'[39m[33m;[39m
+    [31m[1m>[22m[39m[90m 250 |[39m     console[logLevel]([32m`[AUDIT] ${action}: ${user.email} (${user.role}) - ${success ? 'SUCCESS' : 'FAILED'}`[39m[33m,[39m {
+     [90m     |[39m                      [31m[1m^[22m[39m
+     [90m 251 |[39m       resource[33m:[39m req[33m.[39moriginalUrl[33m,[39m
+     [90m 252 |[39m       ip[33m:[39m req[33m.[39mip[33m,[39m
+     [90m 253 |[39m       details[0m
+
+      at logAccessAttempt (middleware/productionRBAC.js:250:22)
+      at middleware/productionRBAC.js:48:9
+
+    console.info
+      [AUDIT] access_granted: test@example.com (investigator) - SUCCESS {
+        resource: '/test',
+        ip: '::ffff:127.0.0.1',
+        details: {
+          permissions: [ 'evidence.view', 'evidence.upload' ],
+          auditLevel: 'standard'
+        }
+      }
+
+      at logAccessAttempt (middleware/productionRBAC.js:250:22)
+
+    console.warn
+      [AUDIT] insufficient_permissions: test@example.com (investigator) - FAILED {
+        resource: '/test',
+        ip: '::ffff:127.0.0.1',
+        details: {
+          requiredPermissions: [ 'evidence.delete' ],
+          userRole: 'investigator',
+          allowedRoles: [ 'superadmin' ]
+        }
+      }
+
+    [0m [90m 248 |[39m     [90m// Log to console for monitoring[39m
+     [90m 249 |[39m     [36mconst[39m logLevel [33m=[39m success [33m?[39m [32m'info'[39m [33m:[39m [32m'warn'[39m[33m;[39m
+    [31m[1m>[22m[39m[90m 250 |[39m     console[logLevel]([32m`[AUDIT] ${action}: ${user.email} (${user.role}) - ${success ? 'SUCCESS' : 'FAILED'}`[39m[33m,[39m {
+     [90m     |[39m                      [31m[1m^[22m[39m
+     [90m 251 |[39m       resource[33m:[39m req[33m.[39moriginalUrl[33m,[39m
+     [90m 252 |[39m       ip[33m:[39m req[33m.[39mip[33m,[39m
+     [90m 253 |[39m       details[0m
+
+      at logAccessAttempt (middleware/productionRBAC.js:250:22)
+      at middleware/productionRBAC.js:84:9
+
+    console.error
+      Authorization error: Error: Database connection failed
+          at Object.<anonymous> (C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\fraud-evidence-system\Backend\tests\rbac.test.js:145:39)
+          at Promise.then.completed (C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\fraud-evidence-system\Backend\node_modules\jest-circus\build\utils.js:298:28)
+          at new Promise (<anonymous>)
+          at callAsyncCircusFn (C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\fraud-evidence-system\Backend\node_modules\jest-circus\build\utils.js:231:10)
+          at _callCircusTest (C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\fraud-evidence-system\Backend\node_modules\jest-circus\build\run.js:316:40)
+          at processTicksAndRejections (node:internal/process/task_queues:105:5)
+          at _runTest (C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\fraud-evidence-system\Backend\node_modules\jest-circus\build\run.js:252:3)
+          at _runTestsForDescribeBlock (C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\fraud-evidence-system\Backend\node_modules\jest-circus\build\run.js:126:9)
+          at _runTestsForDescribeBlock (C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\fraud-evidence-system\Backend\node_modules\jest-circus\build\run.js:121:9)
+          at _runTestsForDescribeBlock (C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\fraud-evidence-system\Backend\node_modules\jest-circus\build\run.js:121:9)
+          at run (C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\fraud-evidence-system\Backend\node_modules\jest-circus\build\run.js:71:3)
+          at runAndTransformResultsToJestFormat (C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\fraud-evidence-system\Backend\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+          at jestAdapter (C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\fraud-evidence-system\Backend\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+          at runTestInternal (C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\fraud-evidence-system\Backend\node_modules\jest-runner\build\runTest.js:367:16)
+          at runTest (C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\fraud-evidence-system\Backend\node_modules\jest-runner\build\runTest.js:444:34)
+          at Object.worker (C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\fraud-evidence-system\Backend\node_modules\jest-runner\build\testWorker.js:106:12)
+
+    [0m [90m 152 |[39m       next()[33m;[39m
+     [90m 153 |[39m     } [36mcatch[39m (error) {
+    [31m[1m>[22m[39m[90m 154 |[39m       console[33m.[39merror([32m'Authorization error:'[39m[33m,[39m error)[33m;[39m
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 155 |[39m       [36mreturn[39m res[33m.[39mstatus([35m500[39m)[33m.[39mjson({
+     [90m 156 |[39m         error[33m:[39m [36mtrue[39m[33m,[39m
+     [90m 157 |[39m         code[33m:[39m [35m500[39m[33m,[39m[0m
+
+      at error (middleware/productionRBAC.js:154:15)
+
+    console.info
+      [AUDIT] access_granted: test@example.com (investigator) - SUCCESS {
+        resource: '/test',
+        ip: '::ffff:127.0.0.1',
+        details: { permissions: [ 'evidence.view' ], auditLevel: 'standard' }
+      }
+
+      at logAccessAttempt (middleware/productionRBAC.js:250:22)
+
+    console.warn
+      [AUDIT] resource_access_denied: test@example.com (investigator) - FAILED {
+        resource: '/test',
+        ip: '::ffff:127.0.0.1',
+        details: {
+          resourceType: 'evidence',
+          resourceLevel: 'critical',
+          userRole: 'investigator'
+        }
+      }
+
+    [0m [90m 248 |[39m     [90m// Log to console for monitoring[39m
+     [90m 249 |[39m     [36mconst[39m logLevel [33m=[39m success [33m?[39m [32m'info'[39m [33m:[39m [32m'warn'[39m[33m;[39m
+    [31m[1m>[22m[39m[90m 250 |[39m     console[logLevel]([32m`[AUDIT] ${action}: ${user.email} (${user.role}) - ${success ? 'SUCCESS' : 'FAILED'}`[39m[33m,[39m {
+     [90m     |[39m                      [31m[1m^[22m[39m
+     [90m 251 |[39m       resource[33m:[39m req[33m.[39moriginalUrl[33m,[39m
+     [90m 252 |[39m       ip[33m:[39m req[33m.[39mip[33m,[39m
+     [90m 253 |[39m       details[0m
+
+      at logAccessAttempt (middleware/productionRBAC.js:250:22)
+      at middleware/productionRBAC.js:108:11
+
+    console.warn
+      [AUDIT] insufficient_permissions: test@example.com (investigator) - FAILED {
+        resource: '/test',
+        ip: '::ffff:127.0.0.1',
+        details: {
+          requiredPermissions: [ 'evidence.delete' ],
+          userRole: 'investigator',
+          allowedRoles: [ 'superadmin' ]
+        }
+      }
+
+    [0m [90m 248 |[39m     [90m// Log to console for monitoring[39m
+     [90m 249 |[39m     [36mconst[39m logLevel [33m=[39m success [33m?[39m [32m'info'[39m [33m:[39m [32m'warn'[39m[33m;[39m
+    [31m[1m>[22m[39m[90m 250 |[39m     console[logLevel]([32m`[AUDIT] ${action}: ${user.email} (${user.role}) - ${success ? 'SUCCESS' : 'FAILED'}`[39m[33m,[39m {
+     [90m     |[39m                      [31m[1m^[22m[39m
+     [90m 251 |[39m       resource[33m:[39m req[33m.[39moriginalUrl[33m,[39m
+     [90m 252 |[39m       ip[33m:[39m req[33m.[39mip[33m,[39m
+     [90m 253 |[39m       details[0m
+
+      at logAccessAttempt (middleware/productionRBAC.js:250:22)
+      at middleware/productionRBAC.js:84:9
+
+(node:21272) NOTE: The AWS SDK for JavaScript (v2) is in maintenance mode.
+ SDK releases are limited to address critical bug fixes and security issues only.
+
+Please migrate your code to use AWS SDK for JavaScript (v3).
+For more information, check the blog post at https://a.co/cUPnyil
+(Use `node --trace-warnings ...` to show where the warning was created)
+FAIL tests/evidence.integration.test.js (21.797 s)
+  ● Console
+
+    console.warn
+      IPFS client not available, using simulation mode
+
+    [0m [90m 16 |[39m     ipfsClient [33m=[39m require([32m'ipfs-http-client'[39m)[33m;[39m
+     [90m 17 |[39m   } [36mcatch[39m (fallbackError) {
+    [31m[1m>[22m[39m[90m 18 |[39m     console[33m.[39mwarn([32m'IPFS client not available, using simulation mode'[39m)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m 19 |[39m     ipfsClient [33m=[39m [36mnull[39m[33m;[39m
+     [90m 20 |[39m   }
+     [90m 21 |[39m }[0m
+
+      at Object.warn (services/hybridStorageService.js:18:13)
+      at Object.require (routes/evidenceRoutes.js:5:30)
+      at Object.require (server.js:20:24)
+      at Object.require (tests/evidence.integration.test.js:32:11)
+
+    console.warn
+      IPFS client initialization skipped - using simulation mode
+
+    [0m [90m 38 |[39m       } [36melse[39m {
+     [90m 39 |[39m         [36mthis[39m[33m.[39mipfs [33m=[39m [36mnull[39m[33m;[39m
+    [31m[1m>[22m[39m[90m 40 |[39m         console[33m.[39mwarn([32m'IPFS client initialization skipped - using simulation mode'[39m)[33m;[39m
+     [90m    |[39m                 [31m[1m^[22m[39m
+     [90m 41 |[39m       }
+     [90m 42 |[39m     } [36mcatch[39m (error) {
+     [90m 43 |[39m       console[33m.[39mwarn([32m'IPFS client initialization failed, using simulation mode:'[39m[33m,[39m error[33m.[39mmessage)[33m;[39m[0m
+
+      at new warn (services/hybridStorageService.js:40:17)
+      at Object.<anonymous> (services/hybridStorageService.js:607:18)
+      at Object.require (routes/evidenceRoutes.js:5:30)
+      at Object.require (server.js:20:24)
+      at Object.require (tests/evidence.integration.test.js:32:11)
+
+    console.warn
+      {"level":"WARN","timestamp":"2026-11-04T08:17:16.621Z","logger":"kafkajs","message":"KafkaJS v2.0.0 switched default partitioner. To retain the same partitioning behavior as in previous versions, create the producer with the option \"createPartitioner: Partitioners.LegacyPartitioner\". See the migration guide at https://kafka.js.org/docs/migration-guide-v2.0.0#producer-new-default-partitioner for details. Silence this warning by setting the environment variable \"KAFKAJS_NO_PARTITIONER_WARNING=1\""}
+
+    [0m [90m 22 |[39m     }
+     [90m 23 |[39m   })[33m;[39m
+    [31m[1m>[22m[39m[90m 24 |[39m   producer [33m=[39m kafka[33m.[39mproducer()[33m;[39m
+     [90m    |[39m                    [31m[1m^[22m[39m
+     [90m 25 |[39m   console[33m.[39mlog([32m'📡 Kafka client initialized'[39m)[33m;[39m
+     [90m 26 |[39m } [36mcatch[39m (error) {
+     [90m 27 |[39m   console[33m.[39mwarn([32m'⚠️  Kafka not available - using local queue only'[39m)[33m;[39m[0m
+
+      at node_modules/kafkajs/src/loggers/console.js:17:22
+      at Object.warn (node_modules/kafkajs/src/loggers/index.js:16:3)
+      at node_modules/kafkajs/src/index.js:27:12
+      at node_modules/kafkajs/src/utils/once.js:7:14
+      at Client.producer (node_modules/kafkajs/src/index.js:120:7)
+      at Object.producer (services/eventPublisher.js:24:20)
+      at Object.require (routes/rlRoutes.js:9:39)
+      at Object.require (server.js:21:18)
+      at Object.require (tests/evidence.integration.test.js:32:11)
+
+    console.log
+      📡 Kafka client initialized
+
+      at Object.log (services/eventPublisher.js:25:11)
+
+    console.log
+      ⏰ Starting periodic audit anchoring (interval: 3600000ms)
+
+      at log (services/auditService.js:255:11)
+
+    console.log
+      ✅ RBAC permissions loaded successfully
+
+      at Object.log (middleware/rbacMiddleware.js:16:11)
+
+    console.log
+      🌉 Initializing Bridge SDK...
+
+      at BridgeSDK.log [as initialize] (services/bridgeSDK.js:42:15)
+
+    console.log
+      ✅ ETH chain connected
+
+      at BridgeSDK.log [as _testChainConnectivity] (services/bridgeSDK.js:351:17)
+
+    console.log
+      ✅ BH chain connected
+
+      at BridgeSDK.log [as _testChainConnectivity] (services/bridgeSDK.js:351:17)
+
+    console.error
+      {"level":"ERROR","timestamp":"2026-11-04T08:17:17.315Z","logger":"kafkajs","message":"[Connection] Connection error: ","broker":"localhost:9092","clientId":"fraud-evidence-backend","stack":"AggregateError: \n    at internalConnectMultiple (node:net:1134:18)\n    at afterConnectMultiple (node:net:1715:7)"}
+
+      at node_modules/kafkajs/src/loggers/console.js:15:22
+      at node_modules/kafkajs/src/loggers/index.js:16:3
+      at Connection.logError (node_modules/kafkajs/src/network/connection.js:111:7)
+      at Socket.onError (node_modules/kafkajs/src/network/connection.js:215:14)
+
+    console.error
+      {"level":"ERROR","timestamp":"2026-11-04T08:17:17.321Z","logger":"kafkajs","message":"[BrokerPool] Failed to connect to seed broker, trying another broker from the list: Connection error: ","retryCount":0,"retryTime":101}
+
+    [0m [90m 50 |[39m   
+     [90m 51 |[39m   [36mtry[39m {
+    [31m[1m>[22m[39m[90m 52 |[39m     [36mawait[39m producer[33m.[39mconnect()[33m;[39m
+     [90m    |[39m     [31m[1m^[22m[39m
+     [90m 53 |[39m     kafkaConnected [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 54 |[39m     kafkaAvailable [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 55 |[39m     console[33m.[39mlog([32m'✅ Kafka producer connected successfully'[39m)[33m;[39m[0m
+
+      at node_modules/kafkajs/src/loggers/console.js:15:22
+      at Object.error (node_modules/kafkajs/src/loggers/index.js:16:3)
+      at node_modules/kafkajs/src/cluster/brokerPool.js:99:23
+      at node_modules/kafkajs/src/cluster/index.js:107:14
+      at Cluster.connect (node_modules/kafkajs/src/cluster/index.js:146:5)
+      at Object.connect (node_modules/kafkajs/src/producer/index.js:219:7)
+      at initializeKafka (services/eventPublisher.js:52:5)
+
+    console.log
+      ✅ SOL chain connected
+
+      at BridgeSDK.log [as _testChainConnectivity] (services/bridgeSDK.js:351:17)
+
+    console.log
+      👂 Starting event listeners on all chains...
+
+      at BridgeSDK.log [as _startEventListeners] (services/bridgeSDK.js:365:13)
+
+    console.log
+      ✅ Bridge SDK initialized successfully
+
+      at BridgeSDK.log [as initialize] (services/bridgeSDK.js:50:15)
+
+    console.log
+      ✅ MongoDB connected successfully
+
+      at log (server.js:96:13)
+
+    console.log
+      📊 Database: test
+
+      at log (server.js:97:13)
+
+    console.error
+      {"level":"ERROR","timestamp":"2026-11-04T08:17:17.623Z","logger":"kafkajs","message":"[Connection] Connection error: ","broker":"localhost:9092","clientId":"fraud-evidence-backend","stack":"AggregateError: \n    at internalConnectMultiple (node:net:1134:18)\n    at afterConnectMultiple (node:net:1715:7)"}
+
+      at node_modules/kafkajs/src/loggers/console.js:15:22
+      at node_modules/kafkajs/src/loggers/index.js:16:3
+      at Connection.logError (node_modules/kafkajs/src/network/connection.js:111:7)
+      at Socket.onError (node_modules/kafkajs/src/network/connection.js:215:14)
+
+    console.error
+      {"level":"ERROR","timestamp":"2026-11-04T08:17:17.623Z","logger":"kafkajs","message":"[BrokerPool] Failed to connect to seed broker, trying another broker from the list: Connection error: ","retryCount":1,"retryTime":150}
+
+    [0m [90m 50 |[39m   
+     [90m 51 |[39m   [36mtry[39m {
+    [31m[1m>[22m[39m[90m 52 |[39m     [36mawait[39m producer[33m.[39mconnect()[33m;[39m
+     [90m    |[39m     [31m[1m^[22m[39m
+     [90m 53 |[39m     kafkaConnected [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 54 |[39m     kafkaAvailable [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 55 |[39m     console[33m.[39mlog([32m'✅ Kafka producer connected successfully'[39m)[33m;[39m[0m
+
+      at node_modules/kafkajs/src/loggers/console.js:15:22
+      at Object.error (node_modules/kafkajs/src/loggers/index.js:16:3)
+      at node_modules/kafkajs/src/cluster/brokerPool.js:99:23
+      at node_modules/kafkajs/src/cluster/index.js:107:14
+      at Cluster.connect (node_modules/kafkajs/src/cluster/index.js:146:5)
+      at Object.connect (node_modules/kafkajs/src/producer/index.js:219:7)
+      at initializeKafka (services/eventPublisher.js:52:5)
+
+    console.log
+      👤 Seeded default user: aryangupta3103@gmail.com (admin)
+
+      at log (server.js:82:17)
+
+    console.error
+      {"level":"ERROR","timestamp":"2026-11-04T08:17:17.818Z","logger":"kafkajs","message":"[Connection] Connection error: ","broker":"localhost:9092","clientId":"fraud-evidence-backend","stack":"AggregateError: \n    at internalConnectMultiple (node:net:1134:18)\n    at afterConnectMultiple (node:net:1715:7)"}
+
+      at node_modules/kafkajs/src/loggers/console.js:15:22
+      at node_modules/kafkajs/src/loggers/index.js:16:3
+      at Connection.logError (node_modules/kafkajs/src/network/connection.js:111:7)
+      at Socket.onError (node_modules/kafkajs/src/network/connection.js:215:14)
+
+    console.error
+      {"level":"ERROR","timestamp":"2026-11-04T08:17:17.819Z","logger":"kafkajs","message":"[BrokerPool] Failed to connect to seed broker, trying another broker from the list: Connection error: ","retryCount":2,"retryTime":226.5}
+
+    [0m [90m 50 |[39m   
+     [90m 51 |[39m   [36mtry[39m {
+    [31m[1m>[22m[39m[90m 52 |[39m     [36mawait[39m producer[33m.[39mconnect()[33m;[39m
+     [90m    |[39m     [31m[1m^[22m[39m
+     [90m 53 |[39m     kafkaConnected [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 54 |[39m     kafkaAvailable [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 55 |[39m     console[33m.[39mlog([32m'✅ Kafka producer connected successfully'[39m)[33m;[39m[0m
+
+      at node_modules/kafkajs/src/loggers/console.js:15:22
+      at Object.error (node_modules/kafkajs/src/loggers/index.js:16:3)
+      at node_modules/kafkajs/src/cluster/brokerPool.js:99:23
+      at node_modules/kafkajs/src/cluster/index.js:107:14
+      at Cluster.connect (node_modules/kafkajs/src/cluster/index.js:146:5)
+      at Object.connect (node_modules/kafkajs/src/producer/index.js:219:7)
+      at initializeKafka (services/eventPublisher.js:52:5)
+
+    console.log
+      👤 Seeded default user: admin@fraudevidence.com (admin)
+
+      at log (server.js:82:17)
+
+    console.log
+      👤 Seeded default user: admin123@fraud.com (admin)
+
+      at log (server.js:82:17)
+
+    console.error
+      Warning during user seeding: Client must be connected before running operations
+
+    [0m [90m 84 |[39m     }
+     [90m 85 |[39m   } [36mcatch[39m (seedErr) {
+    [31m[1m>[22m[39m[90m 86 |[39m     console[33m.[39merror([32m'Warning during user seeding:'[39m[33m,[39m seedErr[33m.[39mmessage)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m 87 |[39m   }
+     [90m 88 |[39m }
+     [90m 89 |[39m[0m
+
+      at error (server.js:86:13)
+      at connectDatabase (server.js:98:5)
+
+    console.error
+      {"level":"ERROR","timestamp":"2026-11-04T08:17:18.073Z","logger":"kafkajs","message":"[Connection] Connection error: ","broker":"localhost:9092","clientId":"fraud-evidence-backend","stack":"AggregateError: \n    at internalConnectMultiple (node:net:1134:18)\n    at afterConnectMultiple (node:net:1715:7)"}
+
+      at node_modules/kafkajs/src/loggers/console.js:15:22
+      at node_modules/kafkajs/src/loggers/index.js:16:3
+      at Connection.logError (node_modules/kafkajs/src/network/connection.js:111:7)
+      at Socket.onError (node_modules/kafkajs/src/network/connection.js:215:14)
+
+    console.error
+      {"level":"ERROR","timestamp":"2026-11-04T08:17:18.074Z","logger":"kafkajs","message":"[BrokerPool] Failed to connect to seed broker, trying another broker from the list: Connection error: ","retryCount":3,"retryTime":342}
+
+    [0m [90m 50 |[39m   
+     [90m 51 |[39m   [36mtry[39m {
+    [31m[1m>[22m[39m[90m 52 |[39m     [36mawait[39m producer[33m.[39mconnect()[33m;[39m
+     [90m    |[39m     [31m[1m^[22m[39m
+     [90m 53 |[39m     kafkaConnected [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 54 |[39m     kafkaAvailable [33m=[39m [36mtrue[39m[33m;[39m
+     [90m 55 |[39m     console[33m.[39mlog([32m'✅ Kafka producer connected successfully'[39m)[33m;[39m[0m
+
+      at node_modules/kafkajs/src/loggers/console.js:15:22
+      at Object.error (node_modules/kafkajs/src/loggers/index.js:16:3)
+      at node_modules/kafkajs/src/cluster/brokerPool.js:99:23
+      at node_modules/kafkajs/src/cluster/index.js:107:14
+      at Cluster.connect (node_modules/kafkajs/src/cluster/index.js:146:5)
+      at Object.connect (node_modules/kafkajs/src/producer/index.js:219:7)
+      at initializeKafka (services/eventPublisher.js:52:5)
+
+    console.error
+      ❌ Kafka connection failed: Connection error:
+
+    [0m [90m 64 |[39m     [36mreturn[39m [36mtrue[39m[33m;[39m
+     [90m 65 |[39m   } [36mcatch[39m (error) {
+    [31m[1m>[22m[39m[90m 66 |[39m     console[33m.[39merror([32m'❌ Kafka connection failed:'[39m[33m,[39m error[33m.[39mmessage)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m 67 |[39m     console[33m.[39mlog([32m'📝 Events will be queued locally until Kafka is available'[39m)[33m;[39m
+     [90m 68 |[39m     kafkaConnected [33m=[39m [36mfalse[39m[33m;[39m
+     [90m 69 |[39m     [0m
+
+      at error (services/eventPublisher.js:66:13)
+
+    console.log
+      📝 Events will be queued locally until Kafka is available
+
+      at log (services/eventPublisher.js:67:13)
+
+    console.log
+      ⏰ Starting retry mechanism (interval: 10000ms)
+
+      at log (services/eventPublisher.js:320:11)
+
+  ● Evidence API Integration Tests › GET /api/evidence › should return evidence list for authenticated user
+
+    thrown: "Exceeded timeout of 5000 ms for a hook.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+    [0m [90m 21 |[39m   [36mlet[39m testEvidence[33m;[39m
+     [90m 22 |[39m
+    [31m[1m>[22m[39m[90m 23 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+     [90m    |[39m   [31m[1m^[22m[39m
+     [90m 24 |[39m     process[33m.[39menv[33m.[39m[33mNODE_ENV[39m [33m=[39m [32m'test'[39m[33m;[39m
+     [90m 25 |[39m     process[33m.[39menv[33m.[39m[33mJWT_SECRET[39m [33m=[39m [32m'test-secret'[39m[33m;[39m
+     [90m 26 |[39m     [90m// Start MongoMemoryServer[39m[0m
+
+      at beforeAll (tests/evidence.integration.test.js:23:3)
+      at Object.describe (tests/evidence.integration.test.js:18:1)
+
+  ● Evidence API Integration Tests › GET /api/evidence › should deny access without authentication
+
+    thrown: "Exceeded timeout of 5000 ms for a hook.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+    [0m [90m 21 |[39m   [36mlet[39m testEvidence[33m;[39m
+     [90m 22 |[39m
+    [31m[1m>[22m[39m[90m 23 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+     [90m    |[39m   [31m[1m^[22m[39m
+     [90m 24 |[39m     process[33m.[39menv[33m.[39m[33mNODE_ENV[39m [33m=[39m [32m'test'[39m[33m;[39m
+     [90m 25 |[39m     process[33m.[39menv[33m.[39m[33mJWT_SECRET[39m [33m=[39m [32m'test-secret'[39m[33m;[39m
+     [90m 26 |[39m     [90m// Start MongoMemoryServer[39m[0m
+
+      at beforeAll (tests/evidence.integration.test.js:23:3)
+      at Object.describe (tests/evidence.integration.test.js:18:1)
+
+  ● Evidence API Integration Tests › GET /api/evidence › should filter evidence by case ID
+
+    thrown: "Exceeded timeout of 5000 ms for a hook.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+    [0m [90m 21 |[39m   [36mlet[39m testEvidence[33m;[39m
+     [90m 22 |[39m
+    [31m[1m>[22m[39m[90m 23 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+     [90m    |[39m   [31m[1m^[22m[39m
+     [90m 24 |[39m     process[33m.[39menv[33m.[39m[33mNODE_ENV[39m [33m=[39m [32m'test'[39m[33m;[39m
+     [90m 25 |[39m     process[33m.[39menv[33m.[39m[33mJWT_SECRET[39m [33m=[39m [32m'test-secret'[39m[33m;[39m
+     [90m 26 |[39m     [90m// Start MongoMemoryServer[39m[0m
+
+      at beforeAll (tests/evidence.integration.test.js:23:3)
+      at Object.describe (tests/evidence.integration.test.js:18:1)
+
+  ● Evidence API Integration Tests › GET /api/evidence › should filter evidence by risk level
+
+    thrown: "Exceeded timeout of 5000 ms for a hook.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+    [0m [90m 21 |[39m   [36mlet[39m testEvidence[33m;[39m
+     [90m 22 |[39m
+    [31m[1m>[22m[39m[90m 23 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+     [90m    |[39m   [31m[1m^[22m[39m
+     [90m 24 |[39m     process[33m.[39menv[33m.[39m[33mNODE_ENV[39m [33m=[39m [32m'test'[39m[33m;[39m
+     [90m 25 |[39m     process[33m.[39menv[33m.[39m[33mJWT_SECRET[39m [33m=[39m [32m'test-secret'[39m[33m;[39m
+     [90m 26 |[39m     [90m// Start MongoMemoryServer[39m[0m
+
+      at beforeAll (tests/evidence.integration.test.js:23:3)
+      at Object.describe (tests/evidence.integration.test.js:18:1)
+
+  ● Evidence API Integration Tests › GET /api/evidence › should support pagination
+
+    thrown: "Exceeded timeout of 5000 ms for a hook.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+    [0m [90m 21 |[39m   [36mlet[39m testEvidence[33m;[39m
+     [90m 22 |[39m
+    [31m[1m>[22m[39m[90m 23 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+     [90m    |[39m   [31m[1m^[22m[39m
+     [90m 24 |[39m     process[33m.[39menv[33m.[39m[33mNODE_ENV[39m [33m=[39m [32m'test'[39m[33m;[39m
+     [90m 25 |[39m     process[33m.[39menv[33m.[39m[33mJWT_SECRET[39m [33m=[39m [32m'test-secret'[39m[33m;[39m
+     [90m 26 |[39m     [90m// Start MongoMemoryServer[39m[0m
+
+      at beforeAll (tests/evidence.integration.test.js:23:3)
+      at Object.describe (tests/evidence.integration.test.js:18:1)
+
+  ● Evidence API Integration Tests › POST /api/evidence/upload › should upload evidence file successfully
+
+    thrown: "Exceeded timeout of 5000 ms for a hook.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+    [0m [90m 21 |[39m   [36mlet[39m testEvidence[33m;[39m
+     [90m 22 |[39m
+    [31m[1m>[22m[39m[90m 23 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+     [90m    |[39m   [31m[1m^[22m[39m
+     [90m 24 |[39m     process[33m.[39menv[33m.[39m[33mNODE_ENV[39m [33m=[39m [32m'test'[39m[33m;[39m
+     [90m 25 |[39m     process[33m.[39menv[33m.[39m[33mJWT_SECRET[39m [33m=[39m [32m'test-secret'[39m[33m;[39m
+     [90m 26 |[39m     [90m// Start MongoMemoryServer[39m[0m
+
+      at beforeAll (tests/evidence.integration.test.js:23:3)
+      at Object.describe (tests/evidence.integration.test.js:18:1)
+
+  ● Evidence API Integration Tests › POST /api/evidence/upload › should reject upload without file
+
+    thrown: "Exceeded timeout of 5000 ms for a hook.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+    [0m [90m 21 |[39m   [36mlet[39m testEvidence[33m;[39m
+     [90m 22 |[39m
+    [31m[1m>[22m[39m[90m 23 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+     [90m    |[39m   [31m[1m^[22m[39m
+     [90m 24 |[39m     process[33m.[39menv[33m.[39m[33mNODE_ENV[39m [33m=[39m [32m'test'[39m[33m;[39m
+     [90m 25 |[39m     process[33m.[39menv[33m.[39m[33mJWT_SECRET[39m [33m=[39m [32m'test-secret'[39m[33m;[39m
+     [90m 26 |[39m     [90m// Start MongoMemoryServer[39m[0m
+
+      at beforeAll (tests/evidence.integration.test.js:23:3)
+      at Object.describe (tests/evidence.integration.test.js:18:1)
+
+  ● Evidence API Integration Tests › POST /api/evidence/upload › should reject upload without required fields
+
+    thrown: "Exceeded timeout of 5000 ms for a hook.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+    [0m [90m 21 |[39m   [36mlet[39m testEvidence[33m;[39m
+     [90m 22 |[39m
+    [31m[1m>[22m[39m[90m 23 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+     [90m    |[39m   [31m[1m^[22m[39m
+     [90m 24 |[39m     process[33m.[39menv[33m.[39m[33mNODE_ENV[39m [33m=[39m [32m'test'[39m[33m;[39m
+     [90m 25 |[39m     process[33m.[39menv[33m.[39m[33mJWT_SECRET[39m [33m=[39m [32m'test-secret'[39m[33m;[39m
+     [90m 26 |[39m     [90m// Start MongoMemoryServer[39m[0m
+
+      at beforeAll (tests/evidence.integration.test.js:23:3)
+      at Object.describe (tests/evidence.integration.test.js:18:1)
+
+  ● Evidence API Integration Tests › POST /api/evidence/upload › should reject oversized files
+
+    thrown: "Exceeded timeout of 5000 ms for a hook.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+    [0m [90m 21 |[39m   [36mlet[39m testEvidence[33m;[39m
+     [90m 22 |[39m
+    [31m[1m>[22m[39m[90m 23 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+     [90m    |[39m   [31m[1m^[22m[39m
+     [90m 24 |[39m     process[33m.[39menv[33m.[39m[33mNODE_ENV[39m [33m=[39m [32m'test'[39m[33m;[39m
+     [90m 25 |[39m     process[33m.[39menv[33m.[39m[33mJWT_SECRET[39m [33m=[39m [32m'test-secret'[39m[33m;[39m
+     [90m 26 |[39m     [90m// Start MongoMemoryServer[39m[0m
+
+      at beforeAll (tests/evidence.integration.test.js:23:3)
+      at Object.describe (tests/evidence.integration.test.js:18:1)
+
+  ● Evidence API Integration Tests › GET /api/evidence/:evidenceId › should return specific evidence
+
+    thrown: "Exceeded timeout of 5000 ms for a hook.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+    [0m [90m 21 |[39m   [36mlet[39m testEvidence[33m;[39m
+     [90m 22 |[39m
+    [31m[1m>[22m[39m[90m 23 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+     [90m    |[39m   [31m[1m^[22m[39m
+     [90m 24 |[39m     process[33m.[39menv[33m.[39m[33mNODE_ENV[39m [33m=[39m [32m'test'[39m[33m;[39m
+     [90m 25 |[39m     process[33m.[39menv[33m.[39m[33mJWT_SECRET[39m [33m=[39m [32m'test-secret'[39m[33m;[39m
+     [90m 26 |[39m     [90m// Start MongoMemoryServer[39m[0m
+
+      at beforeAll (tests/evidence.integration.test.js:23:3)
+      at Object.describe (tests/evidence.integration.test.js:18:1)
+
+  ● Evidence API Integration Tests › GET /api/evidence/:evidenceId › should return 404 for non-existent evidence
+
+    thrown: "Exceeded timeout of 5000 ms for a hook.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+    [0m [90m 21 |[39m   [36mlet[39m testEvidence[33m;[39m
+     [90m 22 |[39m
+    [31m[1m>[22m[39m[90m 23 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+     [90m    |[39m   [31m[1m^[22m[39m
+     [90m 24 |[39m     process[33m.[39menv[33m.[39m[33mNODE_ENV[39m [33m=[39m [32m'test'[39m[33m;[39m
+     [90m 25 |[39m     process[33m.[39menv[33m.[39m[33mJWT_SECRET[39m [33m=[39m [32m'test-secret'[39m[33m;[39m
+     [90m 26 |[39m     [90m// Start MongoMemoryServer[39m[0m
+
+      at beforeAll (tests/evidence.integration.test.js:23:3)
+      at Object.describe (tests/evidence.integration.test.js:18:1)
+
+  ● Evidence API Integration Tests › GET /api/evidence/download/:evidenceId › should download evidence file
+
+    thrown: "Exceeded timeout of 5000 ms for a hook.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+    [0m [90m 21 |[39m   [36mlet[39m testEvidence[33m;[39m
+     [90m 22 |[39m
+    [31m[1m>[22m[39m[90m 23 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+     [90m    |[39m   [31m[1m^[22m[39m
+     [90m 24 |[39m     process[33m.[39menv[33m.[39m[33mNODE_ENV[39m [33m=[39m [32m'test'[39m[33m;[39m
+     [90m 25 |[39m     process[33m.[39menv[33m.[39m[33mJWT_SECRET[39m [33m=[39m [32m'test-secret'[39m[33m;[39m
+     [90m 26 |[39m     [90m// Start MongoMemoryServer[39m[0m
+
+      at beforeAll (tests/evidence.integration.test.js:23:3)
+      at Object.describe (tests/evidence.integration.test.js:18:1)
+
+  ● Evidence API Integration Tests › GET /api/evidence/download/:evidenceId › should deny download for unauthorized user
+
+    thrown: "Exceeded timeout of 5000 ms for a hook.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+    [0m [90m 21 |[39m   [36mlet[39m testEvidence[33m;[39m
+     [90m 22 |[39m
+    [31m[1m>[22m[39m[90m 23 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+     [90m    |[39m   [31m[1m^[22m[39m
+     [90m 24 |[39m     process[33m.[39menv[33m.[39m[33mNODE_ENV[39m [33m=[39m [32m'test'[39m[33m;[39m
+     [90m 25 |[39m     process[33m.[39menv[33m.[39m[33mJWT_SECRET[39m [33m=[39m [32m'test-secret'[39m[33m;[39m
+     [90m 26 |[39m     [90m// Start MongoMemoryServer[39m[0m
+
+      at beforeAll (tests/evidence.integration.test.js:23:3)
+      at Object.describe (tests/evidence.integration.test.js:18:1)
+
+  ● Evidence API Integration Tests › POST /api/evidence/verify/:evidenceId › should verify evidence integrity
+
+    thrown: "Exceeded timeout of 5000 ms for a hook.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+    [0m [90m 21 |[39m   [36mlet[39m testEvidence[33m;[39m
+     [90m 22 |[39m
+    [31m[1m>[22m[39m[90m 23 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+     [90m    |[39m   [31m[1m^[22m[39m
+     [90m 24 |[39m     process[33m.[39menv[33m.[39m[33mNODE_ENV[39m [33m=[39m [32m'test'[39m[33m;[39m
+     [90m 25 |[39m     process[33m.[39menv[33m.[39m[33mJWT_SECRET[39m [33m=[39m [32m'test-secret'[39m[33m;[39m
+     [90m 26 |[39m     [90m// Start MongoMemoryServer[39m[0m
+
+      at beforeAll (tests/evidence.integration.test.js:23:3)
+      at Object.describe (tests/evidence.integration.test.js:18:1)
+
+  ● Evidence API Integration Tests › POST /api/evidence/verify/:evidenceId › should return 404 for non-existent evidence
+
+    thrown: "Exceeded timeout of 5000 ms for a hook.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+    [0m [90m 21 |[39m   [36mlet[39m testEvidence[33m;[39m
+     [90m 22 |[39m
+    [31m[1m>[22m[39m[90m 23 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+     [90m    |[39m   [31m[1m^[22m[39m
+     [90m 24 |[39m     process[33m.[39menv[33m.[39m[33mNODE_ENV[39m [33m=[39m [32m'test'[39m[33m;[39m
+     [90m 25 |[39m     process[33m.[39menv[33m.[39m[33mJWT_SECRET[39m [33m=[39m [32m'test-secret'[39m[33m;[39m
+     [90m 26 |[39m     [90m// Start MongoMemoryServer[39m[0m
+
+      at beforeAll (tests/evidence.integration.test.js:23:3)
+      at Object.describe (tests/evidence.integration.test.js:18:1)
+
+  ● Evidence API Integration Tests › GET /api/evidence/case/:caseId › should return evidence for specific case
+
+    thrown: "Exceeded timeout of 5000 ms for a hook.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+    [0m [90m 21 |[39m   [36mlet[39m testEvidence[33m;[39m
+     [90m 22 |[39m
+    [31m[1m>[22m[39m[90m 23 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+     [90m    |[39m   [31m[1m^[22m[39m
+     [90m 24 |[39m     process[33m.[39menv[33m.[39m[33mNODE_ENV[39m [33m=[39m [32m'test'[39m[33m;[39m
+     [90m 25 |[39m     process[33m.[39menv[33m.[39m[33mJWT_SECRET[39m [33m=[39m [32m'test-secret'[39m[33m;[39m
+     [90m 26 |[39m     [90m// Start MongoMemoryServer[39m[0m
+
+      at beforeAll (tests/evidence.integration.test.js:23:3)
+      at Object.describe (tests/evidence.integration.test.js:18:1)
+
+  ● Evidence API Integration Tests › GET /api/evidence/case/:caseId › should return empty array for case with no evidence
+
+    thrown: "Exceeded timeout of 5000 ms for a hook.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+    [0m [90m 21 |[39m   [36mlet[39m testEvidence[33m;[39m
+     [90m 22 |[39m
+    [31m[1m>[22m[39m[90m 23 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+     [90m    |[39m   [31m[1m^[22m[39m
+     [90m 24 |[39m     process[33m.[39menv[33m.[39m[33mNODE_ENV[39m [33m=[39m [32m'test'[39m[33m;[39m
+     [90m 25 |[39m     process[33m.[39menv[33m.[39m[33mJWT_SECRET[39m [33m=[39m [32m'test-secret'[39m[33m;[39m
+     [90m 26 |[39m     [90m// Start MongoMemoryServer[39m[0m
+
+      at beforeAll (tests/evidence.integration.test.js:23:3)
+      at Object.describe (tests/evidence.integration.test.js:18:1)
+
+  ● Evidence API Integration Tests › Error handling › should handle invalid evidence ID format
+
+    thrown: "Exceeded timeout of 5000 ms for a hook.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+    [0m [90m 21 |[39m   [36mlet[39m testEvidence[33m;[39m
+     [90m 22 |[39m
+    [31m[1m>[22m[39m[90m 23 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+     [90m    |[39m   [31m[1m^[22m[39m
+     [90m 24 |[39m     process[33m.[39menv[33m.[39m[33mNODE_ENV[39m [33m=[39m [32m'test'[39m[33m;[39m
+     [90m 25 |[39m     process[33m.[39menv[33m.[39m[33mJWT_SECRET[39m [33m=[39m [32m'test-secret'[39m[33m;[39m
+     [90m 26 |[39m     [90m// Start MongoMemoryServer[39m[0m
+
+      at beforeAll (tests/evidence.integration.test.js:23:3)
+      at Object.describe (tests/evidence.integration.test.js:18:1)
+
+  ● Evidence API Integration Tests › Error handling › should handle server errors gracefully
+
+    thrown: "Exceeded timeout of 5000 ms for a hook.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+    [0m [90m 21 |[39m   [36mlet[39m testEvidence[33m;[39m
+     [90m 22 |[39m
+    [31m[1m>[22m[39m[90m 23 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+     [90m    |[39m   [31m[1m^[22m[39m
+     [90m 24 |[39m     process[33m.[39menv[33m.[39m[33mNODE_ENV[39m [33m=[39m [32m'test'[39m[33m;[39m
+     [90m 25 |[39m     process[33m.[39menv[33m.[39m[33mJWT_SECRET[39m [33m=[39m [32m'test-secret'[39m[33m;[39m
+     [90m 26 |[39m     [90m// Start MongoMemoryServer[39m[0m
+
+      at beforeAll (tests/evidence.integration.test.js:23:3)
+      at Object.describe (tests/evidence.integration.test.js:18:1)
+
+  ● Evidence API Integration Tests › Rate limiting › should enforce rate limits on evidence endpoints
+
+    thrown: "Exceeded timeout of 5000 ms for a hook.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+    [0m [90m 21 |[39m   [36mlet[39m testEvidence[33m;[39m
+     [90m 22 |[39m
+    [31m[1m>[22m[39m[90m 23 |[39m   beforeAll([36masync[39m () [33m=>[39m {
+     [90m    |[39m   [31m[1m^[22m[39m
+     [90m 24 |[39m     process[33m.[39menv[33m.[39m[33mNODE_ENV[39m [33m=[39m [32m'test'[39m[33m;[39m
+     [90m 25 |[39m     process[33m.[39menv[33m.[39m[33mJWT_SECRET[39m [33m=[39m [32m'test-secret'[39m[33m;[39m
+     [90m 26 |[39m     [90m// Start MongoMemoryServer[39m[0m
+
+      at beforeAll (tests/evidence.integration.test.js:23:3)
+      at Object.describe (tests/evidence.integration.test.js:18:1)
+
+A worker process has failed to exit gracefully and has been force exited. This is likely caused by tests leaking due to improper teardown. Try running with --detectOpenHandles to find leaks. Active timers can also cause this, ensure that .unref() was called on them.
+Test Suites: 1 failed, 1 passed, 2 total
+Tests:       20 failed, 20 passed, 40 total
+Snapshots:   0 total
+Time:        23.61 s
+Ran all test suites.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?
+exit=1

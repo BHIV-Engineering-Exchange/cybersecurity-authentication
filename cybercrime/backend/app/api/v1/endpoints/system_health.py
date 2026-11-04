@@ -4,10 +4,11 @@ System-level health checks for demo-safe operations.
 
 from __future__ import annotations
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 from sqlalchemy import text
 
 from app.core.sovereign_integrations import integration_health, flush_event_buffer
+from app.core.bhiv_runtime import runtime_health
 from app.db.database import engine
 
 
@@ -15,7 +16,8 @@ router = APIRouter()
 
 
 @router.get("/health")
-async def system_health() -> dict:
+def system_health(request: Request) -> dict:
+    # Plain def: the database check and the peer probes block, so they run in a worker thread.
     db_ok = False
     db_error = None
     try:
@@ -29,11 +31,15 @@ async def system_health() -> dict:
     storage_ok = integrations["storage"]["exists"] and integrations["storage"]["writable"]
 
     status = "healthy" if db_ok and storage_ok else "degraded"
-    return {
+    body = {
         "status": status,
         "database": {"ok": db_ok, "error": db_error},
         "integrations": integrations,
     }
+    # Peer topology (VAJRA/TANTRA reachability) only for superadmins; anonymous callers never trigger probes.
+    if getattr(request.state, "current_role", None) == "superadmin":
+        body["bhiv_runtime"] = runtime_health()
+    return body
 
 
 @router.post("/queue/flush")

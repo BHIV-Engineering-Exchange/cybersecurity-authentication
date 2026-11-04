@@ -1,0 +1,92 @@
+[
+  {
+    "name": "A_security_decision",
+    "utc": "2026-11-04T08:22:44.161565+00:00",
+    "url": "http://163.128.209.18:8101/validate/prana/ingress",
+    "request": {
+      "registry_reference": {
+        "registry": "prana.event.contracts",
+        "event_type": "security_decision",
+        "version": "1.0.0"
+      },
+      "submission_id": "cyber-p0-test-1f22b904a67c-sub-A",
+      "event_type": "security_decision",
+      "timestamp": "2026-11-04T08:22:43.504106+00:00",
+      "payload": {
+        "synthetic": true,
+        "test_run": "cyber-p0-test-1f22b904a67c",
+        "origin": "BHIV Cybersecurity Task 1 verification (Hemanth)",
+        "note": "synthetic test event - safe to ignore",
+        "decision": "DENY",
+        "reason_code": "AUTHENTICATION_REQUIRED",
+        "trace_id": "cyber-p0-test-1f22b904a67c-trace-A"
+      },
+      "source_system": "cybersecurity"
+    },
+    "http_status": 422,
+    "response": {
+      "status": "rejected",
+      "reason": "event_type_not_registered",
+      "message": "event_type 'security_decision' is not registered for PRANA ingress",
+      "event_type": "security_decision",
+      "registry_reference": {
+        "registry": "prana.event.contracts",
+        "event_type": "security_decision",
+        "version": "1.0.0"
+      },
+      "expected_versions": [],
+      "details": {
+        "registered_event_types": [
+          "adaptive_decision",
+          "bucket_memory_saved",
+          "integrity_probe",
+          "review_completed",
+          "task_submit",
+          "task_submit_failed",
+          "truth_classification"
+        ]
+      }
+    }
+  },
+  {
+    "name": "B_integrity_probe",
+    "utc": "2026-11-04T08:22:45.155992+00:00",
+    "url": "http://163.128.209.18:8101/validate/prana/ingress",
+    "request": {
+      "registry_reference": {
+        "registry": "prana.event.contracts",
+        "event_type": "integrity_probe",
+        "version": "1.0.0"
+      },
+      "submission_id": "cyber-p0-test-1f22b904a67c-sub-B",
+      "event_type": "integrity_probe",
+      "timestamp": "2026-11-04T08:22:43.504106+00:00",
+      "payload": {
+        "sequence": 1,
+        "status": "ok",
+        "probe": "cyber-p0-test-1f22b904a67c-probe-B"
+      },
+      "source_system": "cybersecurity"
+    },
+    "http_status": 200,
+    "response": {
+      "status": "valid",
+      "envelope": {
+        "registry_reference": {
+          "registry": "prana.event.contracts",
+          "event_type": "integrity_probe",
+          "version": "1.0.0"
+        },
+        "submission_id": "cyber-p0-test-1f22b904a67c-sub-B",
+        "event_type": "integrity_probe",
+        "timestamp": "2026-11-04T08:22:43.504106+00:00",
+        "payload": {
+          "sequence": 1,
+          "status": "ok",
+          "probe": "cyber-p0-test-1f22b904a67c-probe-B"
+        },
+        "source_system": "cybersecurity"
+      }
+    }
+  }
+]

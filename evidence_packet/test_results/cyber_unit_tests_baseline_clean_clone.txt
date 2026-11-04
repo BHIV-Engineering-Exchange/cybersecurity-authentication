@@ -1,0 +1,124 @@
+# Raw output: cybercrime/backend 'python -m pytest -v' on a clean clone of 59d2d63 BEFORE this change (no SECRET_KEY, no .env)
+2026-11-04T07:46:23Z
+C:\Users\acer\Downloads\BHIV-cyber\repos\.venvs\cyber312\Lib\site-packages\pytest_asyncio\plugin.py:300: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the "fixture" caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to "function" scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+============================= test session starts =============================
+platform win32 -- Python 3.12.7, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\acer\Downloads\BHIV-cyber\repos\.venvs\cyber312\Scripts\python.exe
+rootdir: C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\cybercrime\backend
+plugins: anyio-4.16.0, platformdirs-4.14.4, asyncio-1.4.1.post1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 29 items / 2 errors
+
+=================================== ERRORS ====================================
+______________________ ERROR collecting test_endpoint.py ______________________
+test_endpoint.py:8: in <module>
+    from app.db.database import SessionLocal
+app\db\database.py:8: in <module>
+    from app.core.config import settings
+app\core\config.py:192: in <module>
+    settings = Settings()
+               ^^^^^^^^^^
+..\..\..\.venvs\cyber312\Lib\site-packages\pydantic_settings\main.py:292: in __init__
+    super().__init__(**__pydantic_self__.__class__._settings_build_values(sources, init_kwargs))
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for Settings
+E   SECRET_KEY
+E     Value error, SECRET_KEY must be set via environment variables. [type=value_error, input_value=None, input_type=NoneType]
+E       For further information visit https://errors.pydantic.dev/2.14/v/value_error
+____________________ ERROR collecting test_predictions.py _____________________
+..\..\..\.venvs\cyber312\Lib\site-packages\sqlalchemy\engine\base.py:1977: in _exec_single_context
+    self.dialect.do_execute(
+..\..\..\.venvs\cyber312\Lib\site-packages\sqlalchemy\engine\default.py:1192: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlite3.OperationalError: no such table: fraud_transactions
+
+The above exception was the direct cause of the following exception:
+test_predictions.py:14: in <module>
+    fraud_tx = db.query(FraudTransaction).filter(FraudTransaction.is_fraud == 1).first()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\..\.venvs\cyber312\Lib\site-packages\sqlalchemy\orm\query.py:2823: in first
+    return self.limit(1)._iter().first()  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^
+..\..\..\.venvs\cyber312\Lib\site-packages\sqlalchemy\orm\query.py:2921: in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+..\..\..\.venvs\cyber312\Lib\site-packages\sqlalchemy\orm\session.py:2555: in execute
+    return self._execute_internal(
+..\..\..\.venvs\cyber312\Lib\site-packages\sqlalchemy\orm\session.py:2445: in _execute_internal
+    compile_state_cls.orm_execute_statement(
+..\..\..\.venvs\cyber312\Lib\site-packages\sqlalchemy\orm\context.py:322: in orm_execute_statement
+    result = conn.execute(
+..\..\..\.venvs\cyber312\Lib\site-packages\sqlalchemy\engine\base.py:1494: in execute
+    return meth(
+..\..\..\.venvs\cyber312\Lib\site-packages\sqlalchemy\sql\elements.py:534: in _execute_on_connection
+    return connection._execute_clauseelement(
+..\..\..\.venvs\cyber312\Lib\site-packages\sqlalchemy\engine\base.py:1714: in _execute_clauseelement
+    ret = self._execute_context(
+..\..\..\.venvs\cyber312\Lib\site-packages\sqlalchemy\engine\base.py:1868: in _execute_context
+    return self._exec_single_context(
+..\..\..\.venvs\cyber312\Lib\site-packages\sqlalchemy\engine\base.py:1996: in _exec_single_context
+    self._handle_dbapi_exception(
+..\..\..\.venvs\cyber312\Lib\site-packages\sqlalchemy\engine\base.py:2351: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+..\..\..\.venvs\cyber312\Lib\site-packages\sqlalchemy\engine\base.py:1977: in _exec_single_context
+    self.dialect.do_execute(
+..\..\..\.venvs\cyber312\Lib\site-packages\sqlalchemy\engine\default.py:1192: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: fraud_transactions
+E   [SQL: SELECT fraud_transactions.id AS fraud_transactions_id, fraud_transactions.step AS fraud_transactions_step, fraud_transactions.type AS fraud_transactions_type, fraud_transactions.amount AS fraud_transactions_amount, fraud_transactions.name_orig AS fraud_transactions_name_orig, fraud_transactions.old_balance_orig AS fraud_transactions_old_balance_orig, fraud_transactions.new_balance_orig AS fraud_transactions_new_balance_orig, fraud_transactions.name_dest AS fraud_transactions_name_dest, fraud_transactions.old_balance_dest AS fraud_transactions_old_balance_dest, fraud_transactions.new_balance_dest AS fraud_transactions_new_balance_dest, fraud_transactions.is_fraud AS fraud_transactions_is_fraud, fraud_transactions.created_at AS fraud_transactions_created_at 
+E   FROM fraud_transactions 
+E   WHERE fraud_transactions.is_fraud = ?
+E    LIMIT ? OFFSET ?]
+E   [parameters: (1, 1, 0)]
+E   (Background on this error at: https://sqlalche.me/e/21/e3q8)
+============================== warnings summary ===============================
+..\..\..\.venvs\cyber312\Lib\site-packages\starlette\testclient.py:37
+  C:\Users\acer\Downloads\BHIV-cyber\repos\.venvs\cyber312\Lib\site-packages\starlette\testclient.py:37: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = typing.Callable[[], typing.ContextManager[anyio.abc.BlockingPortal]]
+
+app\db\database.py:17
+  C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\cybercrime\backend\app\db\database.py:17: MovedIn20Warning: The ``declarative_base()`` function is now available as sqlalchemy.orm.declarative_base(). (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+    Base = declarative_base()
+
+app\api\v1\schemas.py:21
+  C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\cybercrime\backend\app\api\v1\schemas.py:21: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
+    class UserResponse(UserBase):
+
+app\api\v1\schemas.py:48
+  C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\cybercrime\backend\app\api\v1\schemas.py:48: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
+    class CaseResponse(CaseBase):
+
+app\api\v1\schemas.py:71
+  C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\cybercrime\backend\app\api\v1\schemas.py:71: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
+    class WalletResponse(WalletBase):
+
+app\api\v1\schemas.py:97
+  C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\cybercrime\backend\app\api\v1\schemas.py:97: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
+    class TransactionResponse(TransactionBase):
+
+app\api\v1\schemas.py:126
+  C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\cybercrime\backend\app\api\v1\schemas.py:126: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
+    class EvidenceResponse(EvidenceBase):
+
+app\api\v1\schemas.py:148
+  C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\cybercrime\backend\app\api\v1\schemas.py:148: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
+    class RiskScoreResponse(RiskScoreBase):
+
+app\api\v1\schemas.py:158
+  C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\cybercrime\backend\app\api\v1\schemas.py:158: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
+    class AuditLogResponse(BaseModel):
+
+app\api\v1\schemas.py:193
+  C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\cybercrime\backend\app\api\v1\schemas.py:193: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
+    class GraphEdge(BaseModel):
+
+app\api\v1\endpoints\messages.py:27
+  C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\cybercrime\backend\app\api\v1\endpoints\messages.py:27: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
+    class MessageResponse(BaseModel):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+ERROR test_endpoint.py - pydantic_core._pydantic_core.ValidationError: 1 vali...
+ERROR test_predictions.py - sqlalchemy.exc.OperationalError: (sqlite3.Operati...
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!
+======================= 11 warnings, 2 errors in 28.01s =======================

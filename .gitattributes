@@ -1,0 +1,3 @@
+# evidence_packet/MANIFEST.sha256 hashes the evidence files as written. Store and check them out byte for byte
+# (no line-ending conversion), so the manifest verifies on every platform.
+evidence_packet/** -text

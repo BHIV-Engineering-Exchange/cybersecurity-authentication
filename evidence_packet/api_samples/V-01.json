@@ -1,0 +1,110 @@
+[
+  {
+    "check_id": "V-01",
+    "system": "vajra-local",
+    "utc": "2026-11-04T10:39:55Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:51295/api/admin/add-tokens",
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "address": "cyber-p0-test-addr",
+        "token": "BHX",
+        "amount": 1
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "error": "token BHX not found",
+        "success": false
+      }
+    }
+  },
+  {
+    "check_id": "V-01",
+    "system": "vajra-local",
+    "utc": "2026-11-04T10:39:55Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:51295/api/v1/permission/grant",
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "trace_id": "c69962a0-7b0d-4316-8128-481614ed27db",
+        "subject": "cyber-p0-test-subj",
+        "requester": "attacker",
+        "purpose": "unauthenticated grant attempt (synthetic)",
+        "scope": "read",
+        "ttl_seconds": 60
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "commitment": "0165a21b6cef30c1a43a03140c2438df8f45e31419d72cc697a01db4c78b6a7e",
+        "permission_id": "perm-cyber-p0-test-subj-",
+        "record": {
+          "permission_id": "perm-cyber-p0-test-subj-",
+          "trace_id": "c69962a0-7b0d-4316-8128-481614ed27db",
+          "subject": "cyber-p0-test-subj",
+          "requester": "attacker",
+          "purpose": "unauthenticated grant attempt (synthetic)",
+          "scope": "read",
+          "state": "GRANT",
+          "created_at": 1793788795,
+          "updated_at": 1793788795,
+          "expires_at": 1793788855,
+          "commitment_hash": "0165a21b6cef30c1a43a03140c2438df8f45e31419d72cc697a01db4c78b6a7e",
+          "transitions": [
+            {
+              "from_state": "",
+              "to_state": "GRANT",
+              "timestamp": 1793788795,
+              "reason": "Initial user consent grant",
+              "trace_id": "c69962a0-7b0d-4316-8128-481614ed27db"
+            }
+          ]
+        },
+        "status": "GRANTED"
+      }
+    }
+  },
+  {
+    "check_id": "V-01",
+    "system": "vajra-local",
+    "utc": "2026-11-04T10:39:55Z",
+    "elapsed_ms": 16,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:51295/api/cybercrime/freeze",
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "wallet_address": "cyber-p0-test-wallet",
+        "admin_address": "attacker"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "success": true
+      }
+    }
+  }
+]

@@ -436,3 +436,22 @@ class RevokedToken(Base):
     reason = Column(String, nullable=True)
     revoked_by = Column(String, nullable=True)
 
+
+
+class ProtectedAccessDecision(Base):
+    """Idempotency record for POST /api/v1/protected/access.
+
+    One row per (actor, idempotency_key): a repeated identical request returns the first decision and
+    re-executes nothing. A different request under the same key is refused. This is a record of Cybersecurity's own decisions, not a
+    permission store; permission state stays with VAJRA.
+    """
+    __tablename__ = "protected_access_decisions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    idempotency_key = Column(String, unique=True, index=True, nullable=False)
+    actor_id = Column(String, nullable=False)
+    trace_id = Column(String, index=True, nullable=False)
+    request_fingerprint = Column(String, nullable=False, default="")  # SHA-256 of the request content
+    decision = Column(String, nullable=False)  # PENDING while in flight, then ALLOW or DENY
+    response_json = Column(Text, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)

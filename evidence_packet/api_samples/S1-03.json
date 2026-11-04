@@ -1,0 +1,203 @@
+[
+  {
+    "check_id": "S1-03",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T10:39:55Z",
+    "elapsed_ms": 31,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:51300/api/v1/access/revoke",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "b286b85e-12c6-43c5-bab8-754610201ceb",
+        "content-type": "application/json"
+      },
+      "body": {
+        "contract_version": "1.0.0",
+        "revocation_type": "user_deactivation",
+        "target": {
+          "actor_id": "cc_usr_4"
+        },
+        "reason": "privilege escalation attempt (synthetic)",
+        "requested_by": "cc_usr_2"
+      }
+    },
+    "response": {
+      "status": 403,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "fa8d79a6-2eaf-4f9e-b5a5-69e88b7d99e6",
+        "x-trace-id": "b286b85e-12c6-43c5-bab8-754610201ceb"
+      },
+      "body": {
+        "error": true,
+        "code": "INSUFFICIENT_PERMISSIONS",
+        "status_code": 403,
+        "message": "Access denied.",
+        "trace_id": "b286b85e-12c6-43c5-bab8-754610201ceb",
+        "request_id": "fa8d79a6-2eaf-4f9e-b5a5-69e88b7d99e6",
+        "timestamp": "2026-11-04T10:39:55.588Z",
+        "details": []
+      }
+    }
+  },
+  {
+    "check_id": "S1-03",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T10:39:55Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:51300/api/v1/audit/?limit=500",
+      "headers": {
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "ed3bdecf-553f-4347-bddf-2d9624ae9045",
+        "x-trace-id": "a7947ae2-1263-4397-a380-b881922a9d24"
+      },
+      "body": [
+        {
+          "id": 9,
+          "action": "authz.decision:read",
+          "message": "Access denied.",
+          "entity_type": "policy",
+          "entity_id": "/api/v1/access/revoke",
+          "status": "denied",
+          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"cf51139b-b18c-41fd-a949-12eddcbbc52b\",\"event_type\":\"authz.decision\",\"timestamp\":\"2026-11-04T10:39:55.582Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"b286b85e-12c6-43c5-bab8-754610201ceb\",\"request_id\":\"fa8d79a6-2eaf-4f9e-b5a5-69e88b7d99e6\",\"actor\":{\"actor_id\":\"cc_usr_2\",\"actor_type\":\"user\",\"role\":\"investigator\",\"display_name\":null,\"authenticated\":true,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"policy\",\"resource_id\":\"/api/v1/access/revoke\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"DENIED\",\"status_code\":403,\"reason_code\":\"INSUFFICIENT_PERMISSIONS\",\"message\":\"Access denied.\"},\"policy_reference\":{\"policy_id\":\"rbac_permissions_v1\",\"rule_name\":null,\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"path\":\"/api/v1/access/revoke\",\"method\":\"POST\",\"role\":\"investigator\"},\"extensions\":null}",
+          "user_id": 2,
+          "ip_address": null,
+          "request_id": "fa8d79a6-2eaf-4f9e-b5a5-69e88b7d99e6",
+          "path": "/api/v1/access/revoke",
+          "method": "POST",
+          "timestamp": "2026-11-04T10:39:55.583625"
+        },
+        {
+          "id": 8,
+          "action": "authz.decision:read",
+          "message": "Invalid or expired credentials.",
+          "entity_type": "policy",
+          "entity_id": "/api/v1/cases",
+          "status": "denied",
+          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"3b73731a-d39c-4f08-a2fc-b4d14c959ae4\",\"event_type\":\"authz.decision\",\"timestamp\":\"2026-11-04T10:39:55.559Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"cffd7518-93d9-4678-ab4c-f1d245415666\",\"request_id\":\"bd051573-021a-4eef-9c39-70d44f52357f\",\"actor\":{\"actor_id\":\"anonymous\",\"actor_type\":\"user\",\"role\":\"public\",\"display_name\":null,\"authenticated\":false,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"policy\",\"resource_id\":\"/api/v1/cases\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"DENIED\",\"status_code\":401,\"reason_code\":\"INVALID_CREDENTIALS\",\"message\":\"Invalid or expired credentials.\"},\"policy_reference\":{\"policy_id\":\"rbac_permissions_v1\",\"rule_name\":null,\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"path\":\"/api/v1/cases\",\"method\":\"GET\",\"role\":\"public\"},\"extensions\":null}",
+          "user_id": null,
+          "ip_address": null,
+          "request_id": "bd051573-021a-4eef-9c39-70d44f52357f",
+          "path": "/api/v1/cases",
+          "method": "GET",
+          "timestamp": "2026-11-04T10:39:55.563498"
+        },
+        {
+          "id": 7,
+          "action": "authz.decision:read",
+          "message": "Authentication required.",
+          "entity_type": "policy",
+          "entity_id": "/api/v1/cases",
+          "status": "denied",
+          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"5a654c0e-cde3-4e0e-89f0-8ec54dcd0c69\",\"event_type\":\"authz.decision\",\"timestamp\":\"2026-11-04T10:39:55.504Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"58a92b86-47d4-4087-ad4a-702a2d451d38\",\"request_id\":\"525123b9-a173-44c5-82ab-8f8c92ecb0c5\",\"actor\":{\"actor_id\":\"anonymous\",\"actor_type\":\"user\",\"role\":\"public\",\"display_name\":null,\"authenticated\":false,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"policy\",\"resource_id\":\"/api/v1/cases\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"DENIED\",\"status_code\":401,\"reason_code\":\"AUTHENTICATION_REQUIRED\",\"message\":\"Authentication required.\"},\"policy_reference\":{\"policy_id\":\"rbac_permissions_v1\",\"rule_name\":null,\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"path\":\"/api/v1/cases\",\"method\":\"GET\",\"role\":\"public\"},\"extensions\":null}",
+          "user_id": null,
+          "ip_address": null,
+          "request_id": "525123b9-a173-44c5-82ab-8f8c92ecb0c5",
+          "path": "/api/v1/cases",
+          "method": "GET",
+          "timestamp": "2026-11-04T10:39:55.506206"
+        },
+        {
+          "id": 6,
+          "action": "auth.login",
+          "message": "User logged in successfully.",
+          "entity_type": "user",
+          "entity_id": "6",
+          "status": "success",
+          "details": "User investigator.e@bhiv-verification.example logged in successfully",
+          "user_id": 6,
+          "ip_address": null,
+          "request_id": null,
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T10:39:53.090049"
+        },
+        {
+          "id": 5,
+          "action": "auth.login",
+          "message": "User logged in successfully.",
+          "entity_type": "user",
+          "entity_id": "5",
+          "status": "success",
+          "details": "User investigator.d@bhiv-verification.example logged in successfully",
+          "user_id": 5,
+          "ip_address": null,
+          "request_id": null,
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T10:39:52.571362"
+        },
+        {
+          "id": 4,
+          "action": "auth.login",
+          "message": "User logged in successfully.",
+          "entity_type": "user",
+          "entity_id": "4",
+          "status": "success",
+          "details": "User investigator.c@bhiv-verification.example logged in successfully",
+          "user_id": 4,
+          "ip_address": null,
+          "request_id": null,
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T10:39:52.058605"
+        },
+        {
+          "id": 3,
+          "action": "auth.login",
+          "message": "User logged in successfully.",
+          "entity_type": "user",
+          "entity_id": "3",
+          "status": "success",
+          "details": "User investigator.b@bhiv-verification.example logged in successfully",
+          "user_id": 3,
+          "ip_address": null,
+          "request_id": null,
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T10:39:51.494533"
+        },
+        {
+          "id": 2,
+          "action": "auth.login",
+          "message": "User logged in successfully.",
+          "entity_type": "user",
+          "entity_id": "2",
+          "status": "success",
+          "details": "User investigator.a@bhiv-verification.example logged in successfully",
+          "user_id": 2,
+          "ip_address": null,
+          "request_id": null,
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T10:39:50.961830"
+        },
+        {
+          "id": 1,
+          "action": "auth.login",
+          "message": "User logged in successfully.",
+          "entity_type": "user",
+          "entity_id": "1",
+          "status": "success",
+          "details": "User superadmin@bhiv-verification.example logged in successfully",
+          "user_id": 1,
+          "ip_address": null,
+          "request_id": null,
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T10:39:50.388442"
+        }
+      ]
+    }
+  }
+]

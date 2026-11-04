@@ -1,0 +1,12 @@
+{
+  "status": "RECORDED",
+  "http_status": 200,
+  "detail": "",
+  "data": {
+    "karma_event_id": "388ac0bb-c817-40ee-8877-84a39ab8d2b3",
+    "payload_hash": "d09bb3d448f661e72de55851912ff9ac0d85ff4122b2273c05348d762fabf2bb",
+    "prana_forward": "forwarded",
+    "replay_status": "MATCH",
+    "replay_http_status": 200
+  }
+}

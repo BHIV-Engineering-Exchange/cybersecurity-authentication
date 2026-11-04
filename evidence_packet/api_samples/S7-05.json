@@ -1,0 +1,144 @@
+[
+  {
+    "check_id": "S7-05",
+    "system": "vajra-local",
+    "utc": "2026-11-04T10:42:10Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:51295/api/vajra/authority/transition",
+      "headers": {
+        "x-trace-id": "8af89246-4a8b-41b1-bd5c-1b7706d83075",
+        "authorization": "[REDACTED]",
+        "content-type": "application/json"
+      },
+      "body": {
+        "trace_id": "8af89246-4a8b-41b1-bd5c-1b7706d83075",
+        "subject": "cyber-p0-test-persistence-709194cd84",
+        "authority": "AUTH_ROLE_CLIENT",
+        "issuer": "VAJRA_USER_CONTROL_SIMULATOR (verification harness)",
+        "target": "VAJRA_LEDGER",
+        "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)",
+        "scope": [
+          "read"
+        ],
+        "to_state": "GRANT",
+        "policy_version": "v1.0.0",
+        "evidence_ref": "synthetic-test"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "record": {
+          "record_id": "auth_1793788930_cyber-p0",
+          "trace_id": "8af89246-4a8b-41b1-bd5c-1b7706d83075",
+          "subject": "cyber-p0-test-persistence-709194cd84",
+          "authority": "AUTH_ROLE_CLIENT",
+          "issuer": "VAJRA_USER_CONTROL_SIMULATOR (verification harness)",
+          "target": "VAJRA_LEDGER",
+          "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)",
+          "scope": [
+            "read"
+          ],
+          "state_transition": {
+            "from": "",
+            "to": "GRANT"
+          },
+          "policy_version": "v1.0.0",
+          "timestamp": 1793788930,
+          "evidence_reference": "synthetic-test",
+          "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "entry_hash": "d1718a5e0ff591b71deef29910c716b51016855675328ba171acb3cba7808f1c"
+        },
+        "success": true
+      }
+    }
+  },
+  {
+    "check_id": "S7-05",
+    "system": "vajra-local",
+    "utc": "2026-11-04T10:42:10Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:51295/api/vajra/authority/transition",
+      "headers": {
+        "x-trace-id": "a4a9e71d-8465-4e14-a5be-0b15c88ccf4c",
+        "authorization": "[REDACTED]",
+        "content-type": "application/json"
+      },
+      "body": {
+        "trace_id": "a4a9e71d-8465-4e14-a5be-0b15c88ccf4c",
+        "subject": "cyber-p0-test-persistence-709194cd84",
+        "authority": "AUTH_ROLE_CLIENT",
+        "issuer": "VAJRA_USER_CONTROL_SIMULATOR (verification harness)",
+        "target": "VAJRA_LEDGER",
+        "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)",
+        "scope": [
+          "read"
+        ],
+        "to_state": "USE",
+        "policy_version": "v1.0.0",
+        "evidence_ref": "synthetic-test"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "record": {
+          "record_id": "auth_1793788930_cyber-p0",
+          "trace_id": "a4a9e71d-8465-4e14-a5be-0b15c88ccf4c",
+          "subject": "cyber-p0-test-persistence-709194cd84",
+          "authority": "AUTH_ROLE_CLIENT",
+          "issuer": "VAJRA_USER_CONTROL_SIMULATOR (verification harness)",
+          "target": "VAJRA_LEDGER",
+          "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)",
+          "scope": [
+            "read"
+          ],
+          "state_transition": {
+            "from": "GRANT",
+            "to": "USE"
+          },
+          "policy_version": "v1.0.0",
+          "timestamp": 1793788930,
+          "evidence_reference": "synthetic-test",
+          "prev_hash": "d1718a5e0ff591b71deef29910c716b51016855675328ba171acb3cba7808f1c",
+          "entry_hash": "18e0e1eca85d84f98820eaa63bb6fde75d7de25f2650ca9f19d98200873bdd6a"
+        },
+        "success": true
+      }
+    }
+  },
+  {
+    "check_id": "S7-05",
+    "system": "vajra-local",
+    "utc": "2026-11-04T10:42:11Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:51295/api/vajra/authority/verify?subject=cyber-p0-test-persistence-709194cd84",
+      "headers": {},
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "current_state": "",
+        "is_authorized": false,
+        "subject": "cyber-p0-test-persistence-709194cd84",
+        "verified_at": 1793788931
+      }
+    }
+  }
+]
