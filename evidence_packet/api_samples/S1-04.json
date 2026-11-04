@@ -2,16 +2,16 @@
   {
     "check_id": "S1-04",
     "system": "cybersecurity",
-    "utc": "2026-11-04T12:38:44Z",
-    "elapsed_ms": 0,
+    "utc": "2026-11-04T13:32:52Z",
+    "elapsed_ms": 15,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:62636/api/v1/auth/register",
+      "url": "http://127.0.0.1:62513/api/v1/auth/register",
       "headers": {
         "content-type": "application/json"
       },
       "body": {
-        "email": "selfreg-febdcc42@bhiv-verification.example",
+        "email": "selfreg-a4c4161e@bhiv-verification.example",
         "password": "[REDACTED]",
         "full_name": "Self-registered stranger (synthetic)"
       }
@@ -20,17 +20,17 @@
       "status": 401,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "ad190e9d-b0a6-4297-8557-dbc1a2cf9f64",
-        "x-trace-id": "9ec97cfd-e83b-4fe0-8b66-a11a36d1a47b"
+        "x-request-id": "e4b3a1b9-e535-4b6e-9314-08da8250c844",
+        "x-trace-id": "5041528c-6ba4-4797-b90c-eeddb7d87305"
       },
       "body": {
         "error": true,
         "code": "AUTHENTICATION_REQUIRED",
         "status_code": 401,
         "message": "Authentication required.",
-        "trace_id": "9ec97cfd-e83b-4fe0-8b66-a11a36d1a47b",
-        "request_id": "ad190e9d-b0a6-4297-8557-dbc1a2cf9f64",
-        "timestamp": "2026-11-04T12:38:44.821Z",
+        "trace_id": "5041528c-6ba4-4797-b90c-eeddb7d87305",
+        "request_id": "e4b3a1b9-e535-4b6e-9314-08da8250c844",
+        "timestamp": "2026-11-04T13:32:52.084Z",
         "details": []
       }
     }
@@ -38,16 +38,16 @@
   {
     "check_id": "S1-04",
     "system": "cybersecurity",
-    "utc": "2026-11-04T12:38:45Z",
-    "elapsed_ms": 1172,
+    "utc": "2026-11-04T13:32:53Z",
+    "elapsed_ms": 1234,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:62636/api/v1/auth/login",
+      "url": "http://127.0.0.1:62513/api/v1/auth/login",
       "headers": {
         "content-type": "application/x-www-form-urlencoded"
       },
       "body": {
-        "username": "selfreg-febdcc42%40bhiv-verification.example",
+        "username": "selfreg-a4c4161e%40bhiv-verification.example",
         "password": "[REDACTED]"
       }
     },
@@ -55,17 +55,17 @@
       "status": 401,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "1a96036f-86cf-43e9-95d9-e9831e498672",
-        "x-trace-id": "f5f16cbe-c566-4fe2-be4e-2ac32d4b2b43"
+        "x-request-id": "22ad88ed-14be-44f7-9aaa-d28083e4f4d9",
+        "x-trace-id": "3b20dfce-372f-49d4-aea1-78bc4e1a1cff"
       },
       "body": {
         "error": true,
         "code": "HTTP_401",
         "status_code": 401,
         "message": "Invalid email or password.",
-        "trace_id": "f5f16cbe-c566-4fe2-be4e-2ac32d4b2b43",
-        "request_id": "1a96036f-86cf-43e9-95d9-e9831e498672",
-        "timestamp": "2026-11-04T12:38:45.990Z",
+        "trace_id": "3b20dfce-372f-49d4-aea1-78bc4e1a1cff",
+        "request_id": "22ad88ed-14be-44f7-9aaa-d28083e4f4d9",
+        "timestamp": "2026-11-04T13:32:53.311Z",
         "details": []
       }
     }

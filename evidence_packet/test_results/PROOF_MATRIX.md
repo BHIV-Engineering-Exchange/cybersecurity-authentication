@@ -2,7 +2,7 @@
 
 Each requirement maps to checks in this run. VERIFIED = every mapped check passed and the requirement asks for nothing more; FAILING = at least one failed; PARTIAL = some passed and the rest were blocked or skipped, or all passed but the requirement asks for more than the run showed (the reason follows the bracket); NOT VERIFIED = none passed. The bracket lists the systems the passing checks touched (live or local) and whether the harness simulated a role.
 
-Run `20261104T123826Z`, TANTRA mode `live`.
+Run `20261104T133229Z`, TANTRA mode `live`.
 
 | Source | Requirement | Checks (result) | Status |
 |---|---|---|---|
@@ -29,7 +29,7 @@ Run `20261104T123826Z`, TANTRA mode `live`.
 
 | Condition | Met? | Basis (evidence status) |
 |---|---|---|
-| BUILD WORKS | **YES** | OFFLINE-VERIFIED: both services started in this run (deployment_proof/local_runtime_proof.json); unit tests: 91 passed, 199 warnings |
+| BUILD WORKS | **YES** | OFFLINE-VERIFIED: both services started in this run (deployment_proof/local_runtime_proof.json); unit tests: 101 passed, 324 warnings |
 | INTEGRATION WORKS | **PARTIAL** | VAJRA path OFFLINE-VERIFIED on a local node (consent SIMULATED). TANTRA contract gate LIVE-VERIFIED; cybersecurity contract BLOCKED-EXTERNAL (TAN-01).  |
 | TESTS PASS | **NO** | 42 PASS, 3 FAIL, 0 ERROR, 0 BLOCKED, 1 SKIPPED; failures are listed in DEFECTS.md |
 | EVIDENCE EXISTS | **YES** | all evidence folders present |

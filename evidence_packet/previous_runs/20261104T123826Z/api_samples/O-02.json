@@ -1,0 +1,75 @@
+[
+  {
+    "check_id": "O-02",
+    "system": "tantra-live",
+    "utc": "2026-11-04T12:38:42Z",
+    "elapsed_ms": 515,
+    "request": {
+      "method": "GET",
+      "url": "http://163.128.209.18:8101/health",
+      "headers": {},
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "healthy",
+        "service": "bhiv-validation-layer"
+      }
+    }
+  },
+  {
+    "check_id": "O-02",
+    "system": "tantra-live",
+    "utc": "2026-11-04T12:38:42Z",
+    "elapsed_ms": 515,
+    "request": {
+      "method": "GET",
+      "url": "http://163.128.209.18:8102/health",
+      "headers": {},
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "healthy",
+        "service": "bhiv-karma-helper"
+      }
+    }
+  },
+  {
+    "check_id": "O-02",
+    "system": "tantra-live",
+    "utc": "2026-11-04T12:38:43Z",
+    "elapsed_ms": 515,
+    "request": {
+      "method": "GET",
+      "url": "http://163.128.209.18:8103/health",
+      "headers": {},
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-trace-id": "niyantran-5e3e5378c3ec4744ad217d8826bf4145"
+      },
+      "body": {
+        "status": "healthy",
+        "service": "bhiv-prana",
+        "forwarding_enabled": true,
+        "mongodb": {
+          "mongodb_connected": true,
+          "database_name": "prana",
+          "connection_status": "connected"
+        }
+      }
+    }
+  }
+]

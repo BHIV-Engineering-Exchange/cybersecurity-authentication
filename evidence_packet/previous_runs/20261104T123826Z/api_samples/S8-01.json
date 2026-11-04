@@ -1,0 +1,713 @@
+[
+  {
+    "check_id": "S8-01",
+    "system": "vajra-local",
+    "utc": "2026-11-04T12:39:02Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:62631/api/vajra/authority/transition",
+      "headers": {
+        "x-trace-id": "211b8d7c-9945-4642-83ff-bc0e0f63365f",
+        "authorization": "[REDACTED]",
+        "content-type": "application/json"
+      },
+      "body": {
+        "trace_id": "211b8d7c-9945-4642-83ff-bc0e0f63365f",
+        "subject": "cyber-p0-test-traced-03a296b147",
+        "authority": "AUTH_ROLE_CLIENT",
+        "issuer": "VAJRA_USER_CONTROL_SIMULATOR (verification harness)",
+        "target": "VAJRA_LEDGER",
+        "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)",
+        "scope": [
+          "read"
+        ],
+        "to_state": "GRANT",
+        "policy_version": "v1.0.0",
+        "evidence_ref": "synthetic-test"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "record": {
+          "record_id": "auth_1793795942_cyber-p0",
+          "trace_id": "211b8d7c-9945-4642-83ff-bc0e0f63365f",
+          "subject": "cyber-p0-test-traced-03a296b147",
+          "authority": "AUTH_ROLE_CLIENT",
+          "issuer": "VAJRA_USER_CONTROL_SIMULATOR (verification harness)",
+          "target": "VAJRA_LEDGER",
+          "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)",
+          "scope": [
+            "read"
+          ],
+          "state_transition": {
+            "from": "",
+            "to": "GRANT"
+          },
+          "policy_version": "v1.0.0",
+          "timestamp": 1793795942,
+          "evidence_reference": "synthetic-test",
+          "prev_hash": "5c078be378e16e1d11c118cec3b09793a7336cef1ac69b67cf8afe47cd4da748",
+          "entry_hash": "5c7025cca1391948b99a2e72f76c03e2d3e8326c907786e145282d17a54d8829"
+        },
+        "success": true
+      }
+    }
+  },
+  {
+    "check_id": "S8-01",
+    "system": "vajra-local",
+    "utc": "2026-11-04T12:39:02Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:62631/api/vajra/authority/transition",
+      "headers": {
+        "x-trace-id": "44df4837-af61-4dc3-bc3e-10082673806d",
+        "authorization": "[REDACTED]",
+        "content-type": "application/json"
+      },
+      "body": {
+        "trace_id": "44df4837-af61-4dc3-bc3e-10082673806d",
+        "subject": "cyber-p0-test-traced-03a296b147",
+        "authority": "AUTH_ROLE_CLIENT",
+        "issuer": "VAJRA_USER_CONTROL_SIMULATOR (verification harness)",
+        "target": "VAJRA_LEDGER",
+        "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)",
+        "scope": [
+          "read"
+        ],
+        "to_state": "USE",
+        "policy_version": "v1.0.0",
+        "evidence_ref": "synthetic-test"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "record": {
+          "record_id": "auth_1793795942_cyber-p0",
+          "trace_id": "44df4837-af61-4dc3-bc3e-10082673806d",
+          "subject": "cyber-p0-test-traced-03a296b147",
+          "authority": "AUTH_ROLE_CLIENT",
+          "issuer": "VAJRA_USER_CONTROL_SIMULATOR (verification harness)",
+          "target": "VAJRA_LEDGER",
+          "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)",
+          "scope": [
+            "read"
+          ],
+          "state_transition": {
+            "from": "GRANT",
+            "to": "USE"
+          },
+          "policy_version": "v1.0.0",
+          "timestamp": 1793795942,
+          "evidence_reference": "synthetic-test",
+          "prev_hash": "5c7025cca1391948b99a2e72f76c03e2d3e8326c907786e145282d17a54d8829",
+          "entry_hash": "5671d5906b281e4c1bb18567d7068ce8892853aac13d3f9ba020207479f02aa9"
+        },
+        "success": true
+      }
+    }
+  },
+  {
+    "check_id": "S8-01",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T12:39:04Z",
+    "elapsed_ms": 2625,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:62636/api/v1/protected/access",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "cyber-p0-test-2eb753dd-f79b-4830-a7aa-9d079123534f",
+        "content-type": "application/json"
+      },
+      "body": {
+        "contract_version": "1.0.0",
+        "vajra_subject": "cyber-p0-test-traced-03a296b147",
+        "action": "read",
+        "resource": {
+          "type": "evidence",
+          "id": "EV-P0-0001"
+        },
+        "purpose": "P0 verification (synthetic)"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "2fe723a8-73b5-4594-8864-12680373ffac",
+        "x-trace-id": "cyber-p0-test-2eb753dd-f79b-4830-a7aa-9d079123534f"
+      },
+      "body": {
+        "contract_version": "1.0.0",
+        "decision": "ALLOW",
+        "reason_code": "ALLOWED_BY_VAJRA_AUTHORITY",
+        "reason": "Access permitted: VAJRA authority state is 'USE', the caller passed RBAC and VAJRA recorded the evidence. Scope (action/resource) is not checked by VAJRA's verify contract.",
+        "decision_id": "acea7a6dab934f76967d3641c8e1e998",
+        "trace_id": "cyber-p0-test-2eb753dd-f79b-4830-a7aa-9d079123534f",
+        "request_id": "2fe723a8-73b5-4594-8864-12680373ffac",
+        "idempotency_key": null,
+        "duplicate": false,
+        "actor_id": "cc_usr_2",
+        "action": "read",
+        "resource": {
+          "type": "evidence",
+          "id": "EV-P0-0001"
+        },
+        "vajra": {
+          "subject_ref": "subj_sha256_e4d5017b17026388",
+          "status": "OK",
+          "is_authorized": true,
+          "current_state": "USE",
+          "scope_checked": false
+        },
+        "evidence": {
+          "local_audit_event_id": "7b5d3b0f-6baf-4ebb-8c6f-c4d14e4d0670",
+          "superseded_audit_event_id": null,
+          "vajra": {
+            "status": "RECORDED",
+            "http_status": 200,
+            "detail": "",
+            "data": {
+              "evidence_hash": "sha256:74072fb04365640228aa51fbddf3bd77bda3c58036d650b2d91f960581948151",
+              "stored_in": [
+                "TruthStore (tantra_truth.jsonl)"
+              ],
+              "recorded_at": 1793795943
+            }
+          },
+          "tantra": {
+            "status": "CONTRACT_REJECTED",
+            "http_status": 422,
+            "detail": "event_type_not_registered",
+            "data": {
+              "reason": "event_type_not_registered",
+              "message": "event_type 'security_decision' is not registered for PRANA ingress",
+              "registered_event_types": [
+                "adaptive_decision",
+                "bucket_memory_saved",
+                "integrity_probe",
+                "review_completed",
+                "task_submit",
+                "task_submit_failed",
+                "truth_classification"
+              ]
+            }
+          },
+          "complete": false,
+          "gaps": [
+            "tantra"
+          ]
+        },
+        "policy_applied": "vajra_authority_v1",
+        "evaluated_at": "2026-11-04T12:39:02.054Z"
+      }
+    }
+  },
+  {
+    "check_id": "S8-01",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T12:39:04Z",
+    "elapsed_ms": 15,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:62636/api/v1/audit/?limit=500",
+      "headers": {
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "3152e684-7c57-4e15-80b6-5b5c29e84452",
+        "x-trace-id": "b60e356a-2f3b-4e52-8be6-b148d6d2e9b6"
+      },
+      "body": [
+        {
+          "id": 21,
+          "action": "protected_access.decision:read",
+          "message": "Access permitted: VAJRA authority state is 'USE', the caller passed RBAC and VAJRA recorded the evidence. Scope (action/resource) is not checked by VAJRA's verify contract.",
+          "entity_type": "evidence",
+          "entity_id": "EV-P0-0001",
+          "status": "success",
+          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"7b5d3b0f-6baf-4ebb-8c6f-c4d14e4d0670\",\"event_type\":\"protected_access.decision\",\"timestamp\":\"2026-11-04T12:39:02.700Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"cyber-p0-test-2eb753dd-f79b-4830-a7aa-9d079123534f\",\"request_id\":\"2fe723a8-73b5-4594-8864-12680373ffac\",\"actor\":{\"actor_id\":\"cc_usr_2\",\"actor_type\":\"user\",\"role\":\"investigator\",\"display_name\":null,\"authenticated\":true,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"evidence\",\"resource_id\":\"EV-P0-0001\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"SUCCESS\",\"status_code\":200,\"reason_code\":\"ALLOWED_BY_VAJRA_AUTHORITY\",\"message\":\"Access permitted: VAJRA authority state is 'USE', the caller passed RBAC and VAJRA recorded the evidence. Scope (action/resource) is not checked by VAJRA's verify contract.\"},\"policy_reference\":{\"policy_id\":\"vajra_authority_v1\",\"rule_name\":\"vajra_authority_verify\",\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"decision_id\":\"acea7a6dab934f76967d3641c8e1e998\",\"vajra_subject_ref\":\"subj_sha256_e4d5017b17026388\",\"vajra_status\":\"OK\",\"vajra_state\":\"USE\",\"vajra_trace_id\":\"cyber-p0-test-2eb753dd-f79b-4830-a7aa-9d079123534f::acea7a6dab934f76967d3641c8e1e998\",\"scope_checked\":false,\"purpose\":\"P0 verification (synthetic)\",\"idempotency_key\":{},\"decision\":\"ALLOW\"},\"extensions\":null}",
+          "user_id": 2,
+          "ip_address": null,
+          "request_id": "2fe723a8-73b5-4594-8864-12680373ffac",
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T12:39:02.701005"
+        },
+        {
+          "id": 20,
+          "action": "protected_access.decision:read",
+          "message": "Access permitted: VAJRA authority state is 'USE', the caller passed RBAC and VAJRA recorded the evidence. Scope (action/resource) is not checked by VAJRA's verify contract.",
+          "entity_type": "evidence",
+          "entity_id": "EV-P0-0001",
+          "status": "success",
+          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"1ee9abe0-8c0b-4fab-b03c-b2a45f35924a\",\"event_type\":\"protected_access.decision\",\"timestamp\":\"2026-11-04T12:39:00.026Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"cyber-p0-test-7e43993b-848c-4bba-a937-f37c5aa17a19\",\"request_id\":\"1c57faef-343e-4d40-9d10-f5118464006b\",\"actor\":{\"actor_id\":\"cc_usr_2\",\"actor_type\":\"user\",\"role\":\"investigator\",\"display_name\":null,\"authenticated\":true,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"evidence\",\"resource_id\":\"EV-P0-0001\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"SUCCESS\",\"status_code\":200,\"reason_code\":\"ALLOWED_BY_VAJRA_AUTHORITY\",\"message\":\"Access permitted: VAJRA authority state is 'USE', the caller passed RBAC and VAJRA recorded the evidence. Scope (action/resource) is not checked by VAJRA's verify contract.\"},\"policy_reference\":{\"policy_id\":\"vajra_authority_v1\",\"rule_name\":\"vajra_authority_verify\",\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"decision_id\":\"12f1c777628e447eab6b40f5c135979c\",\"vajra_subject_ref\":\"subj_sha256_a18d8764270e0f7b\",\"vajra_status\":\"OK\",\"vajra_state\":\"USE\",\"vajra_trace_id\":\"cyber-p0-test-7e43993b-848c-4bba-a937-f37c5aa17a19::12f1c777628e447eab6b40f5c135979c\",\"scope_checked\":false,\"purpose\":\"P0 verification (synthetic)\",\"idempotency_key\":{},\"decision\":\"ALLOW\"},\"extensions\":null}",
+          "user_id": 2,
+          "ip_address": null,
+          "request_id": "1c57faef-343e-4d40-9d10-f5118464006b",
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T12:39:00.032588"
+        },
+        {
+          "id": 19,
+          "action": "protected_access.decision:read",
+          "message": "Access permitted: VAJRA authority state is 'USE', the caller passed RBAC and VAJRA recorded the evidence. Scope (action/resource) is not checked by VAJRA's verify contract.",
+          "entity_type": "evidence",
+          "entity_id": "EV-P0-0001",
+          "status": "success",
+          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"ea29bef0-5220-477e-839f-4147e8db233a\",\"event_type\":\"protected_access.decision\",\"timestamp\":\"2026-11-04T12:38:54.249Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"81dbacd1-1550-4eaf-80cb-2682f091859f\",\"request_id\":\"7971fb35-9c89-40ca-be67-f45ff9f89c9f\",\"actor\":{\"actor_id\":\"cc_usr_2\",\"actor_type\":\"user\",\"role\":\"investigator\",\"display_name\":null,\"authenticated\":true,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"evidence\",\"resource_id\":\"EV-P0-0001\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"SUCCESS\",\"status_code\":200,\"reason_code\":\"ALLOWED_BY_VAJRA_AUTHORITY\",\"message\":\"Access permitted: VAJRA authority state is 'USE', the caller passed RBAC and VAJRA recorded the evidence. Scope (action/resource) is not checked by VAJRA's verify contract.\"},\"policy_reference\":{\"policy_id\":\"vajra_authority_v1\",\"rule_name\":\"vajra_authority_verify\",\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"decision_id\":\"7841c0cbc0c74080876b2ddc001573c3\",\"vajra_subject_ref\":\"subj_sha256_5645ebfe040c9cb0\",\"vajra_status\":\"OK\",\"vajra_state\":\"USE\",\"vajra_trace_id\":\"81dbacd1-1550-4eaf-80cb-2682f091859f::7841c0cbc0c74080876b2ddc001573c3\",\"scope_checked\":false,\"purpose\":\"P0 verification (synthetic)\",\"idempotency_key\":\"idem-938bf2daaea9461490694747f4a41b4f\",\"decision\":\"ALLOW\"},\"extensions\":null}",
+          "user_id": 2,
+          "ip_address": null,
+          "request_id": "7971fb35-9c89-40ca-be67-f45ff9f89c9f",
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T12:38:54.249821"
+        },
+        {
+          "id": 18,
+          "action": "protected_access.decision:read",
+          "message": "Access permitted: VAJRA authority state is 'USE', the caller passed RBAC and VAJRA recorded the evidence. Scope (action/resource) is not checked by VAJRA's verify contract.",
+          "entity_type": "evidence",
+          "entity_id": "EV-P0-0001",
+          "status": "success",
+          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"5867b7b3-3926-4ba5-a271-e1f6ce3c5051\",\"event_type\":\"protected_access.decision\",\"timestamp\":\"2026-11-04T12:38:52.871Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"d8192f57-ea8e-4769-b1db-995e873c540e\",\"request_id\":\"c53bb2fd-176a-4dbf-acbe-80096a097d81\",\"actor\":{\"actor_id\":\"cc_usr_2\",\"actor_type\":\"user\",\"role\":\"investigator\",\"display_name\":null,\"authenticated\":true,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"evidence\",\"resource_id\":\"EV-P0-0001\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"SUCCESS\",\"status_code\":200,\"reason_code\":\"ALLOWED_BY_VAJRA_AUTHORITY\",\"message\":\"Access permitted: VAJRA authority state is 'USE', the caller passed RBAC and VAJRA recorded the evidence. Scope (action/resource) is not checked by VAJRA's verify contract.\"},\"policy_reference\":{\"policy_id\":\"vajra_authority_v1\",\"rule_name\":\"vajra_authority_verify\",\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"decision_id\":\"319850d94c1e4caaa7753335bff028c0\",\"vajra_subject_ref\":\"subj_sha256_5683883ec0501227\",\"vajra_status\":\"OK\",\"vajra_state\":\"USE\",\"vajra_trace_id\":\"d8192f57-ea8e-4769-b1db-995e873c540e::319850d94c1e4caaa7753335bff028c0\",\"scope_checked\":false,\"purpose\":\"P0 verification (synthetic)\",\"idempotency_key\":\"idem-5530ed846b9c4af2801aa95f8becc8f9\",\"decision\":\"ALLOW\"},\"extensions\":null}",
+          "user_id": 2,
+          "ip_address": null,
+          "request_id": "c53bb2fd-176a-4dbf-acbe-80096a097d81",
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T12:38:52.871723"
+        },
+        {
+          "id": 17,
+          "action": "protected_access.decision:read",
+          "message": "Access permitted: VAJRA authority state is 'USE', the caller passed RBAC and VAJRA recorded the evidence. Scope (action/resource) is not checked by VAJRA's verify contract.",
+          "entity_type": "evidence",
+          "entity_id": "EV-P0-0001",
+          "status": "success",
+          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"958cd1e6-716a-42d6-880c-bd00d5dbbd9b\",\"event_type\":\"protected_access.decision\",\"timestamp\":\"2026-11-04T12:38:50.721Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"11b5dffc-d061-4048-81c5-fcfcafffefb4\",\"request_id\":\"c5fee628-9ebe-4f87-b7b3-9477a46046cd\",\"actor\":{\"actor_id\":\"cc_usr_2\",\"actor_type\":\"user\",\"role\":\"investigator\",\"display_name\":null,\"authenticated\":true,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"evidence\",\"resource_id\":\"EV-P0-0001\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"SUCCESS\",\"status_code\":200,\"reason_code\":\"ALLOWED_BY_VAJRA_AUTHORITY\",\"message\":\"Access permitted: VAJRA authority state is 'USE', the caller passed RBAC and VAJRA recorded the evidence. Scope (action/resource) is not checked by VAJRA's verify contract.\"},\"policy_reference\":{\"policy_id\":\"vajra_authority_v1\",\"rule_name\":\"vajra_authority_verify\",\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"decision_id\":\"1c39b53aae924eebbda9d130812e6213\",\"vajra_subject_ref\":\"subj_sha256_a43bf20ae1e7073f\",\"vajra_status\":\"OK\",\"vajra_state\":\"USE\",\"vajra_trace_id\":\"11b5dffc-d061-4048-81c5-fcfcafffefb4::1c39b53aae924eebbda9d130812e6213\",\"scope_checked\":false,\"purpose\":\"P0 verification (synthetic)\",\"idempotency_key\":\"idem-e2ae9083af3c4ef9b4d5f49a87a56c40\",\"decision\":\"ALLOW\"},\"extensions\":null}",
+          "user_id": 2,
+          "ip_address": null,
+          "request_id": "c5fee628-9ebe-4f87-b7b3-9477a46046cd",
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T12:38:50.722590"
+        },
+        {
+          "id": 16,
+          "action": "protected_access.decision:read",
+          "message": "Access denied: VAJRA authority state is 'REVOKE', which does not permit access.",
+          "entity_type": "evidence",
+          "entity_id": "EV-P0-0001",
+          "status": "denied",
+          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"7c66edb9-aec2-4bf4-949e-77e7f0cb0671\",\"event_type\":\"protected_access.decision\",\"timestamp\":\"2026-11-04T12:38:49.406Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"1878fdfb-ec70-40f9-b321-c731a88c151b\",\"request_id\":\"6dd8ac2c-b3b3-4af2-9948-c2e19fd6653f\",\"actor\":{\"actor_id\":\"cc_usr_2\",\"actor_type\":\"user\",\"role\":\"investigator\",\"display_name\":null,\"authenticated\":true,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"evidence\",\"resource_id\":\"EV-P0-0001\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"DENIED\",\"status_code\":200,\"reason_code\":\"VAJRA_AUTHORITY_NOT_GRANTED\",\"message\":\"Access denied: VAJRA authority state is 'REVOKE', which does not permit access.\"},\"policy_reference\":{\"policy_id\":\"vajra_authority_v1\",\"rule_name\":\"vajra_authority_verify\",\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"decision_id\":\"d1d35b63703e41679f2dc6ca4e1a4557\",\"vajra_subject_ref\":\"subj_sha256_101c1950530b4a1f\",\"vajra_status\":\"OK\",\"vajra_state\":\"REVOKE\",\"vajra_trace_id\":\"1878fdfb-ec70-40f9-b321-c731a88c151b::d1d35b63703e41679f2dc6ca4e1a4557\",\"scope_checked\":false,\"purpose\":\"P0 verification (synthetic)\",\"idempotency_key\":{},\"decision\":\"DENY\"},\"extensions\":null}",
+          "user_id": 2,
+          "ip_address": null,
+          "request_id": "6dd8ac2c-b3b3-4af2-9948-c2e19fd6653f",
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T12:38:49.406390"
+        },
+        {
+          "id": 15,
+          "action": "protected_access.decision:read",
+          "message": "Access denied: VAJRA authority state is 'REVOKE', which does not permit access.",
+          "entity_type": "evidence",
+          "entity_id": "EV-P0-0001",
+          "status": "denied",
+          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"fbd38cd8-7629-4229-be8f-344dd2cca1f3\",\"event_type\":\"protected_access.decision\",\"timestamp\":\"2026-11-04T12:38:48.079Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"023ac7f6-b70c-4cdf-9bab-0ae0617c1199\",\"request_id\":\"272b3a0b-8ac3-4faa-96ab-6ed68a8030dc\",\"actor\":{\"actor_id\":\"cc_usr_2\",\"actor_type\":\"user\",\"role\":\"investigator\",\"display_name\":null,\"authenticated\":true,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"evidence\",\"resource_id\":\"EV-P0-0001\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"DENIED\",\"status_code\":200,\"reason_code\":\"VAJRA_AUTHORITY_NOT_GRANTED\",\"message\":\"Access denied: VAJRA authority state is 'REVOKE', which does not permit access.\"},\"policy_reference\":{\"policy_id\":\"vajra_authority_v1\",\"rule_name\":\"vajra_authority_verify\",\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"decision_id\":\"922180069e7b4b89bfde6272288e1499\",\"vajra_subject_ref\":\"subj_sha256_101c1950530b4a1f\",\"vajra_status\":\"OK\",\"vajra_state\":\"REVOKE\",\"vajra_trace_id\":\"023ac7f6-b70c-4cdf-9bab-0ae0617c1199::922180069e7b4b89bfde6272288e1499\",\"scope_checked\":false,\"purpose\":\"P0 verification (synthetic)\",\"idempotency_key\":{},\"decision\":\"DENY\"},\"extensions\":null}",
+          "user_id": 2,
+          "ip_address": null,
+          "request_id": "272b3a0b-8ac3-4faa-96ab-6ed68a8030dc",
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T12:38:48.080171"
+        },
+        {
+          "id": 14,
+          "action": "protected_access.decision:read",
+          "message": "Access permitted: VAJRA authority state is 'USE', the caller passed RBAC and VAJRA recorded the evidence. Scope (action/resource) is not checked by VAJRA's verify contract.",
+          "entity_type": "evidence",
+          "entity_id": "EV-P0-0001",
+          "status": "success",
+          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"cc147164-4a32-4e03-881f-bf0b46ddea70\",\"event_type\":\"protected_access.decision\",\"timestamp\":\"2026-11-04T12:38:46.586Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"105904c5-da0e-4ea3-972e-6237ba0fa338\",\"request_id\":\"5427d63b-8a09-4612-843e-a46ba2f4d213\",\"actor\":{\"actor_id\":\"cc_usr_2\",\"actor_type\":\"user\",\"role\":\"investigator\",\"display_name\":null,\"authenticated\":true,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"evidence\",\"resource_id\":\"EV-P0-0001\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"SUCCESS\",\"status_code\":200,\"reason_code\":\"ALLOWED_BY_VAJRA_AUTHORITY\",\"message\":\"Access permitted: VAJRA authority state is 'USE', the caller passed RBAC and VAJRA recorded the evidence. Scope (action/resource) is not checked by VAJRA's verify contract.\"},\"policy_reference\":{\"policy_id\":\"vajra_authority_v1\",\"rule_name\":\"vajra_authority_verify\",\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"decision_id\":\"bbd8b55149db4126928473e13fa4850a\",\"vajra_subject_ref\":\"subj_sha256_101c1950530b4a1f\",\"vajra_status\":\"OK\",\"vajra_state\":\"USE\",\"vajra_trace_id\":\"105904c5-da0e-4ea3-972e-6237ba0fa338::bbd8b55149db4126928473e13fa4850a\",\"scope_checked\":false,\"purpose\":\"P0 verification (synthetic)\",\"idempotency_key\":{},\"decision\":\"ALLOW\"},\"extensions\":null}",
+          "user_id": 2,
+          "ip_address": null,
+          "request_id": "5427d63b-8a09-4612-843e-a46ba2f4d213",
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T12:38:46.586574"
+        },
+        {
+          "id": 13,
+          "action": "auth.login:login",
+          "message": "Login failed.",
+          "entity_type": "user",
+          "entity_id": "unknown:0bcbd74d69a3a473",
+          "status": "denied",
+          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"8d22fce6-bee8-4742-ae46-1b700eb27036\",\"event_type\":\"auth.login\",\"timestamp\":\"2026-11-04T12:38:45.970Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"f5f16cbe-c566-4fe2-be4e-2ac32d4b2b43\",\"request_id\":\"1a96036f-86cf-43e9-95d9-e9831e498672\",\"actor\":{\"actor_id\":\"anonymous\",\"actor_type\":\"anonymous\",\"role\":\"public\",\"display_name\":null,\"authenticated\":false,\"auth_method\":\"password\"},\"action\":\"login\",\"resource\":{\"resource_type\":\"user\",\"resource_id\":\"unknown:0bcbd74d69a3a473\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"DENIED\",\"status_code\":401,\"reason_code\":\"INVALID_CREDENTIALS\",\"message\":\"Login failed.\"},\"policy_reference\":null,\"metadata\":{\"client_ip\":\"127.0.0.1\",\"account_known\":false},\"extensions\":null}",
+          "user_id": null,
+          "ip_address": null,
+          "request_id": "1a96036f-86cf-43e9-95d9-e9831e498672",
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T12:38:45.971407"
+        },
+        {
+          "id": 12,
+          "action": "authz.decision:read",
+          "message": "Authentication required.",
+          "entity_type": "policy",
+          "entity_id": "/api/v1/auth/register",
+          "status": "denied",
+          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"2280f6fe-e6c8-45c9-b992-128c9a89d55d\",\"event_type\":\"authz.decision\",\"timestamp\":\"2026-11-04T12:38:44.815Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"9ec97cfd-e83b-4fe0-8b66-a11a36d1a47b\",\"request_id\":\"ad190e9d-b0a6-4297-8557-dbc1a2cf9f64\",\"actor\":{\"actor_id\":\"anonymous\",\"actor_type\":\"user\",\"role\":\"public\",\"display_name\":null,\"authenticated\":false,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"policy\",\"resource_id\":\"/api/v1/auth/register\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"DENIED\",\"status_code\":401,\"reason_code\":\"AUTHENTICATION_REQUIRED\",\"message\":\"Authentication required.\"},\"policy_reference\":{\"policy_id\":\"rbac_permissions_v1\",\"rule_name\":null,\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"path\":\"/api/v1/auth/register\",\"method\":\"POST\",\"role\":\"public\"},\"extensions\":null}",
+          "user_id": null,
+          "ip_address": null,
+          "request_id": "ad190e9d-b0a6-4297-8557-dbc1a2cf9f64",
+          "path": "/api/v1/auth/register",
+          "method": "POST",
+          "timestamp": "2026-11-04T12:38:44.818133"
+        },
+        {
+          "id": 11,
+          "action": "protected_access.decision:read",
+          "message": "Access denied: VAJRA authority state is 'NONE', which does not permit access.",
+          "entity_type": "evidence",
+          "entity_id": "EV-P0-0001",
+          "status": "denied",
+          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"b9ebe90d-0137-436f-819d-9ea280ecb0c4\",\"event_type\":\"protected_access.decision\",\"timestamp\":\"2026-11-04T12:38:44.166Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"cce4b35e-d9ae-45d2-9ec5-85af70676686\",\"request_id\":\"59ee42e8-c698-42f9-852a-75ce4d619cc7\",\"actor\":{\"actor_id\":\"cc_usr_2\",\"actor_type\":\"user\",\"role\":\"investigator\",\"display_name\":null,\"authenticated\":true,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"evidence\",\"resource_id\":\"EV-P0-0001\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"DENIED\",\"status_code\":200,\"reason_code\":\"VAJRA_AUTHORITY_NOT_GRANTED\",\"message\":\"Access denied: VAJRA authority state is 'NONE', which does not permit access.\"},\"policy_reference\":{\"policy_id\":\"vajra_authority_v1\",\"rule_name\":\"vajra_authority_verify\",\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"decision_id\":\"a3b40dc449fd4dc78af841b8b5ffd5fc\",\"vajra_subject_ref\":\"subj_sha256_63b2e2fbb83af222\",\"vajra_status\":\"OK\",\"vajra_state\":\"\",\"vajra_trace_id\":\"cce4b35e-d9ae-45d2-9ec5-85af70676686::a3b40dc449fd4dc78af841b8b5ffd5fc\",\"scope_checked\":false,\"purpose\":\"P0 verification (synthetic)\",\"idempotency_key\":{},\"decision\":\"DENY\"},\"extensions\":null}",
+          "user_id": 2,
+          "ip_address": null,
+          "request_id": "59ee42e8-c698-42f9-852a-75ce4d619cc7",
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T12:38:44.166055"
+        },
+        {
+          "id": 10,
+          "action": "authz.decision:read",
+          "message": "Authentication required.",
+          "entity_type": "policy",
+          "entity_id": "/api/v1/protected/access",
+          "status": "denied",
+          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"29553b37-d616-42fa-b5bf-08fc936650d4\",\"event_type\":\"authz.decision\",\"timestamp\":\"2026-11-04T12:38:43.457Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"8fab557f-db98-4bcf-a429-f9d52b63b4e2\",\"request_id\":\"3733af71-2d1e-4b07-afcc-a9b764445138\",\"actor\":{\"actor_id\":\"anonymous\",\"actor_type\":\"user\",\"role\":\"public\",\"display_name\":null,\"authenticated\":false,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"policy\",\"resource_id\":\"/api/v1/protected/access\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"DENIED\",\"status_code\":401,\"reason_code\":\"AUTHENTICATION_REQUIRED\",\"message\":\"Authentication required.\"},\"policy_reference\":{\"policy_id\":\"rbac_permissions_v1\",\"rule_name\":null,\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"path\":\"/api/v1/protected/access\",\"method\":\"POST\",\"role\":\"public\"},\"extensions\":null}",
+          "user_id": null,
+          "ip_address": null,
+          "request_id": "3733af71-2d1e-4b07-afcc-a9b764445138",
+          "path": "/api/v1/protected/access",
+          "method": "POST",
+          "timestamp": "2026-11-04T12:38:43.463676"
+        },
+        {
+          "id": 9,
+          "action": "authz.decision:read",
+          "message": "Access denied.",
+          "entity_type": "policy",
+          "entity_id": "/api/v1/access/revoke",
+          "status": "denied",
+          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"f90a8014-73ea-4032-9c6d-074a69719e37\",\"event_type\":\"authz.decision\",\"timestamp\":\"2026-11-04T12:38:43.433Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"bdcb4e17-4cba-4e04-8f2e-2a9718d15916\",\"request_id\":\"fae5014e-7a70-4b5d-b046-cf4f5c2d49ea\",\"actor\":{\"actor_id\":\"cc_usr_2\",\"actor_type\":\"user\",\"role\":\"investigator\",\"display_name\":null,\"authenticated\":true,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"policy\",\"resource_id\":\"/api/v1/access/revoke\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"DENIED\",\"status_code\":403,\"reason_code\":\"INSUFFICIENT_PERMISSIONS\",\"message\":\"Access denied.\"},\"policy_reference\":{\"policy_id\":\"rbac_permissions_v1\",\"rule_name\":null,\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"path\":\"/api/v1/access/revoke\",\"method\":\"POST\",\"role\":\"investigator\"},\"extensions\":null}",
+          "user_id": 2,
+          "ip_address": null,
+          "request_id": "fae5014e-7a70-4b5d-b046-cf4f5c2d49ea",
+          "path": "/api/v1/access/revoke",
+          "method": "POST",
+          "timestamp": "2026-11-04T12:38:43.433029"
+        },
+        {
+          "id": 8,
+          "action": "authz.decision:read",
+          "message": "Invalid or expired credentials.",
+          "entity_type": "policy",
+          "entity_id": "/api/v1/cases",
+          "status": "denied",
+          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"424a0bcb-6c94-42ae-8d96-4f8c03075414\",\"event_type\":\"authz.decision\",\"timestamp\":\"2026-11-04T12:38:43.419Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"2fbd5e22-cdc0-46d2-8640-64cf9b457d86\",\"request_id\":\"6c97bde3-4962-4e60-9e7c-8fed4c46df1b\",\"actor\":{\"actor_id\":\"anonymous\",\"actor_type\":\"user\",\"role\":\"public\",\"display_name\":null,\"authenticated\":false,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"policy\",\"resource_id\":\"/api/v1/cases\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"DENIED\",\"status_code\":401,\"reason_code\":\"INVALID_CREDENTIALS\",\"message\":\"Invalid or expired credentials.\"},\"policy_reference\":{\"policy_id\":\"rbac_permissions_v1\",\"rule_name\":null,\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"path\":\"/api/v1/cases\",\"method\":\"GET\",\"role\":\"public\"},\"extensions\":null}",
+          "user_id": null,
+          "ip_address": null,
+          "request_id": "6c97bde3-4962-4e60-9e7c-8fed4c46df1b",
+          "path": "/api/v1/cases",
+          "method": "GET",
+          "timestamp": "2026-11-04T12:38:43.420309"
+        },
+        {
+          "id": 7,
+          "action": "authz.decision:read",
+          "message": "Authentication required.",
+          "entity_type": "policy",
+          "entity_id": "/api/v1/cases",
+          "status": "denied",
+          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"494e3512-733b-44dc-b15f-8e62466781e4\",\"event_type\":\"authz.decision\",\"timestamp\":\"2026-11-04T12:38:43.342Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"c49e523e-1609-4b82-893b-231b20aa0030\",\"request_id\":\"253df8d9-c37f-4092-8332-2b9666b6075f\",\"actor\":{\"actor_id\":\"anonymous\",\"actor_type\":\"user\",\"role\":\"public\",\"display_name\":null,\"authenticated\":false,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"policy\",\"resource_id\":\"/api/v1/cases\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"DENIED\",\"status_code\":401,\"reason_code\":\"AUTHENTICATION_REQUIRED\",\"message\":\"Authentication required.\"},\"policy_reference\":{\"policy_id\":\"rbac_permissions_v1\",\"rule_name\":null,\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"path\":\"/api/v1/cases\",\"method\":\"GET\",\"role\":\"public\"},\"extensions\":null}",
+          "user_id": null,
+          "ip_address": null,
+          "request_id": "253df8d9-c37f-4092-8332-2b9666b6075f",
+          "path": "/api/v1/cases",
+          "method": "GET",
+          "timestamp": "2026-11-04T12:38:43.342751"
+        },
+        {
+          "id": 6,
+          "action": "auth.login",
+          "message": "User logged in successfully.",
+          "entity_type": "user",
+          "entity_id": "6",
+          "status": "success",
+          "details": "User investigator.e@bhiv-verification.example logged in successfully",
+          "user_id": 6,
+          "ip_address": null,
+          "request_id": null,
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T12:38:40.939965"
+        },
+        {
+          "id": 5,
+          "action": "auth.login",
+          "message": "User logged in successfully.",
+          "entity_type": "user",
+          "entity_id": "5",
+          "status": "success",
+          "details": "User investigator.d@bhiv-verification.example logged in successfully",
+          "user_id": 5,
+          "ip_address": null,
+          "request_id": null,
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T12:38:40.372207"
+        },
+        {
+          "id": 4,
+          "action": "auth.login",
+          "message": "User logged in successfully.",
+          "entity_type": "user",
+          "entity_id": "4",
+          "status": "success",
+          "details": "User investigator.c@bhiv-verification.example logged in successfully",
+          "user_id": 4,
+          "ip_address": null,
+          "request_id": null,
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T12:38:39.817002"
+        },
+        {
+          "id": 3,
+          "action": "auth.login",
+          "message": "User logged in successfully.",
+          "entity_type": "user",
+          "entity_id": "3",
+          "status": "success",
+          "details": "User investigator.b@bhiv-verification.example logged in successfully",
+          "user_id": 3,
+          "ip_address": null,
+          "request_id": null,
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T12:38:39.350991"
+        },
+        {
+          "id": 2,
+          "action": "auth.login",
+          "message": "User logged in successfully.",
+          "entity_type": "user",
+          "entity_id": "2",
+          "status": "success",
+          "details": "User investigator.a@bhiv-verification.example logged in successfully",
+          "user_id": 2,
+          "ip_address": null,
+          "request_id": null,
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T12:38:38.799520"
+        },
+        {
+          "id": 1,
+          "action": "auth.login",
+          "message": "User logged in successfully.",
+          "entity_type": "user",
+          "entity_id": "1",
+          "status": "success",
+          "details": "User superadmin@bhiv-verification.example logged in successfully",
+          "user_id": 1,
+          "ip_address": null,
+          "request_id": null,
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T12:38:38.204615"
+        }
+      ]
+    }
+  },
+  {
+    "check_id": "S8-01",
+    "system": "vajra-local",
+    "utc": "2026-11-04T12:39:04Z",
+    "elapsed_ms": 15,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:62631/api/tantra/records",
+      "headers": {},
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "count": 10,
+        "records": [
+          {
+            "trace_id": "cce4b35e-d9ae-45d2-9ec5-85af70676686::a3b40dc449fd4dc78af841b8b5ffd5fc",
+            "execution_hash": "sha256:00458453753646b05d1f33492d93b503782907b984338a4e3397b60af430aad1",
+            "validation_hash": "sha256:00458453753646b05d1f33492d93b503782907b984338a4e3397b60af430aad1",
+            "replay_hash": "sha256:00458453753646b05d1f33492d93b503782907b984338a4e3397b60af430aad1",
+            "tx_hash": "evidence_cce4b35e-d9ae-45d2-9ec5-85af70676686::a3b40dc449fd4dc78af841b8b5ffd5fc",
+            "fraud_decision": "DENY",
+            "timestamp": 1793795924,
+            "prev_hash": "genesis",
+            "entry_hash": "dfa3a62ecec45f6e05e332e9bc706ef31850f82b507f890e5fa8576ec1996253"
+          },
+          {
+            "trace_id": "105904c5-da0e-4ea3-972e-6237ba0fa338::bbd8b55149db4126928473e13fa4850a",
+            "execution_hash": "sha256:1151ac03ae0169a658f8a7f21532ebbf9112ee171ab3ae8c36492ace17248f1e",
+            "validation_hash": "sha256:1151ac03ae0169a658f8a7f21532ebbf9112ee171ab3ae8c36492ace17248f1e",
+            "replay_hash": "sha256:1151ac03ae0169a658f8a7f21532ebbf9112ee171ab3ae8c36492ace17248f1e",
+            "tx_hash": "evidence_105904c5-da0e-4ea3-972e-6237ba0fa338::bbd8b55149db4126928473e13fa4850a",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793795927,
+            "prev_hash": "dfa3a62ecec45f6e05e332e9bc706ef31850f82b507f890e5fa8576ec1996253",
+            "entry_hash": "0847f78ee53bca171a61347391af1fcfbb5a345cf51b64cfaa695ed97be4fc45"
+          },
+          {
+            "trace_id": "023ac7f6-b70c-4cdf-9bab-0ae0617c1199::922180069e7b4b89bfde6272288e1499",
+            "execution_hash": "sha256:224a9ebf0e8b4d07c5301d3df43a7b8db3c4116d053a593468bfa0449fa1e016",
+            "validation_hash": "sha256:224a9ebf0e8b4d07c5301d3df43a7b8db3c4116d053a593468bfa0449fa1e016",
+            "replay_hash": "sha256:224a9ebf0e8b4d07c5301d3df43a7b8db3c4116d053a593468bfa0449fa1e016",
+            "tx_hash": "evidence_023ac7f6-b70c-4cdf-9bab-0ae0617c1199::922180069e7b4b89bfde6272288e1499",
+            "fraud_decision": "DENY",
+            "timestamp": 1793795928,
+            "prev_hash": "0847f78ee53bca171a61347391af1fcfbb5a345cf51b64cfaa695ed97be4fc45",
+            "entry_hash": "cacf3b9e349e507d408d488d1c564a732b7f9e6a3c8188ff94193c716cbe0052"
+          },
+          {
+            "trace_id": "1878fdfb-ec70-40f9-b321-c731a88c151b::d1d35b63703e41679f2dc6ca4e1a4557",
+            "execution_hash": "sha256:fb46d9632570a62ee3a13854aa3494f15fb927a5a1b52bf17be12ae36ec629d9",
+            "validation_hash": "sha256:fb46d9632570a62ee3a13854aa3494f15fb927a5a1b52bf17be12ae36ec629d9",
+            "replay_hash": "sha256:fb46d9632570a62ee3a13854aa3494f15fb927a5a1b52bf17be12ae36ec629d9",
+            "tx_hash": "evidence_1878fdfb-ec70-40f9-b321-c731a88c151b::d1d35b63703e41679f2dc6ca4e1a4557",
+            "fraud_decision": "DENY",
+            "timestamp": 1793795930,
+            "prev_hash": "cacf3b9e349e507d408d488d1c564a732b7f9e6a3c8188ff94193c716cbe0052",
+            "entry_hash": "66b9464e3784003c3dd2b045cc92e7ab6f3aea9b42e5142855a74e75dc211f89"
+          },
+          {
+            "trace_id": "11b5dffc-d061-4048-81c5-fcfcafffefb4::1c39b53aae924eebbda9d130812e6213",
+            "execution_hash": "sha256:c2159addc5a4baf487fc33548d36beaa3681f8d78e0b613849891c6193c5c17d",
+            "validation_hash": "sha256:c2159addc5a4baf487fc33548d36beaa3681f8d78e0b613849891c6193c5c17d",
+            "replay_hash": "sha256:c2159addc5a4baf487fc33548d36beaa3681f8d78e0b613849891c6193c5c17d",
+            "tx_hash": "evidence_11b5dffc-d061-4048-81c5-fcfcafffefb4::1c39b53aae924eebbda9d130812e6213",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793795931,
+            "prev_hash": "66b9464e3784003c3dd2b045cc92e7ab6f3aea9b42e5142855a74e75dc211f89",
+            "entry_hash": "022e3179ba98bd7557340c584ca7ef1a72be64abd01598f210ff1b7f45626fd6"
+          },
+          {
+            "trace_id": "2437f3f0-184c-454f-9b3b-8c1d6873d063",
+            "execution_hash": "sha256:91d654a002d99c4831fb0ddef82fdb22cc77ca997ebd7b2b7682c940548ab926",
+            "validation_hash": "sha256:91d654a002d99c4831fb0ddef82fdb22cc77ca997ebd7b2b7682c940548ab926",
+            "replay_hash": "sha256:91d654a002d99c4831fb0ddef82fdb22cc77ca997ebd7b2b7682c940548ab926",
+            "tx_hash": "evidence_2437f3f0-184c-454f-9b3b-8c1d6873d063",
+            "fraud_decision": "DENY",
+            "timestamp": 1793795932,
+            "prev_hash": "022e3179ba98bd7557340c584ca7ef1a72be64abd01598f210ff1b7f45626fd6",
+            "entry_hash": "3637ebc0496bd99fc5462a1c7c4fc06c4b82c130671a2dc3f9632fd83da6c377"
+          },
+          {
+            "trace_id": "d8192f57-ea8e-4769-b1db-995e873c540e::319850d94c1e4caaa7753335bff028c0",
+            "execution_hash": "sha256:5c4b27025771b318ceda0a142a1477d3b91aa8252269877cec3e7bfb543aaae6",
+            "validation_hash": "sha256:5c4b27025771b318ceda0a142a1477d3b91aa8252269877cec3e7bfb543aaae6",
+            "replay_hash": "sha256:5c4b27025771b318ceda0a142a1477d3b91aa8252269877cec3e7bfb543aaae6",
+            "tx_hash": "evidence_d8192f57-ea8e-4769-b1db-995e873c540e::319850d94c1e4caaa7753335bff028c0",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793795933,
+            "prev_hash": "3637ebc0496bd99fc5462a1c7c4fc06c4b82c130671a2dc3f9632fd83da6c377",
+            "entry_hash": "79d81ee6c2cdc4c9d2899748bd60029fd907051160bd388701078fd25875c197"
+          },
+          {
+            "trace_id": "81dbacd1-1550-4eaf-80cb-2682f091859f::7841c0cbc0c74080876b2ddc001573c3",
+            "execution_hash": "sha256:6dab6ba8db9edf96c8b1dfd212073d81cae9f94caf9e0b7ad6d0598544f275b8",
+            "validation_hash": "sha256:6dab6ba8db9edf96c8b1dfd212073d81cae9f94caf9e0b7ad6d0598544f275b8",
+            "replay_hash": "sha256:6dab6ba8db9edf96c8b1dfd212073d81cae9f94caf9e0b7ad6d0598544f275b8",
+            "tx_hash": "evidence_81dbacd1-1550-4eaf-80cb-2682f091859f::7841c0cbc0c74080876b2ddc001573c3",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793795934,
+            "prev_hash": "79d81ee6c2cdc4c9d2899748bd60029fd907051160bd388701078fd25875c197",
+            "entry_hash": "44b7a464f3e500668161c1510245310654e1fa3712e9c759b815c4a8c2067706"
+          },
+          {
+            "trace_id": "cyber-p0-test-7e43993b-848c-4bba-a937-f37c5aa17a19::12f1c777628e447eab6b40f5c135979c",
+            "execution_hash": "sha256:b0ad9d0b38bc14ed5a06222fbdac7aa36301ed2e5ab8410a19ee4d072272a283",
+            "validation_hash": "sha256:b0ad9d0b38bc14ed5a06222fbdac7aa36301ed2e5ab8410a19ee4d072272a283",
+            "replay_hash": "sha256:b0ad9d0b38bc14ed5a06222fbdac7aa36301ed2e5ab8410a19ee4d072272a283",
+            "tx_hash": "evidence_cyber-p0-test-7e43993b-848c-4bba-a937-f37c5aa17a19::12f1c777628e447eab6b40f5c135979c",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793795940,
+            "prev_hash": "44b7a464f3e500668161c1510245310654e1fa3712e9c759b815c4a8c2067706",
+            "entry_hash": "68198ccaec5ad12289a1603f10efd96b2565bf1faf71c42df7461026279bb8c2"
+          },
+          {
+            "trace_id": "cyber-p0-test-2eb753dd-f79b-4830-a7aa-9d079123534f::acea7a6dab934f76967d3641c8e1e998",
+            "execution_hash": "sha256:74072fb04365640228aa51fbddf3bd77bda3c58036d650b2d91f960581948151",
+            "validation_hash": "sha256:74072fb04365640228aa51fbddf3bd77bda3c58036d650b2d91f960581948151",
+            "replay_hash": "sha256:74072fb04365640228aa51fbddf3bd77bda3c58036d650b2d91f960581948151",
+            "tx_hash": "evidence_cyber-p0-test-2eb753dd-f79b-4830-a7aa-9d079123534f::acea7a6dab934f76967d3641c8e1e998",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793795943,
+            "prev_hash": "68198ccaec5ad12289a1603f10efd96b2565bf1faf71c42df7461026279bb8c2",
+            "entry_hash": "7df2416ece290539884b1c15faaa1dc5a720efa5110322504273513596f81ffa"
+          }
+        ],
+        "success": true
+      }
+    }
+  },
+  {
+    "check_id": "S8-01",
+    "system": "vajra-local",
+    "utc": "2026-11-04T12:39:04Z",
+    "elapsed_ms": 15,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:62631/api/tantra/chain-integrity",
+      "headers": {},
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "intact": true,
+        "message": "truth store chain is intact \u2014 no tampering detected",
+        "success": true
+      }
+    }
+  }
+]

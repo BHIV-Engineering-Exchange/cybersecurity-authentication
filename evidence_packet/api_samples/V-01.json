@@ -2,11 +2,11 @@
   {
     "check_id": "V-01",
     "system": "vajra-local",
-    "utc": "2026-11-04T12:38:43Z",
+    "utc": "2026-11-04T13:32:50Z",
     "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:62631/api/admin/add-tokens",
+      "url": "http://127.0.0.1:62507/api/admin/add-tokens",
       "headers": {
         "content-type": "application/json"
       },
@@ -30,16 +30,16 @@
   {
     "check_id": "V-01",
     "system": "vajra-local",
-    "utc": "2026-11-04T12:38:43Z",
+    "utc": "2026-11-04T13:32:50Z",
     "elapsed_ms": 15,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:62631/api/v1/permission/grant",
+      "url": "http://127.0.0.1:62507/api/v1/permission/grant",
       "headers": {
         "content-type": "application/json"
       },
       "body": {
-        "trace_id": "fc86e82e-dbde-430b-ad4e-aca73d6cfcc6",
+        "trace_id": "aeca3744-3342-4eb2-95e0-432511cb981b",
         "subject": "cyber-p0-test-subj",
         "requester": "attacker",
         "purpose": "unauthenticated grant attempt (synthetic)",
@@ -53,27 +53,27 @@
         "content-type": "application/json"
       },
       "body": {
-        "commitment": "cd8a43be36f47596580c9e301382025f1c91da4094302e764ad9223a61e43fdf",
+        "commitment": "2ea2808d8d18edb56324e7c94e11560e3b923615a0026398357943cfac2162ac",
         "permission_id": "perm-cyber-p0-test-subj-",
         "record": {
           "permission_id": "perm-cyber-p0-test-subj-",
-          "trace_id": "fc86e82e-dbde-430b-ad4e-aca73d6cfcc6",
+          "trace_id": "aeca3744-3342-4eb2-95e0-432511cb981b",
           "subject": "cyber-p0-test-subj",
           "requester": "attacker",
           "purpose": "unauthenticated grant attempt (synthetic)",
           "scope": "read",
           "state": "GRANT",
-          "created_at": 1793795923,
-          "updated_at": 1793795923,
-          "expires_at": 1793795983,
-          "commitment_hash": "cd8a43be36f47596580c9e301382025f1c91da4094302e764ad9223a61e43fdf",
+          "created_at": 1793799170,
+          "updated_at": 1793799170,
+          "expires_at": 1793799230,
+          "commitment_hash": "2ea2808d8d18edb56324e7c94e11560e3b923615a0026398357943cfac2162ac",
           "transitions": [
             {
               "from_state": "",
               "to_state": "GRANT",
-              "timestamp": 1793795923,
+              "timestamp": 1793799170,
               "reason": "Initial user consent grant",
-              "trace_id": "fc86e82e-dbde-430b-ad4e-aca73d6cfcc6"
+              "trace_id": "aeca3744-3342-4eb2-95e0-432511cb981b"
             }
           ]
         },
@@ -84,11 +84,11 @@
   {
     "check_id": "V-01",
     "system": "vajra-local",
-    "utc": "2026-11-04T12:38:43Z",
+    "utc": "2026-11-04T13:32:50Z",
     "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:62631/api/cybercrime/freeze",
+      "url": "http://127.0.0.1:62507/api/cybercrime/freeze",
       "headers": {
         "content-type": "application/json"
       },

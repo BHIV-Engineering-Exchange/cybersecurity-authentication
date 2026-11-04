@@ -2,11 +2,11 @@
   {
     "check_id": "S7-04",
     "system": "vajra-local",
-    "utc": "2026-11-04T12:39:45Z",
+    "utc": "2026-11-04T13:33:45Z",
     "elapsed_ms": 0,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:62631/api/vajra/recovery/package",
+      "url": "http://127.0.0.1:62507/api/vajra/recovery/package",
       "headers": {},
       "body": null
     },
@@ -30,7 +30,7 @@
                 "val3_sig",
                 "val4_sig"
               ],
-              "timestamp": 1793795985
+              "timestamp": 1793799225
             }
           ],
           "state_commitment_root": "28aa643d20079274e707ea742e33193edc5bacbe1ae290779c462203bf245253",
@@ -46,8 +46,8 @@
           ],
           "revocation_state_root": "clean_revocation_root",
           "recovery_policy": "CANONICAL_CHECKPOINT_REPLAY_POLICY",
-          "generated_at": 1793795985,
-          "package_hash": "df1736289a5a58e5d00f2e4e5a5aa6ad17437eaa7fb023271b9601df38282f30"
+          "generated_at": 1793799225,
+          "package_hash": "e26bcc571bafe669bbdcc3602545bec0ddbc0c2a4ad20f25177df5dedce0ebf5"
         },
         "success": true
       }
@@ -56,11 +56,11 @@
   {
     "check_id": "S7-04",
     "system": "vajra-local",
-    "utc": "2026-11-04T12:39:45Z",
-    "elapsed_ms": 31,
+    "utc": "2026-11-04T13:33:45Z",
+    "elapsed_ms": 15,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:62631/api/vajra/recovery/verify-anchor",
+      "url": "http://127.0.0.1:62507/api/vajra/recovery/verify-anchor",
       "headers": {
         "content-type": "application/json"
       },
@@ -95,7 +95,7 @@
           "quorum_satisfied": false,
           "lineage_intact": false,
           "state_root_valid": false,
-          "certified_at": 1793795985
+          "certified_at": 1793799225
         }
       }
     }
@@ -103,11 +103,11 @@
   {
     "check_id": "S7-04",
     "system": "vajra-local",
-    "utc": "2026-11-04T12:39:45Z",
-    "elapsed_ms": 15,
+    "utc": "2026-11-04T13:33:45Z",
+    "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:62631/api/vajra/recovery/verify-anchor",
+      "url": "http://127.0.0.1:62507/api/vajra/recovery/verify-anchor",
       "headers": {
         "content-type": "application/json"
       },
@@ -141,7 +141,7 @@
           "quorum_satisfied": false,
           "lineage_intact": true,
           "state_root_valid": false,
-          "certified_at": 1793795985
+          "certified_at": 1793799225
         }
       }
     }

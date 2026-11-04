@@ -1,0 +1,98 @@
+<testsuite name="cyber-p0-verification" tests="46" failures="3" errors="0" skipped="1">
+  <testcase classname="Observability" name="O-01 Health endpoints report real state; peer topology is shown only to a superadmin" time="0.765">
+  </testcase>
+  <testcase classname="Observability" name="O-02 TANTRA live services healthy (read-only GET)" time="1.545">
+  </testcase>
+  <testcase classname="S1 Unauthorized access" name="S1-01 Anonymous request is denied at the enforcement point, with actor/resource/decision/reason recorded" time="0.079">
+  </testcase>
+  <testcase classname="S1 Unauthorized access" name="S1-02 Forged token is rejected" time="0.015">
+  </testcase>
+  <testcase classname="S1 Unauthorized access" name="S1-03 Investigator cannot call a superadmin-only control (revoke)" time="0.030">
+  </testcase>
+  <testcase classname="S1 Unauthorized access" name="S1-07 Anonymous call to the protected-access API is rejected" time="0.016">
+  </testcase>
+  <testcase classname="S1 Unauthorized access" name="S1-06 VAJRA write routes reject callers without the bearer token (VAJRA enforcement point)" time="0.015">
+  </testcase>
+  <testcase classname="S1 Unauthorized access" name="V-01 VAJRA privileged state-changing routes reject unauthenticated callers (local node)" time="0.015">
+    <failure message="POST /api/admin/add-tokens without credentials is refused: expected '401 or 403', got '200, handler ran; reply: {"error":"token BHX not found","success":false}'; POST /api/v1/permission/grant without credentials is refused: expected '401 or 403', got '201, handler ran; reply: {"commitment":"cd8a43be36f47596580c9e301382025f1c91da4094302e764ad9223a61e43fdf","permission_id":"perm-cyber-p0-test-subj-","record":{"permission_id":"perm-cybe'; POST /api/cybercrime/freeze without credentials is refused: expected '401 or 403', got '200, handler ran; reply: {"success":true}'"/>
+  </testcase>
+  <testcase classname="S2 Revoked permission" name="V-02 VAJRA permission ids are unique per grant (local node)" time="0.016">
+    <failure message="two different grants get two different permission ids: expected True, got False"/>
+  </testcase>
+  <testcase classname="S1 Unauthorized access" name="S1-05 Subject without VAJRA consent is denied; decision and evidence recorded" time="1.296">
+  </testcase>
+  <testcase classname="S1 Unauthorized access" name="S1-04 Self-registered account cannot read investigator data without approval" time="1.172">
+  </testcase>
+  <testcase classname="S2 Revoked permission" name="S2-01 Proof B REVOCATION: active permission -&gt; VAJRA revoke -&gt; next request denied -&gt; stale grant cannot return" time="4.031">
+  </testcase>
+  <testcase classname="S4 Duplicate event" name="S4-01 Duplicate signal (same idempotency key, same request) is answered once; nothing re-executed" time="2.155">
+  </testcase>
+  <testcase classname="S4 Duplicate event" name="S4-02 VAJRA refuses a second evidence record for the same trace" time="0.015">
+  </testcase>
+  <testcase classname="S4 Duplicate event" name="S4-04 Same idempotency key with a different request is refused" time="1.406">
+  </testcase>
+  <testcase classname="S4 Duplicate event" name="S4-05 A repeated key cannot bring back an ALLOW after VAJRA revoked the subject" time="1.890">
+  </testcase>
+  <testcase classname="Mandatory proof A (10-day)" name="P-A Proof A NORMAL: identity -&gt; consent -&gt; authorised access -&gt; evidence" time="2.797">
+  </testcase>
+  <testcase classname="S8 Trace / replay" name="S8-01 One trace id links request, decision, audit record and VAJRA evidence" time="2.686">
+  </testcase>
+  <testcase classname="S5 TANTRA denial / outage" name="S5-01 TANTRA contract gate rejects the unregistered security event; no bypass; gap visible" time="3.141">
+  </testcase>
+  <testcase classname="S5 TANTRA denial / outage" name="S5-04 TANTRA rejects a malformed envelope (live, validation endpoint)" time="0.608">
+  </testcase>
+  <testcase classname="S8 Trace / replay" name="S8-02 TANTRA ledger participation: probe written, replay-verified and forwarded (live write)" time="0.000">
+    <skipped message="SKIPPED: live TANTRA write not enabled (--allow-live-tantra-write); nothing sent"/>
+  </testcase>
+  <testcase classname="S3 Ambiguous / low confidence" name="S3-01 Ambiguous signal: uncertainty is visible in the intelligence output" time="0.109">
+  </testcase>
+  <testcase classname="S3 Ambiguous / low confidence" name="S3-02 Ambiguous signal: no autonomous high-impact action recorded" time="0.172">
+  </testcase>
+  <testcase classname="S3 Ambiguous / low confidence" name="S3-03 Analysis of a wallet with no recorded history does not present generated transactions as evidence" time="0.030">
+  </testcase>
+  <testcase classname="S6 Evidence failure" name="S6-04 Evidence upload without Bucket does not claim anchoring" time="0.062">
+  </testcase>
+  <testcase classname="Mandatory proof C (10-day)" name="P-C1 Proof C ATTACK (signal): repeated failed logins are denied and recorded as security events" time="10.047">
+  </testcase>
+  <testcase classname="Mandatory proof C (10-day)" name="P-C2 Proof C ATTACK (intelligence): the failed logins are detected and correlated into one incident for review" time="0.765">
+  </testcase>
+  <testcase classname="Mandatory proof C (10-day)" name="P-C3 Proof C ATTACK (containment): ISOLATE/TERMINATE at VAJRA blocks the actor" time="5.281">
+  </testcase>
+  <testcase classname="S2 Revoked permission" name="S2-02 Revoked session token (JTI) is rejected on the next request" time="0.108">
+  </testcase>
+  <testcase classname="S2 Revoked permission" name="S2-03 Deactivated account is rejected on the next request" time="0.094">
+  </testcase>
+  <testcase classname="S4 Duplicate event" name="S4-03 Repeating a deactivation does not repeat the privileged action" time="0.452">
+  </testcase>
+  <testcase classname="S7 Recovery failure" name="S7-01 After a crash-restart of Cybersecurity, revoked sessions and accounts stay blocked" time="5.282">
+  </testcase>
+  <testcase classname="S7 Recovery failure" name="S7-02 Proof D (staged recovery): a contained actor stays restricted until the full recovery path completes" time="8.780">
+  </testcase>
+  <testcase classname="S7 Recovery failure" name="S7-04 Recovery anchor check rejects a corrupt candidate (inputs synthetic)" time="0.047">
+  </testcase>
+  <testcase classname="S5 TANTRA denial / outage" name="S5-02 TANTRA unreachable: decision still made by Cybersecurity + VAJRA, TANTRA gap reported and visible in health" time="24.297">
+  </testcase>
+  <testcase classname="S5 TANTRA denial / outage" name="S5-05 A slow TANTRA peer does not stall the rest of the API" time="13.420">
+  </testcase>
+  <testcase classname="S6 Evidence failure" name="S6-01 VAJRA refuses the evidence write: no ALLOW without evidence; the gap is visible" time="9.079">
+  </testcase>
+  <testcase classname="S6 Evidence failure" name="S6-03 Audit store cannot be written: no decision is released" time="8.359">
+  </testcase>
+  <testcase classname="S6 Evidence failure" name="S6-02 VAJRA down: access fails closed and the outage is visible" time="8.608">
+  </testcase>
+  <testcase classname="S7 Recovery failure" name="S7-03 After a VAJRA crash-restart, Cybersecurity follows VAJRA's reported state; evidence survives" time="1.952">
+  </testcase>
+  <testcase classname="S7 Recovery failure" name="S7-05 VAJRA authority state survives a node restart" time="0.734">
+    <failure message="authority state after restart (subject was USE): expected 'USE', got ''"/>
+  </testcase>
+  <testcase classname="S8 Trace / replay" name="S8-03 Tampering with stored evidence is detected by VAJRA's chain check" time="1.390">
+  </testcase>
+  <testcase classname="S5 TANTRA denial / outage" name="S5-03 No bypass executor: Cybersecurity exposes no route that changes VAJRA authority" time="0.016">
+  </testcase>
+  <testcase classname="Observability" name="O-03 Error responses follow the canonical error contract (code, trace_id, request_id, timestamp)" time="0.015">
+  </testcase>
+  <testcase classname="Observability" name="O-04 Collection route without trailing slash is served or redirected (API contract)" time="0.015">
+  </testcase>
+  <testcase classname="S2 Revoked permission" name="S2-04 Tier-1 permission revocation takes effect on the next request" time="0.077">
+  </testcase>
+</testsuite>

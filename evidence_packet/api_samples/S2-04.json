@@ -2,14 +2,14 @@
   {
     "check_id": "S2-04",
     "system": "cybersecurity",
-    "utc": "2026-11-04T12:40:53Z",
-    "elapsed_ms": 32,
+    "utc": "2026-11-04T13:34:57Z",
+    "elapsed_ms": 47,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:62636/api/v1/access/revoke",
+      "url": "http://127.0.0.1:62513/api/v1/access/revoke",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "3f634d0b-6ef8-4eb9-98d7-2ce21f958a1f",
+        "x-trace-id": "7938025a-c17b-4c44-b539-c3a664c9dfe1",
         "content-type": "application/json"
       },
       "body": {
@@ -27,31 +27,31 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "e7984184-7305-440e-a9ab-5c44b245a8aa",
-        "x-trace-id": "3f634d0b-6ef8-4eb9-98d7-2ce21f958a1f"
+        "x-request-id": "6b7a3322-16b7-4cb0-8c57-03787ecd79c5",
+        "x-trace-id": "7938025a-c17b-4c44-b539-c3a664c9dfe1"
       },
       "body": {
         "contract_version": "1.0.0",
-        "revocation_id": "2638ea7c-09fe-44a4-9a4d-92fa697a2ac4",
+        "revocation_id": "a41c4d78-2cc2-4026-abf3-344fcc70f0af",
         "revocation_type": "permission_revocation",
         "status": "REVOKED",
-        "effective_at": "2026-11-04T12:40:53.510Z",
-        "trace_id": "3f634d0b-6ef8-4eb9-98d7-2ce21f958a1f",
-        "audit_event_id": "1c67cc4c-5233-495a-b68c-40b894b9364a"
+        "effective_at": "2026-11-04T13:34:57.707Z",
+        "trace_id": "7938025a-c17b-4c44-b539-c3a664c9dfe1",
+        "audit_event_id": "24065357-fbb6-4450-ae18-01e8dcf5c468"
       }
     }
   },
   {
     "check_id": "S2-04",
     "system": "cybersecurity",
-    "utc": "2026-11-04T12:40:53Z",
-    "elapsed_ms": 15,
+    "utc": "2026-11-04T13:34:57Z",
+    "elapsed_ms": 30,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:62636/api/v1/cases/",
+      "url": "http://127.0.0.1:62513/api/v1/cases/",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "c39807cb-42dd-43e6-b2ba-99a6ebedcc3c"
+        "x-trace-id": "cf3a74c7-d25d-4ae6-94be-587c56a96920"
       },
       "body": null
     },
@@ -59,17 +59,17 @@
       "status": 403,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "76e58582-2341-413a-a73a-73777babb254",
-        "x-trace-id": "c39807cb-42dd-43e6-b2ba-99a6ebedcc3c"
+        "x-request-id": "fd53e2b7-6408-46ea-8a82-facd568f2bc6",
+        "x-trace-id": "cf3a74c7-d25d-4ae6-94be-587c56a96920"
       },
       "body": {
         "error": true,
         "code": "PERMISSION_REVOKED",
         "status_code": 403,
         "message": "Access denied: 'investigator:read' has been revoked.",
-        "trace_id": "c39807cb-42dd-43e6-b2ba-99a6ebedcc3c",
-        "request_id": "76e58582-2341-413a-a73a-73777babb254",
-        "timestamp": "2026-11-04T12:40:53.550Z",
+        "trace_id": "cf3a74c7-d25d-4ae6-94be-587c56a96920",
+        "request_id": "fd53e2b7-6408-46ea-8a82-facd568f2bc6",
+        "timestamp": "2026-11-04T13:34:57.750Z",
         "details": []
       }
     }
@@ -77,14 +77,14 @@
   {
     "check_id": "S2-04",
     "system": "cybersecurity",
-    "utc": "2026-11-04T12:40:53Z",
-    "elapsed_ms": 30,
+    "utc": "2026-11-04T13:34:57Z",
+    "elapsed_ms": 32,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:62636/api/v1/authz/check",
+      "url": "http://127.0.0.1:62513/api/v1/authz/check",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "bb5c8df2-867d-4a92-80ba-a53c786f481a",
+        "x-trace-id": "1c511f77-af3b-4e26-adfb-f76b66ed0fdb",
         "content-type": "application/json"
       },
       "body": {
@@ -104,16 +104,16 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "77d57795-f816-4a5c-8831-65c5b3565abc",
-        "x-trace-id": "bb5c8df2-867d-4a92-80ba-a53c786f481a"
+        "x-request-id": "5cc72e18-25ae-4730-942a-7de5708e3055",
+        "x-trace-id": "1c511f77-af3b-4e26-adfb-f76b66ed0fdb"
       },
       "body": {
         "contract_version": "1.0.0",
         "decision": "DENY",
         "reason_code": "PERMISSION_REVOKED",
-        "reason": "Access denied: 'investigator:read' was revoked (revocation 2638ea7c-09fe-44a4-9a4d-92fa697a2ac4).",
-        "trace_id": "bb5c8df2-867d-4a92-80ba-a53c786f481a",
-        "evaluated_at": "2026-11-04T12:40:53.571Z",
+        "reason": "Access denied: 'investigator:read' was revoked (revocation a41c4d78-2cc2-4026-abf3-344fcc70f0af).",
+        "trace_id": "1c511f77-af3b-4e26-adfb-f76b66ed0fdb",
+        "evaluated_at": "2026-11-04T13:34:57.779Z",
         "policy_applied": "rbac_permissions_v1"
       }
     }

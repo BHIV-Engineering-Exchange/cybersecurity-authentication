@@ -265,10 +265,10 @@ Generated from `verification/defects.py`, this run's `results.json` and the reco
   1. On a local node, POST /api/admin/add-tokens, /api/v1/permission/grant and /api/cybercrime/freeze with no Authorization header.
   2. permission/grant creates a GRANT (201) and cybercrime/freeze answers success (200). add-tokens also runs (200); in this run it reported 'token BHX not found' because the test used a token name that does not exist, so no mint was shown.
 - Expected: 401/403 without credentials.
-- Actual (this run): POST /api/admin/add-tokens without credentials is refused: expected '401 or 403', got '200, handler ran; reply: {"error":"token BHX not found","success":false}'; POST /api/v1/permission/grant without credentials is refused: expected '401 or 403', got '201, handler ran; reply: {"commitment":"cd8a43be36f47596580c9e301382025f1c91da4094302e764ad9223a61e43fdf","permission_id":"perm-cyber-p0-test-subj-","record":{"permission_id":"perm-cybe'; POST /api/cybercrime/freeze without credentials is refused: expected '401 or 403', got '200, handler ran; reply: {"success":true}'
+- Actual (this run): POST /api/admin/add-tokens without credentials is refused: expected '401 or 403', got '200, handler ran; reply: {"error":"token BHX not found","success":false}'; POST /api/v1/permission/grant without credentials is refused: expected '401 or 403', got '201, handler ran; reply: {"commitment":"2ea2808d8d18edb56324e7c94e11560e3b923615a0026398357943cfac2162ac","permission_id":"perm-cyber-p0-test-subj-","record":{"permission_id":"perm-cybe'; POST /api/cybercrime/freeze without credentials is refused: expected '401 or 403', got '200, handler ran; reply: {"success":true}'
 - Recorded replies ([api_samples/V-01.json](../api_samples/V-01.json)):
   - `POST /api/admin/add-tokens` -> 200: `{"error":"token BHX not found","success":false}`
-  - `POST /api/v1/permission/grant` -> 201: `{"commitment":"cd8a43be36f47596580c9e301382025f1c91da4094302e764ad9223a61e43fdf","permission_id":"perm-cyber-p0-test-subj-","record":{"permission_id":"perm-cyber-p0-test-subj-","trace_id":"fc86e82e-db`
+  - `POST /api/v1/permission/grant` -> 201: `{"commitment":"2ea2808d8d18edb56324e7c94e11560e3b923615a0026398357943cfac2162ac","permission_id":"perm-cyber-p0-test-subj-","record":{"permission_id":"perm-cyber-p0-test-subj-","trace_id":"aeca3744-33`
   - `POST /api/cybercrime/freeze` -> 200: `{"success":true}`
 - Suggested fix: Wrap these routes with enableCORSWithAuth (or remove admin routes from public builds).
 

@@ -1,7 +1,7 @@
 {
-  "run_id": "20261104T123826Z",
+  "run_id": "20261104T133229Z",
   "versions": {
-    "cybersecurity_repo_commit": "5a7789440cd4b03ed4060829fea57289d94e525d",
+    "cybersecurity_repo_commit": "4d1c687248fc1ee4a3d4be32233af75658298239",
     "vajra_repo_commit": "07d683c3656b936152367989e8458d18941471a7",
     "python": "3.12.7",
     "os": "Windows-11-10.0.26300-SP0"
@@ -9,96 +9,96 @@
   "services": {
     "cybersecurity-api": [
       {
-        "utc": "2026-11-04T12:38:34Z",
-        "seconds_to_healthy": 3.88,
-        "pid": 22148
+        "utc": "2026-11-04T13:32:40Z",
+        "seconds_to_healthy": 5.47,
+        "pid": 29924
       },
       {
-        "utc": "2026-11-04T12:38:59Z",
-        "seconds_to_healthy": 3.72,
-        "pid": 23964
+        "utc": "2026-11-04T13:33:08Z",
+        "seconds_to_healthy": 4.44,
+        "pid": 27572
       },
       {
-        "utc": "2026-11-04T12:39:13Z",
-        "seconds_to_healthy": 5.91,
-        "pid": 9868
+        "utc": "2026-11-04T13:33:23Z",
+        "seconds_to_healthy": 5.0,
+        "pid": 7920
       },
       {
-        "utc": "2026-11-04T12:39:36Z",
-        "seconds_to_healthy": 4.03,
-        "pid": 23956
+        "utc": "2026-11-04T13:33:41Z",
+        "seconds_to_healthy": 4.8,
+        "pid": 16056
       },
       {
-        "utc": "2026-11-04T12:39:50Z",
-        "seconds_to_healthy": 4.5,
-        "pid": 13200
+        "utc": "2026-11-04T13:33:49Z",
+        "seconds_to_healthy": 4.31,
+        "pid": 17544
       },
       {
-        "utc": "2026-11-04T12:40:09Z",
+        "utc": "2026-11-04T13:34:07Z",
+        "seconds_to_healthy": 3.92,
+        "pid": 21204
+      },
+      {
+        "utc": "2026-11-04T13:34:12Z",
+        "seconds_to_healthy": 4.91,
+        "pid": 18464
+      },
+      {
+        "utc": "2026-11-04T13:34:23Z",
+        "seconds_to_healthy": 4.34,
+        "pid": 18252
+      },
+      {
+        "utc": "2026-11-04T13:34:27Z",
+        "seconds_to_healthy": 4.0,
+        "pid": 8600
+      },
+      {
+        "utc": "2026-11-04T13:34:33Z",
         "seconds_to_healthy": 4.39,
-        "pid": 13160
+        "pid": 7972
       },
       {
-        "utc": "2026-11-04T12:40:13Z",
-        "seconds_to_healthy": 3.73,
-        "pid": 20252
+        "utc": "2026-11-04T13:34:38Z",
+        "seconds_to_healthy": 4.95,
+        "pid": 19208
       },
       {
-        "utc": "2026-11-04T12:40:23Z",
-        "seconds_to_healthy": 3.78,
-        "pid": 26108
-      },
-      {
-        "utc": "2026-11-04T12:40:26Z",
-        "seconds_to_healthy": 3.62,
-        "pid": 24376
-      },
-      {
-        "utc": "2026-11-04T12:40:32Z",
-        "seconds_to_healthy": 3.78,
-        "pid": 10752
-      },
-      {
-        "utc": "2026-11-04T12:40:36Z",
-        "seconds_to_healthy": 3.81,
-        "pid": 13960
-      },
-      {
-        "utc": "2026-11-04T12:40:40Z",
-        "seconds_to_healthy": 3.69,
-        "pid": 23516
+        "utc": "2026-11-04T13:34:44Z",
+        "seconds_to_healthy": 4.34,
+        "pid": 1608
       }
     ],
     "vajra-relay-node": [
       {
-        "utc": "2026-11-04T12:38:30Z",
-        "seconds_to_healthy": 0.75,
-        "pid": 27224
+        "utc": "2026-11-04T13:32:34Z",
+        "seconds_to_healthy": 0.84,
+        "pid": 13424
       },
       {
-        "utc": "2026-11-04T12:40:49Z",
-        "seconds_to_healthy": 0.59,
-        "pid": 4324
-      },
-      {
-        "utc": "2026-11-04T12:40:49Z",
-        "seconds_to_healthy": 0.52,
-        "pid": 23728
-      },
-      {
-        "utc": "2026-11-04T12:40:52Z",
+        "utc": "2026-11-04T13:34:53Z",
         "seconds_to_healthy": 0.69,
-        "pid": 22400
+        "pid": 25488
       },
       {
-        "utc": "2026-11-04T12:40:52Z",
+        "utc": "2026-11-04T13:34:53Z",
         "seconds_to_healthy": 0.61,
-        "pid": 11884
+        "pid": 6372
       },
       {
-        "utc": "2026-11-04T12:40:53Z",
+        "utc": "2026-11-04T13:34:56Z",
         "seconds_to_healthy": 0.66,
-        "pid": 2924
+        "pid": 20992
+      },
+      {
+        "utc": "2026-11-04T13:34:56Z",
+        "seconds_to_healthy": 0.7,
+        "pid": 28248
+      },
+      {
+        "utc": "2026-11-04T13:34:57Z",
+        "seconds_to_healthy": 0.66,
+        "pid": 4932
       }
     ]
   },
