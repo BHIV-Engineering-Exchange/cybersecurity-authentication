@@ -128,7 +128,10 @@ class EvidenceResponse(EvidenceBase):
     investigator_id: Optional[int]
     case_id: Optional[int]
     created_at: datetime
-    
+    # Outcome of the sovereign copy in the BHIV Bucket for this upload (CYB-08): stored | unavailable | not_configured.
+    # Only set on the upload response; None when not reported.
+    bucket_status: Optional[str] = None
+
     class Config:
         from_attributes = True
 
@@ -213,6 +216,7 @@ class TransactionDetail(BaseModel):
     direction: str
     timestamp: Optional[str] = None
     type: Optional[str] = None
+    synthetic: bool = False  # true only for generated demo data (INCIDENT_SYNTHETIC_DEMO); never evidence
     suspicious: bool = False
 
 
@@ -227,6 +231,12 @@ class IncidentReportResponse(BaseModel):
     transactions: Optional[List[TransactionDetail]] = None
     system_conclusion: str
     report_id: Optional[str] = None  # MongoDB document ID
+    # How far the result can be trusted (CYB-03). confidence is a rule of thumb (0-1) based on how much recorded data
+    # was analysed, not a calibrated probability; uncertainty lists what is missing or assumed.
+    confidence: float = 0.0
+    uncertainty: List[str] = []
+    data_basis: str = "observed"  # observed | none (nothing recorded) | synthetic_demo (generated, never evidence)
+    observed_tx_count: int = 0
 
 
 # Complaint Schemas

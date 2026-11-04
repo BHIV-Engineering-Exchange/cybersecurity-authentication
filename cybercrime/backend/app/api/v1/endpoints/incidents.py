@@ -24,6 +24,7 @@ from app.core.ai_service import generate_ai_conclusion, check_ai_available
 from app.core.ai_orchestrator import call_incident_orchestrator
 from app.core.security import decode_access_token
 from app.core.audit_logging import emit_audit_log
+from app.core.config import settings
 from synthetic_data_generator.generator import generate_wallet_transactions, random_wallet
 from synthetic_data_generator.suspicious_patterns import (
     calculate_risk_score,
@@ -363,48 +364,21 @@ async def analyze_wallet_incident(
         # Analyze description to boost pattern scores
         description_weights = analyze_wallet_description(request.description)
         
-        # 1. Always generate synthetic fraud patterns to show comprehensive fraud activity with multiple accounts
-        # Pick pattern based on description weights
-        if description_weights["ponzi"] > 0:
-            synthetic_txns = generate_wallet_transactions(wallet, mode="ponzi")
-        elif description_weights["money_laundering"] > 0:
-            synthetic_txns = generate_wallet_transactions(wallet, mode="money_laundering")
-        elif description_weights["ransomware"] > 0:
-            synthetic_txns = generate_wallet_transactions(wallet, mode="ransomware")
+        # Recorded transactions only (CYB-06): the analysis never invents data. Only in explicit demo mode
+        # (INCIDENT_SYNTHETIC_DEMO) does a wallet with no history get generated transactions, each labelled synthetic.
+        observed_txns = fetch_real_transactions(db, wallet)
+        uncertainty: List[str] = []
+        if observed_txns:
+            txns = observed_txns
+            data_basis = "observed"
+        elif settings.INCIDENT_SYNTHETIC_DEMO:
+            demo_mode = next((m for m in ("ponzi", "money_laundering", "ransomware") if description_weights[m] > 0), "fraud")
+            txns = [dict(t, synthetic=True) for t in generate_wallet_transactions(wallet, mode=demo_mode)]
+            data_basis = "synthetic_demo"
+            uncertainty.append("DEMO MODE: every transaction in this report is generated (synthetic=true); none of it is evidence.")
         else:
-            # Default to fraud pattern (shows multiple victims -> multiple mules -> exit accounts)
-            synthetic_txns = generate_wallet_transactions(wallet, mode="fraud")
-        
-        # 2. Try to fetch REAL data from FraudTransaction dataset for additional context
-        real_txns = fetch_real_transactions(db, wallet)
-        
-        # 3. Always use synthetic fraud data as primary (ensures clear fraud patterns with multiple accounts)
-        # Synthetic data shows: multiple victims -> fraud wallet -> multiple mules/intermediates -> exit accounts
-        # This creates a clear fraud network visualization
-        txns = synthetic_txns
-        
-        # Optionally add real data as additional context (but don't let it override fraud pattern)
-        if real_txns and len(real_txns) >= 3:
-            # Add real transactions with earlier timestamps to show historical context
-            # But keep synthetic fraud pattern as the main visualization
-            earliest_synthetic_time = min((t.get("timestamp", "") for t in synthetic_txns), default="")
-            if earliest_synthetic_time:
-                try:
-                    base_dt = datetime.fromisoformat(earliest_synthetic_time.replace('Z', '+00:00'))
-                except:
-                    base_dt = datetime.utcnow()
-            else:
-                base_dt = datetime.utcnow()
-            
-            # Adjust real transaction timestamps to be before synthetic (historical context)
-            adjusted_real = []
-            for i, txn in enumerate(real_txns[:20]):  # Limit to 20 real transactions
-                txn_copy = txn.copy()
-                txn_copy["timestamp"] = (base_dt - timedelta(days=1, minutes=i*10)).isoformat()
-                adjusted_real.append(txn_copy)
-            
-            # Combine: historical real data + synthetic fraud pattern (primary)
-            txns = adjusted_real + synthetic_txns
+            txns = []
+            data_basis = "none"
         
         # Calculate metrics
         total_in = sum(t.get("amount", 0) for t in txns if t.get("to") == wallet)
@@ -412,92 +386,118 @@ async def analyze_wallet_incident(
         unique_senders = len(set(t.get("from") for t in txns if t.get("from") != wallet))
         unique_receivers = len(set(t.get("to") for t in txns if t.get("to") != wallet))
         
-        # Calculate risk score
-        base_risk = calculate_risk_score(txns)
-        
-        # Boost risk based on description
-        description_boost = sum(description_weights.values()) * 0.1
-        risk_score = min(base_risk + description_boost, 1.0)
-        
-        # Detect pattern type
-        pattern_type = detect_pattern_type(txns, description_weights)
-        risk_level = get_risk_level(risk_score)
-        
-        # Get detected patterns
-        detected_patterns = get_detected_patterns_list(txns)
-        
-        # Generate graph data
-        graph_data = generate_graph_data(txns, wallet)
-        
-        # Generate timeline
-        timeline = generate_timeline(txns)
-        
-        # Optionally delegate to external AI orchestrator (e.g. Primary_Bucket_Owner)
-        orchestrator_result: Optional[Dict[str, Any]] = None
-        try:
-            orchestrator_payload = {
-                "wallet": wallet,
-                "description": request.description,
-                "transactions": txns,
-                "base_metrics": {
-                    "total_in": total_in,
-                    "total_out": total_out,
-                    "tx_count": len(txns),
-                    "unique_senders": unique_senders,
-                    "unique_receivers": unique_receivers,
-                },
-                "base_risk": {
-                    "risk_score": risk_score,
-                    "risk_level": risk_level,
-                    "pattern_type": pattern_type,
-                    "detected_patterns": detected_patterns,
-                },
-            }
-            orchestrator_result = call_incident_orchestrator(orchestrator_payload)
-        except Exception:
-            orchestrator_result = None
-
-        # Generate system conclusion using orchestrator if available, else OpenRouter/template
-        if orchestrator_result and isinstance(orchestrator_result, dict) and orchestrator_result.get("system_conclusion"):
-            # Optionally override risk if orchestrator provides it
-            try:
-                if "risk_score" in orchestrator_result:
-                    risk_score = float(orchestrator_result["risk_score"])
-                    risk_level = get_risk_level(risk_score)
-                if "risk_level" in orchestrator_result:
-                    risk_level = orchestrator_result["risk_level"]
-                extra_patterns = orchestrator_result.get("detected_patterns") or []
-                if isinstance(extra_patterns, list):
-                    # Merge and deduplicate patterns
-                    detected_patterns = list({*detected_patterns, *[str(p) for p in extra_patterns]})
-            except Exception:
-                # If parsing fails, keep original risk values
-                pass
-
-            system_conclusion = str(orchestrator_result["system_conclusion"])
+        if not txns:
+            # Nothing recorded: no score, no patterns, and the description alone is not evidence.
+            risk_score = 0.0
+            risk_level = "INSUFFICIENT DATA"
+            pattern_type = "none"
+            detected_patterns = []
+            graph_data = []
+            timeline = []
+            confidence = 0.0
+            uncertainty += [
+                "No recorded transactions were found for this wallet, so no fraud assessment was made.",
+                "The description text is not evidence and did not raise any score.",
+            ]
+            system_conclusion = ("No recorded transactions were found for this wallet, so no fraud assessment was made. "
+                                 "Add transaction data or evidence and analyse again.")
         else:
+            # Calculate risk score
+            base_risk = calculate_risk_score(txns)
+        
+            # Boost risk based on description
+            description_boost = sum(description_weights.values()) * 0.1
+            risk_score = min(base_risk + description_boost, 1.0)
+        
+            # Detect pattern type
+            pattern_type = detect_pattern_type(txns, description_weights)
+            risk_level = get_risk_level(risk_score)
+        
+            # Get detected patterns
+            detected_patterns = get_detected_patterns_list(txns)
+        
+            # Generate graph data
+            graph_data = generate_graph_data(txns, wallet)
+        
+            # Generate timeline
+            timeline = generate_timeline(txns)
+        
+            # Optionally delegate to external AI orchestrator (e.g. Primary_Bucket_Owner)
+            orchestrator_result: Optional[Dict[str, Any]] = None
             try:
-                system_conclusion = generate_ai_conclusion(
-                    wallet=wallet,
-                    risk_score=risk_score,
-                    risk_level=risk_level,
-                    pattern_type=pattern_type,
-                    detected_patterns=detected_patterns,
-                    summary={
+                orchestrator_payload = {
+                    "wallet": wallet,
+                    "description": request.description,
+                    "transactions": txns,
+                    "base_metrics": {
                         "total_in": total_in,
                         "total_out": total_out,
                         "tx_count": len(txns),
                         "unique_senders": unique_senders,
                         "unique_receivers": unique_receivers,
                     },
-                    user_description=request.description,
-                    fallback_to_template=True,
-                )
+                    "base_risk": {
+                        "risk_score": risk_score,
+                        "risk_level": risk_level,
+                        "pattern_type": pattern_type,
+                        "detected_patterns": detected_patterns,
+                    },
+                }
+                orchestrator_result = call_incident_orchestrator(orchestrator_payload)
             except Exception:
-                # Fallback to template if AI fails
-                system_conclusion = generate_system_conclusion(
-                    risk_score, risk_level, pattern_type, detected_patterns
-                )
+                orchestrator_result = None
+
+            # Generate system conclusion using orchestrator if available, else OpenRouter/template
+            if orchestrator_result and isinstance(orchestrator_result, dict) and orchestrator_result.get("system_conclusion"):
+                # Optionally override risk if orchestrator provides it
+                try:
+                    if "risk_score" in orchestrator_result:
+                        risk_score = float(orchestrator_result["risk_score"])
+                        risk_level = get_risk_level(risk_score)
+                    if "risk_level" in orchestrator_result:
+                        risk_level = orchestrator_result["risk_level"]
+                    extra_patterns = orchestrator_result.get("detected_patterns") or []
+                    if isinstance(extra_patterns, list):
+                        # Merge and deduplicate patterns
+                        detected_patterns = list({*detected_patterns, *[str(p) for p in extra_patterns]})
+                except Exception:
+                    # If parsing fails, keep original risk values
+                    pass
+
+                system_conclusion = str(orchestrator_result["system_conclusion"])
+            else:
+                try:
+                    system_conclusion = generate_ai_conclusion(
+                        wallet=wallet,
+                        risk_score=risk_score,
+                        risk_level=risk_level,
+                        pattern_type=pattern_type,
+                        detected_patterns=detected_patterns,
+                        summary={
+                            "total_in": total_in,
+                            "total_out": total_out,
+                            "tx_count": len(txns),
+                            "unique_senders": unique_senders,
+                            "unique_receivers": unique_receivers,
+                        },
+                        user_description=request.description,
+                        fallback_to_template=True,
+                    )
+                except Exception:
+                    # Fallback to template if AI fails
+                    system_conclusion = generate_system_conclusion(
+                        risk_score, risk_level, pattern_type, detected_patterns
+                    )
+            # How far this result can be trusted (CYB-03): a rule of thumb, not a calibrated probability.
+            confidence = 0.0 if data_basis == "synthetic_demo" else round(min(0.8, 0.8 * len(txns) / 20), 2)
+            uncertainty.append("Rule-based score from pattern heuristics; not a calibrated probability.")
+            if data_basis == "observed":
+                uncertainty.append(f"Based on {len(observed_txns)} recorded transaction(s) for this wallet and its counterparties.")
+            if description_boost:
+                uncertainty.append(f"Keywords in the description raised the score by {description_boost:.2f}; keywords are not evidence.")
+            uncertainty.append("The conclusion text is written by an orchestrator, an AI model or a template from the score; it adds no evidence.")
+            if data_basis == "synthetic_demo":
+                system_conclusion = "DEMO (generated data, not evidence): " + system_conclusion
         
         # Build transaction details for frontend table
         tx_details = []
@@ -520,6 +520,7 @@ async def analyze_wallet_incident(
                 "timestamp": timestamp,
                 "type": t.get("type", None),
                 "suspicious": suspicious,
+                "synthetic": bool(t.get("synthetic")),
             })
 
         # Prepare response data
@@ -541,7 +542,11 @@ async def analyze_wallet_incident(
             graph_data=graph_data,
             timeline=timeline,
             transactions=tx_details,
-            system_conclusion=system_conclusion
+            system_conclusion=system_conclusion,
+            confidence=confidence,
+            uncertainty=uncertainty,
+            data_basis=data_basis,
+            observed_tx_count=len(observed_txns),
         )
 
         # Save to SQL database (IncidentReport table)
@@ -554,6 +559,9 @@ async def analyze_wallet_incident(
                 "unique_receivers": unique_receivers,
                 "pattern_type": pattern_type.replace("_", " ").title(),
                 "transactions": tx_details,
+                "data_basis": data_basis,
+                "confidence": confidence,
+                "uncertainty": uncertainty,
             }
 
             report = IncidentReport(

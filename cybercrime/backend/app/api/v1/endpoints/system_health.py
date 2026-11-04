@@ -29,6 +29,13 @@ def system_health(request: Request) -> dict:
 
     integrations = integration_health()
     storage_ok = integrations["storage"]["exists"] and integrations["storage"]["writable"]
+    is_superadmin = getattr(request.state, "current_role", None) == "superadmin"
+    if not is_superadmin:
+        # Server file-system paths and raw database errors are for operators only (CYB-12).
+        integrations = {name: {k: v for k, v in part.items() if k not in ("path", "buffer_path")}
+                        for name, part in integrations.items()}
+        if db_error:
+            db_error = "unavailable"
 
     status = "healthy" if db_ok and storage_ok else "degraded"
     body = {
@@ -37,7 +44,7 @@ def system_health(request: Request) -> dict:
         "integrations": integrations,
     }
     # Peer topology (VAJRA/TANTRA reachability) only for superadmins; anonymous callers never trigger probes.
-    if getattr(request.state, "current_role", None) == "superadmin":
+    if is_superadmin:
         body["bhiv_runtime"] = runtime_health()
     return body
 

@@ -227,14 +227,20 @@ async def create_evidence(
         with open(file_path, "wb") as f:
             f.write(content)
 
-        # Attempt sovereign bucket store (graceful degradation to local storage).
-        store_evidence_in_bucket(
+        # Attempt sovereign bucket store (graceful degradation to local storage); the outcome is returned (CYB-08).
+        bucket_result = store_evidence_in_bucket(
             evidence_id=evidence_id,
             sha256=file_hash,
             filename=file.filename or safe_filename,
             content=content,
             content_type=file_type,
         )
+        if bucket_result.success:
+            bucket_status = "stored"
+        elif not settings.BHIV_BUCKET_EVIDENCE_URL:
+            bucket_status = "not_configured"
+        else:
+            bucket_status = "unavailable"
 
         # Enrich description with context from the form so it's visible later
         details_parts = []
@@ -341,8 +347,10 @@ async def create_evidence(
                 message=error_msg,
                 details={"traceback": traceback.format_exc()},
             )
-        
-        return db_evidence
+
+        response = EvidenceResponse.model_validate(db_evidence)
+        response.bucket_status = bucket_status
+        return response
     except HTTPException as he:
         # Re-raise HTTP exceptions as-is
         emit_audit_log(

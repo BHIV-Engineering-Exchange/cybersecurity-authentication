@@ -45,7 +45,10 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import threading
+import time
 import uuid
+from collections import deque
 from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, List, Optional
 
@@ -73,6 +76,26 @@ CONTRACT_VERSION = "1.0.0"
 POLICY_ID = "vajra_authority_v1"
 PENDING_STALE_AFTER = timedelta(seconds=120)
 TRACE_ID_RE = re.compile(r"^[A-Za-z0-9._:-]{1,128}$")
+
+# Per-caller sliding window for PROTECTED_ACCESS_RATE_LIMIT_PER_MINUTE (CYB-14). Every accepted request can write
+# an append-only VAJRA row, so a caller is capped. In memory, per process.
+_rate_lock = threading.Lock()
+_rate_windows: Dict[str, deque] = {}
+
+
+def _within_rate_limit(actor_id: str) -> bool:
+    limit = settings.PROTECTED_ACCESS_RATE_LIMIT_PER_MINUTE
+    if limit <= 0:
+        return True
+    now = time.monotonic()
+    with _rate_lock:
+        window = _rate_windows.setdefault(actor_id, deque())
+        while window and now - window[0] > 60.0:
+            window.popleft()
+        if len(window) >= limit:
+            return False
+        window.append(now)
+        return True
 TANTRA_METADATA_FIELDS = ("decision", "decision_id", "vajra_subject_ref", "vajra_status", "vajra_state",
                           "vajra_trace_id", "scope_checked", "supersedes_event_id")
 
@@ -247,9 +270,20 @@ def protected_access(req: ProtectedAccessRequest, request: Request, db: Session 
     current_user = getattr(request.state, "current_user", None)
     if not current_user:  # defence in depth; RBAC middleware already blocks anonymous callers
         return _error(401, "AUTHENTICATION_REQUIRED", "Authentication required.", trace_id, request_id)
-    if not TRACE_ID_RE.match(trace_id):
+    # The middleware replaces a malformed X-Trace-Id with a fresh one; this route refuses it instead.
+    raw_trace = request.headers.get("X-Trace-Id")
+    if (raw_trace is not None and not TRACE_ID_RE.match(raw_trace)) or not TRACE_ID_RE.match(trace_id):
         return _error(400, "INVALID_TRACE_ID", "X-Trace-Id must be 1-128 characters of A-Z a-z 0-9 . _ : -",
                       str(uuid.uuid4()), request_id)
+    if not _within_rate_limit(f"cc_usr_{current_user.id}"):
+        response = _error(429, "RATE_LIMITED",
+                          f"More than {settings.PROTECTED_ACCESS_RATE_LIMIT_PER_MINUTE} protected-access requests in a "
+                          "minute; try again later.", trace_id, request_id)
+        response.headers["Retry-After"] = "60"
+        emit_audit_log(action="protected_access.rate_limited", status="warning",
+                       message="Caller exceeded the protected-access rate limit; nothing was sent to VAJRA or TANTRA.",
+                       trace_id=trace_id, request_id=request_id, details={"actor_id": f"cc_usr_{current_user.id}"})
+        return response
     if req.contract_version != CONTRACT_VERSION:
         return _error(400, "UNSUPPORTED_CONTRACT_VERSION",
                       f"contract_version must be '{CONTRACT_VERSION}'.", trace_id, request_id)

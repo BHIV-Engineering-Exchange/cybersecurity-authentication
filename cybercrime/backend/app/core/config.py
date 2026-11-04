@@ -168,6 +168,12 @@ class Settings(BaseSettings):
     # confirms the authority again; otherwise the client must send a new request.
     PROTECTED_ACCESS_REPLAY_TTL_SECONDS: int = 300
     BHIV_HEALTH_CACHE_SECONDS: float = 15.0      # peer reachability probes are cached this long
+    # Requests per caller per minute on POST /api/v1/protected/access (each one writes a VAJRA evidence row).
+    # Counted per process: with several workers the effective limit is workers x this value. 0 disables it.
+    PROTECTED_ACCESS_RATE_LIMIT_PER_MINUTE: int = 60
+    # Wallet incident analysis uses recorded transactions only. When true, a wallet with no recorded history gets
+    # generated DEMO transactions instead, every one labelled synthetic=true (never for real investigations).
+    INCIDENT_SYNTHETIC_DEMO: bool = False
 
     @field_validator("BREVO_API_KEY", mode="before")
     @classmethod

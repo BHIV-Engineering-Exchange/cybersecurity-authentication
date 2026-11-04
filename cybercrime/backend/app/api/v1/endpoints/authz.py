@@ -14,7 +14,9 @@ from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
 from app.db.database import get_db
+from app.db.models import RevokedPermission
 from app.core.canonical_event import emit_canonical_event, ALLOWED_ROLES
+from app.core.rbac import NON_REVOCABLE_ROLES
 
 
 router = APIRouter()
@@ -122,6 +124,12 @@ async def check_authorization(
     reason_code = "DENIED_BY_DEFAULT"
     reason = "Access denied: No matching policy grant found."
 
+    # Tier 1 revocations stored by POST /api/v1/access/revoke apply here too (CYB-02).
+    revoked = None
+    if subject_role not in NON_REVOCABLE_ROLES:
+        revoked = db.query(RevokedPermission).filter(
+            RevokedPermission.role == subject_role, RevokedPermission.action == req.action.lower().strip()).first()
+
     # A. Account Active check
     if not subject_is_active:
         decision = "DENY"
@@ -133,6 +141,12 @@ async def check_authorization(
         decision = "DENY"
         reason_code = "ROLE_NOT_PERMITTED"
         reason = f"Access denied: Role '{subject_role}' is not a recognized system role."
+
+    # B2. Revoked role:action pair
+    elif revoked is not None:
+        decision = "DENY"
+        reason_code = "PERMISSION_REVOKED"
+        reason = f"Access denied: '{subject_role}:{req.action.lower().strip()}' was revoked (revocation {revoked.revocation_id})."
 
     # C. Superadmin role has universal allow
     elif subject_role == "superadmin":

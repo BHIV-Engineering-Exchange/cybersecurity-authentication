@@ -89,7 +89,25 @@ How idempotent repeats work:
 - A claim left PENDING for more than 120 seconds (a crashed request) is taken over by the next attempt.
 
 Errors use the canonical error body: `error`, `code`, `status_code`, `message`, `trace_id`, `request_id`, `timestamp`
-and `details`.
+and `details`. A caller sending more than `PROTECTED_ACCESS_RATE_LIMIT_PER_MINUTE` requests a minute gets
+`429 RATE_LIMITED` with `Retry-After: 60`, and nothing is sent to VAJRA or TANTRA.
+
+### 1a. Other inbound contracts changed or added on 2026-11-04
+
+| Route | Contract |
+|---|---|
+| `POST /api/v1/auth/register` | Superadmin only (401/403 otherwise). Public sign-up is `POST /api/v1/access-requests/request`, reviewed by a superadmin. |
+| `POST /api/v1/auth/login` | Unknown email and wrong password both answer `401` "Invalid email or password.". Each failed login writes a canonical `auth.login` DENIED event (actor anonymous; resource = the account, `cc_usr_<id>` or `unknown:<sha256 prefix>` of the email). |
+| `GET /api/v1/threats/incidents[?status_filter=open]`, `GET /api/v1/threats/incidents/{incident_id}` | Superadmin only. Incidents opened by rule `auth.repeated_failed_login` v1.0.0 (>= 5 failed logins for one account in 10 minutes): `incident_id, correlation_key, rule_id, rule_version, threat_type, target_ref, severity, confidence, uncertainty[], rationale, status, requires_human_review, event_count, evidence_event_ids[], trace_ids[], first_seen_at, last_seen_at`. Opening one writes a `threat.detected` event. Decision support only: nothing is blocked. |
+| `POST /api/v1/access/revoke` (`permission_revocation`) | The `role:action` pair is now stored and enforced: the RBAC middleware answers `403 PERMISSION_REVOKED` (read=GET/HEAD, create=POST, update=PUT/PATCH, delete=DELETE), and `/api/v1/authz/check` answers DENY `PERMISSION_REVOKED`. `superadmin` and `public` cannot be revoked. A repeat answers `ALREADY_INACTIVE`. |
+| `POST /api/v1/access/restore` | Superadmin only. Body `{contract_version, role, action, reason}`; answers `RESTORED` or `NOT_REVOKED` and writes an `access.restored` event. |
+| `POST /api/v1/incidents/analyze` | Uses recorded transactions only. New fields: `confidence` (0-1, a rule of thumb, not a calibrated probability), `uncertainty[]`, `data_basis` (`observed`, `none`, `synthetic_demo`), `observed_tx_count`; each transaction has `synthetic`. With no recorded data: no transactions or patterns, `risk_level` `INSUFFICIENT DATA`. |
+| `POST /api/v1/evidence/` | Response adds `bucket_status`: `stored`, `unavailable` or `not_configured`. |
+| `GET /api/v1/system/health` | Anonymous callers no longer see file-system paths or raw database errors. |
+| Any route | `X-Trace-Id` / `X-Request-Id` are echoed only if they match `^[A-Za-z0-9._:-]{1,128}$`; otherwise a fresh UUID is used. A collection route without the trailing slash now redirects (307) instead of 405. |
+
+Outbound change: the Bucket API key now travels in an `X-API-Key` header, not in the JSON body. The Bucket owner must
+confirm the Bucket reads it from there.
 
 ## 2. VAJRA (relay node HTTP API)
 

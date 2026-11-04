@@ -162,8 +162,9 @@ def store_evidence_in_bucket(
         "timestamp": _utc_now_iso(),
         "traceId": trace_id or f"trace-{uuid.uuid4().hex[:16]}",
     }
-    if settings.BHIV_BUCKET_API_KEY:
-        payload["apiKey"] = settings.BHIV_BUCKET_API_KEY
+    # The key travels in a header, never in the payload an append-only store may keep (CYB-09).
+    # (_post_json drops Authorization headers, so X-API-Key is used; the Bucket owner must read it from there.)
+    headers = {"X-API-Key": settings.BHIV_BUCKET_API_KEY} if settings.BHIV_BUCKET_API_KEY else None
 
     result = IntegrationResult(success=False, detail="not attempted")
     for _ in range(settings.EVENT_RETRY_MAX_ATTEMPTS):
@@ -171,6 +172,7 @@ def store_evidence_in_bucket(
             settings.BHIV_BUCKET_EVIDENCE_URL,
             payload,
             timeout_seconds=settings.BHIV_INTEGRATION_TIMEOUT_SECONDS,
+            headers=headers,
             trace_id=trace_id,
             request_id=request_id,
         )

@@ -26,6 +26,7 @@ import re
 import subprocess
 import sys
 from pathlib import Path
+from typing import Optional
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parent
@@ -33,6 +34,9 @@ sys.path.insert(0, str(HERE))
 from defects import DEFECTS  # noqa: E402
 
 BASE_COMMIT = "59d2d63"  # last commit on main before this change (2026-10-27)
+# The earlier live run that made the single TANTRA ledger write. Later runs do not repeat that write, so its evidence is
+# kept under evidence_packet/previous_runs/<id>/ and carried over, labelled with its run id.
+PREVIOUS_LIVE_RUN = "20261104T103939Z"
 EVIDENCE_DIR = REPO / "evidence_packet"  # set from --evidence in main(); defect statuses read recorded files under it
 PACKET_DIR = REPO / "review_packets" / "CYBER-P0-2026-11-04"
 CORE_FILES = [
@@ -103,7 +107,13 @@ def status_of(by_id: dict, check_id: str) -> str:
 
 def defect_status(defect: dict, by_id: dict) -> str:
     if defect.get("status") == "FIXED":
-        return "FIXED in this change"
+        chk = defect.get("check")
+        r = by_id.get(chk) if chk else None
+        if r is None:
+            return "FIXED in this change (unit tests; no runtime check)" if chk is None else f"FIXED in this change ({chk} not run)"
+        if r["status"] == "PASS":
+            return f"FIXED in this change; {chk} passes in this run"
+        return f"FIX NOT CONFIRMED: {chk} {r['status']} in this run"
     failing = sorted(r["id"] for r in by_id.values() if r["status"] == "FAIL" and defect["id"] in r["defects"])
     if failing:
         return f"CONFIRMED at runtime by {', '.join(failing)}"
@@ -133,6 +143,36 @@ def defect_status(defect: dict, by_id: dict) -> str:
     if r["status"] == "PASS":
         return f"NOT REPRODUCED ({chk} passed)"
     return f"{r['status']} ({chk})"
+
+
+def previous_run_dir(evidence: Optional[Path] = None) -> Path:
+    return (evidence or EVIDENCE_DIR) / "previous_runs" / PREVIOUS_LIVE_RUN
+
+
+def probe_record(samples: dict, evidence: Optional[Path] = None):
+    """S8-02 exchanges from this run, else from the archived earlier live run, and a label saying which."""
+    if samples.get("S8-02"):
+        return samples["S8-02"], "this run"
+    archived = previous_run_dir(evidence) / "api_samples" / "S8-02.json"
+    if archived.exists():
+        return json.loads(archived.read_text(encoding="utf-8")), f"run {PREVIOUS_LIVE_RUN} (carried over; not repeated)"
+    return None, ""
+
+
+def probe_status(by_id: dict, evidence: Optional[Path] = None) -> str:
+    """PASS if this run made the ledger probe; CARRIED if the archived earlier live run did; else this run's status."""
+    status = status_of(by_id, "S8-02")
+    if status == "PASS":
+        return "PASS"
+    archived = previous_run_dir(evidence) / "test_results" / "results.json"
+    if archived.exists():
+        try:
+            earlier = {r["id"]: r for r in json.loads(archived.read_text(encoding="utf-8"))["results"]}
+        except (ValueError, KeyError):
+            earlier = {}
+        if earlier.get("S8-02", {}).get("status") == "PASS":
+            return "CARRIED"
+    return status
 
 
 def actual_for(defect: dict, by_id: dict) -> str:
@@ -347,7 +387,9 @@ def defects_report(by_id, samples) -> str:
             if replies:
                 lines.append(f"- Recorded replies ([api_samples/{d['check']}.json](../api_samples/{d['check']}.json)):")
                 lines += [f"  - {x}" for x in replies]
-            lines += [f"- Suggested fix: {d['fix']}", ""]
+            if d.get("fixed_by"):
+                lines.append(f"- Fixed by: {d['fixed_by']}")
+            lines += [f"- {'Fix' if d.get('status') == 'FIXED' else 'Suggested fix'}: {d['fix']}", ""]
     return "\n".join(lines)
 
 
@@ -398,7 +440,7 @@ def acceptance(meta, by_id, evidence: Path, suites: list) -> list[tuple]:
     missing = [d for d in required if not (evidence / d).exists() or not any((evidence / d).iterdir())]
     vajra_ok = all(status_of(by_id, x) == "PASS" for x in ("S1-05", "S2-01", "P-A", "S8-01", "S1-06", "S5-03"))
     gate = status_of(by_id, "S5-01") == "PASS"
-    probe = status_of(by_id, "S8-02") == "PASS"
+    probe = probe_status(by_id, evidence)
     blocked = [x for x in ("P-C2",) if status_of(by_id, x) == "BLOCKED"]
     return [
         ("BUILD WORKS", "YES" if started and unit_ok else "NOT DETERMINED",
@@ -416,7 +458,10 @@ def acceptance(meta, by_id, evidence: Path, suites: list) -> list[tuple]:
         ("VM DEPLOYMENT WORKS", "NO", "BLOCKED-EXTERNAL: no VM reference was provided to this work (owner: Rajaryan)"),
         ("TANTRA PARTICIPATION IS PROVEN", "PARTIAL" if gate else "NO",
          ("LIVE-VERIFIED: TANTRA's contract gate answered the module's decisions"
-          + ("; the registered integrity_probe contract was written and replay-verified (S8-02)" if probe else "; no ledger write in this run")
+          + ({"PASS": "; the registered integrity_probe contract was written and replay-verified (S8-02)",
+              "CARRIED": f"; the registered integrity_probe contract was written and replay-verified in run {PREVIOUS_LIVE_RUN} "
+                         "(S8-02, carried over from previous_runs/; the write was not repeated in this run)"}
+             .get(probe, "; no ledger write in this run"))
           + "; security decisions cannot enter the TANTRA ledger until TANTRA registers a contract (TAN-01)") if gate
          else "not exercised in this run"),
         ("VAJRA BOUNDARY IS PROVEN", "PARTIAL" if vajra_ok else "NO",
@@ -464,11 +509,14 @@ def readiness_board(by_id) -> list[tuple]:
          st("P-A", "S1-05", "S2-01", "S4-01", "S4-04", "S4-05", "S6-01")),
         ("Evidence: local audit + VAJRA record", "cybersecurity-authentication + VAJRA", "Rajaryan / Prakash", st("S8-01", "S6-03")),
         ("Wallet incident analysis (existing intelligence)", "cybersecurity-authentication", "Shivam", st("S3-01", "S3-03")),
-        ("Threat assessment of access signals", "not wired in this repository", "Shivam", "BLOCKED"),
-        ("Correlation into incidents", "fraud-evidence case linking exists; not wired to these signals", "Aryan Dias", "BLOCKED"),
+        ("Threat assessment of access signals (rule auth.repeated_failed_login)",
+         "cybersecurity-authentication (app/core/threat_detection.py)", "Shivam (review); built by Hemanth", st("P-C1", "P-C2")),
+        ("Correlation into incidents (security_incidents)", "cybersecurity-authentication (app/core/threat_detection.py)",
+         "Aryan Dias (review); built by Hemanth", st("P-C2")),
         ("TANTRA contract for security decisions", "TANTRA (live)", "TANTRA team", "BLOCKED" if status_of(by_id, "S5-01") == "PASS" else "NOT VERIFIED"),
         ("TANTRA ledger participation (probe contract)", "TANTRA (live)", "TANTRA team / Hemanth",
-         "BUILT & VERIFIED (LIVE)" if status_of(by_id, "S8-02") == "PASS" else "NOT VERIFIED"),
+         {"PASS": "BUILT & VERIFIED (LIVE)",
+          "CARRIED": f"BUILT & VERIFIED (LIVE, run {PREVIOUS_LIVE_RUN}; not repeated)"}.get(probe_status(by_id), "NOT VERIFIED")),
         ("TANTRA response approval (rajya/validate?)", "TANTRA", "TANTRA team", "UNKNOWN (no test lane)"),
         ("VAJRA authority lifecycle + bearer gate", "bhiv-VAJRA_Blockchain", "Prakash", st("S1-06", "S2-01", "S7-02")),
         ("VAJRA authority durability across restart", "bhiv-VAJRA_Blockchain", "Prakash / Samsoorya", st("S7-05")),
@@ -485,7 +533,7 @@ def review_packet(meta, results, by_id, samples, branch) -> str:
     tantra_reject = first_exchange(samples, "S5-01", "/api/v1/protected/access")
     golden = by_id.get("S8-01", {}).get("trace_ids", [""])[-1] if by_id.get("S8-01") else ""
     gate = status_of(by_id, "S5-01")
-    probe = status_of(by_id, "S8-02")
+    probe = probe_status(by_id)
     lines = [
         "# REVIEW_PACKET - Cybersecurity P0 verification and BHIV runtime bridge",
         "",
@@ -549,8 +597,10 @@ def review_packet(meta, results, by_id, samples, branch) -> str:
                       ("S4-05", "replay after revocation")):
         lines.append(f"| {case} | {chk} | {status_of(by_id, chk)} |")
     tantra_line = ("contract gate exercised live (" + gate + ")"
-                   + ("; registered probe contract written and replay-verified (S8-02 PASS)" if probe == "PASS" else
-                      f"; ledger probe {probe}")) if meta["mode"]["tantra"] == "live" else "not exercised in this run"
+                   + {"PASS": "; registered probe contract written and replay-verified (S8-02 PASS)",
+                      "CARRIED": f"; registered probe contract written and replay-verified in run {PREVIOUS_LIVE_RUN} "
+                                 "(S8-02 PASS there, carried over; not repeated)"}.get(probe, f"; ledger probe {probe}")
+                   ) if meta["mode"]["tantra"] == "live" else "not exercised in this run"
     vajra_line = ("consent read, evidence record, bearer gate and lifecycle - "
                   + ("OFFLINE-VERIFIED on a local node, consent SIMULATED" if all(status_of(by_id, x) == "PASS" for x in ("S1-05", "S2-01", "P-A", "S1-06"))
                      else "not all checks passing"))
@@ -567,8 +617,9 @@ def review_packet(meta, results, by_id, samples, branch) -> str:
         "## 8. Repository coverage",
         "",
         "Covered by checks: RBAC middleware, auth (login/register), access revoke (all three tiers), authz check, incident "
-        "analysis, evidence upload, system health, the new protected-access route and bridge. Not covered: the React "
-        "frontends, TTS, ML training scripts, most of fraud-evidence-system (its own Jest suite is reported).",
+        "analysis, evidence upload, system health, failed-login detection and correlation, the protected-access route and "
+        "bridge. Not covered: the React frontends, TTS, ML training scripts, most of fraud-evidence-system (its own Jest "
+        "suite is reported).",
         "",
         "## 9. Integration status",
         "",
@@ -591,7 +642,10 @@ def review_packet(meta, results, by_id, samples, branch) -> str:
         "authorizes VAJRA transitions).",
         "- TANTRA has no registered contract for cybersecurity events (TAN-01), so decisions are not in the TANTRA ledger.",
         "- The harness plays the VAJRA user journey and TANTRA governance roles (labelled SIMULATED per check).",
-        "- The bridge and the checks were written by the same person; review by the integration lead is requested.",
+        "- Failed-login detection is a count rule (5 in 10 minutes per account), not a model; its confidence is a fixed "
+        "function of the count. The protected-access rate limit is kept per process.",
+        "- The bridge, the checks and the fixes in other lanes (CHANGELOG.md) were written by the same person; review by "
+        "the lane owners and the integration lead is requested.",
         "",
     ]
     return "\n".join(lines)
@@ -604,7 +658,10 @@ def eod_report(meta, results, by_id, suites, branch, commit="") -> str:
     critical = [d["id"] for d in confirmed if d["severity"] == "CRITICAL"]
     suite_txt = "; ".join(f"{s['suite']}: {s['result']}" for s in suites)
     live = meta["mode"]["tantra"] == "live"
-    probe = status_of(by_id, "S8-02")
+    probe = probe_status(by_id)
+    detection = status_of(by_id, "P-C2")
+    fixed_for_others = [d["id"] for d in DEFECTS if d.get("status") == "FIXED" and "for review by" in d.get("fixed_by", "")]
+    failing = [r["id"] for r in results if r["status"] == "FAIL"]
     lines = [
         "# EOD report - 04 Nov 2026 - Hemanth (Independent Verification & Evidence)",
         "",
@@ -619,32 +676,42 @@ def eod_report(meta, results, by_id, suites, branch, commit="") -> str:
         "Local processes: API and VAJRA node started, crash-restarted and recovered; no VM | "
         f"Integrated: {c['PASS']} PASS / {c['FAIL']} FAIL / {c['BLOCKED']} BLOCKED / {c['SKIPPED']} SKIPPED / {c['ERROR']} ERROR of {len(results)}. {suite_txt} | "
         f"`evidence_packet/`; golden trace `{golden}` | VAJRA: OFFLINE-VERIFIED on a local node (consent SIMULATED). TANTRA: "
-        + (("contract gate LIVE-VERIFIED" + ("; probe write LIVE-VERIFIED" if probe == "PASS" else "")) if live else "not exercised")
-        + ". Detection/correlation: BLOCKED | "
+        + (("contract gate LIVE-VERIFIED"
+            + {"PASS": "; probe write LIVE-VERIFIED",
+               "CARRIED": f"; probe write LIVE-VERIFIED in run {PREVIOUS_LIVE_RUN} (not repeated)"}.get(probe, ""))
+           if live else "not exercised")
+        + f". Detection/correlation of failed logins: {detection} (P-C2, local) | "
         f"Confirmed defects: {', '.join(d['id'] for d in confirmed)} | `git revert <commit>` (adds files, small config/RBAC/model "
         "additions, regenerated openapi.yaml, three junk files deleted - all restorable) | See next actions below |",
         "",
         "## Team closure",
         "",
         "- **What shipped:** the verification harness and evidence packet; the protected-access route with the VAJRA/TANTRA "
-        "bridge (off unless configured); reproducible unit tests (conftest) and a regenerated OpenAPI contract.",
+        "bridge (off unless configured); fixes for other lanes' open defects ("
+        + ", ".join(fixed_for_others) + ") and rule-based detection and correlation of failed logins (proof C), each for "
+        "its owner's review; reproducible unit tests (conftest) and a regenerated OpenAPI contract.",
         "- **What is actually integrated:** Cybersecurity -> VAJRA (consent read, evidence record) against the real VAJRA code "
-        "on a local node" + ("; Cybersecurity -> TANTRA contract gate on the live TANTRA services" if live else "") +
-        ". Not integrated: the TANTRA ledger for security decisions (no contract), threat assessment and correlation of access "
-        "signals, TANTRA response approval.",
+        "on a local node" + ("; Cybersecurity -> TANTRA contract gate on the live TANTRA services" if live else "")
+        + ("; failed-login detection and correlation inside Cybersecurity (local)" if detection == "PASS" else "")
+        + ". Not integrated: the TANTRA ledger for security decisions (no contract), TANTRA response approval"
+        + ("" if detection == "PASS" else ", threat assessment and correlation of access signals") + ".",
         f"- **What was tested:** {len(results)} integrated checks; unit suites listed in TEST_REPORT.md.",
-        "- **What remains blocked:** VM (no reference), TANTRA security contract (TAN-01), assessment/correlation wiring, a live "
-        "VAJRA test lane, the Central Depository submission reference.",
-        "- **Who owns the next action:** Kaushlendra - CYB-01, CYB-02, CYB-04, CYB-05, CYB-12; Shivam - CYB-06, CYB-03; "
-        "Rajaryan - review/merge the bridge, CYB-13 scope decision with Prakash, VM, CYB-07; Prakash - VAJ-01..VAJ-09; "
-        "TANTRA team - TAN-01..TAN-04, TAN-06; Bucket owner (UNKNOWN, via the TANTRA team) - TAN-05; Aryan Dias - correlation wiring.",
+        "- **What remains blocked:** VM (no reference), TANTRA security contract (TAN-01), a scope-aware VAJRA contract "
+        "(CYB-13), a live VAJRA test lane, the Central Depository submission reference"
+        + ("" if detection == "PASS" else ", assessment/correlation wiring") + ".",
+        "- **Who owns the next action:** Kaushlendra - review the fixes in his lane (CYB-01, 02, 04, 05, 07, 08, 09, 12, 15); "
+        "Shivam - review CYB-03, CYB-06 and the detection rule; Aryan Dias - review the correlation; Rajaryan - review and "
+        "merge the branch, the CYB-13 scope decision with Prakash, the VM; Prakash - VAJ-01..VAJ-09; TANTRA team - "
+        "TAN-01..TAN-04, TAN-06; Bucket owner (UNKNOWN, via the TANTRA team) - TAN-05.",
         "",
         "## Acceptance recommendation (technical, implementer's self-assessment)",
         "",
         "**Not accepted for production.** "
-        + (f"{len(critical)} CRITICAL defect(s) are confirmed ({', '.join(critical)}) and " if critical else "")
-        + "mandatory scenarios are failing (see PROOF_MATRIX.md). The bridge was built and tested by the same person, so its "
-        "acceptance is for Rajaryan (integration lead) after review, together with the independent audit result.",
+        + (f"{len(critical)} CRITICAL defect(s) are confirmed ({', '.join(critical)}). " if critical else "")
+        + (f"{len(failing)} check(s) still fail ({', '.join(failing)}; see DEFECTS.md and PROOF_MATRIX.md). " if failing else "")
+        + "The bridge, the harness and the fixes in other lanes were written and tested by the same person (Hemanth), so "
+        "acceptance is for the lane owners and Rajaryan (integration lead) after review, together with the independent "
+        "audit result.",
         "",
         "## Parikshak and UX (recorded separately)",
         "",
@@ -663,9 +730,10 @@ def eod_report(meta, results, by_id, suites, branch, commit="") -> str:
     return "\n".join(lines)
 
 
-def probe_effects(samples: dict) -> list[str]:
+def probe_effects(samples: dict, evidence: Optional[Path] = None) -> list[str]:
     """What the single TANTRA ledger write caused, read from TANTRA's own /karma/ingest reply (check S8-02)."""
-    ingest = next((e for e in samples.get("S8-02", []) if "/karma/ingest" in e["request"]["url"]), None)
+    exchanges, source = probe_record(samples, evidence)
+    ingest = next((e for e in exchanges or [] if "/karma/ingest" in e["request"]["url"]), None)
     body = ingest["response"].get("body") if ingest else None
     if not isinstance(body, dict):
         return []
@@ -688,7 +756,15 @@ def probe_effects(samples: dict) -> list[str]:
     if "[REDACTED after capture" in json.dumps(body):
         lines.append("- TANTRA's internal Bucket address in this reply was replaced by a `[REDACTED after capture ...]` label "
                      "before publication; everything else is as received.")
+    if source != "this run":
+        lines.insert(0, f"- Source: {source}; see `previous_runs/{PREVIOUS_LIVE_RUN}/`.")
     return lines
+
+
+def previous_run_calls(evidence: Path) -> list[dict]:
+    """TANTRA calls made by the archived earlier live run (written when it was archived; see previous_runs/)."""
+    f = previous_run_dir(evidence) / "tantra_calls.json"
+    return json.loads(f.read_text(encoding="utf-8")) if f.exists() else []
 
 
 def outside_run_calls(evidence: Path) -> tuple[list[dict], list[str]]:
@@ -773,10 +849,19 @@ def live_tantra_calls(meta, samples, evidence: Path) -> str:
     if local_only:
         lines += ["", f"Not listed: {local_only} outcome(s) from the induced-outage checks (S5-02, S5-05), where the API was "
                   "pointed at local closed or never-answering ports instead of TANTRA."]
-    effects = probe_effects(samples)
+    effects = probe_effects(samples, evidence)
     if effects:
         lines += ["", "## What the single ledger write caused inside TANTRA (from TANTRA's own reply, check S8-02)", "", *effects]
     host = meta["mode"]["tantra_base"].split("://", 1)[-1].split("/")[0].split(":")[0]
+    earlier = previous_run_calls(evidence) if meta["run_id"] != PREVIOUS_LIVE_RUN else []
+    if earlier:
+        lines += ["", f"## Calls made by the earlier verification run {PREVIOUS_LIVE_RUN} (same day)", "",
+                  f"Archived in `previous_runs/{PREVIOUS_LIVE_RUN}/` (that run's full call list: its LIVE_TANTRA_CALLS.md).", "",
+                  "| UTC (reply received) | Source | Check | Method | Path | HTTP | Ledger write? |",
+                  "|---|---|---|---|---|---|---|"]
+        lines += [f"| {c['utc']} | {c['source']} | {c.get('check') or ''} | {c['method']} | `{c['path']}` | {c['http']} | "
+                  f"{'YES' if c.get('ledger_write') else 'no'} |" for c in earlier]
+    earlier_writes = sum(1 for c in earlier if c.get("ledger_write"))
     outside, notes = outside_run_calls(evidence)
     if outside:
         lines += ["", "## Calls made by hand on the same day, outside this run", "",
@@ -787,7 +872,9 @@ def live_tantra_calls(meta, samples, evidence: Path) -> str:
         if notes:
             lines += ["", *notes]
     to_tantra = [c for c in outside if host and host in str(c["url"])]
-    lines += ["", f"Ledger writes to TANTRA in this run: **{writes}**. Outside this run, to TANTRA: "
+    lines += ["", f"Ledger writes to TANTRA in this run: **{writes}**."
+              + (f" In the earlier run {PREVIOUS_LIVE_RUN}: **{earlier_writes}** ({len(earlier)} TANTRA calls)." if earlier else "")
+              + " Outside the runs, to TANTRA: "
               f"{sum(1 for c in to_tantra if c['method'] == 'GET')} read-only GET(s), "
               f"{sum(1 for c in to_tantra if '/validate/' in str(c['url']))} /validate call(s), "
               f"**{sum(1 for c in to_tantra if '/karma/ingest' in str(c['url']))}** ledger write(s); "
