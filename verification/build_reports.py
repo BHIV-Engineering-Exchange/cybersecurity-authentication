@@ -231,7 +231,8 @@ def changed_files() -> list[str]:
     folded, evidence_count = [], 0
     for path, kind in sorted(entries.items()):
         if path.startswith(("evidence_packet/", "review_packets/")):
-            evidence_count += 1
+            # Count files present after the change; an uncommitted deletion (for example a moved file) is not added.
+            evidence_count += 0 if kind == "deleted" else 1
             continue
         folded.append(f"{kind:9} {path}")
     if evidence_count:

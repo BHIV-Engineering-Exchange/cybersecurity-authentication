@@ -311,7 +311,7 @@ added     verification/harness/redact.py
 added     verification/harness/runner.py
 added     verification/harness/services.py
 added     verification/run_verification.py
-added     evidence_packet/ and review_packets/ (95 generated files)
+added     evidence_packet/ and review_packets/ (93 generated files)
 ```
 
 ## 6. Failure cases
