@@ -293,10 +293,28 @@ modified  cybercrime/backend/app/db/models.py
 added     cybercrime/backend/conftest.py
 modified  cybercrime/backend/env.template
 deleted   cybercrime/backend/event_buffer/events.jsonl
+added     cybercrime/backend/fixtures/threat_scenarios.json
 modified  cybercrime/backend/main.py
+added     cybercrime/backend/requirements.lock.txt
+added     cybercrime/backend/scripts/export_contract_schemas.py
+added     cybercrime/backend/test_contract_schemas.py
 added     cybercrime/backend/test_lane_fixes.py
 deleted   cybercrime/backend/test_output.txt
 added     cybercrime/backend/test_p0_runtime_bridge.py
+added     cybercrime/backend/test_threat_scenarios.py
+added     cybercrime/contracts/README.md
+added     cybercrime/contracts/access_restore_request.v1.0.0.schema.json
+added     cybercrime/contracts/access_restore_response.v1.0.0.schema.json
+added     cybercrime/contracts/access_revocation_request.v1.0.0.schema.json
+added     cybercrime/contracts/access_revocation_response.v1.0.0.schema.json
+added     cybercrime/contracts/authz_check_request.v1.0.0.schema.json
+added     cybercrime/contracts/authz_check_response.v1.0.0.schema.json
+added     cybercrime/contracts/canonical_security_event.v1.0.0.schema.json
+added     cybercrime/contracts/incident_report_request.v1.0.0.schema.json
+added     cybercrime/contracts/incident_report_response.v1.0.0.schema.json
+added     cybercrime/contracts/protected_access_request.v1.0.0.schema.json
+added     cybercrime/contracts/protected_access_response.v1.0.0.schema.json
+added     cybercrime/contracts/security_incident.v1.0.0.schema.json
 modified  cybercrime/openapi.yaml
 modified  cybercrime/rbac-permissions.json
 deleted   investigation.db
@@ -306,12 +324,13 @@ added     verification/capture_screenshots.py
 added     verification/checks/__init__.py
 added     verification/checks/scenarios.py
 added     verification/defects.py
+added     verification/determinism_check.py
 added     verification/harness/__init__.py
 added     verification/harness/redact.py
 added     verification/harness/runner.py
 added     verification/harness/services.py
 added     verification/run_verification.py
-added     evidence_packet/ and review_packets/ (103 generated files)
+added     evidence_packet/ and review_packets/ (104 generated files)
 ```
 
 ## 6. Failure cases

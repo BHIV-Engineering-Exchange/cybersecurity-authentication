@@ -1,0 +1,55 @@
+{
+  "$id": "bhiv-cybersecurity/authz_check_response/1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "contract_version": {
+      "default": "1.0.0",
+      "title": "Contract Version",
+      "type": "string"
+    },
+    "decision": {
+      "title": "Decision",
+      "type": "string"
+    },
+    "evaluated_at": {
+      "title": "Evaluated At",
+      "type": "string"
+    },
+    "policy_applied": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "rbac_permissions_v1",
+      "title": "Policy Applied"
+    },
+    "reason": {
+      "title": "Reason",
+      "type": "string"
+    },
+    "reason_code": {
+      "title": "Reason Code",
+      "type": "string"
+    },
+    "trace_id": {
+      "title": "Trace Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "decision",
+    "reason_code",
+    "reason",
+    "trace_id",
+    "evaluated_at"
+  ],
+  "title": "AuthzCheckResponse",
+  "type": "object",
+  "x-contract-version": "1.0.0",
+  "x-description": "POST /api/v1/authz/check response",
+  "x-owner": "Kaushlendra"
+}

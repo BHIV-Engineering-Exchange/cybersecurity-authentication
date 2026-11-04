@@ -1,0 +1,35 @@
+{
+  "$id": "bhiv-cybersecurity/access_restore_request/1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "action": {
+      "title": "Action",
+      "type": "string"
+    },
+    "contract_version": {
+      "default": "1.0.0",
+      "title": "Contract Version",
+      "type": "string"
+    },
+    "reason": {
+      "maxLength": 256,
+      "minLength": 10,
+      "title": "Reason",
+      "type": "string"
+    },
+    "role": {
+      "title": "Role",
+      "type": "string"
+    }
+  },
+  "required": [
+    "role",
+    "action",
+    "reason"
+  ],
+  "title": "RestoreRequest",
+  "type": "object",
+  "x-contract-version": "1.0.0",
+  "x-description": "POST /api/v1/access/restore request",
+  "x-owner": "Kaushlendra"
+}

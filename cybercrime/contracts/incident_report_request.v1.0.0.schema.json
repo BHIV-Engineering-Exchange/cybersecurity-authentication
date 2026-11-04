@@ -1,0 +1,35 @@
+{
+  "$id": "bhiv-cybersecurity/incident_report_request/1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "description": {
+      "title": "Description",
+      "type": "string"
+    },
+    "investigator_id": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Investigator Id"
+    },
+    "wallet_address": {
+      "title": "Wallet Address",
+      "type": "string"
+    }
+  },
+  "required": [
+    "wallet_address",
+    "description"
+  ],
+  "title": "IncidentReportRequest",
+  "type": "object",
+  "x-contract-version": "1.0.0",
+  "x-description": "POST /api/v1/incidents/analyze request",
+  "x-owner": "Shivam"
+}

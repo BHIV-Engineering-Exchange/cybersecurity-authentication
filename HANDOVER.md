@@ -94,7 +94,9 @@ review). Details: CHANGELOG.md and DEFECTS.md.
 
 | Item | Owner |
 |---|---|
-| Review the fixes made in this lane (CYB-01, 02, 04, 05, 07, 08, 09, 12, 15) | Kaushlendra |
+| Review the fixes made in this lane (CYB-01, 02, 04, 05, 07, 08, 09, 12, 15), the contracts (`cybercrime/contracts/`) and the dependency pin | Kaushlendra |
+| T-GOV-F02: obtain the Parikshak `incorrect_logic` logs and candidate modules, then re-run `verification/determinism_check.py` with those modules as targets | Kaushlendra (logs from Parikshak/Niyantran or Prakash) |
+| Review the threat taxonomy and scenarios; close the declared gaps (password spray, exfiltration, insider misuse, agents, unknown behaviour) | Shivam |
 | Review CYB-03, CYB-06 and the detection rule `auth.repeated_failed_login` (threshold, window, confidence) | Shivam |
 | Review the correlation (one open incident per account and window); decide how incidents close | Aryan Dias |
 | Review and merge the branch; decide scope and caller binding with Prakash (CYB-13); provide the VM | Rajaryan |

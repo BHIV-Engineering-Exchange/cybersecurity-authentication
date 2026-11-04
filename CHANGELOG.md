@@ -1,5 +1,37 @@
 # Changelog
 
+## 2026-11-04 (evening) - Remaining P0 items for other members (Hemanth, for the owners' review)
+
+A check of the P0 task against every member's assignment found these items still open in this repository. Each is
+built for its owner's review.
+
+- **Aryan (correlation and explainability):** every incident from `GET /api/v1/threats/incidents` now carries:
+  - `observed_facts` (kept apart from the `inference`);
+  - `evidence_gaps` and a `proposed_next_action` (nothing is acted on);
+  - a TANTRA-compatible `tantra_response_envelope`, marked NOT SENT until TANTRA registers a contract (TAN-01).
+
+  Incident ids are deterministic (UUIDv5 of the correlation key and the first linked event). A re-delivered event is
+  not counted twice. The response follows the new `security_incident` contract.
+- **Shivam (threat intelligence):** `cybercrime/backend/fixtures/threat_scenarios.json` holds a first-release threat
+  taxonomy (12 classes) and 15 synthetic scenarios covering the shared threat scenarios, each with its real coverage:
+  - covered: 4;
+  - partial: 2;
+  - not covered: 9, each with the gap stated.
+
+  `test_threat_scenarios.py` runs the runnable ones against the API. It also proves the declared password-spray gap.
+- **Kaushlendra (contracts and security state):**
+  - `cybercrime/contracts/` holds 12 versioned JSON Schema contracts, generated from the models the API uses;
+    `test_contract_schemas.py` fails on drift.
+  - `cybercrime/backend/requirements.lock.txt` pins the exact versions of the verified environment.
+  - `verification/determinism_check.py` gives 50-run SHA-256 evidence for the module's deterministic functions.
+  - T-GOV-F02 is **not** closed: the Parikshak `incorrect_logic` logs are not in any repository available to us. The
+    blocker and owner are in `evidence_packet/test_results/DETERMINISM_50_RUNS.md`.
+- **VAJRA (from the Cybersecurity side):** `evidence_packet/architecture_and_integration_maps/VAJRA_CAPABILITY_MAP.md`
+  maps each VAJRA capability we use to the checks that test it.
+
+Still not in this repository: the VAJRA end-user journey (VAJRA's UI), Brahmanda events (no repository), TANTRA's
+security contract, the VM.
+
 ## 2026-11-04 (afternoon) - Fixes in other lanes and failed-login detection (Hemanth, for the owners' review)
 
 At the team's request, open defects in other lanes were fixed in this repository. Each fix is for its lane owner to

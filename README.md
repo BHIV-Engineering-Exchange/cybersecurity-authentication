@@ -62,6 +62,10 @@ python verification/build_reports.py
 | `INCIDENT_SYNTHETIC_DEMO` | `true` only for demos: wallets with no history get generated data, labelled synthetic. Default `false`. |
 | `LOGIN_MAX_ATTEMPTS_PER_MINUTE` | Login attempts per email per minute before `429` (default 20; per process). |
 
+Versioned API and event contracts (JSON Schema) are in [cybercrime/contracts/](cybercrime/contracts/README.md). For the
+exact dependency versions used in verification: `pip install -r cybercrime/backend/requirements.lock.txt`. Synthetic
+threat scenarios and their coverage: `cybercrime/backend/fixtures/threat_scenarios.json`.
+
 Contracts, errors and statuses: [INTEGRATION.md](INTEGRATION.md). Responsibilities and limits: [BCAES_ALIGNMENT.md](BCAES_ALIGNMENT.md).
 
 ## Status in one paragraph

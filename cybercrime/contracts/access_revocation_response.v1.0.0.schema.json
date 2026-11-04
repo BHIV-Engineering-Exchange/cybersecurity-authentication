@@ -1,0 +1,48 @@
+{
+  "$id": "bhiv-cybersecurity/access_revocation_response/1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "audit_event_id": {
+      "title": "Audit Event Id",
+      "type": "string"
+    },
+    "contract_version": {
+      "default": "1.0.0",
+      "title": "Contract Version",
+      "type": "string"
+    },
+    "effective_at": {
+      "title": "Effective At",
+      "type": "string"
+    },
+    "revocation_id": {
+      "title": "Revocation Id",
+      "type": "string"
+    },
+    "revocation_type": {
+      "title": "Revocation Type",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "trace_id": {
+      "title": "Trace Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "revocation_id",
+    "revocation_type",
+    "status",
+    "effective_at",
+    "trace_id",
+    "audit_event_id"
+  ],
+  "title": "RevocationResponse",
+  "type": "object",
+  "x-contract-version": "1.0.0",
+  "x-description": "POST /api/v1/access/revoke response",
+  "x-owner": "Kaushlendra"
+}

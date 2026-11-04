@@ -34,7 +34,9 @@ from typing import Dict, List, Optional
 
 from sqlalchemy import func
 
+from app.core import bhiv_runtime
 from app.core.canonical_event import emit_canonical_event
+from app.core.config import settings
 from app.db.models import AuditLog, SecurityIncident
 
 RULE_ID = "auth.repeated_failed_login"
@@ -42,6 +44,8 @@ RULE_VERSION = "1.0.0"
 WINDOW = timedelta(minutes=10)
 THRESHOLD = 5
 MAX_LINKED = 50  # event ids and trace ids kept per incident
+# Incident ids are derived from the correlation key and the first linked event, so the same input gives the same id.
+INCIDENT_NAMESPACE = uuid.UUID("6f1d9a52-3c1e-4b8e-9d0a-5b7e2c4f8a11")
 FAILED_LOGIN_ACTION = "auth.login:login"  # audit_logs.action of a canonical auth.login event (see canonical_event.py)
 COUNTED_REASON = '"reason_code":"INVALID_CREDENTIALS"'  # as it appears in the stored event JSON
 
@@ -114,8 +118,10 @@ def detect_and_correlate_failed_logins(db, *, account_ref: str, trace_id: str, r
     )
     if incident is not None:  # correlate this attempt into the open incident
         evidence = json.loads(incident.evidence_event_ids or "[]")
+        if event_id and event_id in set(evidence):
+            return incident  # duplicate delivery of an event already linked: nothing is counted twice
         traces = json.loads(incident.trace_ids or "[]")
-        if event_id and event_id not in set(evidence) and len(evidence) < MAX_LINKED:
+        if event_id and len(evidence) < MAX_LINKED:
             evidence.append(event_id)
         if trace_id and trace_id not in set(traces) and len(traces) < MAX_LINKED:
             traces.append(trace_id)
@@ -129,8 +135,9 @@ def detect_and_correlate_failed_logins(db, *, account_ref: str, trace_id: str, r
     if count < THRESHOLD:
         return None
     events = recent_failed_login_events(db, account_ref, now - WINDOW)
+    first = events[0]["event_id"] if events else (event_id or str(uuid.uuid4()))
     incident = SecurityIncident(
-        incident_id=str(uuid.uuid4()), correlation_key=key, rule_id=RULE_ID, rule_version=RULE_VERSION,
+        incident_id=str(uuid.uuid5(INCIDENT_NAMESPACE, f"{key}|{first}")), correlation_key=key, rule_id=RULE_ID, rule_version=RULE_VERSION,
         threat_type="credential_attack_suspected", target_ref=account_ref, status="open", requires_human_review=True,
         first_seen_at=now, created_at=now,
         evidence_event_ids=json.dumps([e["event_id"] for e in events]),
@@ -155,3 +162,51 @@ def detect_and_correlate_failed_logins(db, *, account_ref: str, trace_id: str, r
         db_session=db, fail_on_persist_error=False,
     )
     return incident
+
+
+PROPOSED_ACTIONS = {
+    "medium": "Human review. Check with the account owner; if the attempts were not theirs, reset the password and "
+              "watch the account. No automatic action is taken.",
+    "high": "Human review now. If confirmed, ask TANTRA to approve containment (for example a VAJRA ISOLATE of the "
+            "affected subject) and reset the password. No automatic action is taken.",
+}
+
+
+def explain(incident: SecurityIncident) -> dict:
+    """The incident's explanation: observed facts kept apart from inference, evidence gaps, a proposed next action,
+    and a TANTRA-compatible response envelope (not sent: TANTRA has no registered contract for it yet)."""
+    linked = json.loads(incident.evidence_event_ids or "[]")
+    first = incident.first_seen_at.isoformat() + "Z" if incident.first_seen_at else None
+    last = incident.last_seen_at.isoformat() + "Z" if incident.last_seen_at else None
+    observed_facts = [
+        f"{incident.event_count} failed login(s) with a wrong password were recorded for account {incident.target_ref} "
+        f"between {first} and {last}.",
+        f"{len(linked)} of them are linked here by canonical event id (at most {MAX_LINKED} are listed).",
+        "No successful login, privilege change or data access is part of this incident.",
+    ]
+    inference = (f"{incident.threat_type}: the pattern matches rule {incident.rule_id} {incident.rule_version} "
+                 f"(severity {incident.severity}, confidence {incident.confidence}). This is an inference from the count, "
+                 "not a confirmed attack.")
+    evidence_gaps = [
+        "TANTRA has no registered contract for security events, so this incident is not in the TANTRA ledger and its "
+        "proposed response cannot be submitted for approval.",
+        "No IP reputation, geolocation or device data is available to tell an attacker from the account owner.",
+        "The account owner has not confirmed or denied the attempts.",
+    ]
+    proposed = PROPOSED_ACTIONS.get(incident.severity, PROPOSED_ACTIONS["medium"])
+    envelope = bhiv_runtime.build_tantra_envelope(
+        event_type=settings.TANTRA_EVENT_TYPE, submission_id=incident.incident_id,
+        timestamp=incident.created_at.isoformat() + "Z" if incident.created_at else None,
+        payload={"kind": "security_incident_response_proposal", "incident_id": incident.incident_id,
+                 "rule": f"{incident.rule_id}@{incident.rule_version}", "threat_type": incident.threat_type,
+                 "severity": incident.severity, "confidence": incident.confidence, "target_ref": incident.target_ref,
+                 "evidence_event_ids": linked, "proposed_next_action": proposed, "requires_human_review": True})
+    return {
+        "observed_facts": observed_facts,
+        "inference": inference,
+        "evidence_gaps": evidence_gaps,
+        "proposed_next_action": proposed,
+        "tantra_response_envelope": envelope,
+        "tantra_status": "NOT SENT: TANTRA has no registered contract for this event type yet (TAN-01); the envelope "
+                         "is ready for when it does.",
+    }

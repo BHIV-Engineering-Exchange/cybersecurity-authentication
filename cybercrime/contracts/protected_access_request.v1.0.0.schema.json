@@ -1,0 +1,80 @@
+{
+  "$defs": {
+    "ProtectedResource": {
+      "properties": {
+        "id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "type": {
+          "description": "One of the canonical resource types (evidence, case, wallet, ...)",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "id"
+      ],
+      "title": "ProtectedResource",
+      "type": "object"
+    }
+  },
+  "$id": "bhiv-cybersecurity/protected_access_request/1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "action": {
+      "description": "Canonical action (read, update, download, ...)",
+      "title": "Action",
+      "type": "string"
+    },
+    "contract_version": {
+      "default": "1.0.0",
+      "title": "Contract Version",
+      "type": "string"
+    },
+    "idempotency_key": {
+      "anyOf": [
+        {
+          "maxLength": 128,
+          "minLength": 8,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Idempotency Key"
+    },
+    "purpose": {
+      "maxLength": 256,
+      "minLength": 3,
+      "title": "Purpose",
+      "type": "string"
+    },
+    "resource": {
+      "$ref": "#/$defs/ProtectedResource"
+    },
+    "vajra_subject": {
+      "description": "VAJRA subject whose consent governs the resource",
+      "maxLength": 256,
+      "minLength": 1,
+      "title": "Vajra Subject",
+      "type": "string"
+    }
+  },
+  "required": [
+    "vajra_subject",
+    "action",
+    "resource",
+    "purpose"
+  ],
+  "title": "ProtectedAccessRequest",
+  "type": "object",
+  "x-contract-version": "1.0.0",
+  "x-description": "POST /api/v1/protected/access request",
+  "x-owner": "Rajaryan (bridge by Hemanth)"
+}

@@ -343,3 +343,48 @@ def test_authz_check_does_not_echo_a_bad_trace_id(investigator):
         "contract_version": "1.0.0", "subject": {"actor_id": f"cc_usr_{investigator.id}", "role": "investigator"},
         "action": "read", "resource": {"type": "evidence", "id": "EV-1"}})
     assert r.status_code == 200 and r.json()["trace_id"] != bad
+
+
+# ------------------------------------------------------------------ correlation and explainability (Aryan's lane)
+
+def test_unrelated_accounts_stay_in_separate_incidents():
+    a, b = _user("investigator", password="Right-pass-1"), _user("investigator", password="Right-pass-1")
+    for _ in range(THRESHOLD):
+        _login(a.email, "wrong")
+        _login(b.email, "wrong")
+    db = SessionLocal()
+    refs = sorted(i.target_ref for i in db.query(SecurityIncident).filter(
+        SecurityIncident.target_ref.in_([f"cc_usr_{a.id}", f"cc_usr_{b.id}"])).all())
+    db.close()
+    assert refs == sorted([f"cc_usr_{a.id}", f"cc_usr_{b.id}"])  # two incidents, one per account
+
+
+def test_duplicate_event_is_not_counted_twice_and_ids_are_deterministic():
+    import uuid as _uuid
+    from app.core.threat_detection import INCIDENT_NAMESPACE, RULE_ID, detect_and_correlate_failed_logins
+    victim = _user("investigator", password="Right-pass-1")
+    for _ in range(THRESHOLD):
+        _login(victim.email, "wrong")
+    db = SessionLocal()
+    incident = db.query(SecurityIncident).filter(SecurityIncident.target_ref == f"cc_usr_{victim.id}").one()
+    first_event = json.loads(incident.evidence_event_ids)[0]
+    assert incident.incident_id == str(_uuid.uuid5(INCIDENT_NAMESPACE, f"{RULE_ID}:cc_usr_{victim.id}|{first_event}"))
+    before = incident.event_count
+    again = detect_and_correlate_failed_logins(db, account_ref=f"cc_usr_{victim.id}", trace_id="trace-dup",
+                                               event_id=first_event)
+    assert again.event_count == before  # re-delivered event: nothing counted twice
+    db.close()
+
+
+def test_incident_api_explains_and_proposes_without_acting(superadmin):
+    victim = _user("investigator", password="Right-pass-1")
+    for _ in range(THRESHOLD):
+        _login(victim.email, "wrong")
+    rows = client.get("/api/v1/threats/incidents", headers=_auth(superadmin)).json()
+    incident = next(i for i in rows if i["target_ref"] == f"cc_usr_{victim.id}")
+    assert incident["observed_facts"] and incident["inference"] and incident["evidence_gaps"]
+    assert "No automatic action" in incident["proposed_next_action"]
+    envelope = incident["tantra_response_envelope"]
+    assert envelope["registry_reference"]["registry"] == settings.TANTRA_REGISTRY
+    assert envelope["payload"]["incident_id"] == incident["incident_id"]
+    assert incident["tantra_status"].startswith("NOT SENT")

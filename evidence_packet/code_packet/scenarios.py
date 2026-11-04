@@ -898,6 +898,13 @@ def proof_c2(ctx: Context):
     detected = [row for row in rows if row["action"] == "threat.detected:escalate"
                 and (row["_details"].get("metadata") or {}).get("incident_id") == incident.get("incident_id")]
     ctx.expect("one threat.detected security event for the incident", 1, len(detected))
+    ctx.expect("observed facts kept apart from the inference", True,
+               bool(incident.get("observed_facts")) and bool(incident.get("inference")))
+    ctx.expect("evidence gaps and a proposed next action stated (no action taken)", True,
+               bool(incident.get("evidence_gaps")) and "No automatic action" in str(incident.get("proposed_next_action")))
+    envelope = incident.get("tantra_response_envelope") or {}
+    ctx.expect("TANTRA-compatible response envelope prepared, marked not sent (no contract yet)", True,
+               bool(envelope.get("registry_reference")) and str(incident.get("tantra_status", "")).startswith("NOT SENT"))
     ctx.expect("attacked account still usable (detection blocks no one)", 200,
                login(ctx, victim["email"], victim["password"]).status_code)
     ctx.note(f"incident {incident.get('incident_id')}: {incident.get('event_count')} events, severity "

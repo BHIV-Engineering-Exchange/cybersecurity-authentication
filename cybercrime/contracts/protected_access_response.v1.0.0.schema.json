@@ -1,0 +1,217 @@
+{
+  "$defs": {
+    "EvidenceView": {
+      "properties": {
+        "complete": {
+          "title": "Complete",
+          "type": "boolean"
+        },
+        "gaps": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Gaps",
+          "type": "array"
+        },
+        "local_audit_event_id": {
+          "title": "Local Audit Event Id",
+          "type": "string"
+        },
+        "superseded_audit_event_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Superseded Audit Event Id"
+        },
+        "tantra": {
+          "additionalProperties": true,
+          "title": "Tantra",
+          "type": "object"
+        },
+        "vajra": {
+          "additionalProperties": true,
+          "title": "Vajra",
+          "type": "object"
+        }
+      },
+      "required": [
+        "local_audit_event_id",
+        "vajra",
+        "tantra",
+        "complete",
+        "gaps"
+      ],
+      "title": "EvidenceView",
+      "type": "object"
+    },
+    "ProtectedResource": {
+      "properties": {
+        "id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "type": {
+          "description": "One of the canonical resource types (evidence, case, wallet, ...)",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "id"
+      ],
+      "title": "ProtectedResource",
+      "type": "object"
+    },
+    "VajraAuthorityView": {
+      "properties": {
+        "current_state": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Current State"
+        },
+        "is_authorized": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Is Authorized"
+        },
+        "scope_checked": {
+          "default": false,
+          "title": "Scope Checked",
+          "type": "boolean"
+        },
+        "status": {
+          "title": "Status",
+          "type": "string"
+        },
+        "subject_ref": {
+          "title": "Subject Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "subject_ref",
+        "status"
+      ],
+      "title": "VajraAuthorityView",
+      "type": "object"
+    }
+  },
+  "$id": "bhiv-cybersecurity/protected_access_response/1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "action": {
+      "title": "Action",
+      "type": "string"
+    },
+    "actor_id": {
+      "title": "Actor Id",
+      "type": "string"
+    },
+    "contract_version": {
+      "default": "1.0.0",
+      "title": "Contract Version",
+      "type": "string"
+    },
+    "decision": {
+      "title": "Decision",
+      "type": "string"
+    },
+    "decision_id": {
+      "title": "Decision Id",
+      "type": "string"
+    },
+    "duplicate": {
+      "default": false,
+      "title": "Duplicate",
+      "type": "boolean"
+    },
+    "evaluated_at": {
+      "title": "Evaluated At",
+      "type": "string"
+    },
+    "evidence": {
+      "$ref": "#/$defs/EvidenceView"
+    },
+    "idempotency_key": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Idempotency Key"
+    },
+    "policy_applied": {
+      "default": "vajra_authority_v1",
+      "title": "Policy Applied",
+      "type": "string"
+    },
+    "reason": {
+      "title": "Reason",
+      "type": "string"
+    },
+    "reason_code": {
+      "title": "Reason Code",
+      "type": "string"
+    },
+    "request_id": {
+      "title": "Request Id",
+      "type": "string"
+    },
+    "resource": {
+      "$ref": "#/$defs/ProtectedResource"
+    },
+    "trace_id": {
+      "title": "Trace Id",
+      "type": "string"
+    },
+    "vajra": {
+      "$ref": "#/$defs/VajraAuthorityView"
+    }
+  },
+  "required": [
+    "decision",
+    "reason_code",
+    "reason",
+    "decision_id",
+    "trace_id",
+    "request_id",
+    "actor_id",
+    "action",
+    "resource",
+    "vajra",
+    "evidence",
+    "evaluated_at"
+  ],
+  "title": "ProtectedAccessResponse",
+  "type": "object",
+  "x-contract-version": "1.0.0",
+  "x-description": "POST /api/v1/protected/access response",
+  "x-owner": "Rajaryan (bridge by Hemanth)"
+}

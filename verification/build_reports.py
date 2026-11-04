@@ -81,6 +81,14 @@ def parse_raw_suites(evidence: Path) -> list[dict]:
                        "command": "cd core/relay-chain && go test -count=1 -v ./authority/... ./permission/... ; "
                                   "go test -count=1 -v -run \"TestVajra|TestPermissionHandlers\" ./api/...",
                        "result": f"{text.count('--- PASS')} passed, {text.count('--- FAIL')} failed", "raw": "vajra_go_tests.txt"})
+    f = tr / "determinism_50_runs.json"
+    if f.exists():
+        d = json.loads(f.read_text(encoding="utf-8"))
+        same = sum(1 for t in d["targets"].values() if t["distinct_digests"] == 1)
+        suites.append({"suite": "Determinism check (fresh process per run, SHA-256 of outputs)",
+                       "command": f"python verification/determinism_check.py --runs {d['runs']}",
+                       "result": f"{same} of {len(d['targets'])} targets gave one SHA-256 across {d['runs']} runs",
+                       "raw": "determinism_50_runs.json"})
     for run in (1, 2):
         f = tr / f"fraud_evidence_jest_run{run}.txt"
         if f.exists():
@@ -499,6 +507,17 @@ def proof_matrix(meta, by_id, evidence: Path, suites: list) -> str:
     return "\n".join(lines)
 
 
+def scenario_coverage() -> str:
+    """Coverage of the synthetic threat scenarios, read from the fixture file."""
+    f = REPO / "cybercrime" / "backend" / "fixtures" / "threat_scenarios.json"
+    if not f.exists():
+        return "NOT BUILT"
+    scenarios = json.loads(f.read_text(encoding="utf-8"))["scenarios"]
+    count = {k: sum(1 for x in scenarios if x["coverage"] == k) for k in ("covered", "partial", "not_covered")}
+    return (f"PARTIAL ({count['covered']} of {len(scenarios)} scenarios covered, {count['partial']} partial, "
+            f"{count['not_covered']} not covered; tests: test_threat_scenarios.py)")
+
+
 def readiness_board(by_id) -> list[tuple]:
     def st(*checks):
         base = row_status(list(checks), by_id)
@@ -518,6 +537,19 @@ def readiness_board(by_id) -> list[tuple]:
          "cybersecurity-authentication (app/core/threat_detection.py)", "Shivam (review); built by Hemanth", st("P-C1", "P-C2")),
         ("Correlation into incidents (security_incidents)", "cybersecurity-authentication (app/core/threat_detection.py)",
          "Aryan Dias (review); built by Hemanth", st("P-C2")),
+        ("Threat taxonomy + synthetic scenarios (fixtures/threat_scenarios.json)", "cybersecurity-authentication",
+         "Shivam (review); built by Hemanth", scenario_coverage()),
+        ("Incident explanation + TANTRA response envelope (prepared, not sent)", "cybersecurity-authentication",
+         "Aryan Dias (review); built by Hemanth", st("P-C2") + " - envelope NOT SENT: no TANTRA contract (TAN-01)"),
+        ("Versioned contracts (cybercrime/contracts, JSON Schema)", "cybersecurity-authentication",
+         "Kaushlendra (review); built by Hemanth", "BUILT & VERIFIED (contract drift test in the unit suite)"),
+        ("Dependency pin (cybercrime/backend/requirements.lock.txt)", "cybersecurity-authentication",
+         "Kaushlendra (review); built by Hemanth", "BUILT (exact versions of the verified environment)"),
+        ("T-GOV-F02 closure (Parikshak incorrect_logic logs, candidate modules, 50-run SHA-256)", "Parikshak / Niyantran",
+         "Kaushlendra", "BLOCKED (logs not available; harness and pin ready - see DETERMINISM_50_RUNS.md)"),
+        ("Brahmanda / MANTRA game events", "not provided", "product owners", "BLOCKED (no repository provided)"),
+        ("VAJRA end-user journey (see, authorize, revoke)", "VAJRA UX (not this repository)", "Ganesh + Rhugved",
+         "NOT IN SCOPE (VAJRA's UI)"),
         ("TANTRA contract for security decisions", "TANTRA (live)", "TANTRA team", "BLOCKED" if status_of(by_id, "S5-01") == "PASS" else "NOT VERIFIED"),
         ("TANTRA ledger participation (probe contract)", "TANTRA (live)", "TANTRA team / Hemanth",
          {"PASS": "BUILT & VERIFIED (LIVE)",
@@ -694,7 +726,10 @@ def eod_report(meta, results, by_id, suites, branch, commit="") -> str:
         "- **What shipped:** the verification harness and evidence packet; the protected-access route with the VAJRA/TANTRA "
         "bridge (off unless configured); fixes for other lanes' open defects ("
         + ", ".join(fixed_for_others) + ") and rule-based detection and correlation of failed logins (proof C), each for "
-        "its owner's review; reproducible unit tests (conftest) and a regenerated OpenAPI contract.",
+        "its owner's review; for Shivam a threat taxonomy with synthetic scenarios and their real coverage; for Aryan "
+        "incident explanations (facts apart from inference, evidence gaps, proposed next action, TANTRA-compatible "
+        "response envelope, not sent); for Kaushlendra versioned JSON Schema contracts, an exact dependency pin and a "
+        "50-run determinism harness; reproducible unit tests (conftest) and a regenerated OpenAPI contract.",
         "- **What is actually integrated:** Cybersecurity -> VAJRA (consent read, evidence record) against the real VAJRA code "
         "on a local node" + ("; Cybersecurity -> TANTRA contract gate on the live TANTRA services" if live else "")
         + ("; failed-login detection and correlation inside Cybersecurity (local)" if detection == "PASS" else "")
@@ -702,9 +737,11 @@ def eod_report(meta, results, by_id, suites, branch, commit="") -> str:
         + ("" if detection == "PASS" else ", threat assessment and correlation of access signals") + ".",
         f"- **What was tested:** {len(results)} integrated checks; unit suites listed in TEST_REPORT.md.",
         "- **What remains blocked:** VM (no reference), TANTRA security contract (TAN-01), a scope-aware VAJRA contract "
-        "(CYB-13), a live VAJRA test lane, the Central Depository submission reference"
+        "(CYB-13), a live VAJRA test lane, T-GOV-F02 (Parikshak incorrect_logic logs not available), the Brahmanda "
+        "repository, the Central Depository submission reference"
         + ("" if detection == "PASS" else ", assessment/correlation wiring") + ".",
-        "- **Who owns the next action:** Kaushlendra - review the fixes in his lane (CYB-01, 02, 04, 05, 07, 08, 09, 12, 15); "
+        "- **Who owns the next action:** Kaushlendra - review the fixes in his lane (CYB-01, 02, 04, 05, 07, 08, 09, 12, 15), "
+        "the contracts and the pin, and get the T-GOV-F02 Parikshak logs; "
         "Shivam - review CYB-03, CYB-06 and the detection rule; Aryan Dias - review the correlation; Rajaryan - review and "
         "merge the branch, the CYB-13 scope decision with Prakash, the VM; Prakash - VAJ-01..VAJ-09; TANTRA team - "
         "TAN-01..TAN-04, TAN-06; Bucket owner (UNKNOWN, via the TANTRA team) - TAN-05.",
@@ -946,6 +983,37 @@ def golden_trace(by_id, samples, evidence: Path) -> str:
     return "\n".join(parts)
 
 
+VAJRA_CAPABILITIES = [
+    # (capability, VAJRA interface, auth, checks)
+    ("Authority read (consent state)", "GET /api/vajra/authority/verify", "none", ["S1-05", "S2-01", "P-A"]),
+    ("Authority lifecycle GRANT -> USE -> REVOKE", "POST /api/vajra/authority/transition", "Bearer VAJRA_TANTRA_SECRET", ["S2-01", "S4-05"]),
+    ("Containment ISOLATE / TERMINATE and staged recovery", "POST /api/vajra/authority/transition", "Bearer", ["P-C3", "S7-02"]),
+    ("Write routes refuse callers without the token", "authority/transition, evidence/record", "Bearer (fail closed)", ["S1-06"]),
+    ("Evidence record, one row per trace", "POST /api/vajra/evidence/record", "Bearer", ["S8-01", "S4-02"]),
+    ("Evidence refused, so no ALLOW", "POST /api/vajra/evidence/record", "Bearer", ["S6-01"]),
+    ("Tamper detection on stored evidence", "GET /api/tantra/chain-integrity", "none", ["S8-03"]),
+    ("Authority state survives a node restart", "node restart", "-", ["S7-05"]),
+    ("Privileged routes (token mint, permission grant, wallet freeze) need auth",
+     "/api/admin/add-tokens, /api/v1/permission/grant, /api/cybercrime/freeze", "none today (VAJ-06)", ["V-01"]),
+    ("Permission ids are unique per grant", "POST /api/v1/permission/grant", "none today", ["V-02"]),
+    ("Recovery anchors with real validator signatures", "recovery handlers", "-", []),
+]
+
+
+def vajra_capability_map(meta, by_id) -> str:
+    lines = ["# VAJRA capability map (as tested from Cybersecurity)", "",
+             f"From run `{meta['run_id']}` against a local node built from VAJRA commit `{meta['versions']['vajra_repo_commit']}` "
+             "(VAJRA asks for no test records on its live node). Owner of every capability: Prakash / VAJRA team. "
+             "Status per row comes from the named checks; a row with no check was not tested.", "",
+             "| Capability | VAJRA interface | Auth | Checks (result) | Status |", "|---|---|---|---|---|"]
+    for name, route, auth_, checks in VAJRA_CAPABILITIES:
+        detail = ", ".join(f"{c} {status_of(by_id, c)}" for c in checks) or "-"
+        status = row_status(checks, by_id) if checks else "NOT TESTED (signatures are placeholders: VAJ-05)"
+        lines.append(f"| {name} | `{route}` | {auth_} | {detail} | **{md_escape(status)}** |")
+    lines.append("")
+    return "\n".join(lines)
+
+
 def cross_pillar_map(meta, by_id) -> str:
     rows = [
         ("Cybersecurity API", "BHIV-Engineering-Exchange/cybersecurity-authentication", "Rajaryan, Kaushlendra, Shivam, Hemanth",
@@ -993,6 +1061,7 @@ def main() -> int:
     maps = evidence / "architecture_and_integration_maps"
     maps.mkdir(parents=True, exist_ok=True)
     (maps / "CROSS_PILLAR_MAP.md").write_text(cross_pillar_map(meta, by_id), encoding="utf-8")
+    (maps / "VAJRA_CAPABILITY_MAP.md").write_text(vajra_capability_map(meta, by_id), encoding="utf-8")
     (tr / "TEST_REPORT.md").write_text(test_report(meta, results, by_id, suites, samples), encoding="utf-8")
     (tr / "DEFECTS.md").write_text(defects_report(by_id, samples), encoding="utf-8")
     (tr / "PROOF_MATRIX.md").write_text(proof_matrix(meta, by_id, evidence, suites), encoding="utf-8")

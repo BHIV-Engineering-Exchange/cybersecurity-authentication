@@ -1,0 +1,43 @@
+{
+  "$id": "bhiv-cybersecurity/access_restore_response/1.0.0",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "action": {
+      "title": "Action",
+      "type": "string"
+    },
+    "audit_event_id": {
+      "title": "Audit Event Id",
+      "type": "string"
+    },
+    "contract_version": {
+      "default": "1.0.0",
+      "title": "Contract Version",
+      "type": "string"
+    },
+    "role": {
+      "title": "Role",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "trace_id": {
+      "title": "Trace Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "status",
+    "role",
+    "action",
+    "trace_id",
+    "audit_event_id"
+  ],
+  "title": "RestoreResponse",
+  "type": "object",
+  "x-contract-version": "1.0.0",
+  "x-description": "POST /api/v1/access/restore response",
+  "x-owner": "Kaushlendra"
+}
