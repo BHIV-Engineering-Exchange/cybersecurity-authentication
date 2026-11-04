@@ -1,0 +1,107 @@
+[
+  {
+    "utc": "2026-11-04T10:39:54Z",
+    "source": "harness",
+    "check": "O-02",
+    "method": "GET",
+    "path": "/health",
+    "http": 200,
+    "ledger_write": false
+  },
+  {
+    "utc": "2026-11-04T10:39:54Z",
+    "source": "harness",
+    "check": "O-02",
+    "method": "GET",
+    "path": "/health",
+    "http": 200,
+    "ledger_write": false
+  },
+  {
+    "utc": "2026-11-04T10:39:55Z",
+    "source": "harness",
+    "check": "O-02",
+    "method": "GET",
+    "path": "/health",
+    "http": 200,
+    "ledger_write": false
+  },
+  {
+    "utc": "2026-11-04T10:40:14.429252+00:00",
+    "source": "api",
+    "check": "",
+    "method": "POST",
+    "path": "/validate/prana/ingress",
+    "http": 422,
+    "ledger_write": false,
+    "trace_id": "cyber-p0-test-4d0b8bc8-fd4d-4198-9442-9bc3a7cc28fd",
+    "outcome": "CONTRACT_REJECTED"
+  },
+  {
+    "utc": "2026-11-04T10:40:16.994840+00:00",
+    "source": "api",
+    "check": "",
+    "method": "POST",
+    "path": "/validate/prana/ingress",
+    "http": 422,
+    "ledger_write": false,
+    "trace_id": "cyber-p0-test-80c17aba-e107-426e-af95-7904ea5c1eb1",
+    "outcome": "CONTRACT_REJECTED"
+  },
+  {
+    "utc": "2026-11-04T10:40:19.462075+00:00",
+    "source": "api",
+    "check": "",
+    "method": "POST",
+    "path": "/validate/prana/ingress",
+    "http": 422,
+    "ledger_write": false,
+    "trace_id": "cyber-p0-test-35797205-3f70-438f-ae00-dd5382899ff0",
+    "outcome": "CONTRACT_REJECTED"
+  },
+  {
+    "utc": "2026-11-04T10:40:20Z",
+    "source": "harness",
+    "check": "S5-01",
+    "method": "GET",
+    "path": "/replay/cyber-p0-test-35797205-3f70-438f-ae00-dd5382899ff0",
+    "http": 404,
+    "ledger_write": false
+  },
+  {
+    "utc": "2026-11-04T10:40:25Z",
+    "source": "harness",
+    "check": "S5-04",
+    "method": "POST",
+    "path": "/validate/prana/ingress",
+    "http": 422,
+    "ledger_write": false
+  },
+  {
+    "utc": "2026-11-04T10:40:26Z",
+    "source": "harness",
+    "check": "S8-02",
+    "method": "POST",
+    "path": "/validate/prana/ingress",
+    "http": 200,
+    "ledger_write": false
+  },
+  {
+    "utc": "2026-11-04T10:40:50Z",
+    "source": "harness",
+    "check": "S8-02",
+    "method": "POST",
+    "path": "/karma/ingest",
+    "http": 200,
+    "ledger_write": true
+  },
+  {
+    "utc": "2026-11-04T10:40:51Z",
+    "source": "harness",
+    "check": "S8-02",
+    "method": "POST",
+    "path": "/karma/verify",
+    "http": 200,
+    "ledger_write": false
+  }
+]

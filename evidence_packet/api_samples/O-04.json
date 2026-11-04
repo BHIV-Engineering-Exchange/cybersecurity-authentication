@@ -2,34 +2,24 @@
   {
     "check_id": "O-04",
     "system": "cybersecurity",
-    "utc": "2026-11-04T10:42:12Z",
-    "elapsed_ms": 15,
+    "utc": "2026-11-04T12:07:28Z",
+    "elapsed_ms": 0,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:51300/api/v1/cases",
+      "url": "http://127.0.0.1:57509/api/v1/cases",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "420c4a61-fa9d-417a-bc2e-215ba0b9e67d"
+        "x-trace-id": "09f77960-04cc-4ad3-a530-6b94e7873c51"
       },
       "body": null
     },
     "response": {
-      "status": 405,
+      "status": 307,
       "headers": {
-        "content-type": "application/json",
-        "x-request-id": "d531d95c-daac-4285-b961-5ea358769df5",
-        "x-trace-id": "420c4a61-fa9d-417a-bc2e-215ba0b9e67d"
+        "x-request-id": "55359b0f-8aab-452d-8dc9-95de4c7f7d1b",
+        "x-trace-id": "09f77960-04cc-4ad3-a530-6b94e7873c51"
       },
-      "body": {
-        "error": true,
-        "code": "HTTP_405",
-        "status_code": 405,
-        "message": "Method Not Allowed",
-        "trace_id": "420c4a61-fa9d-417a-bc2e-215ba0b9e67d",
-        "request_id": "d531d95c-daac-4285-b961-5ea358769df5",
-        "timestamp": "2026-11-04T10:42:12.531Z",
-        "details": []
-      }
+      "body": null
     }
   }
 ]

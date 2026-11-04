@@ -2,88 +2,72 @@
   {
     "check_id": "S1-04",
     "system": "cybersecurity",
-    "utc": "2026-11-04T10:39:57Z",
-    "elapsed_ms": 515,
+    "utc": "2026-11-04T12:05:20Z",
+    "elapsed_ms": 15,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:51300/api/v1/auth/register",
+      "url": "http://127.0.0.1:57509/api/v1/auth/register",
       "headers": {
         "content-type": "application/json"
       },
       "body": {
-        "email": "selfreg-5dae6d64@bhiv-verification.example",
+        "email": "selfreg-3afaf510@bhiv-verification.example",
         "password": "[REDACTED]",
         "full_name": "Self-registered stranger (synthetic)"
       }
     },
     "response": {
-      "status": 200,
+      "status": 401,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "e16d97b3-de6f-46b9-ada6-9831c2abded0",
-        "x-trace-id": "00f642bb-d40d-4c67-a96f-16ed632b285f"
+        "x-request-id": "e0b5cafa-d28b-4f54-b319-a902b6c92177",
+        "x-trace-id": "9eb39d23-ccd3-449d-bac6-b42f336f980f"
       },
       "body": {
-        "email": "selfreg-5dae6d64@bhiv-verification.example",
-        "full_name": "Self-registered stranger (synthetic)",
-        "role": "investigator",
-        "id": 7,
-        "is_active": true,
-        "created_at": "2026-11-04T10:39:57.472270"
+        "error": true,
+        "code": "AUTHENTICATION_REQUIRED",
+        "status_code": 401,
+        "message": "Authentication required.",
+        "trace_id": "9eb39d23-ccd3-449d-bac6-b42f336f980f",
+        "request_id": "e0b5cafa-d28b-4f54-b319-a902b6c92177",
+        "timestamp": "2026-11-04T12:05:20.907Z",
+        "details": []
       }
     }
   },
   {
     "check_id": "S1-04",
     "system": "cybersecurity",
-    "utc": "2026-11-04T10:39:58Z",
-    "elapsed_ms": 547,
+    "utc": "2026-11-04T12:05:21Z",
+    "elapsed_ms": 952,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:51300/api/v1/auth/login",
+      "url": "http://127.0.0.1:57509/api/v1/auth/login",
       "headers": {
         "content-type": "application/x-www-form-urlencoded"
       },
       "body": {
-        "username": "selfreg-5dae6d64%40bhiv-verification.example",
+        "username": "selfreg-3afaf510%40bhiv-verification.example",
         "password": "[REDACTED]"
       }
     },
     "response": {
-      "status": 200,
+      "status": 401,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "da301015-bef7-4c7d-9f61-917b2488c692",
-        "x-trace-id": "64440b99-aa67-49dd-ad0f-bbca10bf9d73"
+        "x-request-id": "99b1be57-139e-4d86-a297-4b0dc5e4e92b",
+        "x-trace-id": "6089cde6-4c96-459a-b3d9-44c383800532"
       },
       "body": {
-        "access_token": "[REDACTED]",
-        "token_type": "bearer"
+        "error": true,
+        "code": "HTTP_401",
+        "status_code": 401,
+        "message": "Invalid email or password.",
+        "trace_id": "6089cde6-4c96-459a-b3d9-44c383800532",
+        "request_id": "99b1be57-139e-4d86-a297-4b0dc5e4e92b",
+        "timestamp": "2026-11-04T12:05:21.854Z",
+        "details": []
       }
-    }
-  },
-  {
-    "check_id": "S1-04",
-    "system": "cybersecurity",
-    "utc": "2026-11-04T10:39:58Z",
-    "elapsed_ms": 15,
-    "request": {
-      "method": "GET",
-      "url": "http://127.0.0.1:51300/api/v1/cases/",
-      "headers": {
-        "authorization": "[REDACTED]",
-        "x-trace-id": "2a57ea1f-d72b-4e80-b6a5-f2da37475990"
-      },
-      "body": null
-    },
-    "response": {
-      "status": 200,
-      "headers": {
-        "content-type": "application/json",
-        "x-request-id": "03fb4132-da7f-4ab5-8699-e9d0cd8cee0c",
-        "x-trace-id": "2a57ea1f-d72b-4e80-b6a5-f2da37475990"
-      },
-      "body": []
     }
   }
 ]

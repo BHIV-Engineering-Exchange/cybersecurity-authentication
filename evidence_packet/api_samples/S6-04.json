@@ -2,15 +2,15 @@
   {
     "check_id": "S6-04",
     "system": "cybersecurity",
-    "utc": "2026-11-04T10:40:51Z",
+    "utc": "2026-11-04T12:05:58Z",
     "elapsed_ms": 62,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:51300/api/v1/evidence/",
+      "url": "http://127.0.0.1:57509/api/v1/evidence/",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "3944e34b-3d4d-4af4-a2b7-0b0defe513a5",
-        "content-type": "multipart/form-data; boundary=b279207474a6b86b7985d71f50e65761"
+        "x-trace-id": "e6d55857-c03b-473f-8b89-0a41ce10b4e4",
+        "content-type": "multipart/form-data; boundary=8e7ebaad05728ba71a641a535de78c77"
       },
       "body": "<multipart upload: synthetic file, body not recorded>"
     },
@@ -18,15 +18,15 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "ad88942e-9d30-48ac-8117-c134d50cf80f",
-        "x-trace-id": "3944e34b-3d4d-4af4-a2b7-0b0defe513a5"
+        "x-request-id": "d08e5c70-2a93-4784-bfad-58afb8d7de0a",
+        "x-trace-id": "e6d55857-c03b-473f-8b89-0a41ce10b4e4"
       },
       "body": {
-        "evidence_id": "EV-1793774451484",
+        "evidence_id": "EV-1793779558106",
         "title": "P0 synthetic evidence",
         "description": "Wallet: 0xSYNTHETIC-WALLET\nRisk level: low",
         "hash": "f1f8caba55d283560e64f83e2bcaef8957517020693224bdc54a78e2622375d2",
-        "file_path": "C:\\tmp\\cyber-p0-verify-20261104T103939Z-paj3nl11\\evidence_storage\\EV-1793774451484.txt",
+        "file_path": "C:\\tmp\\cyber-p0-verify-20261104T120458Z-aqiprzq8\\evidence_storage\\EV-1793779558106.txt",
         "file_size": 38,
         "file_type": "text/plain",
         "anchor_status": "pending",
@@ -34,7 +34,8 @@
         "id": 1,
         "investigator_id": 2,
         "case_id": null,
-        "created_at": "2026-11-04T10:40:51.493842"
+        "created_at": "2026-11-04T12:05:58.118895",
+        "bucket_status": "not_configured"
       }
     }
   }

@@ -2,11 +2,11 @@
   {
     "check_id": "S7-01",
     "system": "cybersecurity",
-    "utc": "2026-11-04T10:41:00Z",
+    "utc": "2026-11-04T12:06:09Z",
     "elapsed_ms": 577,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:51300/api/v1/auth/login",
+      "url": "http://127.0.0.1:57509/api/v1/auth/login",
       "headers": {
         "content-type": "application/x-www-form-urlencoded"
       },
@@ -19,8 +19,8 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "4d7f61b3-7738-444c-8af2-b5f879a94b67",
-        "x-trace-id": "5342bcc7-473e-4c3b-98e8-9fba6a1013df"
+        "x-request-id": "111ab415-8532-45b1-8aee-86294665d0e9",
+        "x-trace-id": "ca926093-5563-4c9f-8f25-edc04d316f33"
       },
       "body": {
         "access_token": "[REDACTED]",
@@ -31,14 +31,14 @@
   {
     "check_id": "S7-01",
     "system": "cybersecurity",
-    "utc": "2026-11-04T10:41:00Z",
-    "elapsed_ms": 30,
+    "utc": "2026-11-04T12:06:09Z",
+    "elapsed_ms": 15,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:51300/api/v1/access/revoke",
+      "url": "http://127.0.0.1:57509/api/v1/access/revoke",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "974d1e4b-afaa-4142-a233-22dfc73e0722",
+        "x-trace-id": "8ba5dc12-c818-403b-bd07-9f6b448179cd",
         "content-type": "application/json"
       },
       "body": {
@@ -55,31 +55,31 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "ca150271-8c6a-46de-ac00-ac0e8bf74519",
-        "x-trace-id": "974d1e4b-afaa-4142-a233-22dfc73e0722"
+        "x-request-id": "69d76355-fb92-44ca-8f4f-b635855d714e",
+        "x-trace-id": "8ba5dc12-c818-403b-bd07-9f6b448179cd"
       },
       "body": {
         "contract_version": "1.0.0",
-        "revocation_id": "3bdc54b0-1aa7-4450-9964-d3674243352c",
+        "revocation_id": "2a3097ac-2a67-4a15-b4d7-97d97be00afd",
         "revocation_type": "token_invalidation",
         "status": "REVOKED",
-        "effective_at": "2026-11-04T10:41:00.565Z",
-        "trace_id": "974d1e4b-afaa-4142-a233-22dfc73e0722",
-        "audit_event_id": "c5e2c46d-ef9c-4b0f-8f23-518943bdd7b8"
+        "effective_at": "2026-11-04T12:06:09.725Z",
+        "trace_id": "8ba5dc12-c818-403b-bd07-9f6b448179cd",
+        "audit_event_id": "34e892ed-1eee-4c9c-abdd-15a6210433c6"
       }
     }
   },
   {
     "check_id": "S7-01",
     "system": "cybersecurity",
-    "utc": "2026-11-04T10:41:00Z",
-    "elapsed_ms": 32,
+    "utc": "2026-11-04T12:06:09Z",
+    "elapsed_ms": 31,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:51300/api/v1/access/revoke",
+      "url": "http://127.0.0.1:57509/api/v1/access/revoke",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "08d34ff3-4f3f-4aa6-8b47-4788cd9abc77",
+        "x-trace-id": "895b7f9a-03fe-4021-bcb0-0d40cf436567",
         "content-type": "application/json"
       },
       "body": {
@@ -96,31 +96,31 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "4bc880d7-9966-45e3-b1b5-b8972b1e2828",
-        "x-trace-id": "08d34ff3-4f3f-4aa6-8b47-4788cd9abc77"
+        "x-request-id": "dad01a8e-5974-4b50-a7da-025d8ee6a88f",
+        "x-trace-id": "895b7f9a-03fe-4021-bcb0-0d40cf436567"
       },
       "body": {
         "contract_version": "1.0.0",
-        "revocation_id": "8e837000-5ffb-4242-9f7a-1f09e8c2cce8",
+        "revocation_id": "a6c839f3-a53d-4bb4-991c-aeed3462158a",
         "revocation_type": "user_deactivation",
         "status": "REVOKED",
-        "effective_at": "2026-11-04T10:41:00.597Z",
-        "trace_id": "08d34ff3-4f3f-4aa6-8b47-4788cd9abc77",
-        "audit_event_id": "9ff29221-1d30-46ae-b610-e22a9838f8a5"
+        "effective_at": "2026-11-04T12:06:09.753Z",
+        "trace_id": "895b7f9a-03fe-4021-bcb0-0d40cf436567",
+        "audit_event_id": "0a285f19-1342-4f71-be25-32074482211a"
       }
     }
   },
   {
     "check_id": "S7-01",
     "system": "cybersecurity",
-    "utc": "2026-11-04T10:41:04Z",
-    "elapsed_ms": 77,
+    "utc": "2026-11-04T12:06:13Z",
+    "elapsed_ms": 93,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:51300/api/v1/auth/me",
+      "url": "http://127.0.0.1:57509/api/v1/auth/me",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "09fd01c1-e489-4a24-8277-5f5cc9171ca6"
+        "x-trace-id": "0b5daa3c-195c-4ade-97f4-8180df2fe092"
       },
       "body": null
     },
@@ -128,17 +128,17 @@
       "status": 401,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "abbfb745-6945-4b7c-a73b-22ae3fe5c463",
-        "x-trace-id": "09fd01c1-e489-4a24-8277-5f5cc9171ca6"
+        "x-request-id": "0f854b70-a8d9-446a-8613-352c0fc7248d",
+        "x-trace-id": "0b5daa3c-195c-4ade-97f4-8180df2fe092"
       },
       "body": {
         "error": true,
         "code": "INVALID_CREDENTIALS",
         "status_code": 401,
         "message": "Invalid or expired credentials.",
-        "trace_id": "09fd01c1-e489-4a24-8277-5f5cc9171ca6",
-        "request_id": "abbfb745-6945-4b7c-a73b-22ae3fe5c463",
-        "timestamp": "2026-11-04T10:41:04.602Z",
+        "trace_id": "0b5daa3c-195c-4ade-97f4-8180df2fe092",
+        "request_id": "0f854b70-a8d9-446a-8613-352c0fc7248d",
+        "timestamp": "2026-11-04T12:06:13.809Z",
         "details": []
       }
     }
@@ -146,14 +146,14 @@
   {
     "check_id": "S7-01",
     "system": "cybersecurity",
-    "utc": "2026-11-04T10:41:04Z",
+    "utc": "2026-11-04T12:06:13Z",
     "elapsed_ms": 15,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:51300/api/v1/auth/me",
+      "url": "http://127.0.0.1:57509/api/v1/auth/me",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "f3953e26-a4db-46f4-a829-2ef9186cca0b"
+        "x-trace-id": "b1f15986-9b2f-4d02-a312-54f1831e7678"
       },
       "body": null
     },
@@ -161,17 +161,17 @@
       "status": 403,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "059e7eba-5289-44ce-ac04-077b77929e9a",
-        "x-trace-id": "f3953e26-a4db-46f4-a829-2ef9186cca0b"
+        "x-request-id": "6f655ecd-a7f2-4caf-adc1-a638a9c987c5",
+        "x-trace-id": "b1f15986-9b2f-4d02-a312-54f1831e7678"
       },
       "body": {
         "error": true,
         "code": "ACCOUNT_DEACTIVATED",
         "status_code": 403,
         "message": "Account is deactivated. Access denied.",
-        "trace_id": "f3953e26-a4db-46f4-a829-2ef9186cca0b",
-        "request_id": "059e7eba-5289-44ce-ac04-077b77929e9a",
-        "timestamp": "2026-11-04T10:41:04.614Z",
+        "trace_id": "b1f15986-9b2f-4d02-a312-54f1831e7678",
+        "request_id": "6f655ecd-a7f2-4caf-adc1-a638a9c987c5",
+        "timestamp": "2026-11-04T12:06:13.827Z",
         "details": []
       }
     }
@@ -179,14 +179,14 @@
   {
     "check_id": "S7-01",
     "system": "cybersecurity",
-    "utc": "2026-11-04T10:41:04Z",
-    "elapsed_ms": 15,
+    "utc": "2026-11-04T12:06:13Z",
+    "elapsed_ms": 16,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:51300/api/v1/auth/me",
+      "url": "http://127.0.0.1:57509/api/v1/auth/me",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "00bfbefc-4585-4dfb-9a65-2d83a61bafab"
+        "x-trace-id": "adfde61f-6c32-4854-83ba-c51873d61537"
       },
       "body": null
     },
@@ -194,8 +194,8 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "382fbc50-7732-435c-b348-f20293ad7030",
-        "x-trace-id": "00bfbefc-4585-4dfb-9a65-2d83a61bafab"
+        "x-request-id": "4f8995fc-f6ca-4593-bc41-bcb5228567b8",
+        "x-trace-id": "adfde61f-6c32-4854-83ba-c51873d61537"
       },
       "body": {
         "email": "investigator.a@bhiv-verification.example",
@@ -203,7 +203,7 @@
         "role": "investigator",
         "id": 2,
         "is_active": true,
-        "created_at": "2026-11-04T10:39:41.152533"
+        "created_at": "2026-11-04T12:05:01.293225"
       }
     }
   }

@@ -110,7 +110,9 @@ def defect_status(defect: dict, by_id: dict) -> str:
         chk = defect.get("check")
         r = by_id.get(chk) if chk else None
         if r is None:
-            return "FIXED in this change (unit tests; no runtime check)" if chk is None else f"FIXED in this change ({chk} not run)"
+            if chk is None:
+                return f"FIXED in this change (no runtime check; verified by {defect.get('verified_by', 'NOT STATED')})"
+            return f"FIXED in this change ({chk} not run)"
         if r["status"] == "PASS":
             return f"FIXED in this change; {chk} passes in this run"
         return f"FIX NOT CONFIRMED: {chk} {r['status']} in this run"

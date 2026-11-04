@@ -1,118 +1,136 @@
 # Raw output: cybercrime/backend unit tests AFTER this change (bridge tests use SIMULATED peers)
 # command: cd cybercrime/backend && python -m pytest -v -p no:cacheprovider   (SECRET_KEY unset; conftest.py isolates the run)
-# utc: 2026-11-04T11:48:26Z ; python 3.12.7 ; run on this delivery's final product code (cybercrime/ is unchanged by the audit fixes)
+# utc: 2026-11-04T12:08:22Z ; python 3.12.7 ; commit 8c7f387 (the commit the verification run used)
 C:\Users\acer\Downloads\BHIV-cyber\repos\.venvs\cyber312\Lib\site-packages\pytest_asyncio\plugin.py:300: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
 The event loop scope for asynchronous fixtures will default to the "fixture" caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to "function" scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
 
   warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
-C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\cybercrime\backend\app\db\database.py:17: MovedIn20Warning: The ``declarative_base()`` function is now available as sqlalchemy.orm.declarative_base(). (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+C:\Users\acer\Downloads\BHIV-cyber\repos\cyber-lane-fixes\cybercrime\backend\app\db\database.py:17: MovedIn20Warning: The ``declarative_base()`` function is now available as sqlalchemy.orm.declarative_base(). (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
   Base = declarative_base()
 ============================= test session starts =============================
 platform win32 -- Python 3.12.7, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\acer\Downloads\BHIV-cyber\repos\.venvs\cyber312\Scripts\python.exe
-rootdir: C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\cybercrime\backend
+rootdir: C:\Users\acer\Downloads\BHIV-cyber\repos\cyber-lane-fixes\cybercrime\backend
 plugins: anyio-4.16.0, platformdirs-4.14.4, asyncio-1.4.1.post1
 asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
-collecting ... collected 67 items
+collecting ... collected 85 items
 
 test_endpoint.py::test_endpoint PASSED                                   [  1%]
-test_p0_runtime_bridge.py::test_vajra_verify_maps_states PASSED          [  2%]
-test_p0_runtime_bridge.py::test_vajra_unreachable_is_unavailable_not_success PASSED [  4%]
-test_p0_runtime_bridge.py::test_vajra_evidence_status_mapping[200-body0-RECORDED] PASSED [  5%]
-test_p0_runtime_bridge.py::test_vajra_evidence_status_mapping[200-body1-SIMULATED] PASSED [  7%]
-test_p0_runtime_bridge.py::test_vajra_evidence_status_mapping[409-body2-DUPLICATE_TRACE] PASSED [  8%]
-test_p0_runtime_bridge.py::test_vajra_evidence_status_mapping[401-body3-UNAUTHORIZED] PASSED [ 10%]
-test_p0_runtime_bridge.py::test_vajra_evidence_status_mapping[400-body4-REJECTED] PASSED [ 11%]
-test_p0_runtime_bridge.py::test_vajra_evidence_status_mapping[503-body5-UNAVAILABLE] PASSED [ 13%]
-test_p0_runtime_bridge.py::test_vajra_evidence_without_secret_is_not_sent PASSED [ 14%]
-test_p0_runtime_bridge.py::test_tantra_rejection_is_not_bypassed PASSED  [ 16%]
-test_p0_runtime_bridge.py::test_tantra_validated_envelope_is_ingested_and_replay_checked PASSED [ 17%]
-test_p0_runtime_bridge.py::test_traceparent_only_for_uuid_trace_ids PASSED [ 19%]
-test_p0_runtime_bridge.py::test_vajra_verify_is_strict_about_booleans PASSED [ 20%]
-test_p0_runtime_bridge.py::test_malformed_secret_is_not_sent_and_never_echoed PASSED [ 22%]
-test_p0_runtime_bridge.py::test_exception_detail_is_class_name_only PASSED [ 23%]
-test_p0_runtime_bridge.py::test_karma_replay_mismatch_is_not_counted_as_recorded PASSED [ 25%]
-test_p0_runtime_bridge.py::test_submission_prefix_marks_test_traffic PASSED [ 26%]
-test_p0_runtime_bridge.py::test_endpoint_requires_authentication PASSED  [ 28%]
-test_p0_runtime_bridge.py::test_endpoint_decisions_fail_closed[authority0-ALLOW-ALLOWED_BY_VAJRA_AUTHORITY] PASSED [ 29%]
-test_p0_runtime_bridge.py::test_endpoint_decisions_fail_closed[authority1-DENY-VAJRA_AUTHORITY_NOT_GRANTED] PASSED [ 31%]
-test_p0_runtime_bridge.py::test_endpoint_decisions_fail_closed[authority2-DENY-VAJRA_UNAVAILABLE] PASSED [ 32%]
-test_p0_runtime_bridge.py::test_endpoint_decisions_fail_closed[authority3-DENY-VAJRA_NOT_CONFIGURED] PASSED [ 34%]
-test_p0_runtime_bridge.py::test_allow_requires_vajra_evidence PASSED     [ 35%]
-test_p0_runtime_bridge.py::test_endpoint_reports_tantra_gap_without_changing_decision PASSED [ 37%]
-test_p0_runtime_bridge.py::test_tantra_payload_is_the_canonical_event PASSED [ 38%]
-test_p0_runtime_bridge.py::test_idempotent_repeat_executes_once_and_rechecks_vajra PASSED [ 40%]
-test_p0_runtime_bridge.py::test_same_key_different_request_is_refused PASSED [ 41%]
-test_p0_runtime_bridge.py::test_replay_after_revocation_is_refused PASSED [ 43%]
-test_p0_runtime_bridge.py::test_replay_of_a_deny_is_answered_as_duplicate PASSED [ 44%]
-test_p0_runtime_bridge.py::test_keys_are_scoped_per_caller PASSED        [ 46%]
-test_p0_runtime_bridge.py::test_in_flight_key_returns_409 PASSED         [ 47%]
-test_p0_runtime_bridge.py::test_endpoint_withholds_decision_when_audit_cannot_persist PASSED [ 49%]
-test_p0_runtime_bridge.py::test_endpoint_audit_row_written PASSED        [ 50%]
-test_p0_runtime_bridge.py::test_health_hides_peer_topology_from_anonymous_callers PASSED [ 52%]
-test_p0_runtime_bridge.py::test_vajra_evidence_commits_to_the_stored_audit_event PASSED [ 53%]
-test_p0_runtime_bridge.py::test_invalid_trace_id_is_rejected PASSED      [ 55%]
-test_p0_runtime_bridge.py::test_redaction_keeps_plain_words PASSED       [ 56%]
-test_phase3_sovereign_control.py::test_canonical_event_schema_and_secret_scrubbing PASSED [ 58%]
-test_phase3_sovereign_control.py::test_canonical_event_invalid_schema_rejection PASSED [ 59%]
-test_phase3_sovereign_control.py::test_authz_check_unauthenticated_rejection_sec01 PASSED [ 61%]
-test_phase3_sovereign_control.py::test_authz_check_invalid_credentials_sec01 PASSED [ 62%]
-test_phase3_sovereign_control.py::test_authz_check_identity_spoofing_forbidden_sec01 PASSED [ 64%]
-test_phase3_sovereign_control.py::test_authz_check_allow_case PASSED     [ 65%]
-test_phase3_sovereign_control.py::test_authz_check_deny_investigator_delete PASSED [ 67%]
-test_phase3_sovereign_control.py::test_authz_check_deny_inactive_user PASSED [ 68%]
-test_phase3_sovereign_control.py::test_authz_check_self_boundary_violation PASSED [ 70%]
-test_phase3_sovereign_control.py::test_authz_check_superadmin_allow_all PASSED [ 71%]
-test_phase3_sovereign_control.py::test_access_revoke_unauthenticated_rejection_sec06 PASSED [ 73%]
-test_phase3_sovereign_control.py::test_access_revoke_non_superadmin_forbidden_sec06 PASSED [ 74%]
-test_phase3_sovereign_control.py::test_access_revoke_forged_requested_by_forbidden_sec06 PASSED [ 76%]
-test_phase3_sovereign_control.py::test_access_revoke_tier2_user_deactivation PASSED [ 77%]
-test_phase3_sovereign_control.py::test_deactivated_account_response_403_sec05 PASSED [ 79%]
-test_phase3_sovereign_control.py::test_access_revoke_tier3_token_invalidation_and_persistence_sec03 PASSED [ 80%]
-test_phase3_sovereign_control.py::test_jti_revocation_fail_closed_on_db_error_sec03 PASSED [ 82%]
-test_phase3_sovereign_control.py::test_outbound_trace_propagation_sec04 PASSED [ 83%]
-test_phase3_sovereign_control.py::test_emit_core_event_trace_propagation_sec04 PASSED [ 85%]
-test_phase3_sovereign_control.py::test_canonical_audit_persistence_failure_policy_sec07 PASSED [ 86%]
-test_phase3_sovereign_control.py::test_rbac_supported_roles_alignment_sec08 PASSED [ 88%]
-test_phase3_sovereign_control.py::test_trace_id_propagation_and_canonical_error PASSED [ 89%]
-test_phase4_cross_repo_integration.py::test_canonical_event_cross_repo_compatibility PASSED [ 91%]
-test_phase4_cross_repo_integration.py::test_case_id_lossless_mapping PASSED [ 92%]
-test_phase4_cross_repo_integration.py::test_trace_id_cross_service_continuity PASSED [ 94%]
-test_phase4_cross_repo_integration.py::test_downstream_service_unavailability_graceful_degradation PASSED [ 95%]
+test_lane_fixes.py::test_register_is_not_public PASSED                   [  2%]
+test_lane_fixes.py::test_public_access_request_route_still_open PASSED   [  3%]
+test_lane_fixes.py::test_login_errors_are_identical_and_recorded PASSED  [  4%]
+test_lane_fixes.py::test_deactivated_account_message_only_after_correct_password PASSED [  5%]
+test_lane_fixes.py::test_repeated_failed_logins_open_one_incident_for_review PASSED [  7%]
+test_lane_fixes.py::test_below_threshold_opens_nothing PASSED            [  8%]
+test_lane_fixes.py::test_incident_api_is_superadmin_only PASSED          [  9%]
+test_lane_fixes.py::test_permission_revocation_takes_effect_and_can_be_restored PASSED [ 10%]
+test_lane_fixes.py::test_superadmin_and_unknown_pairs_cannot_be_revoked PASSED [ 11%]
+test_lane_fixes.py::test_unknown_wallet_gets_no_invented_data PASSED     [ 12%]
+test_lane_fixes.py::test_demo_mode_labels_every_generated_transaction PASSED [ 14%]
+test_lane_fixes.py::test_collection_without_trailing_slash_redirects PASSED [ 15%]
+test_lane_fixes.py::test_preflight_still_answered PASSED                 [ 16%]
+test_lane_fixes.py::test_anonymous_health_has_no_paths PASSED            [ 17%]
+test_lane_fixes.py::test_malformed_trace_id_is_not_echoed PASSED         [ 18%]
+test_lane_fixes.py::test_upload_reports_bucket_outcome PASSED            [ 20%]
+test_lane_fixes.py::test_bucket_key_travels_in_a_header_not_the_payload PASSED [ 21%]
+test_lane_fixes.py::test_protected_access_is_rate_limited_per_caller PASSED [ 22%]
+test_p0_runtime_bridge.py::test_vajra_verify_maps_states PASSED          [ 23%]
+test_p0_runtime_bridge.py::test_vajra_unreachable_is_unavailable_not_success PASSED [ 24%]
+test_p0_runtime_bridge.py::test_vajra_evidence_status_mapping[200-body0-RECORDED] PASSED [ 25%]
+test_p0_runtime_bridge.py::test_vajra_evidence_status_mapping[200-body1-SIMULATED] PASSED [ 27%]
+test_p0_runtime_bridge.py::test_vajra_evidence_status_mapping[409-body2-DUPLICATE_TRACE] PASSED [ 28%]
+test_p0_runtime_bridge.py::test_vajra_evidence_status_mapping[401-body3-UNAUTHORIZED] PASSED [ 29%]
+test_p0_runtime_bridge.py::test_vajra_evidence_status_mapping[400-body4-REJECTED] PASSED [ 30%]
+test_p0_runtime_bridge.py::test_vajra_evidence_status_mapping[503-body5-UNAVAILABLE] PASSED [ 31%]
+test_p0_runtime_bridge.py::test_vajra_evidence_without_secret_is_not_sent PASSED [ 32%]
+test_p0_runtime_bridge.py::test_tantra_rejection_is_not_bypassed PASSED  [ 34%]
+test_p0_runtime_bridge.py::test_tantra_validated_envelope_is_ingested_and_replay_checked PASSED [ 35%]
+test_p0_runtime_bridge.py::test_traceparent_only_for_uuid_trace_ids PASSED [ 36%]
+test_p0_runtime_bridge.py::test_vajra_verify_is_strict_about_booleans PASSED [ 37%]
+test_p0_runtime_bridge.py::test_malformed_secret_is_not_sent_and_never_echoed PASSED [ 38%]
+test_p0_runtime_bridge.py::test_exception_detail_is_class_name_only PASSED [ 40%]
+test_p0_runtime_bridge.py::test_karma_replay_mismatch_is_not_counted_as_recorded PASSED [ 41%]
+test_p0_runtime_bridge.py::test_submission_prefix_marks_test_traffic PASSED [ 42%]
+test_p0_runtime_bridge.py::test_endpoint_requires_authentication PASSED  [ 43%]
+test_p0_runtime_bridge.py::test_endpoint_decisions_fail_closed[authority0-ALLOW-ALLOWED_BY_VAJRA_AUTHORITY] PASSED [ 44%]
+test_p0_runtime_bridge.py::test_endpoint_decisions_fail_closed[authority1-DENY-VAJRA_AUTHORITY_NOT_GRANTED] PASSED [ 45%]
+test_p0_runtime_bridge.py::test_endpoint_decisions_fail_closed[authority2-DENY-VAJRA_UNAVAILABLE] PASSED [ 47%]
+test_p0_runtime_bridge.py::test_endpoint_decisions_fail_closed[authority3-DENY-VAJRA_NOT_CONFIGURED] PASSED [ 48%]
+test_p0_runtime_bridge.py::test_allow_requires_vajra_evidence PASSED     [ 49%]
+test_p0_runtime_bridge.py::test_endpoint_reports_tantra_gap_without_changing_decision PASSED [ 50%]
+test_p0_runtime_bridge.py::test_tantra_payload_is_the_canonical_event PASSED [ 51%]
+test_p0_runtime_bridge.py::test_idempotent_repeat_executes_once_and_rechecks_vajra PASSED [ 52%]
+test_p0_runtime_bridge.py::test_same_key_different_request_is_refused PASSED [ 54%]
+test_p0_runtime_bridge.py::test_replay_after_revocation_is_refused PASSED [ 55%]
+test_p0_runtime_bridge.py::test_replay_of_a_deny_is_answered_as_duplicate PASSED [ 56%]
+test_p0_runtime_bridge.py::test_keys_are_scoped_per_caller PASSED        [ 57%]
+test_p0_runtime_bridge.py::test_in_flight_key_returns_409 PASSED         [ 58%]
+test_p0_runtime_bridge.py::test_endpoint_withholds_decision_when_audit_cannot_persist PASSED [ 60%]
+test_p0_runtime_bridge.py::test_endpoint_audit_row_written PASSED        [ 61%]
+test_p0_runtime_bridge.py::test_health_hides_peer_topology_from_anonymous_callers PASSED [ 62%]
+test_p0_runtime_bridge.py::test_vajra_evidence_commits_to_the_stored_audit_event PASSED [ 63%]
+test_p0_runtime_bridge.py::test_invalid_trace_id_is_rejected PASSED      [ 64%]
+test_p0_runtime_bridge.py::test_redaction_keeps_plain_words PASSED       [ 65%]
+test_phase3_sovereign_control.py::test_canonical_event_schema_and_secret_scrubbing PASSED [ 67%]
+test_phase3_sovereign_control.py::test_canonical_event_invalid_schema_rejection PASSED [ 68%]
+test_phase3_sovereign_control.py::test_authz_check_unauthenticated_rejection_sec01 PASSED [ 69%]
+test_phase3_sovereign_control.py::test_authz_check_invalid_credentials_sec01 PASSED [ 70%]
+test_phase3_sovereign_control.py::test_authz_check_identity_spoofing_forbidden_sec01 PASSED [ 71%]
+test_phase3_sovereign_control.py::test_authz_check_allow_case PASSED     [ 72%]
+test_phase3_sovereign_control.py::test_authz_check_deny_investigator_delete PASSED [ 74%]
+test_phase3_sovereign_control.py::test_authz_check_deny_inactive_user PASSED [ 75%]
+test_phase3_sovereign_control.py::test_authz_check_self_boundary_violation PASSED [ 76%]
+test_phase3_sovereign_control.py::test_authz_check_superadmin_allow_all PASSED [ 77%]
+test_phase3_sovereign_control.py::test_access_revoke_unauthenticated_rejection_sec06 PASSED [ 78%]
+test_phase3_sovereign_control.py::test_access_revoke_non_superadmin_forbidden_sec06 PASSED [ 80%]
+test_phase3_sovereign_control.py::test_access_revoke_forged_requested_by_forbidden_sec06 PASSED [ 81%]
+test_phase3_sovereign_control.py::test_access_revoke_tier2_user_deactivation PASSED [ 82%]
+test_phase3_sovereign_control.py::test_deactivated_account_response_403_sec05 PASSED [ 83%]
+test_phase3_sovereign_control.py::test_access_revoke_tier3_token_invalidation_and_persistence_sec03 PASSED [ 84%]
+test_phase3_sovereign_control.py::test_jti_revocation_fail_closed_on_db_error_sec03 PASSED [ 85%]
+test_phase3_sovereign_control.py::test_outbound_trace_propagation_sec04 PASSED [ 87%]
+test_phase3_sovereign_control.py::test_emit_core_event_trace_propagation_sec04 PASSED [ 88%]
+test_phase3_sovereign_control.py::test_canonical_audit_persistence_failure_policy_sec07 PASSED [ 89%]
+test_phase3_sovereign_control.py::test_rbac_supported_roles_alignment_sec08 PASSED [ 90%]
+test_phase3_sovereign_control.py::test_trace_id_propagation_and_canonical_error PASSED [ 91%]
+test_phase4_cross_repo_integration.py::test_canonical_event_cross_repo_compatibility PASSED [ 92%]
+test_phase4_cross_repo_integration.py::test_case_id_lossless_mapping PASSED [ 94%]
+test_phase4_cross_repo_integration.py::test_trace_id_cross_service_continuity PASSED [ 95%]
+test_phase4_cross_repo_integration.py::test_downstream_service_unavailability_graceful_degradation PASSED [ 96%]
 test_phase4_cross_repo_integration.py::test_downstream_service_unauthorized_handling PASSED [ 97%]
 test_phase4_cross_repo_integration.py::test_revocation_enforcement_at_service_boundary PASSED [ 98%]
 test_phase4_cross_repo_integration.py::test_cross_repo_status_code_harmonization_verification PASSED [100%]
 
 ============================== warnings summary ===============================
 app\api\v1\schemas.py:21
-  C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\cybercrime\backend\app\api\v1\schemas.py:21: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
+  C:\Users\acer\Downloads\BHIV-cyber\repos\cyber-lane-fixes\cybercrime\backend\app\api\v1\schemas.py:21: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
     class UserResponse(UserBase):
 
 app\api\v1\schemas.py:48
-  C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\cybercrime\backend\app\api\v1\schemas.py:48: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
+  C:\Users\acer\Downloads\BHIV-cyber\repos\cyber-lane-fixes\cybercrime\backend\app\api\v1\schemas.py:48: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
     class CaseResponse(CaseBase):
 
 app\api\v1\schemas.py:71
-  C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\cybercrime\backend\app\api\v1\schemas.py:71: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
+  C:\Users\acer\Downloads\BHIV-cyber\repos\cyber-lane-fixes\cybercrime\backend\app\api\v1\schemas.py:71: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
     class WalletResponse(WalletBase):
 
 app\api\v1\schemas.py:97
-  C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\cybercrime\backend\app\api\v1\schemas.py:97: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
+  C:\Users\acer\Downloads\BHIV-cyber\repos\cyber-lane-fixes\cybercrime\backend\app\api\v1\schemas.py:97: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
     class TransactionResponse(TransactionBase):
 
 app\api\v1\schemas.py:126
-  C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\cybercrime\backend\app\api\v1\schemas.py:126: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
+  C:\Users\acer\Downloads\BHIV-cyber\repos\cyber-lane-fixes\cybercrime\backend\app\api\v1\schemas.py:126: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
     class EvidenceResponse(EvidenceBase):
 
-app\api\v1\schemas.py:148
-  C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\cybercrime\backend\app\api\v1\schemas.py:148: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
+app\api\v1\schemas.py:151
+  C:\Users\acer\Downloads\BHIV-cyber\repos\cyber-lane-fixes\cybercrime\backend\app\api\v1\schemas.py:151: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
     class RiskScoreResponse(RiskScoreBase):
 
-app\api\v1\schemas.py:158
-  C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\cybercrime\backend\app\api\v1\schemas.py:158: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
+app\api\v1\schemas.py:161
+  C:\Users\acer\Downloads\BHIV-cyber\repos\cyber-lane-fixes\cybercrime\backend\app\api\v1\schemas.py:161: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
     class AuditLogResponse(BaseModel):
 
-app\api\v1\schemas.py:193
-  C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\cybercrime\backend\app\api\v1\schemas.py:193: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
+app\api\v1\schemas.py:196
+  C:\Users\acer\Downloads\BHIV-cyber\repos\cyber-lane-fixes\cybercrime\backend\app\api\v1\schemas.py:196: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
     class GraphEdge(BaseModel):
 
 ..\..\..\.venvs\cyber312\Lib\site-packages\starlette\testclient.py:37
@@ -120,26 +138,36 @@ app\api\v1\schemas.py:193
     _PortalFactoryType = typing.Callable[[], typing.ContextManager[anyio.abc.BlockingPortal]]
 
 app\api\v1\endpoints\messages.py:27
-  C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\cybercrime\backend\app\api\v1\endpoints\messages.py:27: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
+  C:\Users\acer\Downloads\BHIV-cyber\repos\cyber-lane-fixes\cybercrime\backend\app\api\v1\endpoints\messages.py:27: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.14/migration/
     class MessageResponse(BaseModel):
 
 test_endpoint.py: 2 warnings
+test_lane_fixes.py: 42 warnings
 test_p0_runtime_bridge.py: 33 warnings
 test_phase3_sovereign_control.py: 17 warnings
 test_phase4_cross_repo_integration.py: 8 warnings
   C:\Users\acer\Downloads\BHIV-cyber\repos\.venvs\cyber312\Lib\site-packages\sqlalchemy\sql\schema.py:4362: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
     return util.wrap_callable(lambda ctx: fn(), fn)  # type: ignore[call-arg, no-any-return, no-untyped-call]  # noqa: E501
 
+test_lane_fixes.py: 24 warnings
 test_p0_runtime_bridge.py: 3 warnings
 test_phase3_sovereign_control.py: 12 warnings
 test_phase4_cross_repo_integration.py: 3 warnings
-  C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\cybercrime\backend\app\core\security.py:145: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  C:\Users\acer\Downloads\BHIV-cyber\repos\cyber-lane-fixes\cybercrime\backend\app\core\security.py:145: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
     expire = datetime.utcnow() + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+
+test_lane_fixes.py: 15 warnings
+  C:\Users\acer\Downloads\BHIV-cyber\repos\cyber-lane-fixes\cybercrime\backend\app\core\threat_detection.py:84: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = now or datetime.utcnow()
+
+test_lane_fixes.py::test_upload_reports_bucket_outcome
+  C:\Users\acer\Downloads\BHIV-cyber\repos\cyber-lane-fixes\cybercrime\backend\app\api\v1\endpoints\evidence.py:210: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    evidence_id = f"EV-{int(datetime.utcnow().timestamp() * 1000)}"
 
 test_phase3_sovereign_control.py::test_access_revoke_tier3_token_invalidation_and_persistence_sec03
 test_phase4_cross_repo_integration.py::test_revocation_enforcement_at_service_boundary
-  C:\Users\acer\Downloads\BHIV-cyber\repos\cybersecurity-authentication\cybercrime\backend\app\core\security.py:89: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  C:\Users\acer\Downloads\BHIV-cyber\repos\cyber-lane-fixes\cybercrime\backend\app\core\security.py:89: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
     revoked_at=datetime.utcnow(),
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-====================== 67 passed, 90 warnings in 23.58s =======================
+====================== 85 passed, 172 warnings in 31.52s ======================

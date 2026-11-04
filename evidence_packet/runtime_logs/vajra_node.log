@@ -1,5 +1,5 @@
 
-===== harness: starting vajra-relay-node at 2026-11-04T10:39:42Z =====
+===== harness: starting vajra-relay-node at 2026-11-04T12:05:02Z =====
 ======================================================================
   BLACKHOLE BLOCKCHAIN — STARTUP SAFETY CHECK
   Safety Level: PRODUCTION
@@ -9,109 +9,109 @@
   [SECURE]  SARATHI_FAIL_CLOSED=ON (default) — governance unreachable = block
 ======================================================================
   PRODUCTION MODE — all safety defaults active
-2026/11/04 14:39:42 [STARTUP][PRODUCTION_MODE] relay started in PRODUCTION mode
+2026/11/04 16:05:03 [STARTUP][PRODUCTION_MODE] relay started in PRODUCTION mode
 ======================================================================
 🐳 BlackHole Blockchain - Docker Mode
 =====================================
 🆕 Fresh blockchain start - creating genesis block...
-🆔 Peer ID: 12D3KooWEpKnP5YnRWJ7NB3jL9sKVLeyWJ3KbAmJ7rVUgGGTygGu
+🆔 Peer ID: 12D3KooWN3xoYutzSygdr9KpZ72M6VWs3A5Hifdn2obQq2JGnMS9
 🚀 Your peer multiaddr:
-   /ip4/127.0.0.1/tcp/51296/p2p/12D3KooWEpKnP5YnRWJ7NB3jL9sKVLeyWJ3KbAmJ7rVUgGGTygGu
+   /ip4/127.0.0.1/tcp/57505/p2p/12D3KooWN3xoYutzSygdr9KpZ72M6VWs3A5Hifdn2obQq2JGnMS9
 🤖 AI fraud detection integration initialized
-2026/11/04 14:39:42 ✅ Production Balance Cache initialized with 100MB memory limit
-2026/11/04 14:39:42 ✅ Loaded 0 accounts and 0 token interactions from database
-2026/11/04 14:39:42 ✅ Account Registry initialized with 0 accounts
+2026/11/04 16:05:03 ✅ Production Balance Cache initialized with 100MB memory limit
+2026/11/04 16:05:03 ✅ Loaded 0 accounts and 0 token interactions from database
+2026/11/04 16:05:03 ✅ Account Registry initialized with 0 accounts
 🆕 Initializing fresh blockchain state (TokenRegistry only)...
 🪙 Minting initial tokens for fresh blockchain...
-2026/11/04 14:39:42 Minting 10000000 tokens to system
-2026/11/04 14:39:42 🪙 [mint] BHIV: 10000000 BHIV →system (success)
-2026/11/04 14:39:42 Mint successful: Balances[system]=10000000, TotalSupply=10000000
-2026/11/04 14:39:42 Minting 1000 tokens to 03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b
-2026/11/04 14:39:42 🪙 [mint] BHIV: 1000 BHIV →03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b (success)
-2026/11/04 14:39:42 Mint successful: Balances[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b]=1000, TotalSupply=10001000
-2026/11/04 14:39:42 Minting 1000 tokens to genesis-validator
-2026/11/04 14:39:42 🪙 [mint] BHIV: 1000 BHIV →genesis-validator (success)
-2026/11/04 14:39:42 Mint successful: Balances[genesis-validator]=1000, TotalSupply=10002000
-2026/11/04 14:39:42 Minting 10000000 tokens to system
-2026/11/04 14:39:42 🪙 [mint] BHIV: 10000000 BHIV →system (success)
-2026/11/04 14:39:42 Mint successful: Balances[system]=20000000, TotalSupply=20002000
-2026/11/04 14:39:42 Minting 500 tokens to bob
-2026/11/04 14:39:42 🪙 [mint] BHIV: 500 BHIV →bob (success)
-2026/11/04 14:39:42 Mint successful: Balances[bob]=500, TotalSupply=20002500
-2026/11/04 14:39:42 Minting 300 tokens to charlie
-2026/11/04 14:39:42 🪙 [mint] BHIV: 300 BHIV →charlie (success)
-2026/11/04 14:39:42 Mint successful: Balances[charlie]=300, TotalSupply=20002800
-2026/11/04 14:39:42 Minting 1000 tokens to alice
-2026/11/04 14:39:42 🪙 [mint] BHIV: 1000 BHIV →alice (success)
-2026/11/04 14:39:42 Mint successful: Balances[alice]=1000, TotalSupply=20003800
+2026/11/04 16:05:03 Minting 10000000 tokens to system
+2026/11/04 16:05:03 🪙 [mint] BHIV: 10000000 BHIV →system (success)
+2026/11/04 16:05:03 Mint successful: Balances[system]=10000000, TotalSupply=10000000
+2026/11/04 16:05:03 Minting 1000 tokens to 03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b
+2026/11/04 16:05:03 🪙 [mint] BHIV: 1000 BHIV →03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b (success)
+2026/11/04 16:05:03 Mint successful: Balances[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b]=1000, TotalSupply=10001000
+2026/11/04 16:05:03 Minting 1000 tokens to genesis-validator
+2026/11/04 16:05:03 🪙 [mint] BHIV: 1000 BHIV →genesis-validator (success)
+2026/11/04 16:05:03 Mint successful: Balances[genesis-validator]=1000, TotalSupply=10002000
+2026/11/04 16:05:03 Minting 10000000 tokens to system
+2026/11/04 16:05:03 🪙 [mint] BHIV: 10000000 BHIV →system (success)
+2026/11/04 16:05:03 Mint successful: Balances[system]=20000000, TotalSupply=20002000
+2026/11/04 16:05:03 Minting 1000 tokens to alice
+2026/11/04 16:05:03 🪙 [mint] BHIV: 1000 BHIV →alice (success)
+2026/11/04 16:05:03 Mint successful: Balances[alice]=1000, TotalSupply=20003000
+2026/11/04 16:05:03 Minting 500 tokens to bob
+2026/11/04 16:05:03 🪙 [mint] BHIV: 500 BHIV →bob (success)
+2026/11/04 16:05:03 Mint successful: Balances[bob]=500, TotalSupply=20003500
+2026/11/04 16:05:03 Minting 300 tokens to charlie
+2026/11/04 16:05:03 🪙 [mint] BHIV: 300 BHIV →charlie (success)
+2026/11/04 16:05:03 Mint successful: Balances[charlie]=300, TotalSupply=20003800
 ✅ Genesis validator initialized with 1000 stake and 1000 BHIV tokens
 ✅ System account initialized with 10000000 BHIV tokens
 ✅ Test accounts initialized with tokens
-2026/11/04 14:39:42 Minting 1000000 tokens to system
-2026/11/04 14:39:42 🪙 [mint] ETH: 1000000 ETH →system (success)
-2026/11/04 14:39:42 Mint successful: Balances[system]=1000000, TotalSupply=1000000
-2026/11/04 14:39:42 Minting 10000 tokens to 03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b
-2026/11/04 14:39:42 🪙 [mint] ETH: 10000 ETH →03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b (success)
-2026/11/04 14:39:42 Mint successful: Balances[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b]=10000, TotalSupply=1010000
-2026/11/04 14:39:42 Minting 10000000 tokens to system
-2026/11/04 14:39:42 🪙 [mint] USDT: 10000000 USDT →system (success)
-2026/11/04 14:39:42 Mint successful: Balances[system]=10000000, TotalSupply=10000000
-2026/11/04 14:39:42 Minting 50000 tokens to 03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b
-2026/11/04 14:39:42 🪙 [mint] USDT: 50000 USDT →03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b (success)
-2026/11/04 14:39:42 Mint successful: Balances[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b]=50000, TotalSupply=10050000
+2026/11/04 16:05:03 Minting 1000000 tokens to system
+2026/11/04 16:05:03 🪙 [mint] ETH: 1000000 ETH →system (success)
+2026/11/04 16:05:03 Mint successful: Balances[system]=1000000, TotalSupply=1000000
+2026/11/04 16:05:03 Minting 10000 tokens to 03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b
+2026/11/04 16:05:03 🪙 [mint] ETH: 10000 ETH →03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b (success)
+2026/11/04 16:05:03 Mint successful: Balances[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b]=10000, TotalSupply=1010000
+2026/11/04 16:05:03 Minting 10000000 tokens to system
+2026/11/04 16:05:03 🪙 [mint] USDT: 10000000 USDT →system (success)
+2026/11/04 16:05:03 Mint successful: Balances[system]=10000000, TotalSupply=10000000
+2026/11/04 16:05:03 Minting 50000 tokens to 03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b
+2026/11/04 16:05:03 🪙 [mint] USDT: 50000 USDT →03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b (success)
+2026/11/04 16:05:03 Mint successful: Balances[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b]=50000, TotalSupply=10050000
 ✅ Additional tokens initialized: ETH and USDT
 ⚡ Slashing manager initialized and monitoring started
-2026/11/04 14:39:42 🚀 Inflation adjustment process started (interval: 1h0m0s)
+2026/11/04 16:05:03 🚀 Inflation adjustment process started (interval: 1h0m0s)
 💰 Reward inflation manager initialized and started
-2026/11/04 14:39:42 🔄 Loading token balances from persistent storage...
-2026/11/04 14:39:42 ✅ Loaded 0 token balances from persistent storage
-2026/11/04 14:39:42 📋 BHIV balances after loading:
-2026/11/04 14:39:42    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
-2026/11/04 14:39:42    genesis-validator: 1000
-2026/11/04 14:39:42    bob: 500
-2026/11/04 14:39:42    charlie: 300
-2026/11/04 14:39:42    alice: 1000
-2026/11/04 14:39:42    system: 20000000
-2026/11/04 14:39:42 📋 ETH balances after loading:
-2026/11/04 14:39:42    system: 1000000
-2026/11/04 14:39:42    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
-2026/11/04 14:39:42 📋 USDT balances after loading:
-2026/11/04 14:39:42    system: 10000000
-2026/11/04 14:39:42    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
+2026/11/04 16:05:03 🔄 Loading token balances from persistent storage...
+2026/11/04 16:05:03 ✅ Loaded 0 token balances from persistent storage
+2026/11/04 16:05:03 📋 USDT balances after loading:
+2026/11/04 16:05:03    system: 10000000
+2026/11/04 16:05:03    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
+2026/11/04 16:05:03 📋 BHIV balances after loading:
+2026/11/04 16:05:03    system: 20000000
+2026/11/04 16:05:03    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
+2026/11/04 16:05:03    genesis-validator: 1000
+2026/11/04 16:05:03    alice: 1000
+2026/11/04 16:05:03    bob: 500
+2026/11/04 16:05:03    charlie: 300
+2026/11/04 16:05:03 📋 ETH balances after loading:
+2026/11/04 16:05:03    system: 1000000
+2026/11/04 16:05:03    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
 ✅ Genesis block saved to database
-2026/11/04 14:39:42 💾 Saved balance: ETH[system] = 1000000
-2026/11/04 14:39:42 💾 Saved balance: ETH[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 10000
-2026/11/04 14:39:42 💾 Saved balance: USDT[system] = 10000000
-2026/11/04 14:39:42 💾 Saved balance: USDT[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 50000
-2026/11/04 14:39:42 💾 Saved balance: BHIV[charlie] = 300
-2026/11/04 14:39:42 💾 Saved balance: BHIV[alice] = 1000
-2026/11/04 14:39:42 💾 Saved balance: BHIV[system] = 20000000
-2026/11/04 14:39:42 💾 Saved balance: BHIV[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 1000
-2026/11/04 14:39:42 💾 Saved balance: BHIV[genesis-validator] = 1000
-2026/11/04 14:39:42 💾 Saved balance: BHIV[bob] = 500
-2026/11/04 14:39:42 ✅ Saved 10 token balances to persistent storage
+2026/11/04 16:05:03 💾 Saved balance: BHIV[system] = 20000000
+2026/11/04 16:05:03 💾 Saved balance: BHIV[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 1000
+2026/11/04 16:05:03 💾 Saved balance: BHIV[genesis-validator] = 1000
+2026/11/04 16:05:03 💾 Saved balance: BHIV[alice] = 1000
+2026/11/04 16:05:03 💾 Saved balance: BHIV[bob] = 500
+2026/11/04 16:05:03 💾 Saved balance: BHIV[charlie] = 300
+2026/11/04 16:05:03 💾 Saved balance: ETH[system] = 1000000
+2026/11/04 16:05:03 💾 Saved balance: ETH[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 10000
+2026/11/04 16:05:03 💾 Saved balance: USDT[system] = 10000000
+2026/11/04 16:05:03 💾 Saved balance: USDT[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 50000
+2026/11/04 16:05:03 ✅ Saved 10 token balances to persistent storage
 ✅ Fresh blockchain initialized and saved to persistent storage
 
 🔍 DEBUG: Current Token Balances
 ================================
+📋 BHIV Token Balances:
+   genesis-validator: 1000
+   alice: 1000
+   bob: 500
+   charlie: 300
+   system: 20000000
+   03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
 📋 ETH Token Balances:
    system: 1000000
    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
 📋 USDT Token Balances:
    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
    system: 10000000
-📋 BHIV Token Balances:
-   charlie: 300
-   alice: 1000
-   system: 20000000
-   03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
-   genesis-validator: 1000
-   bob: 500
 ✅ Total balance entries: 10
 ================================
 
 🚀 Your peer multiaddr:
-   /ip4/0.0.0.0/tcp/51296/p2p/12D3KooWEpKnP5YnRWJ7NB3jL9sKVLeyWJ3KbAmJ7rVUgGGTygGu
+   /ip4/0.0.0.0/tcp/57505/p2p/12D3KooWN3xoYutzSygdr9KpZ72M6VWs3A5Hifdn2obQq2JGnMS9
 🔍 Initializing advanced monitoring system...
 ✅ Advanced monitoring system started
 ✅ Advanced monitoring system initialized
@@ -123,18 +123,18 @@
 ✅ Governance simulation initialized
 💡 To use bridge functionality, start the bridge SDK separately:
    go run bridge-sdk/example/main.go
-📝 Blockchain state updated at blockchain_logs\blockchain_state_node_51296.json
+📝 Blockchain state updated at blockchain_logs\blockchain_state_node_57505.json
 ⚠️ ETH_RPC_URL not set. Bridge running in localized mocked mode for EVM.
-📤 Requested blocks 1 to 100
-2026/11/04 14:39:42 [NONCESTORE] loaded 0 addresses from C:\tmp\cyber-p0-verify-20261104T103939Z-paj3nl11\vajra\nonce_ledger.jsonl
+2026/11/04 16:05:03 [NONCESTORE] loaded 0 addresses from C:\tmp\cyber-p0-verify-20261104T120458Z-aqiprzq8\vajra\nonce_ledger.jsonl
 🔄 Running in Docker daemon mode - use Docker logs to monitor
-   P2P Port: 51296
-   HTTP API Port: 51295
-🌐 Access dashboard at http://localhost:51295
-   HTTP API Port: 51295
-🌐 Access dashboard at http://localhost:51295
-🌐 API Server starting on port 51295
-🌐 Open http://localhost:51295 in your browser
+   P2P Port: 57505
+   HTTP API Port: 57504
+🌐 Access dashboard at http://localhost:57504
+   HTTP API Port: 57504
+🌐 Access dashboard at http://localhost:57504
+📤 Requested blocks 1 to 100
+🌐 API Server starting on port 57504
+🌐 Open http://localhost:57504 in your browser
 📝 Proposal submitted: Increase Block Reward (parameter_change)
 📝 Sample governance proposal created: Increase Block Reward
 📤 Requested blocks 1 to 100
@@ -143,18 +143,18 @@
 🤖 Simulating voting for proposal: Increase Block Reward
 📤 Requested blocks 1 to 100
 📤 Sent sync request for blocks 1 to 100
-📝 Blockchain state updated at blockchain_logs\blockchain_state_node_51296.json
+📝 Blockchain state updated at blockchain_logs\blockchain_state_node_57505.json
 🚫 No pending transactions, skipping block mining
-2026/11/04 14:39:55 [VAJRA][SECURITY] Unauthorized access attempt: POST /api/vajra/authority/transition (missing Bearer)
-2026/11/04 14:39:55 [VAJRA][SECURITY] Unauthorized access attempt: POST /api/vajra/authority/transition (invalid token)
-2026/11/04 14:39:55 [VAJRA][SECURITY] Unauthorized access attempt: POST /api/vajra/evidence/record (missing Bearer)
+📤 Requested blocks 1 to 100
+📤 Sent sync request for blocks 1 to 100
+2026/11/04 16:05:19 [VAJRA][SECURITY] Unauthorized access attempt: POST /api/vajra/authority/transition (missing Bearer)
+2026/11/04 16:05:19 [VAJRA][SECURITY] Unauthorized access attempt: POST /api/vajra/authority/transition (invalid token)
+2026/11/04 16:05:19 [VAJRA][SECURITY] Unauthorized access attempt: POST /api/vajra/evidence/record (missing Bearer)
 🧊 [CYBERCRIME] Admin attacker froze wallet cyber-p0-test-wallet
-📤 Requested blocks 1 to 100
-📤 Sent sync request for blocks 1 to 100
 🚫 No pending transactions, skipping block mining
 📤 Requested blocks 1 to 100
 📤 Sent sync request for blocks 1 to 100
-📝 Blockchain state updated at blockchain_logs\blockchain_state_node_51296.json
+📝 Blockchain state updated at blockchain_logs\blockchain_state_node_57505.json
 🚫 No pending transactions, skipping block mining
 📤 Requested blocks 1 to 100
 📤 Sent sync request for blocks 1 to 100
@@ -164,93 +164,87 @@
 🚨 Slashing violation reported: Excessive Downtime for node2 (Severity: 0, Amount: 5)
 ⏰ Validator genesis-validator has been down for 3600 seconds
 🚨 Slashing violation reported: Excessive Downtime for genesis-validator (Severity: 0, Amount: 10)
+📝 Blockchain state updated at blockchain_logs\blockchain_state_node_57505.json
+🚫 No pending transactions, skipping block mining
 📤 Requested blocks 1 to 100
 📤 Sent sync request for blocks 1 to 100
-🚫 No pending transactions, skipping block mining
-📝 Blockchain state updated at blockchain_logs\blockchain_state_node_51296.json
-📤 Requested blocks 1 to 100
-📤 Sent sync request for blocks 1 to 100
-🚫 No pending transactions, skipping block mining
-📝 Blockchain state updated at blockchain_logs\blockchain_state_node_51296.json
 📤 Requested blocks 1 to 100
 📤 Sent sync request for blocks 1 to 100
 🚫 No pending transactions, skipping block mining
 📤 Requested blocks 1 to 100
 📤 Sent sync request for blocks 1 to 100
+📝 Blockchain state updated at blockchain_logs\blockchain_state_node_57505.json
 🚫 No pending transactions, skipping block mining
 📤 Requested blocks 1 to 100
 📤 Sent sync request for blocks 1 to 100
-📝 Blockchain state updated at blockchain_logs\blockchain_state_node_51296.json
 🚫 No pending transactions, skipping block mining
-📤 Requested blocks 1 to 100
-📤 Sent sync request for blocks 1 to 100
-2026/11/04 14:40:42 🧹 Cache cleanup completed: 0 active users, 0KB total memory
-⏰ Validator node1 has been down for 3600 seconds
-⏰ Validator node2 has been down for 3600 seconds
-⏰ Validator genesis-validator has been down for 3600 seconds
-🚫 No pending transactions, skipping block mining
-📤 Requested blocks 1 to 100
-📤 Sent sync request for blocks 1 to 100
-📝 Blockchain state updated at blockchain_logs\blockchain_state_node_51296.json
-📤 Requested blocks 1 to 100
-📤 Sent sync request for blocks 1 to 100
-🚫 No pending transactions, skipping block mining
-📝 Blockchain state updated at blockchain_logs\blockchain_state_node_51296.json
+📝 Blockchain state updated at blockchain_logs\blockchain_state_node_57505.json
 📤 Requested blocks 1 to 100
 📤 Sent sync request for blocks 1 to 100
 🚫 No pending transactions, skipping block mining
 📤 Requested blocks 1 to 100
 📤 Sent sync request for blocks 1 to 100
-🚫 No pending transactions, skipping block mining
-📤 Requested blocks 1 to 100
-📤 Sent sync request for blocks 1 to 100
-📝 Blockchain state updated at blockchain_logs\blockchain_state_node_51296.json
-🚫 No pending transactions, skipping block mining
-📤 Requested blocks 1 to 100
-📤 Sent sync request for blocks 1 to 100
+2026/11/04 16:06:03 🧹 Cache cleanup completed: 0 active users, 0KB total memory
 ⏰ Validator genesis-validator has been down for 3600 seconds
 ⏰ Validator node1 has been down for 3600 seconds
 ⏰ Validator node2 has been down for 3600 seconds
 📤 Requested blocks 1 to 100
 📤 Sent sync request for blocks 1 to 100
 🚫 No pending transactions, skipping block mining
-📝 Blockchain state updated at blockchain_logs\blockchain_state_node_51296.json
+📝 Blockchain state updated at blockchain_logs\blockchain_state_node_57505.json
 📤 Requested blocks 1 to 100
 📤 Sent sync request for blocks 1 to 100
 🚫 No pending transactions, skipping block mining
 📤 Requested blocks 1 to 100
 📤 Sent sync request for blocks 1 to 100
-📝 Blockchain state updated at blockchain_logs\blockchain_state_node_51296.json
+📝 Blockchain state updated at blockchain_logs\blockchain_state_node_57505.json
 🚫 No pending transactions, skipping block mining
 📤 Requested blocks 1 to 100
 📤 Sent sync request for blocks 1 to 100
 🚫 No pending transactions, skipping block mining
 📤 Requested blocks 1 to 100
 📤 Sent sync request for blocks 1 to 100
-📝 Blockchain state updated at blockchain_logs\blockchain_state_node_51296.json
+📝 Blockchain state updated at blockchain_logs\blockchain_state_node_57505.json
 🚫 No pending transactions, skipping block mining
 📤 Requested blocks 1 to 100
 📤 Sent sync request for blocks 1 to 100
-2026/11/04 14:41:42 🧹 Cache cleanup completed: 0 active users, 0KB total memory
 ⏰ Validator node1 has been down for 3600 seconds
 ⏰ Validator node2 has been down for 3600 seconds
 ⏰ Validator genesis-validator has been down for 3600 seconds
+📤 Requested blocks 1 to 100
+📤 Sent sync request for blocks 1 to 100
 🚫 No pending transactions, skipping block mining
-📝 Blockchain state updated at blockchain_logs\blockchain_state_node_51296.json
+📝 Blockchain state updated at blockchain_logs\blockchain_state_node_57505.json
 📤 Requested blocks 1 to 100
 📤 Sent sync request for blocks 1 to 100
+🚫 No pending transactions, skipping block mining
+📝 Blockchain state updated at blockchain_logs\blockchain_state_node_57505.json
 📤 Requested blocks 1 to 100
 📤 Sent sync request for blocks 1 to 100
-2026/11/04 14:41:47 [VAJRA][SECURITY] Unauthorized access attempt: POST /api/vajra/evidence/record (invalid token)
 🚫 No pending transactions, skipping block mining
 📤 Requested blocks 1 to 100
 📤 Sent sync request for blocks 1 to 100
-📝 Blockchain state updated at blockchain_logs\blockchain_state_node_51296.json
 🚫 No pending transactions, skipping block mining
 📤 Requested blocks 1 to 100
 📤 Sent sync request for blocks 1 to 100
+📝 Blockchain state updated at blockchain_logs\blockchain_state_node_57505.json
+🚫 No pending transactions, skipping block mining
+📤 Requested blocks 1 to 100
+📤 Sent sync request for blocks 1 to 100
+2026/11/04 16:06:59 [VAJRA][SECURITY] Unauthorized access attempt: POST /api/vajra/evidence/record (invalid token)
+2026/11/04 16:07:03 🧹 Cache cleanup completed: 0 active users, 0KB total memory
+⏰ Validator node1 has been down for 3600 seconds
+⏰ Validator node2 has been down for 3600 seconds
+⏰ Validator genesis-validator has been down for 3600 seconds
+📝 Blockchain state updated at blockchain_logs\blockchain_state_node_57505.json
+📤 Requested blocks 1 to 100
+📤 Sent sync request for blocks 1 to 100
+🚫 No pending transactions, skipping block mining
+📤 Requested blocks 1 to 100
+📤 Sent sync request for blocks 1 to 100
+🚫 No pending transactions, skipping block mining
 
-===== harness: starting vajra-relay-node at 2026-11-04T10:42:08Z =====
+===== harness: starting vajra-relay-node at 2026-11-04T12:07:21Z =====
 ======================================================================
   BLACKHOLE BLOCKCHAIN — STARTUP SAFETY CHECK
   Safety Level: PRODUCTION
@@ -260,75 +254,201 @@
   [SECURE]  SARATHI_FAIL_CLOSED=ON (default) — governance unreachable = block
 ======================================================================
   PRODUCTION MODE — all safety defaults active
-2026/11/04 14:42:08 [STARTUP][PRODUCTION_MODE] relay started in PRODUCTION mode
+2026/11/04 16:07:21 [STARTUP][PRODUCTION_MODE] relay started in PRODUCTION mode
 ======================================================================
 🐳 BlackHole Blockchain - Docker Mode
 =====================================
 🔄 Existing blockchain detected - loading from database...
-🆔 Peer ID: 12D3KooWEpKnP5YnRWJ7NB3jL9sKVLeyWJ3KbAmJ7rVUgGGTygGu
+🆔 Peer ID: 12D3KooWN3xoYutzSygdr9KpZ72M6VWs3A5Hifdn2obQq2JGnMS9
 🚀 Your peer multiaddr:
-   /ip4/127.0.0.1/tcp/51296/p2p/12D3KooWEpKnP5YnRWJ7NB3jL9sKVLeyWJ3KbAmJ7rVUgGGTygGu
+   /ip4/127.0.0.1/tcp/57505/p2p/12D3KooWN3xoYutzSygdr9KpZ72M6VWs3A5Hifdn2obQq2JGnMS9
 🤖 AI fraud detection integration initialized
-2026/11/04 14:42:08 ✅ Production Balance Cache initialized with 100MB memory limit
-2026/11/04 14:42:08 ✅ Loaded 0 accounts and 0 token interactions from database
-2026/11/04 14:42:08 ✅ Account Registry initialized with 0 accounts
+2026/11/04 16:07:22 ✅ Production Balance Cache initialized with 100MB memory limit
+2026/11/04 16:07:22 ✅ Loaded 0 accounts and 0 token interactions from database
+2026/11/04 16:07:22 ✅ Account Registry initialized with 0 accounts
 🔄 Loading existing blockchain (TokenRegistry only)...
 🔄 Loading existing blockchain - restoring token balances...
-2026/11/04 14:42:08 🔄 Loading token balances from persistent storage...
-2026/11/04 14:42:08 ✅ Loaded balance: BHIV[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 1000
-2026/11/04 14:42:08 ✅ Loaded balance: BHIV[alice] = 1000
-2026/11/04 14:42:08 ✅ Loaded balance: BHIV[bob] = 500
-2026/11/04 14:42:08 ✅ Loaded balance: BHIV[charlie] = 300
-2026/11/04 14:42:08 ✅ Loaded balance: BHIV[genesis-validator] = 1000
-2026/11/04 14:42:08 ✅ Loaded balance: BHIV[system] = 20000000
-2026/11/04 14:42:08 ✅ Loaded balance: ETH[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 10000
-2026/11/04 14:42:08 ✅ Loaded balance: ETH[system] = 1000000
-2026/11/04 14:42:08 ✅ Loaded balance: USDT[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 50000
-2026/11/04 14:42:08 ✅ Loaded balance: USDT[system] = 10000000
-2026/11/04 14:42:08 ✅ Loaded 10 token balances from persistent storage
-2026/11/04 14:42:08 📋 BHIV balances after loading:
-2026/11/04 14:42:08    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
-2026/11/04 14:42:08    alice: 1000
-2026/11/04 14:42:08    bob: 500
-2026/11/04 14:42:08    charlie: 300
-2026/11/04 14:42:08    genesis-validator: 1000
-2026/11/04 14:42:08    system: 20000000
-2026/11/04 14:42:08 📋 ETH balances after loading:
-2026/11/04 14:42:08    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
-2026/11/04 14:42:08    system: 1000000
-2026/11/04 14:42:08 📋 USDT balances after loading:
-2026/11/04 14:42:08    system: 10000000
-2026/11/04 14:42:08    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
+2026/11/04 16:07:22 🔄 Loading token balances from persistent storage...
+2026/11/04 16:07:22 ✅ Loaded balance: BHIV[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 1000
+2026/11/04 16:07:22 ✅ Loaded balance: BHIV[alice] = 1000
+2026/11/04 16:07:22 ✅ Loaded balance: BHIV[bob] = 500
+2026/11/04 16:07:22 ✅ Loaded balance: BHIV[charlie] = 300
+2026/11/04 16:07:22 ✅ Loaded balance: BHIV[genesis-validator] = 1000
+2026/11/04 16:07:22 ✅ Loaded balance: BHIV[system] = 20000000
+2026/11/04 16:07:22 ✅ Loaded balance: ETH[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 10000
+2026/11/04 16:07:22 ✅ Loaded balance: ETH[system] = 1000000
+2026/11/04 16:07:22 ✅ Loaded balance: USDT[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 50000
+2026/11/04 16:07:22 ✅ Loaded balance: USDT[system] = 10000000
+2026/11/04 16:07:22 ✅ Loaded 10 token balances from persistent storage
+2026/11/04 16:07:22 📋 BHIV balances after loading:
+2026/11/04 16:07:22    charlie: 300
+2026/11/04 16:07:22    genesis-validator: 1000
+2026/11/04 16:07:22    system: 20000000
+2026/11/04 16:07:22    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
+2026/11/04 16:07:22    alice: 1000
+2026/11/04 16:07:22    bob: 500
+2026/11/04 16:07:22 📋 ETH balances after loading:
+2026/11/04 16:07:22    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
+2026/11/04 16:07:22    system: 1000000
+2026/11/04 16:07:22 📋 USDT balances after loading:
+2026/11/04 16:07:22    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
+2026/11/04 16:07:22    system: 10000000
 🔄 Restored genesis validator with 1000 stake
 🔄 Skipping additional token minting for existing blockchain
 ⚡ Slashing manager initialized and monitoring started
-2026/11/04 14:42:08 🚀 Inflation adjustment process started (interval: 1h0m0s)
+2026/11/04 16:07:22 🚀 Inflation adjustment process started (interval: 1h0m0s)
 💰 Reward inflation manager initialized and started
-2026/11/04 14:42:08 🔄 Loading token balances from persistent storage...
-2026/11/04 14:42:08 ✅ Loaded balance: BHIV[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 1000
-2026/11/04 14:42:08 ✅ Loaded balance: BHIV[alice] = 1000
-2026/11/04 14:42:08 ✅ Loaded balance: BHIV[bob] = 500
-2026/11/04 14:42:08 ✅ Loaded balance: BHIV[charlie] = 300
-2026/11/04 14:42:08 ✅ Loaded balance: BHIV[genesis-validator] = 1000
-2026/11/04 14:42:08 ✅ Loaded balance: BHIV[system] = 20000000
-2026/11/04 14:42:08 ✅ Loaded balance: ETH[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 10000
-2026/11/04 14:42:08 ✅ Loaded balance: ETH[system] = 1000000
-2026/11/04 14:42:08 ✅ Loaded balance: USDT[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 50000
-2026/11/04 14:42:08 ✅ Loaded balance: USDT[system] = 10000000
-2026/11/04 14:42:08 ✅ Loaded 10 token balances from persistent storage
-2026/11/04 14:42:08 📋 BHIV balances after loading:
-2026/11/04 14:42:08    bob: 500
-2026/11/04 14:42:08    charlie: 300
-2026/11/04 14:42:08    genesis-validator: 1000
-2026/11/04 14:42:08    system: 20000000
-2026/11/04 14:42:08    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
-2026/11/04 14:42:08    alice: 1000
-2026/11/04 14:42:08 📋 ETH balances after loading:
-2026/11/04 14:42:08    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
-2026/11/04 14:42:08    system: 1000000
-2026/11/04 14:42:08 📋 USDT balances after loading:
-2026/11/04 14:42:08    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
-2026/11/04 14:42:08    system: 10000000
+2026/11/04 16:07:22 🔄 Loading token balances from persistent storage...
+2026/11/04 16:07:22 ✅ Loaded balance: BHIV[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 1000
+2026/11/04 16:07:22 ✅ Loaded balance: BHIV[alice] = 1000
+2026/11/04 16:07:22 ✅ Loaded balance: BHIV[bob] = 500
+2026/11/04 16:07:22 ✅ Loaded balance: BHIV[charlie] = 300
+2026/11/04 16:07:22 ✅ Loaded balance: BHIV[genesis-validator] = 1000
+2026/11/04 16:07:22 ✅ Loaded balance: BHIV[system] = 20000000
+2026/11/04 16:07:22 ✅ Loaded balance: ETH[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 10000
+2026/11/04 16:07:22 ✅ Loaded balance: ETH[system] = 1000000
+2026/11/04 16:07:22 ✅ Loaded balance: USDT[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 50000
+2026/11/04 16:07:22 ✅ Loaded balance: USDT[system] = 10000000
+2026/11/04 16:07:22 ✅ Loaded 10 token balances from persistent storage
+2026/11/04 16:07:22 📋 ETH balances after loading:
+2026/11/04 16:07:22    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
+2026/11/04 16:07:22    system: 1000000
+2026/11/04 16:07:22 📋 USDT balances after loading:
+2026/11/04 16:07:22    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
+2026/11/04 16:07:22    system: 10000000
+2026/11/04 16:07:22 📋 BHIV balances after loading:
+2026/11/04 16:07:22    system: 20000000
+2026/11/04 16:07:22    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
+2026/11/04 16:07:22    alice: 1000
+2026/11/04 16:07:22    bob: 500
+2026/11/04 16:07:22    charlie: 300
+2026/11/04 16:07:22    genesis-validator: 1000
+✅ Existing blockchain state loaded from persistent storage
+
+🔍 DEBUG: Current Token Balances
+================================
+📋 USDT Token Balances:
+   03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
+   system: 10000000
+📋 BHIV Token Balances:
+   charlie: 300
+   genesis-validator: 1000
+   system: 20000000
+   03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
+   alice: 1000
+   bob: 500
+📋 ETH Token Balances:
+   03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
+   system: 1000000
+✅ Total balance entries: 10
+================================
+
+🚀 Your peer multiaddr:
+   /ip4/0.0.0.0/tcp/57505/p2p/12D3KooWN3xoYutzSygdr9KpZ72M6VWs3A5Hifdn2obQq2JGnMS9
+🔍 Initializing advanced monitoring system...
+✅ Advanced monitoring system started
+✅ Advanced monitoring system initialized
+🧪 Initializing E2E validation system...
+✅ E2E Validator initialized successfully
+✅ E2E validation system initialized
+🏛️ Initializing governance simulation...
+✅ Governance simulator started
+✅ Governance simulation initialized
+💡 To use bridge functionality, start the bridge SDK separately:
+   go run bridge-sdk/example/main.go
+📝 Blockchain state updated at blockchain_logs\blockchain_state_node_57505.json
+⚠️ ETH_RPC_URL not set. Bridge running in localized mocked mode for EVM.
+2026/11/04 16:07:22 [NONCESTORE] recovered 0 nonce records on startup
+2026/11/04 16:07:22 [NONCESTORE] loaded 0 addresses from C:\tmp\cyber-p0-verify-20261104T120458Z-aqiprzq8\vajra\nonce_ledger.jsonl
+🔄 Running in Docker daemon mode - use Docker logs to monitor
+   P2P Port: 57505
+   HTTP API Port: 57504
+🌐 Access dashboard at http://localhost:57504
+   HTTP API Port: 57504
+🌐 Access dashboard at http://localhost:57504
+🌐 API Server starting on port 57504
+🌐 Open http://localhost:57504 in your browser
+📤 Requested blocks 1 to 100
+
+===== harness: starting vajra-relay-node at 2026-11-04T12:07:22Z =====
+======================================================================
+  BLACKHOLE BLOCKCHAIN — STARTUP SAFETY CHECK
+  Safety Level: PRODUCTION
+======================================================================
+  [SECURE]  PDV_STRICT_MODE=ON (default) — agent unreachable = hard fail
+  [SECURE]  SIGVERIFY_STRICT_MODE=ON (default) — named addresses hard rejected
+  [SECURE]  SARATHI_FAIL_CLOSED=ON (default) — governance unreachable = block
+======================================================================
+  PRODUCTION MODE — all safety defaults active
+2026/11/04 16:07:22 [STARTUP][PRODUCTION_MODE] relay started in PRODUCTION mode
+======================================================================
+🐳 BlackHole Blockchain - Docker Mode
+=====================================
+🔄 Existing blockchain detected - loading from database...
+🆔 Peer ID: 12D3KooWN3xoYutzSygdr9KpZ72M6VWs3A5Hifdn2obQq2JGnMS9
+🚀 Your peer multiaddr:
+   /ip4/127.0.0.1/tcp/57505/p2p/12D3KooWN3xoYutzSygdr9KpZ72M6VWs3A5Hifdn2obQq2JGnMS9
+🤖 AI fraud detection integration initialized
+2026/11/04 16:07:22 ✅ Production Balance Cache initialized with 100MB memory limit
+2026/11/04 16:07:22 ✅ Loaded 0 accounts and 0 token interactions from database
+2026/11/04 16:07:22 ✅ Account Registry initialized with 0 accounts
+🔄 Loading existing blockchain (TokenRegistry only)...
+🔄 Loading existing blockchain - restoring token balances...
+2026/11/04 16:07:22 🔄 Loading token balances from persistent storage...
+2026/11/04 16:07:22 ✅ Loaded balance: BHIV[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 1000
+2026/11/04 16:07:22 ✅ Loaded balance: BHIV[alice] = 1000
+2026/11/04 16:07:22 ✅ Loaded balance: BHIV[bob] = 500
+2026/11/04 16:07:22 ✅ Loaded balance: BHIV[charlie] = 300
+2026/11/04 16:07:22 ✅ Loaded balance: BHIV[genesis-validator] = 1000
+2026/11/04 16:07:22 ✅ Loaded balance: BHIV[system] = 20000000
+2026/11/04 16:07:22 ✅ Loaded balance: ETH[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 10000
+2026/11/04 16:07:22 ✅ Loaded balance: ETH[system] = 1000000
+2026/11/04 16:07:22 ✅ Loaded balance: USDT[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 50000
+2026/11/04 16:07:22 ✅ Loaded balance: USDT[system] = 10000000
+2026/11/04 16:07:22 ✅ Loaded 10 token balances from persistent storage
+2026/11/04 16:07:22 📋 BHIV balances after loading:
+2026/11/04 16:07:22    alice: 1000
+2026/11/04 16:07:22    bob: 500
+2026/11/04 16:07:22    charlie: 300
+2026/11/04 16:07:22    genesis-validator: 1000
+2026/11/04 16:07:22    system: 20000000
+2026/11/04 16:07:22    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
+2026/11/04 16:07:22 📋 ETH balances after loading:
+2026/11/04 16:07:22    system: 1000000
+2026/11/04 16:07:22    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
+2026/11/04 16:07:22 📋 USDT balances after loading:
+2026/11/04 16:07:22    system: 10000000
+2026/11/04 16:07:22    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
+🔄 Restored genesis validator with 1000 stake
+🔄 Skipping additional token minting for existing blockchain
+⚡ Slashing manager initialized and monitoring started
+2026/11/04 16:07:22 🚀 Inflation adjustment process started (interval: 1h0m0s)
+💰 Reward inflation manager initialized and started
+2026/11/04 16:07:22 🔄 Loading token balances from persistent storage...
+2026/11/04 16:07:22 ✅ Loaded balance: BHIV[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 1000
+2026/11/04 16:07:22 ✅ Loaded balance: BHIV[alice] = 1000
+2026/11/04 16:07:22 ✅ Loaded balance: BHIV[bob] = 500
+2026/11/04 16:07:22 ✅ Loaded balance: BHIV[charlie] = 300
+2026/11/04 16:07:22 ✅ Loaded balance: BHIV[genesis-validator] = 1000
+2026/11/04 16:07:22 ✅ Loaded balance: BHIV[system] = 20000000
+2026/11/04 16:07:22 ✅ Loaded balance: ETH[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 10000
+2026/11/04 16:07:22 ✅ Loaded balance: ETH[system] = 1000000
+2026/11/04 16:07:22 ✅ Loaded balance: USDT[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 50000
+2026/11/04 16:07:22 ✅ Loaded balance: USDT[system] = 10000000
+2026/11/04 16:07:22 ✅ Loaded 10 token balances from persistent storage
+2026/11/04 16:07:22 📋 BHIV balances after loading:
+2026/11/04 16:07:22    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
+2026/11/04 16:07:22    alice: 1000
+2026/11/04 16:07:22    bob: 500
+2026/11/04 16:07:22    charlie: 300
+2026/11/04 16:07:22    genesis-validator: 1000
+2026/11/04 16:07:22    system: 20000000
+2026/11/04 16:07:22 📋 ETH balances after loading:
+2026/11/04 16:07:22    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
+2026/11/04 16:07:22    system: 1000000
+2026/11/04 16:07:22 📋 USDT balances after loading:
+2026/11/04 16:07:22    system: 10000000
+2026/11/04 16:07:22    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
 ✅ Existing blockchain state loaded from persistent storage
 
 🔍 DEBUG: Current Token Balances
@@ -350,7 +470,7 @@
 ================================
 
 🚀 Your peer multiaddr:
-   /ip4/0.0.0.0/tcp/51296/p2p/12D3KooWEpKnP5YnRWJ7NB3jL9sKVLeyWJ3KbAmJ7rVUgGGTygGu
+   /ip4/0.0.0.0/tcp/57505/p2p/12D3KooWN3xoYutzSygdr9KpZ72M6VWs3A5Hifdn2obQq2JGnMS9
 🔍 Initializing advanced monitoring system...
 ✅ Advanced monitoring system started
 ✅ Advanced monitoring system initialized
@@ -362,21 +482,21 @@
 ✅ Governance simulation initialized
 💡 To use bridge functionality, start the bridge SDK separately:
    go run bridge-sdk/example/main.go
-📝 Blockchain state updated at blockchain_logs\blockchain_state_node_51296.json
+📝 Blockchain state updated at blockchain_logs\blockchain_state_node_57505.json
 ⚠️ ETH_RPC_URL not set. Bridge running in localized mocked mode for EVM.
-2026/11/04 14:42:08 [NONCESTORE] recovered 0 nonce records on startup
-2026/11/04 14:42:08 [NONCESTORE] loaded 0 addresses from C:\tmp\cyber-p0-verify-20261104T103939Z-paj3nl11\vajra\nonce_ledger.jsonl
+2026/11/04 16:07:22 [NONCESTORE] recovered 0 nonce records on startup
+2026/11/04 16:07:22 [NONCESTORE] loaded 0 addresses from C:\tmp\cyber-p0-verify-20261104T120458Z-aqiprzq8\vajra\nonce_ledger.jsonl
 🔄 Running in Docker daemon mode - use Docker logs to monitor
-   P2P Port: 51296
-   HTTP API Port: 51295
-🌐 Access dashboard at http://localhost:51295
-   HTTP API Port: 51295
-🌐 Access dashboard at http://localhost:51295
+   P2P Port: 57505
+   HTTP API Port: 57504
+🌐 Access dashboard at http://localhost:57504
+   HTTP API Port: 57504
+🌐 Access dashboard at http://localhost:57504
+🌐 API Server starting on port 57504
+🌐 Open http://localhost:57504 in your browser
 📤 Requested blocks 1 to 100
-🌐 API Server starting on port 51295
-🌐 Open http://localhost:51295 in your browser
 
-===== harness: starting vajra-relay-node at 2026-11-04T10:42:08Z =====
+===== harness: starting vajra-relay-node at 2026-11-04T12:07:25Z =====
 ======================================================================
   BLACKHOLE BLOCKCHAIN — STARTUP SAFETY CHECK
   Safety Level: PRODUCTION
@@ -386,75 +506,75 @@
   [SECURE]  SARATHI_FAIL_CLOSED=ON (default) — governance unreachable = block
 ======================================================================
   PRODUCTION MODE — all safety defaults active
-2026/11/04 14:42:08 [STARTUP][PRODUCTION_MODE] relay started in PRODUCTION mode
+2026/11/04 16:07:25 [STARTUP][PRODUCTION_MODE] relay started in PRODUCTION mode
 ======================================================================
 🐳 BlackHole Blockchain - Docker Mode
 =====================================
 🔄 Existing blockchain detected - loading from database...
-🆔 Peer ID: 12D3KooWEpKnP5YnRWJ7NB3jL9sKVLeyWJ3KbAmJ7rVUgGGTygGu
+🆔 Peer ID: 12D3KooWN3xoYutzSygdr9KpZ72M6VWs3A5Hifdn2obQq2JGnMS9
 🚀 Your peer multiaddr:
-   /ip4/127.0.0.1/tcp/51296/p2p/12D3KooWEpKnP5YnRWJ7NB3jL9sKVLeyWJ3KbAmJ7rVUgGGTygGu
+   /ip4/127.0.0.1/tcp/57505/p2p/12D3KooWN3xoYutzSygdr9KpZ72M6VWs3A5Hifdn2obQq2JGnMS9
 🤖 AI fraud detection integration initialized
-2026/11/04 14:42:08 ✅ Production Balance Cache initialized with 100MB memory limit
-2026/11/04 14:42:08 ✅ Loaded 0 accounts and 0 token interactions from database
-2026/11/04 14:42:08 ✅ Account Registry initialized with 0 accounts
+2026/11/04 16:07:25 ✅ Production Balance Cache initialized with 100MB memory limit
+2026/11/04 16:07:25 ✅ Loaded 0 accounts and 0 token interactions from database
+2026/11/04 16:07:25 ✅ Account Registry initialized with 0 accounts
 🔄 Loading existing blockchain (TokenRegistry only)...
 🔄 Loading existing blockchain - restoring token balances...
-2026/11/04 14:42:08 🔄 Loading token balances from persistent storage...
-2026/11/04 14:42:08 ✅ Loaded balance: BHIV[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 1000
-2026/11/04 14:42:08 ✅ Loaded balance: BHIV[alice] = 1000
-2026/11/04 14:42:08 ✅ Loaded balance: BHIV[bob] = 500
-2026/11/04 14:42:08 ✅ Loaded balance: BHIV[charlie] = 300
-2026/11/04 14:42:08 ✅ Loaded balance: BHIV[genesis-validator] = 1000
-2026/11/04 14:42:08 ✅ Loaded balance: BHIV[system] = 20000000
-2026/11/04 14:42:08 ✅ Loaded balance: ETH[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 10000
-2026/11/04 14:42:08 ✅ Loaded balance: ETH[system] = 1000000
-2026/11/04 14:42:08 ✅ Loaded balance: USDT[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 50000
-2026/11/04 14:42:08 ✅ Loaded balance: USDT[system] = 10000000
-2026/11/04 14:42:08 ✅ Loaded 10 token balances from persistent storage
-2026/11/04 14:42:08 📋 BHIV balances after loading:
-2026/11/04 14:42:08    bob: 500
-2026/11/04 14:42:08    charlie: 300
-2026/11/04 14:42:08    genesis-validator: 1000
-2026/11/04 14:42:08    system: 20000000
-2026/11/04 14:42:08    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
-2026/11/04 14:42:08    alice: 1000
-2026/11/04 14:42:08 📋 ETH balances after loading:
-2026/11/04 14:42:08    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
-2026/11/04 14:42:08    system: 1000000
-2026/11/04 14:42:08 📋 USDT balances after loading:
-2026/11/04 14:42:08    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
-2026/11/04 14:42:08    system: 10000000
+2026/11/04 16:07:25 🔄 Loading token balances from persistent storage...
+2026/11/04 16:07:25 ✅ Loaded balance: BHIV[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 1000
+2026/11/04 16:07:25 ✅ Loaded balance: BHIV[alice] = 1000
+2026/11/04 16:07:25 ✅ Loaded balance: BHIV[bob] = 500
+2026/11/04 16:07:25 ✅ Loaded balance: BHIV[charlie] = 300
+2026/11/04 16:07:25 ✅ Loaded balance: BHIV[genesis-validator] = 1000
+2026/11/04 16:07:25 ✅ Loaded balance: BHIV[system] = 20000000
+2026/11/04 16:07:25 ✅ Loaded balance: ETH[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 10000
+2026/11/04 16:07:25 ✅ Loaded balance: ETH[system] = 1000000
+2026/11/04 16:07:25 ✅ Loaded balance: USDT[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 50000
+2026/11/04 16:07:25 ✅ Loaded balance: USDT[system] = 10000000
+2026/11/04 16:07:25 ✅ Loaded 10 token balances from persistent storage
+2026/11/04 16:07:25 📋 BHIV balances after loading:
+2026/11/04 16:07:25    system: 20000000
+2026/11/04 16:07:25    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
+2026/11/04 16:07:25    alice: 1000
+2026/11/04 16:07:25    bob: 500
+2026/11/04 16:07:25    charlie: 300
+2026/11/04 16:07:25    genesis-validator: 1000
+2026/11/04 16:07:25 📋 ETH balances after loading:
+2026/11/04 16:07:25    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
+2026/11/04 16:07:25    system: 1000000
+2026/11/04 16:07:25 📋 USDT balances after loading:
+2026/11/04 16:07:25    system: 10000000
+2026/11/04 16:07:25    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
 🔄 Restored genesis validator with 1000 stake
 🔄 Skipping additional token minting for existing blockchain
 ⚡ Slashing manager initialized and monitoring started
-2026/11/04 14:42:08 🚀 Inflation adjustment process started (interval: 1h0m0s)
+2026/11/04 16:07:25 🚀 Inflation adjustment process started (interval: 1h0m0s)
 💰 Reward inflation manager initialized and started
-2026/11/04 14:42:08 🔄 Loading token balances from persistent storage...
-2026/11/04 14:42:08 ✅ Loaded balance: BHIV[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 1000
-2026/11/04 14:42:08 ✅ Loaded balance: BHIV[alice] = 1000
-2026/11/04 14:42:08 ✅ Loaded balance: BHIV[bob] = 500
-2026/11/04 14:42:08 ✅ Loaded balance: BHIV[charlie] = 300
-2026/11/04 14:42:08 ✅ Loaded balance: BHIV[genesis-validator] = 1000
-2026/11/04 14:42:08 ✅ Loaded balance: BHIV[system] = 20000000
-2026/11/04 14:42:08 ✅ Loaded balance: ETH[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 10000
-2026/11/04 14:42:08 ✅ Loaded balance: ETH[system] = 1000000
-2026/11/04 14:42:08 ✅ Loaded balance: USDT[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 50000
-2026/11/04 14:42:08 ✅ Loaded balance: USDT[system] = 10000000
-2026/11/04 14:42:08 ✅ Loaded 10 token balances from persistent storage
-2026/11/04 14:42:08 📋 BHIV balances after loading:
-2026/11/04 14:42:08    charlie: 300
-2026/11/04 14:42:08    genesis-validator: 1000
-2026/11/04 14:42:08    system: 20000000
-2026/11/04 14:42:08    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
-2026/11/04 14:42:08    alice: 1000
-2026/11/04 14:42:08    bob: 500
-2026/11/04 14:42:08 📋 ETH balances after loading:
-2026/11/04 14:42:08    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
-2026/11/04 14:42:08    system: 1000000
-2026/11/04 14:42:08 📋 USDT balances after loading:
-2026/11/04 14:42:08    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
-2026/11/04 14:42:08    system: 10000000
+2026/11/04 16:07:25 🔄 Loading token balances from persistent storage...
+2026/11/04 16:07:25 ✅ Loaded balance: BHIV[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 1000
+2026/11/04 16:07:25 ✅ Loaded balance: BHIV[alice] = 1000
+2026/11/04 16:07:25 ✅ Loaded balance: BHIV[bob] = 500
+2026/11/04 16:07:25 ✅ Loaded balance: BHIV[charlie] = 300
+2026/11/04 16:07:25 ✅ Loaded balance: BHIV[genesis-validator] = 1000
+2026/11/04 16:07:25 ✅ Loaded balance: BHIV[system] = 20000000
+2026/11/04 16:07:25 ✅ Loaded balance: ETH[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 10000
+2026/11/04 16:07:25 ✅ Loaded balance: ETH[system] = 1000000
+2026/11/04 16:07:25 ✅ Loaded balance: USDT[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 50000
+2026/11/04 16:07:25 ✅ Loaded balance: USDT[system] = 10000000
+2026/11/04 16:07:25 ✅ Loaded 10 token balances from persistent storage
+2026/11/04 16:07:25 📋 ETH balances after loading:
+2026/11/04 16:07:25    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
+2026/11/04 16:07:25    system: 1000000
+2026/11/04 16:07:25 📋 USDT balances after loading:
+2026/11/04 16:07:25    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
+2026/11/04 16:07:25    system: 10000000
+2026/11/04 16:07:25 📋 BHIV balances after loading:
+2026/11/04 16:07:25    bob: 500
+2026/11/04 16:07:25    charlie: 300
+2026/11/04 16:07:25    genesis-validator: 1000
+2026/11/04 16:07:25    system: 20000000
+2026/11/04 16:07:25    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
+2026/11/04 16:07:25    alice: 1000
 ✅ Existing blockchain state loaded from persistent storage
 
 🔍 DEBUG: Current Token Balances
@@ -476,7 +596,7 @@
 ================================
 
 🚀 Your peer multiaddr:
-   /ip4/0.0.0.0/tcp/51296/p2p/12D3KooWEpKnP5YnRWJ7NB3jL9sKVLeyWJ3KbAmJ7rVUgGGTygGu
+   /ip4/0.0.0.0/tcp/57505/p2p/12D3KooWN3xoYutzSygdr9KpZ72M6VWs3A5Hifdn2obQq2JGnMS9
 🔍 Initializing advanced monitoring system...
 ✅ Advanced monitoring system started
 ✅ Advanced monitoring system initialized
@@ -488,21 +608,21 @@
 ✅ Governance simulation initialized
 💡 To use bridge functionality, start the bridge SDK separately:
    go run bridge-sdk/example/main.go
-📝 Blockchain state updated at blockchain_logs\blockchain_state_node_51296.json
+📝 Blockchain state updated at blockchain_logs\blockchain_state_node_57505.json
 ⚠️ ETH_RPC_URL not set. Bridge running in localized mocked mode for EVM.
-2026/11/04 14:42:08 [NONCESTORE] recovered 0 nonce records on startup
-2026/11/04 14:42:08 [NONCESTORE] loaded 0 addresses from C:\tmp\cyber-p0-verify-20261104T103939Z-paj3nl11\vajra\nonce_ledger.jsonl
+2026/11/04 16:07:25 [NONCESTORE] recovered 0 nonce records on startup
+2026/11/04 16:07:25 [NONCESTORE] loaded 0 addresses from C:\tmp\cyber-p0-verify-20261104T120458Z-aqiprzq8\vajra\nonce_ledger.jsonl
 🔄 Running in Docker daemon mode - use Docker logs to monitor
-   P2P Port: 51296
-   HTTP API Port: 51295
-🌐 Access dashboard at http://localhost:51295
-   HTTP API Port: 51295
-🌐 Access dashboard at http://localhost:51295
-🌐 API Server starting on port 51295
-🌐 Open http://localhost:51295 in your browser
+   P2P Port: 57505
+   HTTP API Port: 57504
+🌐 Access dashboard at http://localhost:57504
+   HTTP API Port: 57504
+🌐 Access dashboard at http://localhost:57504
 📤 Requested blocks 1 to 100
+🌐 API Server starting on port 57504
+🌐 Open http://localhost:57504 in your browser
 
-===== harness: starting vajra-relay-node at 2026-11-04T10:42:10Z =====
+===== harness: starting vajra-relay-node at 2026-11-04T12:07:26Z =====
 ======================================================================
   BLACKHOLE BLOCKCHAIN — STARTUP SAFETY CHECK
   Safety Level: PRODUCTION
@@ -512,97 +632,97 @@
   [SECURE]  SARATHI_FAIL_CLOSED=ON (default) — governance unreachable = block
 ======================================================================
   PRODUCTION MODE — all safety defaults active
-2026/11/04 14:42:10 [STARTUP][PRODUCTION_MODE] relay started in PRODUCTION mode
+2026/11/04 16:07:26 [STARTUP][PRODUCTION_MODE] relay started in PRODUCTION mode
 ======================================================================
 🐳 BlackHole Blockchain - Docker Mode
 =====================================
 🔄 Existing blockchain detected - loading from database...
-🆔 Peer ID: 12D3KooWEpKnP5YnRWJ7NB3jL9sKVLeyWJ3KbAmJ7rVUgGGTygGu
+🆔 Peer ID: 12D3KooWN3xoYutzSygdr9KpZ72M6VWs3A5Hifdn2obQq2JGnMS9
 🚀 Your peer multiaddr:
-   /ip4/127.0.0.1/tcp/51296/p2p/12D3KooWEpKnP5YnRWJ7NB3jL9sKVLeyWJ3KbAmJ7rVUgGGTygGu
+   /ip4/127.0.0.1/tcp/57505/p2p/12D3KooWN3xoYutzSygdr9KpZ72M6VWs3A5Hifdn2obQq2JGnMS9
 🤖 AI fraud detection integration initialized
-2026/11/04 14:42:10 ✅ Production Balance Cache initialized with 100MB memory limit
-2026/11/04 14:42:10 ✅ Loaded 0 accounts and 0 token interactions from database
-2026/11/04 14:42:10 ✅ Account Registry initialized with 0 accounts
+2026/11/04 16:07:26 ✅ Production Balance Cache initialized with 100MB memory limit
+2026/11/04 16:07:26 ✅ Loaded 0 accounts and 0 token interactions from database
+2026/11/04 16:07:26 ✅ Account Registry initialized with 0 accounts
 🔄 Loading existing blockchain (TokenRegistry only)...
 🔄 Loading existing blockchain - restoring token balances...
-2026/11/04 14:42:10 🔄 Loading token balances from persistent storage...
-2026/11/04 14:42:10 ✅ Loaded balance: BHIV[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 1000
-2026/11/04 14:42:10 ✅ Loaded balance: BHIV[alice] = 1000
-2026/11/04 14:42:10 ✅ Loaded balance: BHIV[bob] = 500
-2026/11/04 14:42:10 ✅ Loaded balance: BHIV[charlie] = 300
-2026/11/04 14:42:10 ✅ Loaded balance: BHIV[genesis-validator] = 1000
-2026/11/04 14:42:10 ✅ Loaded balance: BHIV[system] = 20000000
-2026/11/04 14:42:10 ✅ Loaded balance: ETH[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 10000
-2026/11/04 14:42:10 ✅ Loaded balance: ETH[system] = 1000000
-2026/11/04 14:42:10 ✅ Loaded balance: USDT[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 50000
-2026/11/04 14:42:10 ✅ Loaded balance: USDT[system] = 10000000
-2026/11/04 14:42:10 ✅ Loaded 10 token balances from persistent storage
-2026/11/04 14:42:10 📋 BHIV balances after loading:
-2026/11/04 14:42:10    alice: 1000
-2026/11/04 14:42:10    bob: 500
-2026/11/04 14:42:10    charlie: 300
-2026/11/04 14:42:10    genesis-validator: 1000
-2026/11/04 14:42:10    system: 20000000
-2026/11/04 14:42:10    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
-2026/11/04 14:42:10 📋 ETH balances after loading:
-2026/11/04 14:42:10    system: 1000000
-2026/11/04 14:42:10    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
-2026/11/04 14:42:10 📋 USDT balances after loading:
-2026/11/04 14:42:10    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
-2026/11/04 14:42:10    system: 10000000
+2026/11/04 16:07:26 🔄 Loading token balances from persistent storage...
+2026/11/04 16:07:26 ✅ Loaded balance: BHIV[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 1000
+2026/11/04 16:07:26 ✅ Loaded balance: BHIV[alice] = 1000
+2026/11/04 16:07:26 ✅ Loaded balance: BHIV[bob] = 500
+2026/11/04 16:07:26 ✅ Loaded balance: BHIV[charlie] = 300
+2026/11/04 16:07:26 ✅ Loaded balance: BHIV[genesis-validator] = 1000
+2026/11/04 16:07:26 ✅ Loaded balance: BHIV[system] = 20000000
+2026/11/04 16:07:26 ✅ Loaded balance: ETH[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 10000
+2026/11/04 16:07:26 ✅ Loaded balance: ETH[system] = 1000000
+2026/11/04 16:07:26 ✅ Loaded balance: USDT[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 50000
+2026/11/04 16:07:26 ✅ Loaded balance: USDT[system] = 10000000
+2026/11/04 16:07:26 ✅ Loaded 10 token balances from persistent storage
+2026/11/04 16:07:26 📋 ETH balances after loading:
+2026/11/04 16:07:26    system: 1000000
+2026/11/04 16:07:26    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
+2026/11/04 16:07:26 📋 USDT balances after loading:
+2026/11/04 16:07:26    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
+2026/11/04 16:07:26    system: 10000000
+2026/11/04 16:07:26 📋 BHIV balances after loading:
+2026/11/04 16:07:26    system: 20000000
+2026/11/04 16:07:26    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
+2026/11/04 16:07:26    alice: 1000
+2026/11/04 16:07:26    bob: 500
+2026/11/04 16:07:26    charlie: 300
+2026/11/04 16:07:26    genesis-validator: 1000
 🔄 Restored genesis validator with 1000 stake
 🔄 Skipping additional token minting for existing blockchain
 ⚡ Slashing manager initialized and monitoring started
-2026/11/04 14:42:10 🚀 Inflation adjustment process started (interval: 1h0m0s)
+2026/11/04 16:07:26 🚀 Inflation adjustment process started (interval: 1h0m0s)
 💰 Reward inflation manager initialized and started
-2026/11/04 14:42:10 🔄 Loading token balances from persistent storage...
-2026/11/04 14:42:10 ✅ Loaded balance: BHIV[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 1000
-2026/11/04 14:42:10 ✅ Loaded balance: BHIV[alice] = 1000
-2026/11/04 14:42:10 ✅ Loaded balance: BHIV[bob] = 500
-2026/11/04 14:42:10 ✅ Loaded balance: BHIV[charlie] = 300
-2026/11/04 14:42:10 ✅ Loaded balance: BHIV[genesis-validator] = 1000
-2026/11/04 14:42:10 ✅ Loaded balance: BHIV[system] = 20000000
-2026/11/04 14:42:10 ✅ Loaded balance: ETH[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 10000
-2026/11/04 14:42:10 ✅ Loaded balance: ETH[system] = 1000000
-2026/11/04 14:42:10 ✅ Loaded balance: USDT[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 50000
-2026/11/04 14:42:10 ✅ Loaded balance: USDT[system] = 10000000
-2026/11/04 14:42:10 ✅ Loaded 10 token balances from persistent storage
-2026/11/04 14:42:10 📋 BHIV balances after loading:
-2026/11/04 14:42:10    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
-2026/11/04 14:42:10    alice: 1000
-2026/11/04 14:42:10    bob: 500
-2026/11/04 14:42:10    charlie: 300
-2026/11/04 14:42:10    genesis-validator: 1000
-2026/11/04 14:42:10    system: 20000000
-2026/11/04 14:42:10 📋 ETH balances after loading:
-2026/11/04 14:42:10    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
-2026/11/04 14:42:10    system: 1000000
-2026/11/04 14:42:10 📋 USDT balances after loading:
-2026/11/04 14:42:10    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
-2026/11/04 14:42:10    system: 10000000
+2026/11/04 16:07:26 🔄 Loading token balances from persistent storage...
+2026/11/04 16:07:26 ✅ Loaded balance: BHIV[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 1000
+2026/11/04 16:07:26 ✅ Loaded balance: BHIV[alice] = 1000
+2026/11/04 16:07:26 ✅ Loaded balance: BHIV[bob] = 500
+2026/11/04 16:07:26 ✅ Loaded balance: BHIV[charlie] = 300
+2026/11/04 16:07:26 ✅ Loaded balance: BHIV[genesis-validator] = 1000
+2026/11/04 16:07:26 ✅ Loaded balance: BHIV[system] = 20000000
+2026/11/04 16:07:26 ✅ Loaded balance: ETH[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 10000
+2026/11/04 16:07:26 ✅ Loaded balance: ETH[system] = 1000000
+2026/11/04 16:07:26 ✅ Loaded balance: USDT[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 50000
+2026/11/04 16:07:26 ✅ Loaded balance: USDT[system] = 10000000
+2026/11/04 16:07:26 ✅ Loaded 10 token balances from persistent storage
+2026/11/04 16:07:26 📋 USDT balances after loading:
+2026/11/04 16:07:26    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
+2026/11/04 16:07:26    system: 10000000
+2026/11/04 16:07:26 📋 BHIV balances after loading:
+2026/11/04 16:07:26    bob: 500
+2026/11/04 16:07:26    charlie: 300
+2026/11/04 16:07:26    genesis-validator: 1000
+2026/11/04 16:07:26    system: 20000000
+2026/11/04 16:07:26    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
+2026/11/04 16:07:26    alice: 1000
+2026/11/04 16:07:26 📋 ETH balances after loading:
+2026/11/04 16:07:26    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
+2026/11/04 16:07:26    system: 1000000
 ✅ Existing blockchain state loaded from persistent storage
 
 🔍 DEBUG: Current Token Balances
 ================================
-📋 USDT Token Balances:
-   03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
-   system: 10000000
 📋 BHIV Token Balances:
-   alice: 1000
    bob: 500
    charlie: 300
    genesis-validator: 1000
    system: 20000000
    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
+   alice: 1000
 📋 ETH Token Balances:
-   03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
    system: 1000000
+   03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
+📋 USDT Token Balances:
+   system: 10000000
+   03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
 ✅ Total balance entries: 10
 ================================
 
 🚀 Your peer multiaddr:
-   /ip4/0.0.0.0/tcp/51296/p2p/12D3KooWEpKnP5YnRWJ7NB3jL9sKVLeyWJ3KbAmJ7rVUgGGTygGu
+   /ip4/0.0.0.0/tcp/57505/p2p/12D3KooWN3xoYutzSygdr9KpZ72M6VWs3A5Hifdn2obQq2JGnMS9
 🔍 Initializing advanced monitoring system...
 ✅ Advanced monitoring system started
 ✅ Advanced monitoring system initialized
@@ -614,21 +734,22 @@
 ✅ Governance simulation initialized
 💡 To use bridge functionality, start the bridge SDK separately:
    go run bridge-sdk/example/main.go
-📝 Blockchain state updated at blockchain_logs\blockchain_state_node_51296.json
+📝 Blockchain state updated at blockchain_logs\blockchain_state_node_57505.json
 ⚠️ ETH_RPC_URL not set. Bridge running in localized mocked mode for EVM.
-2026/11/04 14:42:10 [NONCESTORE] recovered 0 nonce records on startup
-2026/11/04 14:42:10 [NONCESTORE] loaded 0 addresses from C:\tmp\cyber-p0-verify-20261104T103939Z-paj3nl11\vajra\nonce_ledger.jsonl
+2026/11/04 16:07:26 [NONCESTORE] recovered 0 nonce records on startup
+2026/11/04 16:07:26 [NONCESTORE] loaded 0 addresses from C:\tmp\cyber-p0-verify-20261104T120458Z-aqiprzq8\vajra\nonce_ledger.jsonl
 🔄 Running in Docker daemon mode - use Docker logs to monitor
-   P2P Port: 51296
-   HTTP API Port: 51295
-🌐 Access dashboard at http://localhost:51295
-   HTTP API Port: 51295
-🌐 Access dashboard at http://localhost:51295
-🌐 API Server starting on port 51295
-🌐 Open http://localhost:51295 in your browser
+   P2P Port: 57505
+   HTTP API Port: 57504
+🌐 Access dashboard at http://localhost:57504
+   HTTP API Port: 57504
+🌐 Access dashboard at http://localhost:57504
+🌐 API Server starting on port 57504
+🌐 Open http://localhost:57504 in your browser
 📤 Requested blocks 1 to 100
+2026/11/04 16:07:27 [truthstore][TAMPER] record 0 entry_hash mismatch
 
-===== harness: starting vajra-relay-node at 2026-11-04T10:42:11Z =====
+===== harness: starting vajra-relay-node at 2026-11-04T12:07:27Z =====
 ======================================================================
   BLACKHOLE BLOCKCHAIN — STARTUP SAFETY CHECK
   Safety Level: PRODUCTION
@@ -638,75 +759,75 @@
   [SECURE]  SARATHI_FAIL_CLOSED=ON (default) — governance unreachable = block
 ======================================================================
   PRODUCTION MODE — all safety defaults active
-2026/11/04 14:42:11 [STARTUP][PRODUCTION_MODE] relay started in PRODUCTION mode
+2026/11/04 16:07:27 [STARTUP][PRODUCTION_MODE] relay started in PRODUCTION mode
 ======================================================================
 🐳 BlackHole Blockchain - Docker Mode
 =====================================
 🔄 Existing blockchain detected - loading from database...
-🆔 Peer ID: 12D3KooWEpKnP5YnRWJ7NB3jL9sKVLeyWJ3KbAmJ7rVUgGGTygGu
+🆔 Peer ID: 12D3KooWN3xoYutzSygdr9KpZ72M6VWs3A5Hifdn2obQq2JGnMS9
 🚀 Your peer multiaddr:
-   /ip4/127.0.0.1/tcp/51296/p2p/12D3KooWEpKnP5YnRWJ7NB3jL9sKVLeyWJ3KbAmJ7rVUgGGTygGu
+   /ip4/127.0.0.1/tcp/57505/p2p/12D3KooWN3xoYutzSygdr9KpZ72M6VWs3A5Hifdn2obQq2JGnMS9
 🤖 AI fraud detection integration initialized
-2026/11/04 14:42:11 ✅ Production Balance Cache initialized with 100MB memory limit
-2026/11/04 14:42:11 ✅ Loaded 0 accounts and 0 token interactions from database
-2026/11/04 14:42:11 ✅ Account Registry initialized with 0 accounts
+2026/11/04 16:07:27 ✅ Production Balance Cache initialized with 100MB memory limit
+2026/11/04 16:07:27 ✅ Loaded 0 accounts and 0 token interactions from database
+2026/11/04 16:07:27 ✅ Account Registry initialized with 0 accounts
 🔄 Loading existing blockchain (TokenRegistry only)...
 🔄 Loading existing blockchain - restoring token balances...
-2026/11/04 14:42:11 🔄 Loading token balances from persistent storage...
-2026/11/04 14:42:11 ✅ Loaded balance: BHIV[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 1000
-2026/11/04 14:42:11 ✅ Loaded balance: BHIV[alice] = 1000
-2026/11/04 14:42:11 ✅ Loaded balance: BHIV[bob] = 500
-2026/11/04 14:42:11 ✅ Loaded balance: BHIV[charlie] = 300
-2026/11/04 14:42:11 ✅ Loaded balance: BHIV[genesis-validator] = 1000
-2026/11/04 14:42:11 ✅ Loaded balance: BHIV[system] = 20000000
-2026/11/04 14:42:11 ✅ Loaded balance: ETH[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 10000
-2026/11/04 14:42:11 ✅ Loaded balance: ETH[system] = 1000000
-2026/11/04 14:42:11 ✅ Loaded balance: USDT[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 50000
-2026/11/04 14:42:11 ✅ Loaded balance: USDT[system] = 10000000
-2026/11/04 14:42:11 ✅ Loaded 10 token balances from persistent storage
-2026/11/04 14:42:11 📋 BHIV balances after loading:
-2026/11/04 14:42:11    charlie: 300
-2026/11/04 14:42:11    genesis-validator: 1000
-2026/11/04 14:42:11    system: 20000000
-2026/11/04 14:42:11    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
-2026/11/04 14:42:11    alice: 1000
-2026/11/04 14:42:11    bob: 500
-2026/11/04 14:42:11 📋 ETH balances after loading:
-2026/11/04 14:42:11    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
-2026/11/04 14:42:11    system: 1000000
-2026/11/04 14:42:11 📋 USDT balances after loading:
-2026/11/04 14:42:11    system: 10000000
-2026/11/04 14:42:11    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
+2026/11/04 16:07:27 🔄 Loading token balances from persistent storage...
+2026/11/04 16:07:27 ✅ Loaded balance: BHIV[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 1000
+2026/11/04 16:07:27 ✅ Loaded balance: BHIV[alice] = 1000
+2026/11/04 16:07:27 ✅ Loaded balance: BHIV[bob] = 500
+2026/11/04 16:07:27 ✅ Loaded balance: BHIV[charlie] = 300
+2026/11/04 16:07:27 ✅ Loaded balance: BHIV[genesis-validator] = 1000
+2026/11/04 16:07:27 ✅ Loaded balance: BHIV[system] = 20000000
+2026/11/04 16:07:27 ✅ Loaded balance: ETH[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 10000
+2026/11/04 16:07:27 ✅ Loaded balance: ETH[system] = 1000000
+2026/11/04 16:07:27 ✅ Loaded balance: USDT[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 50000
+2026/11/04 16:07:27 ✅ Loaded balance: USDT[system] = 10000000
+2026/11/04 16:07:27 ✅ Loaded 10 token balances from persistent storage
+2026/11/04 16:07:27 📋 ETH balances after loading:
+2026/11/04 16:07:27    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
+2026/11/04 16:07:27    system: 1000000
+2026/11/04 16:07:27 📋 USDT balances after loading:
+2026/11/04 16:07:27    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
+2026/11/04 16:07:27    system: 10000000
+2026/11/04 16:07:27 📋 BHIV balances after loading:
+2026/11/04 16:07:27    system: 20000000
+2026/11/04 16:07:27    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
+2026/11/04 16:07:27    alice: 1000
+2026/11/04 16:07:27    bob: 500
+2026/11/04 16:07:27    charlie: 300
+2026/11/04 16:07:27    genesis-validator: 1000
 🔄 Restored genesis validator with 1000 stake
 🔄 Skipping additional token minting for existing blockchain
 ⚡ Slashing manager initialized and monitoring started
-2026/11/04 14:42:11 🚀 Inflation adjustment process started (interval: 1h0m0s)
+2026/11/04 16:07:27 🚀 Inflation adjustment process started (interval: 1h0m0s)
 💰 Reward inflation manager initialized and started
-2026/11/04 14:42:11 🔄 Loading token balances from persistent storage...
-2026/11/04 14:42:11 ✅ Loaded balance: BHIV[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 1000
-2026/11/04 14:42:11 ✅ Loaded balance: BHIV[alice] = 1000
-2026/11/04 14:42:11 ✅ Loaded balance: BHIV[bob] = 500
-2026/11/04 14:42:11 ✅ Loaded balance: BHIV[charlie] = 300
-2026/11/04 14:42:11 ✅ Loaded balance: BHIV[genesis-validator] = 1000
-2026/11/04 14:42:11 ✅ Loaded balance: BHIV[system] = 20000000
-2026/11/04 14:42:11 ✅ Loaded balance: ETH[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 10000
-2026/11/04 14:42:11 ✅ Loaded balance: ETH[system] = 1000000
-2026/11/04 14:42:11 ✅ Loaded balance: USDT[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 50000
-2026/11/04 14:42:11 ✅ Loaded balance: USDT[system] = 10000000
-2026/11/04 14:42:11 ✅ Loaded 10 token balances from persistent storage
-2026/11/04 14:42:11 📋 BHIV balances after loading:
-2026/11/04 14:42:11    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
-2026/11/04 14:42:11    alice: 1000
-2026/11/04 14:42:11    bob: 500
-2026/11/04 14:42:11    charlie: 300
-2026/11/04 14:42:11    genesis-validator: 1000
-2026/11/04 14:42:11    system: 20000000
-2026/11/04 14:42:11 📋 ETH balances after loading:
-2026/11/04 14:42:11    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
-2026/11/04 14:42:11    system: 1000000
-2026/11/04 14:42:11 📋 USDT balances after loading:
-2026/11/04 14:42:11    system: 10000000
-2026/11/04 14:42:11    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
+2026/11/04 16:07:27 🔄 Loading token balances from persistent storage...
+2026/11/04 16:07:27 ✅ Loaded balance: BHIV[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 1000
+2026/11/04 16:07:27 ✅ Loaded balance: BHIV[alice] = 1000
+2026/11/04 16:07:27 ✅ Loaded balance: BHIV[bob] = 500
+2026/11/04 16:07:27 ✅ Loaded balance: BHIV[charlie] = 300
+2026/11/04 16:07:27 ✅ Loaded balance: BHIV[genesis-validator] = 1000
+2026/11/04 16:07:27 ✅ Loaded balance: BHIV[system] = 20000000
+2026/11/04 16:07:27 ✅ Loaded balance: ETH[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 10000
+2026/11/04 16:07:27 ✅ Loaded balance: ETH[system] = 1000000
+2026/11/04 16:07:27 ✅ Loaded balance: USDT[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 50000
+2026/11/04 16:07:27 ✅ Loaded balance: USDT[system] = 10000000
+2026/11/04 16:07:27 ✅ Loaded 10 token balances from persistent storage
+2026/11/04 16:07:27 📋 BHIV balances after loading:
+2026/11/04 16:07:27    bob: 500
+2026/11/04 16:07:27    charlie: 300
+2026/11/04 16:07:27    genesis-validator: 1000
+2026/11/04 16:07:27    system: 20000000
+2026/11/04 16:07:27    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
+2026/11/04 16:07:27    alice: 1000
+2026/11/04 16:07:27 📋 ETH balances after loading:
+2026/11/04 16:07:27    system: 1000000
+2026/11/04 16:07:27    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
+2026/11/04 16:07:27 📋 USDT balances after loading:
+2026/11/04 16:07:27    system: 10000000
+2026/11/04 16:07:27    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
 ✅ Existing blockchain state loaded from persistent storage
 
 🔍 DEBUG: Current Token Balances
@@ -718,17 +839,17 @@
    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
    system: 10000000
 📋 BHIV Token Balances:
+   03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
    alice: 1000
    bob: 500
    charlie: 300
    genesis-validator: 1000
    system: 20000000
-   03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
 ✅ Total balance entries: 10
 ================================
 
 🚀 Your peer multiaddr:
-   /ip4/0.0.0.0/tcp/51296/p2p/12D3KooWEpKnP5YnRWJ7NB3jL9sKVLeyWJ3KbAmJ7rVUgGGTygGu
+   /ip4/0.0.0.0/tcp/57505/p2p/12D3KooWN3xoYutzSygdr9KpZ72M6VWs3A5Hifdn2obQq2JGnMS9
 🔍 Initializing advanced monitoring system...
 ✅ Advanced monitoring system started
 ✅ Advanced monitoring system initialized
@@ -740,143 +861,16 @@
 ✅ Governance simulation initialized
 💡 To use bridge functionality, start the bridge SDK separately:
    go run bridge-sdk/example/main.go
-📝 Blockchain state updated at blockchain_logs\blockchain_state_node_51296.json
-📤 Requested blocks 1 to 100
-⚠️ ETH_RPC_URL not set. Bridge running in localized mocked mode for EVM.
-2026/11/04 14:42:11 [NONCESTORE] recovered 0 nonce records on startup
-2026/11/04 14:42:11 [NONCESTORE] loaded 0 addresses from C:\tmp\cyber-p0-verify-20261104T103939Z-paj3nl11\vajra\nonce_ledger.jsonl
-🔄 Running in Docker daemon mode - use Docker logs to monitor
-   P2P Port: 51296
-   HTTP API Port: 51295
-🌐 Access dashboard at http://localhost:51295
-   HTTP API Port: 51295
-🌐 Access dashboard at http://localhost:51295
-🌐 API Server starting on port 51295
-🌐 Open http://localhost:51295 in your browser
-2026/11/04 14:42:11 [truthstore][TAMPER] record 0 entry_hash mismatch
-
-===== harness: starting vajra-relay-node at 2026-11-04T10:42:11Z =====
-======================================================================
-  BLACKHOLE BLOCKCHAIN — STARTUP SAFETY CHECK
-  Safety Level: PRODUCTION
-======================================================================
-  [SECURE]  PDV_STRICT_MODE=ON (default) — agent unreachable = hard fail
-  [SECURE]  SIGVERIFY_STRICT_MODE=ON (default) — named addresses hard rejected
-  [SECURE]  SARATHI_FAIL_CLOSED=ON (default) — governance unreachable = block
-======================================================================
-  PRODUCTION MODE — all safety defaults active
-2026/11/04 14:42:11 [STARTUP][PRODUCTION_MODE] relay started in PRODUCTION mode
-======================================================================
-🐳 BlackHole Blockchain - Docker Mode
-=====================================
-🔄 Existing blockchain detected - loading from database...
-🆔 Peer ID: 12D3KooWEpKnP5YnRWJ7NB3jL9sKVLeyWJ3KbAmJ7rVUgGGTygGu
-🚀 Your peer multiaddr:
-   /ip4/127.0.0.1/tcp/51296/p2p/12D3KooWEpKnP5YnRWJ7NB3jL9sKVLeyWJ3KbAmJ7rVUgGGTygGu
-🤖 AI fraud detection integration initialized
-2026/11/04 14:42:11 ✅ Production Balance Cache initialized with 100MB memory limit
-2026/11/04 14:42:11 ✅ Loaded 0 accounts and 0 token interactions from database
-2026/11/04 14:42:11 ✅ Account Registry initialized with 0 accounts
-🔄 Loading existing blockchain (TokenRegistry only)...
-🔄 Loading existing blockchain - restoring token balances...
-2026/11/04 14:42:11 🔄 Loading token balances from persistent storage...
-2026/11/04 14:42:11 ✅ Loaded balance: BHIV[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 1000
-2026/11/04 14:42:11 ✅ Loaded balance: BHIV[alice] = 1000
-2026/11/04 14:42:11 ✅ Loaded balance: BHIV[bob] = 500
-2026/11/04 14:42:11 ✅ Loaded balance: BHIV[charlie] = 300
-2026/11/04 14:42:11 ✅ Loaded balance: BHIV[genesis-validator] = 1000
-2026/11/04 14:42:11 ✅ Loaded balance: BHIV[system] = 20000000
-2026/11/04 14:42:11 ✅ Loaded balance: ETH[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 10000
-2026/11/04 14:42:11 ✅ Loaded balance: ETH[system] = 1000000
-2026/11/04 14:42:11 ✅ Loaded balance: USDT[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 50000
-2026/11/04 14:42:11 ✅ Loaded balance: USDT[system] = 10000000
-2026/11/04 14:42:11 ✅ Loaded 10 token balances from persistent storage
-2026/11/04 14:42:11 📋 ETH balances after loading:
-2026/11/04 14:42:11    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
-2026/11/04 14:42:11    system: 1000000
-2026/11/04 14:42:11 📋 USDT balances after loading:
-2026/11/04 14:42:11    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
-2026/11/04 14:42:11    system: 10000000
-2026/11/04 14:42:11 📋 BHIV balances after loading:
-2026/11/04 14:42:11    bob: 500
-2026/11/04 14:42:11    charlie: 300
-2026/11/04 14:42:11    genesis-validator: 1000
-2026/11/04 14:42:11    system: 20000000
-2026/11/04 14:42:11    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
-2026/11/04 14:42:11    alice: 1000
-🔄 Restored genesis validator with 1000 stake
-🔄 Skipping additional token minting for existing blockchain
-⚡ Slashing manager initialized and monitoring started
-2026/11/04 14:42:11 🚀 Inflation adjustment process started (interval: 1h0m0s)
-💰 Reward inflation manager initialized and started
-2026/11/04 14:42:11 🔄 Loading token balances from persistent storage...
-2026/11/04 14:42:11 ✅ Loaded balance: BHIV[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 1000
-2026/11/04 14:42:11 ✅ Loaded balance: BHIV[alice] = 1000
-2026/11/04 14:42:11 ✅ Loaded balance: BHIV[bob] = 500
-2026/11/04 14:42:11 ✅ Loaded balance: BHIV[charlie] = 300
-2026/11/04 14:42:11 ✅ Loaded balance: BHIV[genesis-validator] = 1000
-2026/11/04 14:42:11 ✅ Loaded balance: BHIV[system] = 20000000
-2026/11/04 14:42:11 ✅ Loaded balance: ETH[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 10000
-2026/11/04 14:42:11 ✅ Loaded balance: ETH[system] = 1000000
-2026/11/04 14:42:11 ✅ Loaded balance: USDT[03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b] = 50000
-2026/11/04 14:42:11 ✅ Loaded balance: USDT[system] = 10000000
-2026/11/04 14:42:11 ✅ Loaded 10 token balances from persistent storage
-2026/11/04 14:42:11 📋 BHIV balances after loading:
-2026/11/04 14:42:11    charlie: 300
-2026/11/04 14:42:11    genesis-validator: 1000
-2026/11/04 14:42:11    system: 20000000
-2026/11/04 14:42:11    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
-2026/11/04 14:42:11    alice: 1000
-2026/11/04 14:42:11    bob: 500
-2026/11/04 14:42:11 📋 ETH balances after loading:
-2026/11/04 14:42:11    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
-2026/11/04 14:42:11    system: 1000000
-2026/11/04 14:42:11 📋 USDT balances after loading:
-2026/11/04 14:42:11    03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
-2026/11/04 14:42:11    system: 10000000
-✅ Existing blockchain state loaded from persistent storage
-
-🔍 DEBUG: Current Token Balances
-================================
-📋 BHIV Token Balances:
-   03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 1000
-   alice: 1000
-   bob: 500
-   charlie: 300
-   genesis-validator: 1000
-   system: 20000000
-📋 ETH Token Balances:
-   03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 10000
-   system: 1000000
-📋 USDT Token Balances:
-   03e2459b73c0c6522530f6b26e834d992dfc55d170bee35d0bcdc047fe0d61c25b: 50000
-   system: 10000000
-✅ Total balance entries: 10
-================================
-
-🚀 Your peer multiaddr:
-   /ip4/0.0.0.0/tcp/51296/p2p/12D3KooWEpKnP5YnRWJ7NB3jL9sKVLeyWJ3KbAmJ7rVUgGGTygGu
-🔍 Initializing advanced monitoring system...
-✅ Advanced monitoring system started
-✅ Advanced monitoring system initialized
-🧪 Initializing E2E validation system...
-✅ E2E Validator initialized successfully
-✅ E2E validation system initialized
-🏛️ Initializing governance simulation...
-✅ Governance simulator started
-✅ Governance simulation initialized
-💡 To use bridge functionality, start the bridge SDK separately:
-   go run bridge-sdk/example/main.go
-📝 Blockchain state updated at blockchain_logs\blockchain_state_node_51296.json
+📝 Blockchain state updated at blockchain_logs\blockchain_state_node_57505.json
 ⚠️ ETH_RPC_URL not set. Bridge running in localized mocked mode for EVM.
 📤 Requested blocks 1 to 100
-2026/11/04 14:42:11 [NONCESTORE] recovered 0 nonce records on startup
-2026/11/04 14:42:11 [NONCESTORE] loaded 0 addresses from C:\tmp\cyber-p0-verify-20261104T103939Z-paj3nl11\vajra\nonce_ledger.jsonl
+2026/11/04 16:07:27 [NONCESTORE] recovered 0 nonce records on startup
+2026/11/04 16:07:27 [NONCESTORE] loaded 0 addresses from C:\tmp\cyber-p0-verify-20261104T120458Z-aqiprzq8\vajra\nonce_ledger.jsonl
 🔄 Running in Docker daemon mode - use Docker logs to monitor
-   P2P Port: 51296
-   HTTP API Port: 51295
-🌐 Access dashboard at http://localhost:51295
-   HTTP API Port: 51295
-🌐 Access dashboard at http://localhost:51295
-🌐 API Server starting on port 51295
-🌐 Open http://localhost:51295 in your browser
+   P2P Port: 57505
+   HTTP API Port: 57504
+🌐 Access dashboard at http://localhost:57504
+   HTTP API Port: 57504
+🌐 Access dashboard at http://localhost:57504
+🌐 API Server starting on port 57504
+🌐 Open http://localhost:57504 in your browser

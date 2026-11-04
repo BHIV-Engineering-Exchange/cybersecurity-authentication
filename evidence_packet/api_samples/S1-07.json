@@ -2,13 +2,13 @@
   {
     "check_id": "S1-07",
     "system": "cybersecurity",
-    "utc": "2026-11-04T10:39:55Z",
-    "elapsed_ms": 0,
+    "utc": "2026-11-04T12:05:19Z",
+    "elapsed_ms": 15,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:51300/api/v1/protected/access",
+      "url": "http://127.0.0.1:57509/api/v1/protected/access",
       "headers": {
-        "x-trace-id": "b04675b6-f5ce-481a-9a5a-d3a730c60f46",
+        "x-trace-id": "32fd20b8-c631-40dc-802b-67a8d212e2a6",
         "content-type": "application/json"
       },
       "body": {
@@ -26,17 +26,17 @@
       "status": 401,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "52e829e6-3d61-45b9-9d92-81d349872884",
-        "x-trace-id": "b04675b6-f5ce-481a-9a5a-d3a730c60f46"
+        "x-request-id": "c50c2f73-07db-424e-89ac-b91e3d6e7f03",
+        "x-trace-id": "32fd20b8-c631-40dc-802b-67a8d212e2a6"
       },
       "body": {
         "error": true,
         "code": "AUTHENTICATION_REQUIRED",
         "status_code": 401,
         "message": "Authentication required.",
-        "trace_id": "b04675b6-f5ce-481a-9a5a-d3a730c60f46",
-        "request_id": "52e829e6-3d61-45b9-9d92-81d349872884",
-        "timestamp": "2026-11-04T10:39:55.617Z",
+        "trace_id": "32fd20b8-c631-40dc-802b-67a8d212e2a6",
+        "request_id": "c50c2f73-07db-424e-89ac-b91e3d6e7f03",
+        "timestamp": "2026-11-04T12:05:19.421Z",
         "details": []
       }
     }

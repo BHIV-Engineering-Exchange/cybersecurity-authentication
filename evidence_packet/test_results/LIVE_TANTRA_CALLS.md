@@ -1,6 +1,6 @@
 # Calls made to the live TANTRA services on the run day
 
-Run `20261104T103939Z`, TANTRA base `http://163.128.209.18`. Every trace id and submission id sent starts with `cyber-p0-test-` (request ids and ids inside payloads do not); every payload is synthetic. Generated from `api_samples/`, `runtime_logs/cyber_service.log` and `api_samples/outside_run/`.
+Run `20261104T120458Z`, TANTRA base `http://163.128.209.18`. Every trace id and submission id sent starts with `cyber-p0-test-` (request ids and ids inside payloads do not); every payload is synthetic. Generated from `api_samples/`, `runtime_logs/cyber_service.log` and `api_samples/outside_run/`.
 
 ## Calls made by the verification harness
 
@@ -8,14 +8,11 @@ The UTC column is the time the reply arrived; a slow call was sent earlier (see 
 
 | UTC (reply received) | Check | Method | Path | HTTP | Ledger write? |
 |---|---|---|---|---|---|
-| 2026-11-04T10:39:54Z | O-02 | GET | `/health` | 200 | no ledger write (validation or read; whether /validate stores anything is not known) |
-| 2026-11-04T10:39:54Z | O-02 | GET | `/health` | 200 | no ledger write (validation or read; whether /validate stores anything is not known) |
-| 2026-11-04T10:39:55Z | O-02 | GET | `/health` | 200 | no ledger write (validation or read; whether /validate stores anything is not known) |
-| 2026-11-04T10:40:20Z | S5-01 | GET | `/replay/cyber-p0-test-35797205-3f70-438f-ae00-dd5382899ff0` | 404 | no ledger write (validation or read; whether /validate stores anything is not known) |
-| 2026-11-04T10:40:25Z | S5-04 | POST | `/validate/prana/ingress` | 422 | no ledger write (validation or read; whether /validate stores anything is not known) |
-| 2026-11-04T10:40:26Z | S8-02 | POST | `/validate/prana/ingress` | 200 | no ledger write (validation or read; whether /validate stores anything is not known) |
-| 2026-11-04T10:40:50Z | S8-02 | POST | `/karma/ingest` | 200 | YES - one ledger event |
-| 2026-11-04T10:40:51Z | S8-02 | POST | `/karma/verify` | 200 | replay check (TANTRA may store a validation record) |
+| 2026-11-04T12:05:18Z | O-02 | GET | `/health` | 200 | no ledger write (validation or read; whether /validate stores anything is not known) |
+| 2026-11-04T12:05:18Z | O-02 | GET | `/health` | 200 | no ledger write (validation or read; whether /validate stores anything is not known) |
+| 2026-11-04T12:05:19Z | O-02 | GET | `/health` | 200 | no ledger write (validation or read; whether /validate stores anything is not known) |
+| 2026-11-04T12:05:50Z | S5-01 | GET | `/replay/cyber-p0-test-f3fcb75d-6ffa-4848-a77e-fcc5143e6fea` | 404 | no ledger write (validation or read; whether /validate stores anything is not known) |
+| 2026-11-04T12:05:57Z | S5-04 | POST | `/validate/prana/ingress` | 422 | no ledger write (validation or read; whether /validate stores anything is not known) |
 
 ## Calls made by the Cybersecurity API itself
 
@@ -23,18 +20,37 @@ The API runs with TANTRA_KARMA_URL empty in this run, so it can only call /valid
 
 | UTC | Trace id | Outcome | Ledger write? |
 |---|---|---|---|
-| 2026-11-04T10:40:14.429252+00:00 | `cyber-p0-test-4d0b8bc8-fd4d-4198-9442-9bc3a7cc28fd` | CONTRACT_REJECTED | no |
-| 2026-11-04T10:40:16.994840+00:00 | `cyber-p0-test-80c17aba-e107-426e-af95-7904ea5c1eb1` | CONTRACT_REJECTED | no |
-| 2026-11-04T10:40:19.462075+00:00 | `cyber-p0-test-35797205-3f70-438f-ae00-dd5382899ff0` | CONTRACT_REJECTED | no |
+| 2026-11-04T12:05:43.948285+00:00 | `cyber-p0-test-d5104b4a-cc02-48f8-8a2f-e187e31636f1` | CONTRACT_REJECTED | no |
+| 2026-11-04T12:05:46.935582+00:00 | `cyber-p0-test-da205076-03ac-4a39-b08b-484d5f6798b8` | CONTRACT_REJECTED | no |
+| 2026-11-04T12:05:49.522558+00:00 | `cyber-p0-test-f3fcb75d-6ffa-4848-a77e-fcc5143e6fea` | CONTRACT_REJECTED | no |
 
 Not listed: 2 outcome(s) from the induced-outage checks (S5-02, S5-05), where the API was pointed at local closed or never-answering ports instead of TANTRA.
 
 ## What the single ledger write caused inside TANTRA (from TANTRA's own reply, check S8-02)
 
+- Source: run 20261104T103939Z (carried over; not repeated); see `previous_runs/20261104T103939Z/`.
 - Karma: status `success`, event `388ac0bb-c817-40ee-8877-84a39ab8d2b3`, submission `cyber-p0-test-80c17aba-e107-426e-af95-7904ea5c1eb1`, logged by TANTRA at 2026-11-04T10:40:28.555931+00:00 (the reply arrived at 2026-11-04T10:40:50Z).
 - PRANA: `forwarded`, PRANA event `45565419-3108-4e7d-84c0-997fea900629`.
 - PRANA -> Bucket: `failed`, HTTP 400: Artifact validation failed: parent_hash required (not first artifact) (TANTRA also reported a read timeout) - reported to the TANTRA team as TAN-06.
 - TANTRA's internal Bucket address in this reply was replaced by a `[REDACTED after capture ...]` label before publication; everything else is as received.
+
+## Calls made by the earlier verification run 20261104T103939Z (same day)
+
+Archived in `previous_runs/20261104T103939Z/` (that run's full call list: its LIVE_TANTRA_CALLS.md).
+
+| UTC (reply received) | Source | Check | Method | Path | HTTP | Ledger write? |
+|---|---|---|---|---|---|---|
+| 2026-11-04T10:39:54Z | harness | O-02 | GET | `/health` | 200 | no |
+| 2026-11-04T10:39:54Z | harness | O-02 | GET | `/health` | 200 | no |
+| 2026-11-04T10:39:55Z | harness | O-02 | GET | `/health` | 200 | no |
+| 2026-11-04T10:40:14.429252+00:00 | api |  | POST | `/validate/prana/ingress` | 422 | no |
+| 2026-11-04T10:40:16.994840+00:00 | api |  | POST | `/validate/prana/ingress` | 422 | no |
+| 2026-11-04T10:40:19.462075+00:00 | api |  | POST | `/validate/prana/ingress` | 422 | no |
+| 2026-11-04T10:40:20Z | harness | S5-01 | GET | `/replay/cyber-p0-test-35797205-3f70-438f-ae00-dd5382899ff0` | 404 | no |
+| 2026-11-04T10:40:25Z | harness | S5-04 | POST | `/validate/prana/ingress` | 422 | no |
+| 2026-11-04T10:40:26Z | harness | S8-02 | POST | `/validate/prana/ingress` | 200 | no |
+| 2026-11-04T10:40:50Z | harness | S8-02 | POST | `/karma/ingest` | 200 | YES |
+| 2026-11-04T10:40:51Z | harness | S8-02 | POST | `/karma/verify` | 200 | no |
 
 ## Calls made by hand on the same day, outside this run
 
@@ -56,7 +72,8 @@ Contract discovery before the run, and screenshots after it. Raw files: `api_sam
 | 2026-11-04T08:22:45.155992+00:00 | POST | `http://163.128.209.18:8101/validate/prana/ingress` | 200 | contract check of `integrity_probe` (submission `cyber-p0-test-1f22b904a67c-sub-B`): valid | validation_probe_20261104T082244Z.json |
 | 2026-11-04T10:43:26Z (shortly after) | GET | `http://163.128.209.18:8101/health` | not recorded (page rendered) | screenshot 06 (headless browser) | manual_record.json (time: capture stamp in screenshots/SCREENSHOTS_INDEX.md) |
 | 2026-11-04T10:43:26Z (shortly after) | GET | `http://163.128.209.18:8103/prana/system/health` | not recorded (page rendered) | screenshot 07 (headless browser; image withdrawn from the packet, see SCREENSHOTS_INDEX.md) | manual_record.json (time: capture stamp in screenshots/SCREENSHOTS_INDEX.md) |
+| 2026-11-04T12:09:24Z (shortly after) | GET | `http://163.128.209.18:8101/health` | not recorded (page rendered) | screenshot 06, second capture after the fixes (headless browser) | manual_record.json (time: capture stamp in screenshots/SCREENSHOTS_INDEX.md) |
 
 Not recorded: An earlier attempt of the same screenshot script, a minute or two before 10:43Z, failed to save its images. If its browser reached the two TANTRA pages, that adds up to 2 more read-only GETs. No ledger write was possible from it.
 
-Ledger writes to TANTRA in this run: **1**. Outside this run, to TANTRA: 9 read-only GET(s), 2 /validate call(s), **0** ledger write(s); to other services: 3 read-only GET(s), listed above.
+Ledger writes to TANTRA in this run: **0**. In the earlier run 20261104T103939Z: **1** (11 TANTRA calls). Outside the runs, to TANTRA: 10 read-only GET(s), 2 /validate call(s), **0** ledger write(s); to other services: 3 read-only GET(s), listed above.

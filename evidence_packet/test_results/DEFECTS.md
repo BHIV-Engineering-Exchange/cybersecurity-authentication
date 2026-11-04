@@ -6,142 +6,146 @@ Generated from `verification/defects.py`, this run's `results.json` and the reco
 
 | ID | Severity | Status | Title | Owner |
 |---|---|---|---|---|
-| CYB-01 | CRITICAL | CONFIRMED at runtime by S1-04 | Anyone can self-register and immediately read investigator data | Kaushlendra (auth/authz) |
-| CYB-02 | HIGH | CONFIRMED at runtime by S2-04 | Tier-1 'permission_revocation' reports REVOKED but changes nothing | Kaushlendra (access control) |
-| CYB-06 | CRITICAL | CONFIRMED at runtime by S3-03 | Wallet analysis invents transactions and a fraud verdict for any wallet | Shivam (security intelligence) |
-| CYB-03 | MEDIUM | CONFIRMED at runtime by S3-01 | Intelligence output has no confidence or uncertainty field | Shivam (security intelligence) |
-| CYB-04 | HIGH | CONFIRMED at runtime by P-C1 | Failed logins are not recorded as security events | Kaushlendra (auth); consumed by Shivam/Aryan |
-| CYB-05 | MEDIUM | CONFIRMED at runtime by P-C1 | Login errors reveal whether an account exists | Kaushlendra (auth) |
-| CYB-07 | LOW | CONFIRMED at runtime by O-04 | Collection routes without a trailing slash return 405 for authorised users | Rajaryan (integration) / Kaushlendra (API) |
-| CYB-08 | MEDIUM | CODE-VERIFIED (found by reading code or repository state; no runtime check) | Evidence upload ignores the Bucket result; callers cannot see whether the sovereign copy exists | Kaushlendra (data/API) |
-| CYB-09 | MEDIUM | CODE-VERIFIED (found by reading code or repository state; no runtime check) | Bucket API key is sent inside the JSON body | Kaushlendra (data/API) |
-| CYB-10 | MEDIUM | FIXED in this change | Unit test suite was not reproducible from a clean clone | Hemanth (testing) |
-| CYB-11 | MEDIUM | FIXED in this change | Frozen OpenAPI contract was missing /authz/check, /access/revoke and /tts/ | Kaushlendra (API contracts) |
-| CYB-12 | LOW | CONFIRMED (this run's health reply): recorded in api_samples/O-01.json | Public health endpoint shows server file-system paths (seen in api_samples/O-01.json) | Kaushlendra (API) |
+| CYB-01 | CRITICAL | FIXED in this change; S1-04 passes in this run | Anyone can self-register and immediately read investigator data | Kaushlendra (auth/authz) |
+| CYB-02 | HIGH | FIXED in this change; S2-04 passes in this run | Tier-1 'permission_revocation' reports REVOKED but changes nothing | Kaushlendra (access control) |
+| CYB-06 | CRITICAL | FIXED in this change; S3-03 passes in this run | Wallet analysis invents transactions and a fraud verdict for any wallet | Shivam (security intelligence) |
+| CYB-03 | MEDIUM | FIXED in this change; S3-01 passes in this run | Intelligence output has no confidence or uncertainty field | Shivam (security intelligence) |
+| CYB-04 | HIGH | FIXED in this change; P-C1 passes in this run | Failed logins are not recorded as security events | Kaushlendra (auth); consumed by Shivam/Aryan |
+| CYB-05 | MEDIUM | FIXED in this change; P-C1 passes in this run | Login errors reveal whether an account exists | Kaushlendra (auth) |
+| CYB-07 | LOW | FIXED in this change; O-04 passes in this run | Collection routes without a trailing slash return 405 for authorised users | Rajaryan (integration) / Kaushlendra (API) |
+| CYB-08 | MEDIUM | FIXED in this change; S6-04 passes in this run | Evidence upload ignores the Bucket result; callers cannot see whether the sovereign copy exists | Kaushlendra (data/API) |
+| CYB-09 | MEDIUM | FIXED in this change (no runtime check; verified by unit test test_bucket_key_travels_in_a_header_not_the_payload) | Bucket API key is sent inside the JSON body | Kaushlendra (data/API) |
+| CYB-10 | MEDIUM | FIXED in this change (no runtime check; verified by the unit suite running on a clean checkout (test_results/cyber_unit_tests.txt)) | Unit test suite was not reproducible from a clean clone | Hemanth (testing) |
+| CYB-11 | MEDIUM | FIXED in this change (no runtime check; verified by the regenerated cybercrime/openapi.yaml; the API's start-up drift check logged no warning in this run) | Frozen OpenAPI contract was missing /authz/check, /access/revoke and /tts/ | Kaushlendra (API contracts) |
+| CYB-12 | LOW | FIXED in this change; O-01 passes in this run | Public health endpoint shows server file-system paths (seen in api_samples/O-01.json) | Kaushlendra (API) |
 | CYB-13 | HIGH | CODE-VERIFIED (found by reading code or repository state; no runtime check) | Protected access does not check scope or bind the caller to the subject; the VAJRA token is unscoped | Rajaryan (integration) with Prakash (VAJRA contract); bridge by Hemanth |
-| CYB-14 | MEDIUM | CODE-VERIFIED (found by reading code or repository state; no runtime check) | Every protected-access decision appends a permanent VAJRA row; there is no rate limit | Rajaryan (integration); bridge by Hemanth |
+| CYB-14 | MEDIUM | FIXED in this change (no runtime check; verified by unit test test_protected_access_is_rate_limited_per_caller) | Every protected-access decision appends a permanent VAJRA row; there is no rate limit | Rajaryan (integration); bridge by Hemanth |
+| CYB-15 | LOW | FIXED in this change (no runtime check; verified by unit test test_malformed_trace_id_is_not_echoed) | Caller-supplied X-Trace-Id / X-Request-Id were echoed unvalidated in response headers and logs | Kaushlendra (API) |
 
 ### CYB-01 - Anyone can self-register and immediately read investigator data
 
-- Severity: CRITICAL; owner: Kaushlendra (auth/authz); status: CONFIRMED at runtime by S1-04
+- Severity: CRITICAL; owner: Kaushlendra (auth/authz); status: FIXED in this change; S1-04 passes in this run
 - Where: `cybercrime/backend/app/api/v1/endpoints/auth.py:19-41 (register sets role=investigator, active); cybercrime/rbac-permissions.json (public POST /api/v1/auth/register)`
 - Steps:
   1. POST /api/v1/auth/register with any email and password (no login).
   2. POST /api/v1/auth/login with the same credentials.
   3. GET /api/v1/cases/ with the token.
 - Expected: Registration is refused or stays inactive until a superadmin approves it.
-- Actual (this run): anonymous self-registration does not yield investigator data access: expected 'registration refused (401/403), account pending (login 401/403), or data access 401/403', got 'register=200, login=200, GET /api/v1/cases/=200'
-- Suggested fix: Create self-registered users as inactive (or route them through /api/v1/access-requests), or remove the public route.
+- Fixed by: Hemanth on 2026-11-04 at the team's request; for review by Kaushlendra
+- Fix: Create self-registered users as inactive (or route them through /api/v1/access-requests), or remove the public route.
 
 ### CYB-02 - Tier-1 'permission_revocation' reports REVOKED but changes nothing
 
-- Severity: HIGH; owner: Kaushlendra (access control); status: CONFIRMED at runtime by S2-04
+- Severity: HIGH; owner: Kaushlendra (access control); status: FIXED in this change; S2-04 passes in this run
 - Where: `cybercrime/backend/app/api/v1/endpoints/access.py:158-166`
 - Steps:
   1. As superadmin, POST /api/v1/access/revoke with revocation_type=permission_revocation, target role=investigator, action=read.
   2. As an investigator, GET /api/v1/cases/ and POST /api/v1/authz/check for read.
 - Expected: The revoked permission is denied on the next request.
-- Actual (this run): investigator read after 'read' was revoked: expected '403 (denied)', got 200; authz decision for investigator read after revocation: expected 'DENY', got 'ALLOW'
-- Suggested fix: Persist revoked role:action pairs and enforce them in the RBAC middleware and /authz/check, or return NOT_IMPLEMENTED instead of REVOKED.
+- Fixed by: Hemanth on 2026-11-04 at the team's request; for review by Kaushlendra
+- Fix: Persist revoked role:action pairs and enforce them in the RBAC middleware and /authz/check, or return NOT_IMPLEMENTED instead of REVOKED.
 
 ### CYB-06 - Wallet analysis invents transactions and a fraud verdict for any wallet
 
-- Severity: CRITICAL; owner: Shivam (security intelligence); status: CONFIRMED at runtime by S3-03
+- Severity: CRITICAL; owner: Shivam (security intelligence); status: FIXED in this change; S3-03 passes in this run
 - Where: `cybercrime/backend/app/api/v1/endpoints/incidents.py:366-384 ('Always generate synthetic fraud patterns ... use synthetic fraud data as primary')`
 - Steps:
   1. POST /api/v1/incidents/analyze for a wallet address the system has never seen.
 - Expected: No transactions or patterns are reported without observed data; any demo data is labelled synthetic.
-- Actual (this run): no unlabelled transactions are reported for a wallet with no history: expected '0 transactions, or every transaction labelled synthetic', got '16 transactions, labelled synthetic: False'; no fraud pattern asserted without observed data: expected [], got ['Money Laundering (Layering)', 'Multiple Hop Transfers', 'Circular Movement', 'High Transaction Frequency']
-- Suggested fix: Remove generated data from the investigation path, or gate it behind an explicit demo flag and mark every generated item synthetic:true.
+- Fixed by: Hemanth on 2026-11-04 at the team's request; for review by Shivam
+- Fix: Remove generated data from the investigation path, or gate it behind an explicit demo flag and mark every generated item synthetic:true.
 
 ### CYB-03 - Intelligence output has no confidence or uncertainty field
 
-- Severity: MEDIUM; owner: Shivam (security intelligence); status: CONFIRMED at runtime by S3-01
+- Severity: MEDIUM; owner: Shivam (security intelligence); status: FIXED in this change; S3-01 passes in this run
 - Where: `cybercrime/backend/app/api/v1/schemas.py:219-232 (IncidentReportResponse)`
 - Steps:
   1. POST /api/v1/incidents/analyze for an ambiguous wallet and inspect the fields.
 - Expected: A structured confidence/uncertainty value next to risk_score (EOD: expose severity, confidence, rationale, uncertainty).
-- Actual (this run): structured confidence/uncertainty field present: expected True, got False
-- Suggested fix: Add confidence and an uncertainty/evidence-basis field to the response contract.
+- Fixed by: Hemanth on 2026-11-04 at the team's request; for review by Shivam
+- Fix: Add confidence and an uncertainty/evidence-basis field to the response contract.
 
 ### CYB-04 - Failed logins are not recorded as security events
 
-- Severity: HIGH; owner: Kaushlendra (auth); consumed by Shivam/Aryan; status: CONFIRMED at runtime by P-C1
+- Severity: HIGH; owner: Kaushlendra (auth); consumed by Shivam/Aryan; status: FIXED in this change; P-C1 passes in this run
 - Where: `cybercrime/backend/app/api/v1/endpoints/auth.py:44-71 (401 raised without a canonical security event; the only trace is a generic request.completed log line with status 401)`
 - Steps:
   1. POST /api/v1/auth/login six times with a wrong password.
   2. As superadmin, GET /api/v1/audit/.
 - Expected: One security event per failed attempt, so detection and correlation have an input.
-- Actual (this run): failed logins recorded as security events in the audit store: expected '>= 6', got 0; login error does not reveal whether the account exists: expected True, got False
-- Suggested fix: Emit a canonical security event (auth.login, DENIED, reason) for every failed login.
+- Fixed by: Hemanth on 2026-11-04 at the team's request; for review by Kaushlendra
+- Fix: Emit a canonical security event (auth.login, DENIED, reason) for every failed login.
 
 ### CYB-05 - Login errors reveal whether an account exists
 
-- Severity: MEDIUM; owner: Kaushlendra (auth); status: CONFIRMED at runtime by P-C1
+- Severity: MEDIUM; owner: Kaushlendra (auth); status: FIXED in this change; P-C1 passes in this run
 - Where: `cybercrime/backend/app/api/v1/endpoints/auth.py (messages 'User not found ...' vs 'Incorrect password ...')`
 - Steps:
   1. Log in with an unknown email.
   2. Log in with a known email and a wrong password.
   3. Compare the messages.
 - Expected: The same generic message for both.
-- Actual (this run): failed logins recorded as security events in the audit store: expected '>= 6', got 0; login error does not reveal whether the account exists: expected True, got False
-- Suggested fix: Return one generic 'Invalid email or password' message.
+- Fixed by: Hemanth on 2026-11-04 at the team's request; for review by Kaushlendra
+- Fix: Return one generic 'Invalid email or password' message.
 
 ### CYB-07 - Collection routes without a trailing slash return 405 for authorised users
 
-- Severity: LOW; owner: Rajaryan (integration) / Kaushlendra (API); status: CONFIRMED at runtime by O-04
+- Severity: LOW; owner: Rajaryan (integration) / Kaushlendra (API); status: FIXED in this change; O-04 passes in this run
 - Where: `cybercrime/backend/main.py:511 (catch-all OPTIONS route stops the slash redirect)`
 - Steps:
   1. As an investigator, GET /api/v1/cases (no trailing slash).
 - Expected: 200, or a 307 redirect to /api/v1/cases/.
-- Actual (this run): GET /api/v1/cases (no slash) by an authorised investigator: expected '200 or 307', got 405
-- Suggested fix: Drop the catch-all OPTIONS route (CORSMiddleware already answers preflight) or register both path forms.
+- Fixed by: Hemanth on 2026-11-04 at the team's request; for review by Rajaryan and Kaushlendra
+- Fix: Drop the catch-all OPTIONS route (CORSMiddleware already answers preflight) or register both path forms.
 
 ### CYB-08 - Evidence upload ignores the Bucket result; callers cannot see whether the sovereign copy exists
 
-- Severity: MEDIUM; owner: Kaushlendra (data/API); status: CODE-VERIFIED (found by reading code or repository state; no runtime check)
+- Severity: MEDIUM; owner: Kaushlendra (data/API); status: FIXED in this change; S6-04 passes in this run
 - Where: `cybercrime/backend/app/api/v1/endpoints/evidence.py:231-237`
 - Steps:
   1. Upload evidence while the Bucket is unreachable; the response is identical to a successful Bucket store.
 - Expected: The response states the Bucket outcome (stored / unavailable).
-- Suggested fix: Return the store_evidence_in_bucket result in the response.
+- Fixed by: Hemanth on 2026-11-04 at the team's request; for review by Kaushlendra
+- Fix: Return the store_evidence_in_bucket result in the response.
 
 ### CYB-09 - Bucket API key is sent inside the JSON body
 
-- Severity: MEDIUM; owner: Kaushlendra (data/API); status: CODE-VERIFIED (found by reading code or repository state; no runtime check)
+- Severity: MEDIUM; owner: Kaushlendra (data/API); status: FIXED in this change (no runtime check; verified by unit test test_bucket_key_travels_in_a_header_not_the_payload)
 - Where: `cybercrime/backend/app/core/sovereign_integrations.py:165-166`
 - Steps:
   1. Configure BHIV_BUCKET_API_KEY and upload evidence; the key travels in the payload that an append-only store may keep.
 - Expected: Credentials travel only in a header.
-- Suggested fix: Send the key in an Authorization or X-API-Key header.
+- Fixed by: Hemanth on 2026-11-04 at the team's request; for review by Kaushlendra
+- Fix: Send the key in an Authorization or X-API-Key header.
 
 ### CYB-10 - Unit test suite was not reproducible from a clean clone
 
-- Severity: MEDIUM; owner: Hemanth (testing); status: FIXED in this change
+- Severity: MEDIUM; owner: Hemanth (testing); status: FIXED in this change (no runtime check; verified by the unit suite running on a clean checkout (test_results/cyber_unit_tests.txt))
 - Where: `cybercrime/backend (no conftest; tests relied on a local .env and a pre-filled database)`
 - Steps:
   1. Fresh clone, run pytest -v in cybercrime/backend: 2 collection errors.
   2. With SECRET_KEY set and the non-test script test_predictions.py excluded: 29 passed, 1 failed.
 - Expected: The suite runs the same everywhere.
-- Suggested fix: Fixed in this change: cybercrime/backend/conftest.py (throwaway key, isolated database, offline settings).
+- Fix: Fixed in this change: cybercrime/backend/conftest.py (throwaway key, isolated database, offline settings).
 
 ### CYB-11 - Frozen OpenAPI contract was missing /authz/check, /access/revoke and /tts/
 
-- Severity: MEDIUM; owner: Kaushlendra (API contracts); status: FIXED in this change
+- Severity: MEDIUM; owner: Kaushlendra (API contracts); status: FIXED in this change (no runtime check; verified by the regenerated cybercrime/openapi.yaml; the API's start-up drift check logged no warning in this run)
 - Where: `cybercrime/openapi.yaml (89 paths before, 93 after regeneration)`
 - Steps:
   1. Compare openapi.yaml with the routes the app serves; startup logged 'openapi.yaml is out of date'.
 - Expected: The published contract lists every route.
-- Suggested fix: Fixed in this change: regenerated with scripts/generate_openapi.py.
+- Fix: Fixed in this change: regenerated with scripts/generate_openapi.py.
 
 ### CYB-12 - Public health endpoint shows server file-system paths (seen in api_samples/O-01.json)
 
-- Severity: LOW; owner: Kaushlendra (API); status: CONFIRMED (this run's health reply): recorded in api_samples/O-01.json
+- Severity: LOW; owner: Kaushlendra (API); status: FIXED in this change; O-01 passes in this run
 - Where: `cybercrime/backend/app/core/sovereign_integrations.py:325-350 (integration_health returns storage and buffer paths); GET /api/v1/system/health is public in cybercrime/rbac-permissions.json`
 - Steps:
   1. GET /api/v1/system/health without a token; the body contains absolute storage paths.
 - Expected: Public health returns status only; details (paths) need an authenticated operator.
-- Suggested fix: Drop paths from the public response or move the detailed view behind superadmin.
+- Fixed by: Hemanth on 2026-11-04 at the team's request; for review by Kaushlendra
+- Fix: Drop paths from the public response or move the detailed view behind superadmin.
 
 ### CYB-13 - Protected access does not check scope or bind the caller to the subject; the VAJRA token is unscoped
 
@@ -156,13 +160,24 @@ Generated from `verification/defects.py`, this run's `results.json` and the reco
 
 ### CYB-14 - Every protected-access decision appends a permanent VAJRA row; there is no rate limit
 
-- Severity: MEDIUM; owner: Rajaryan (integration); bridge by Hemanth; status: CODE-VERIFIED (found by reading code or repository state; no runtime check)
+- Severity: MEDIUM; owner: Rajaryan (integration); bridge by Hemanth; status: FIXED in this change (no runtime check; verified by unit test test_protected_access_is_rate_limited_per_caller)
 - Where: `cybercrime/backend/app/api/v1/endpoints/protected_access.py (one VAJRA evidence record per non-duplicate request, ALLOW or DENY)`
 - Steps:
   1. Send many protected-access requests with different trace ids; each one adds a row to VAJRA's append-only TruthStore.
   2. Together with CYB-01 (open self-registration) any stranger can do this.
 - Expected: Rate limiting on the route (and CYB-01 fixed), or recording only decisions that matter to VAJRA.
-- Suggested fix: Add a per-caller rate limit; agree with the VAJRA owner which decisions should be recorded.
+- Fixed by: Hemanth on 2026-11-04 (his bridge); for review by Rajaryan
+- Fix: Add a per-caller rate limit; agree with the VAJRA owner which decisions should be recorded.
+
+### CYB-15 - Caller-supplied X-Trace-Id / X-Request-Id were echoed unvalidated in response headers and logs
+
+- Severity: LOW; owner: Kaushlendra (API); status: FIXED in this change (no runtime check; verified by unit test test_malformed_trace_id_is_not_echoed)
+- Where: `cybercrime/backend/main.py request_context_middleware and rbac_middleware`
+- Steps:
+  1. Send any request with X-Trace-Id containing spaces or control characters; the value came back in the response header.
+- Expected: Only a safe id form is echoed; anything else is replaced by a fresh id.
+- Fixed by: Hemanth on 2026-11-04 at the team's request; for review by Kaushlendra
+- Fix: Fixed in this change: both middlewares accept ^[A-Za-z0-9._:-]{1,128}$ and otherwise mint a UUID (protected access still answers 400 INVALID_TRACE_ID). Unit test: test_lane_fixes.py.
 
 ## Cybersecurity (fraud-evidence-system)
 
@@ -250,10 +265,10 @@ Generated from `verification/defects.py`, this run's `results.json` and the reco
   1. On a local node, POST /api/admin/add-tokens, /api/v1/permission/grant and /api/cybercrime/freeze with no Authorization header.
   2. permission/grant creates a GRANT (201) and cybercrime/freeze answers success (200). add-tokens also runs (200); in this run it reported 'token BHX not found' because the test used a token name that does not exist, so no mint was shown.
 - Expected: 401/403 without credentials.
-- Actual (this run): POST /api/admin/add-tokens without credentials is refused: expected '401 or 403', got '200 (request accepted)'; POST /api/v1/permission/grant without credentials is refused: expected '401 or 403', got '201 (request accepted)'; POST /api/cybercrime/freeze without credentials is refused: expected '401 or 403', got '200 (request accepted)'
+- Actual (this run): POST /api/admin/add-tokens without credentials is refused: expected '401 or 403', got '200, handler ran; reply: {"error":"token BHX not found","success":false}'; POST /api/v1/permission/grant without credentials is refused: expected '401 or 403', got '201, handler ran; reply: {"commitment":"bc9d61291a0cf57d9a70f053aaad1cff398a0b94cd578f64be7728fc43f78d61","permission_id":"perm-cyber-p0-test-subj-","record":{"permission_id":"perm-cybe'; POST /api/cybercrime/freeze without credentials is refused: expected '401 or 403', got '200, handler ran; reply: {"success":true}'
 - Recorded replies ([api_samples/V-01.json](../api_samples/V-01.json)):
   - `POST /api/admin/add-tokens` -> 200: `{"error":"token BHX not found","success":false}`
-  - `POST /api/v1/permission/grant` -> 201: `{"commitment":"0165a21b6cef30c1a43a03140c2438df8f45e31419d72cc697a01db4c78b6a7e","permission_id":"perm-cyber-p0-test-subj-","record":{"permission_id":"perm-cyber-p0-test-subj-","trace_id":"c69962a0-7b`
+  - `POST /api/v1/permission/grant` -> 201: `{"commitment":"bc9d61291a0cf57d9a70f053aaad1cff398a0b94cd578f64be7728fc43f78d61","permission_id":"perm-cyber-p0-test-subj-","record":{"permission_id":"perm-cyber-p0-test-subj-","trace_id":"a0876b88-fb`
   - `POST /api/cybercrime/freeze` -> 200: `{"success":true}`
 - Suggested fix: Wrap these routes with enableCORSWithAuth (or remove admin routes from public builds).
 
@@ -294,7 +309,7 @@ Generated from `verification/defects.py`, this run's `results.json` and the reco
 | TAN-02 | HIGH | CODE-VERIFIED (found by reading code or repository state; no runtime check) | TANTRA repository has no service code: four submodule links with no .gitmodules | TANTRA team (owner name UNKNOWN) |
 | TAN-03 | HIGH | CODE-VERIFIED (found by reading code or repository state; no runtime check) | A .env file is committed to the TANTRA repository | TANTRA team (owner name UNKNOWN) |
 | TAN-04 | MEDIUM | CODE-VERIFIED (found by reading code or repository state; no runtime check) | No test lane for TANTRA's governed enforcement path | TANTRA team (owner name UNKNOWN) |
-| TAN-06 | MEDIUM | CONFIRMED (live reply to this run's single probe write): recorded in api_samples/S8-02.json | PRANA's onward write to the Bucket fails: 400 'parent_hash required (not first artifact)' | TANTRA team (owner name UNKNOWN) |
+| TAN-06 | MEDIUM | CONFIRMED (live reply to the single probe write, run 20261104T103939Z): recorded in previous_runs/20261104T103939Z/api_samples/S8-02.json | PRANA's onward write to the Bucket fails: 400 'parent_hash required (not first artifact)' | TANTRA team (owner name UNKNOWN) |
 
 ### TAN-01 - No TANTRA contract exists for cybersecurity events
 
@@ -335,7 +350,7 @@ Generated from `verification/defects.py`, this run's `results.json` and the reco
 
 ### TAN-06 - PRANA's onward write to the Bucket fails: 400 'parent_hash required (not first artifact)'
 
-- Severity: MEDIUM; owner: TANTRA team (owner name UNKNOWN); status: CONFIRMED (live reply to this run's single probe write): recorded in api_samples/S8-02.json
+- Severity: MEDIUM; owner: TANTRA team (owner name UNKNOWN); status: CONFIRMED (live reply to the single probe write, run 20261104T103939Z): recorded in previous_runs/20261104T103939Z/api_samples/S8-02.json
 - Where: `live TANTRA /karma/ingest reply, field prana.bucket.propagation (PRANA forwarding to the Bucket's artifact endpoint)`
 - Steps:
   1. POST a valid integrity_probe envelope (it passes /validate) to /karma/ingest.
