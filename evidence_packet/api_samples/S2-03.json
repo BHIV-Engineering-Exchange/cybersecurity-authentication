@@ -2,14 +2,14 @@
   {
     "check_id": "S2-03",
     "system": "cybersecurity",
-    "utc": "2026-11-04T12:06:09Z",
-    "elapsed_ms": 30,
+    "utc": "2026-11-04T12:39:30Z",
+    "elapsed_ms": 32,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:57509/api/v1/auth/me",
+      "url": "http://127.0.0.1:62636/api/v1/auth/me",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "eb4f92ca-db50-4508-a514-fb6320627b1b"
+        "x-trace-id": "bb47dd34-d3e0-4a87-8a33-6cc4ee888f47"
       },
       "body": null
     },
@@ -17,8 +17,8 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "f6c2576a-ab0e-4647-8aab-d7bddbd05be8",
-        "x-trace-id": "eb4f92ca-db50-4508-a514-fb6320627b1b"
+        "x-request-id": "db0a08be-e5e2-4ede-9f5d-6274d492b453",
+        "x-trace-id": "bb47dd34-d3e0-4a87-8a33-6cc4ee888f47"
       },
       "body": {
         "email": "investigator.c@bhiv-verification.example",
@@ -26,21 +26,21 @@
         "role": "investigator",
         "id": 4,
         "is_active": true,
-        "created_at": "2026-11-04T12:05:01.903435"
+        "created_at": "2026-11-04T12:38:29.199142"
       }
     }
   },
   {
     "check_id": "S2-03",
     "system": "cybersecurity",
-    "utc": "2026-11-04T12:06:09Z",
+    "utc": "2026-11-04T12:39:31Z",
     "elapsed_ms": 31,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:57509/api/v1/access/revoke",
+      "url": "http://127.0.0.1:62636/api/v1/access/revoke",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "5049a93f-baf5-4cd8-af58-792b6c4b96f2",
+        "x-trace-id": "a5891ac2-848c-4a59-b512-799425cebbb8",
         "content-type": "application/json"
       },
       "body": {
@@ -57,31 +57,31 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "81aed94a-790f-468a-a462-5845d342dd84",
-        "x-trace-id": "5049a93f-baf5-4cd8-af58-792b6c4b96f2"
+        "x-request-id": "17a5322f-abc5-47a0-a0a5-b3b9d88e347b",
+        "x-trace-id": "a5891ac2-848c-4a59-b512-799425cebbb8"
       },
       "body": {
         "contract_version": "1.0.0",
-        "revocation_id": "b24a9cc9-af2f-4407-8a2c-044cb8abcc26",
+        "revocation_id": "80072807-a5db-4210-be68-24894a872256",
         "revocation_type": "user_deactivation",
         "status": "REVOKED",
-        "effective_at": "2026-11-04T12:06:09.072Z",
-        "trace_id": "5049a93f-baf5-4cd8-af58-792b6c4b96f2",
-        "audit_event_id": "e2ddffe7-6685-45e6-8dbe-acd545d2d04b"
+        "effective_at": "2026-11-04T12:39:31.003Z",
+        "trace_id": "a5891ac2-848c-4a59-b512-799425cebbb8",
+        "audit_event_id": "4cea8c61-e965-41cb-8792-d28a0e775d51"
       }
     }
   },
   {
     "check_id": "S2-03",
     "system": "cybersecurity",
-    "utc": "2026-11-04T12:06:09Z",
-    "elapsed_ms": 0,
+    "utc": "2026-11-04T12:39:31Z",
+    "elapsed_ms": 30,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:57509/api/v1/auth/me",
+      "url": "http://127.0.0.1:62636/api/v1/auth/me",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "8f36e0f0-07f5-4264-b2d6-6f5b83b287c1"
+        "x-trace-id": "d76e7f3a-8175-49a2-863e-cfb61c99a81b"
       },
       "body": null
     },
@@ -89,17 +89,17 @@
       "status": 403,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "e15ff40a-80b8-47f5-8c5f-720a9e286e98",
-        "x-trace-id": "8f36e0f0-07f5-4264-b2d6-6f5b83b287c1"
+        "x-request-id": "59e44a6c-9bd3-40f2-aded-fe9c771a7bb6",
+        "x-trace-id": "d76e7f3a-8175-49a2-863e-cfb61c99a81b"
       },
       "body": {
         "error": true,
         "code": "ACCOUNT_DEACTIVATED",
         "status_code": 403,
         "message": "Account is deactivated. Access denied.",
-        "trace_id": "8f36e0f0-07f5-4264-b2d6-6f5b83b287c1",
-        "request_id": "e15ff40a-80b8-47f5-8c5f-720a9e286e98",
-        "timestamp": "2026-11-04T12:06:09.101Z",
+        "trace_id": "d76e7f3a-8175-49a2-863e-cfb61c99a81b",
+        "request_id": "59e44a6c-9bd3-40f2-aded-fe9c771a7bb6",
+        "timestamp": "2026-11-04T12:39:31.040Z",
         "details": []
       }
     }

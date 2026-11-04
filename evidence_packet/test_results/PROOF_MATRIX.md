@@ -2,7 +2,7 @@
 
 Each requirement maps to checks in this run. VERIFIED = every mapped check passed and the requirement asks for nothing more; FAILING = at least one failed; PARTIAL = some passed and the rest were blocked or skipped, or all passed but the requirement asks for more than the run showed (the reason follows the bracket); NOT VERIFIED = none passed. The bracket lists the systems the passing checks touched (live or local) and whether the harness simulated a role.
 
-Run `20261104T120458Z`, TANTRA mode `live`.
+Run `20261104T123826Z`, TANTRA mode `live`.
 
 | Source | Requirement | Checks (result) | Status |
 |---|---|---|---|
@@ -16,7 +16,7 @@ Run `20261104T120458Z`, TANTRA mode `live`.
 | EOD 04 Nov - mandatory scenario | Trace / replay: source, decision, enforcement and evidence linked; replay where supported | S8-01 PASS, S8-02 SKIPPED, S8-03 PASS | **PARTIAL (API: local; VAJRA: local node; TANTRA: live; includes SIMULATED roles)** |
 | 10-day - mandatory proof | A NORMAL: user -> identity -> consent -> authorised access -> evidence | P-A PASS | **VERIFIED (API: local; VAJRA: local node; TANTRA: live; includes SIMULATED roles)** |
 | 10-day - mandatory proof | B REVOCATION: active permission -> revoke -> future request denied -> evidence | S2-01 PASS, S4-05 PASS | **VERIFIED (API: local; VAJRA: local node; includes SIMULATED roles)** |
-| 10-day - mandatory proof | C ATTACK: threat -> detect -> correlate -> govern -> contain -> evidence | P-C1 PASS, P-C2 PASS, P-C3 PASS | **VERIFIED (API: local; VAJRA: local node; includes SIMULATED roles)** |
+| 10-day - mandatory proof | C ATTACK: threat -> detect -> correlate -> govern -> contain -> evidence | P-C1 PASS, P-C2 PASS, P-C3 PASS | **PARTIAL (API: local; VAJRA: local node; includes SIMULATED roles) - the govern step (TANTRA approval) was played by the harness (SIMULATED); the approval contract is UNKNOWN** |
 | 10-day - mandatory proof | D RECOVERY: failure -> candidate -> verify -> replay/integrity -> rebuild -> reinstate | S7-02 PASS, S7-03 PASS, S7-04 PASS, S7-05 FAIL, S8-03 PASS | **FAILING (API: local; VAJRA: local node; includes SIMULATED roles)** |
 | Task 1 section M - live path | Input signal / data-access event -> Cybersecurity processing -> decision | S1-05 PASS, P-A PASS | **PARTIAL (API: local; VAJRA: local node; TANTRA: live; includes SIMULATED roles) - the checks passed against local processes or simulated roles; Task 1 section M asks for the live path** |
 | Task 1 section M - live path | Controlled downstream response (containment through VAJRA) | P-C3 PASS, S7-02 PASS | **PARTIAL (API: local; VAJRA: local node; includes SIMULATED roles) - the checks passed against local processes or simulated roles; Task 1 section M asks for the live path** |
@@ -29,7 +29,7 @@ Run `20261104T120458Z`, TANTRA mode `live`.
 
 | Condition | Met? | Basis (evidence status) |
 |---|---|---|
-| BUILD WORKS | **YES** | OFFLINE-VERIFIED: both services started in this run (deployment_proof/local_runtime_proof.json); unit tests: 85 passed, 172 warnings |
+| BUILD WORKS | **YES** | OFFLINE-VERIFIED: both services started in this run (deployment_proof/local_runtime_proof.json); unit tests: 91 passed, 199 warnings |
 | INTEGRATION WORKS | **PARTIAL** | VAJRA path OFFLINE-VERIFIED on a local node (consent SIMULATED). TANTRA contract gate LIVE-VERIFIED; cybersecurity contract BLOCKED-EXTERNAL (TAN-01).  |
 | TESTS PASS | **NO** | 42 PASS, 3 FAIL, 0 ERROR, 0 BLOCKED, 1 SKIPPED; failures are listed in DEFECTS.md |
 | EVIDENCE EXISTS | **YES** | all evidence folders present |

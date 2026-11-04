@@ -1,0 +1,52 @@
+[
+  {
+    "check_id": "S5-04",
+    "system": "tantra-live",
+    "utc": "2026-11-04T12:05:57Z",
+    "elapsed_ms": 608,
+    "request": {
+      "method": "POST",
+      "url": "http://163.128.209.18:8101/validate/prana/ingress",
+      "headers": {
+        "x-trace-id": "cyber-p0-test-9d205ed8-daf2-4609-a18d-6042aafbe5d6",
+        "content-type": "application/json"
+      },
+      "body": {
+        "registry_reference": {
+          "registry": "prana.event.contracts",
+          "event_type": "integrity_probe",
+          "version": "1.0.0"
+        },
+        "submission_id": "cyber-p0-test-9d205ed8-daf2-4609-a18d-6042aafbe5d6",
+        "event_type": "integrity_probe",
+        "timestamp": "2026-11-04T00:00:00Z",
+        "source_system": "cybersecurity"
+      }
+    },
+    "response": {
+      "status": 422,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "status": "rejected",
+        "reason": "schema_validation_failed",
+        "message": "Ingress request failed contract envelope validation",
+        "event_type": "integrity_probe",
+        "registry_reference": {
+          "registry": "prana.event.contracts",
+          "event_type": "integrity_probe",
+          "version": "1.0.0"
+        },
+        "expected_versions": [],
+        "details": [
+          {
+            "field": "payload",
+            "message": "Field required",
+            "type": "missing"
+          }
+        ]
+      }
+    }
+  }
+]

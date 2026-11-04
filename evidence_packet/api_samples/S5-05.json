@@ -2,19 +2,19 @@
   {
     "check_id": "S5-05",
     "system": "vajra-local",
-    "utc": "2026-11-04T12:06:43Z",
-    "elapsed_ms": 0,
+    "utc": "2026-11-04T12:40:13Z",
+    "elapsed_ms": 16,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:57504/api/vajra/authority/transition",
+      "url": "http://127.0.0.1:62631/api/vajra/authority/transition",
       "headers": {
-        "x-trace-id": "2af37c10-ed02-4166-9d5c-42d4a035c930",
+        "x-trace-id": "36667257-3a45-4633-9f68-82e93364aa4f",
         "authorization": "[REDACTED]",
         "content-type": "application/json"
       },
       "body": {
-        "trace_id": "2af37c10-ed02-4166-9d5c-42d4a035c930",
-        "subject": "cyber-p0-test-slow-peer-2f8a4d6a90",
+        "trace_id": "36667257-3a45-4633-9f68-82e93364aa4f",
+        "subject": "cyber-p0-test-slow-peer-eb34cfe054",
         "authority": "AUTH_ROLE_CLIENT",
         "issuer": "VAJRA_USER_CONTROL_SIMULATOR (verification harness)",
         "target": "VAJRA_LEDGER",
@@ -34,9 +34,9 @@
       },
       "body": {
         "record": {
-          "record_id": "auth_1793794003_cyber-p0",
-          "trace_id": "2af37c10-ed02-4166-9d5c-42d4a035c930",
-          "subject": "cyber-p0-test-slow-peer-2f8a4d6a90",
+          "record_id": "auth_1793796013_cyber-p0",
+          "trace_id": "36667257-3a45-4633-9f68-82e93364aa4f",
+          "subject": "cyber-p0-test-slow-peer-eb34cfe054",
           "authority": "AUTH_ROLE_CLIENT",
           "issuer": "VAJRA_USER_CONTROL_SIMULATOR (verification harness)",
           "target": "VAJRA_LEDGER",
@@ -49,10 +49,10 @@
             "to": "GRANT"
           },
           "policy_version": "v1.0.0",
-          "timestamp": 1793794003,
+          "timestamp": 1793796013,
           "evidence_reference": "synthetic-test",
-          "prev_hash": "91e916f3746bb3d3f40c90f058e721a1a9a6111609efb790ca42d5b8b7e7a458",
-          "entry_hash": "b47606de69c71e3e96a67ca4da49bac5c30c1bf946fb95c42cecc89393ec9f68"
+          "prev_hash": "b620c9a8b0f764309f699f0964ebcebaeb44a5b7b8663f748653adf8b211406b",
+          "entry_hash": "aa4f82a5d73fe02a406048aebc996d275af7809b0f7998b5536dafbd7fd8e010"
         },
         "success": true
       }
@@ -61,19 +61,19 @@
   {
     "check_id": "S5-05",
     "system": "vajra-local",
-    "utc": "2026-11-04T12:06:43Z",
-    "elapsed_ms": 0,
+    "utc": "2026-11-04T12:40:13Z",
+    "elapsed_ms": 15,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:57504/api/vajra/authority/transition",
+      "url": "http://127.0.0.1:62631/api/vajra/authority/transition",
       "headers": {
-        "x-trace-id": "de65632e-a091-4229-8015-a9194d58fd77",
+        "x-trace-id": "1360e206-2e58-42f4-a540-f54fe50ffb25",
         "authorization": "[REDACTED]",
         "content-type": "application/json"
       },
       "body": {
-        "trace_id": "de65632e-a091-4229-8015-a9194d58fd77",
-        "subject": "cyber-p0-test-slow-peer-2f8a4d6a90",
+        "trace_id": "1360e206-2e58-42f4-a540-f54fe50ffb25",
+        "subject": "cyber-p0-test-slow-peer-eb34cfe054",
         "authority": "AUTH_ROLE_CLIENT",
         "issuer": "VAJRA_USER_CONTROL_SIMULATOR (verification harness)",
         "target": "VAJRA_LEDGER",
@@ -93,9 +93,9 @@
       },
       "body": {
         "record": {
-          "record_id": "auth_1793794003_cyber-p0",
-          "trace_id": "de65632e-a091-4229-8015-a9194d58fd77",
-          "subject": "cyber-p0-test-slow-peer-2f8a4d6a90",
+          "record_id": "auth_1793796013_cyber-p0",
+          "trace_id": "1360e206-2e58-42f4-a540-f54fe50ffb25",
+          "subject": "cyber-p0-test-slow-peer-eb34cfe054",
           "authority": "AUTH_ROLE_CLIENT",
           "issuer": "VAJRA_USER_CONTROL_SIMULATOR (verification harness)",
           "target": "VAJRA_LEDGER",
@@ -108,10 +108,10 @@
             "to": "USE"
           },
           "policy_version": "v1.0.0",
-          "timestamp": 1793794003,
+          "timestamp": 1793796013,
           "evidence_reference": "synthetic-test",
-          "prev_hash": "b47606de69c71e3e96a67ca4da49bac5c30c1bf946fb95c42cecc89393ec9f68",
-          "entry_hash": "7e86cc65ea4b737f9f0141b78ed3ac52647dc75d6a66bfcd99e45fba81f5f0ee"
+          "prev_hash": "aa4f82a5d73fe02a406048aebc996d275af7809b0f7998b5536dafbd7fd8e010",
+          "entry_hash": "a94fa1ef81f8c32443d8b227b2b07f746bd3b43dbde1c5eee88b77e9e48d7275"
         },
         "success": true
       }
@@ -120,11 +120,11 @@
   {
     "check_id": "S5-05",
     "system": "cybersecurity",
-    "utc": "2026-11-04T12:06:44Z",
-    "elapsed_ms": 15,
+    "utc": "2026-11-04T12:40:14Z",
+    "elapsed_ms": 0,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:57509/health",
+      "url": "http://127.0.0.1:62636/health",
       "headers": {},
       "body": null
     },
@@ -132,8 +132,8 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "b3b5b69b-9764-44a7-afc6-accbf13437a4",
-        "x-trace-id": "2b25de53-786b-44c3-a607-cdc2f11f3951"
+        "x-request-id": "15b9f69b-91e8-481b-9a08-7461f811b241",
+        "x-trace-id": "9a94b1e2-f435-40c0-9fde-3dbd6ae488da"
       },
       "body": {
         "status": "healthy",
@@ -144,19 +144,19 @@
   {
     "check_id": "S5-05",
     "system": "cybersecurity",
-    "utc": "2026-11-04T12:06:50Z",
-    "elapsed_ms": 6484,
+    "utc": "2026-11-04T12:40:19Z",
+    "elapsed_ms": 5797,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:57509/api/v1/protected/access",
+      "url": "http://127.0.0.1:62636/api/v1/protected/access",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "72a66d02-b359-4963-916b-da6e0d506edc",
+        "x-trace-id": "71e5accb-f68d-4bda-8c74-ccf8a0ff4dda",
         "content-type": "application/json"
       },
       "body": {
         "contract_version": "1.0.0",
-        "vajra_subject": "cyber-p0-test-slow-peer-2f8a4d6a90",
+        "vajra_subject": "cyber-p0-test-slow-peer-eb34cfe054",
         "action": "read",
         "resource": {
           "type": "evidence",
@@ -169,17 +169,17 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "898b3354-51b4-4b6f-9905-3703276695e4",
-        "x-trace-id": "72a66d02-b359-4963-916b-da6e0d506edc"
+        "x-request-id": "85553490-c698-4fe4-bc4e-e3c09bfe2aa0",
+        "x-trace-id": "71e5accb-f68d-4bda-8c74-ccf8a0ff4dda"
       },
       "body": {
         "contract_version": "1.0.0",
         "decision": "ALLOW",
         "reason_code": "ALLOWED_BY_VAJRA_AUTHORITY",
         "reason": "Access permitted: VAJRA authority state is 'USE', the caller passed RBAC and VAJRA recorded the evidence. Scope (action/resource) is not checked by VAJRA's verify contract.",
-        "decision_id": "eecf9217d38f4909ac9eb83fe15e4004",
-        "trace_id": "72a66d02-b359-4963-916b-da6e0d506edc",
-        "request_id": "898b3354-51b4-4b6f-9905-3703276695e4",
+        "decision_id": "89e503e9b97148b294fcbbcb2da8f356",
+        "trace_id": "71e5accb-f68d-4bda-8c74-ccf8a0ff4dda",
+        "request_id": "85553490-c698-4fe4-bc4e-e3c09bfe2aa0",
         "idempotency_key": null,
         "duplicate": false,
         "actor_id": "cc_usr_2",
@@ -189,25 +189,25 @@
           "id": "EV-P0-0001"
         },
         "vajra": {
-          "subject_ref": "subj_sha256_4cfa79be041705e1",
+          "subject_ref": "subj_sha256_ec85d9ed084c0611",
           "status": "OK",
           "is_authorized": true,
           "current_state": "USE",
           "scope_checked": false
         },
         "evidence": {
-          "local_audit_event_id": "15d2eb11-0361-46b0-a129-e8bd46a1474c",
+          "local_audit_event_id": "fa180a40-e7ca-49c7-aea4-8da6f2fc0cde",
           "superseded_audit_event_id": null,
           "vajra": {
             "status": "RECORDED",
             "http_status": 200,
             "detail": "",
             "data": {
-              "evidence_hash": "sha256:23410ce6e7c20addfa0bd50c7c63c0ea18ca65e88ea107bd3b0024568dd2e15e",
+              "evidence_hash": "sha256:37933407b4dfb9ae4950b34678b661ee50b71cdef566dbfbb8401273bf905e45",
               "stored_in": [
                 "TruthStore (tantra_truth.jsonl)"
               ],
-              "recorded_at": 1793794005
+              "recorded_at": 1793796014
             }
           },
           "tantra": {
@@ -221,7 +221,7 @@
           ]
         },
         "policy_applied": "vajra_authority_v1",
-        "evaluated_at": "2026-11-04T12:06:43.650Z"
+        "evaluated_at": "2026-11-04T12:40:13.807Z"
       }
     }
   }

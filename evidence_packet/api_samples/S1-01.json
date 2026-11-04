@@ -2,13 +2,13 @@
   {
     "check_id": "S1-01",
     "system": "cybersecurity",
-    "utc": "2026-11-04T12:05:19Z",
-    "elapsed_ms": 16,
+    "utc": "2026-11-04T12:38:43Z",
+    "elapsed_ms": 32,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:57509/api/v1/cases",
+      "url": "http://127.0.0.1:62636/api/v1/cases",
       "headers": {
-        "x-trace-id": "454593c0-f44c-479b-bf4c-45ca5bfb1a72"
+        "x-trace-id": "c49e523e-1609-4b82-893b-231b20aa0030"
       },
       "body": null
     },
@@ -16,17 +16,17 @@
       "status": 401,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "6240f5a7-5c44-4e99-b13d-879a5a928f8c",
-        "x-trace-id": "454593c0-f44c-479b-bf4c-45ca5bfb1a72"
+        "x-request-id": "253df8d9-c37f-4092-8332-2b9666b6075f",
+        "x-trace-id": "c49e523e-1609-4b82-893b-231b20aa0030"
       },
       "body": {
         "error": true,
         "code": "AUTHENTICATION_REQUIRED",
         "status_code": 401,
         "message": "Authentication required.",
-        "trace_id": "454593c0-f44c-479b-bf4c-45ca5bfb1a72",
-        "request_id": "6240f5a7-5c44-4e99-b13d-879a5a928f8c",
-        "timestamp": "2026-11-04T12:05:19.351Z",
+        "trace_id": "c49e523e-1609-4b82-893b-231b20aa0030",
+        "request_id": "253df8d9-c37f-4092-8332-2b9666b6075f",
+        "timestamp": "2026-11-04T12:38:43.358Z",
         "details": []
       }
     }
@@ -34,11 +34,11 @@
   {
     "check_id": "S1-01",
     "system": "cybersecurity",
-    "utc": "2026-11-04T12:05:19Z",
-    "elapsed_ms": 15,
+    "utc": "2026-11-04T12:38:43Z",
+    "elapsed_ms": 32,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:57509/api/v1/audit/?limit=500",
+      "url": "http://127.0.0.1:62636/api/v1/audit/?limit=500",
       "headers": {
         "authorization": "[REDACTED]"
       },
@@ -48,8 +48,8 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "7e3728b7-8733-4f05-bc05-b047c7280ce4",
-        "x-trace-id": "2824442d-f145-463b-86d2-7bedc7ff462e"
+        "x-request-id": "26bb0723-3073-4e30-b6b6-a039204af7ce",
+        "x-trace-id": "1389f8e3-f5e6-4f80-b8fa-bb7573019a19"
       },
       "body": [
         {
@@ -59,13 +59,13 @@
           "entity_type": "policy",
           "entity_id": "/api/v1/cases",
           "status": "denied",
-          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"aa75e302-c23e-43e6-8de0-8e2219f37381\",\"event_type\":\"authz.decision\",\"timestamp\":\"2026-11-04T12:05:19.342Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"454593c0-f44c-479b-bf4c-45ca5bfb1a72\",\"request_id\":\"6240f5a7-5c44-4e99-b13d-879a5a928f8c\",\"actor\":{\"actor_id\":\"anonymous\",\"actor_type\":\"user\",\"role\":\"public\",\"display_name\":null,\"authenticated\":false,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"policy\",\"resource_id\":\"/api/v1/cases\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"DENIED\",\"status_code\":401,\"reason_code\":\"AUTHENTICATION_REQUIRED\",\"message\":\"Authentication required.\"},\"policy_reference\":{\"policy_id\":\"rbac_permissions_v1\",\"rule_name\":null,\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"path\":\"/api/v1/cases\",\"method\":\"GET\",\"role\":\"public\"},\"extensions\":null}",
+          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"494e3512-733b-44dc-b15f-8e62466781e4\",\"event_type\":\"authz.decision\",\"timestamp\":\"2026-11-04T12:38:43.342Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"c49e523e-1609-4b82-893b-231b20aa0030\",\"request_id\":\"253df8d9-c37f-4092-8332-2b9666b6075f\",\"actor\":{\"actor_id\":\"anonymous\",\"actor_type\":\"user\",\"role\":\"public\",\"display_name\":null,\"authenticated\":false,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"policy\",\"resource_id\":\"/api/v1/cases\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"DENIED\",\"status_code\":401,\"reason_code\":\"AUTHENTICATION_REQUIRED\",\"message\":\"Authentication required.\"},\"policy_reference\":{\"policy_id\":\"rbac_permissions_v1\",\"rule_name\":null,\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"path\":\"/api/v1/cases\",\"method\":\"GET\",\"role\":\"public\"},\"extensions\":null}",
           "user_id": null,
           "ip_address": null,
-          "request_id": "6240f5a7-5c44-4e99-b13d-879a5a928f8c",
+          "request_id": "253df8d9-c37f-4092-8332-2b9666b6075f",
           "path": "/api/v1/cases",
           "method": "GET",
-          "timestamp": "2026-11-04T12:05:19.346721"
+          "timestamp": "2026-11-04T12:38:43.342751"
         },
         {
           "id": 6,
@@ -80,7 +80,7 @@
           "request_id": null,
           "path": null,
           "method": null,
-          "timestamp": "2026-11-04T12:05:16.837333"
+          "timestamp": "2026-11-04T12:38:40.939965"
         },
         {
           "id": 5,
@@ -95,7 +95,7 @@
           "request_id": null,
           "path": null,
           "method": null,
-          "timestamp": "2026-11-04T12:05:16.446443"
+          "timestamp": "2026-11-04T12:38:40.372207"
         },
         {
           "id": 4,
@@ -110,7 +110,7 @@
           "request_id": null,
           "path": null,
           "method": null,
-          "timestamp": "2026-11-04T12:05:16.008887"
+          "timestamp": "2026-11-04T12:38:39.817002"
         },
         {
           "id": 3,
@@ -125,7 +125,7 @@
           "request_id": null,
           "path": null,
           "method": null,
-          "timestamp": "2026-11-04T12:05:15.577605"
+          "timestamp": "2026-11-04T12:38:39.350991"
         },
         {
           "id": 2,
@@ -140,7 +140,7 @@
           "request_id": null,
           "path": null,
           "method": null,
-          "timestamp": "2026-11-04T12:05:15.133413"
+          "timestamp": "2026-11-04T12:38:38.799520"
         },
         {
           "id": 1,
@@ -155,7 +155,7 @@
           "request_id": null,
           "path": null,
           "method": null,
-          "timestamp": "2026-11-04T12:05:14.612397"
+          "timestamp": "2026-11-04T12:38:38.204615"
         }
       ]
     }

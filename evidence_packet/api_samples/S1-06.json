@@ -2,18 +2,18 @@
   {
     "check_id": "S1-06",
     "system": "vajra-local",
-    "utc": "2026-11-04T12:05:19Z",
+    "utc": "2026-11-04T12:38:43Z",
     "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:57504/api/vajra/authority/transition",
+      "url": "http://127.0.0.1:62631/api/vajra/authority/transition",
       "headers": {
-        "x-trace-id": "7496f9b3-659d-4386-9d75-72806b329d60",
+        "x-trace-id": "6274fb21-14d6-4d31-ab3c-f4f8c93c4d40",
         "content-type": "application/json"
       },
       "body": {
-        "trace_id": "7496f9b3-659d-4386-9d75-72806b329d60",
-        "subject": "cyber-p0-test-attacker-50da85a97f",
+        "trace_id": "6274fb21-14d6-4d31-ab3c-f4f8c93c4d40",
+        "subject": "cyber-p0-test-attacker-862970c6bd",
         "authority": "AUTH_ROLE_CLIENT",
         "issuer": "ATTACKER (synthetic)",
         "target": "VAJRA_LEDGER",
@@ -40,19 +40,19 @@
   {
     "check_id": "S1-06",
     "system": "vajra-local",
-    "utc": "2026-11-04T12:05:19Z",
+    "utc": "2026-11-04T12:38:43Z",
     "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:57504/api/vajra/authority/transition",
+      "url": "http://127.0.0.1:62631/api/vajra/authority/transition",
       "headers": {
-        "x-trace-id": "51b1a9d9-f3b4-40e2-a266-5fdda5e2cb3a",
+        "x-trace-id": "e7a60033-1336-4abd-a28d-b698ce314ac8",
         "authorization": "[REDACTED]",
         "content-type": "application/json"
       },
       "body": {
-        "trace_id": "51b1a9d9-f3b4-40e2-a266-5fdda5e2cb3a",
-        "subject": "cyber-p0-test-attacker-50da85a97f",
+        "trace_id": "e7a60033-1336-4abd-a28d-b698ce314ac8",
+        "subject": "cyber-p0-test-attacker-862970c6bd",
         "authority": "AUTH_ROLE_CLIENT",
         "issuer": "ATTACKER (synthetic)",
         "target": "VAJRA_LEDGER",
@@ -79,16 +79,16 @@
   {
     "check_id": "S1-06",
     "system": "vajra-local",
-    "utc": "2026-11-04T12:05:19Z",
-    "elapsed_ms": 15,
+    "utc": "2026-11-04T12:38:43Z",
+    "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:57504/api/vajra/evidence/record",
+      "url": "http://127.0.0.1:62631/api/vajra/evidence/record",
       "headers": {
         "content-type": "application/json"
       },
       "body": {
-        "trace_id": "1a109776-8557-451d-a10e-ba7364f9d7f1",
+        "trace_id": "5c8dfe98-5378-4f8b-b266-993cbef89e3c",
         "action_taken": "ALLOW"
       }
     },
@@ -106,11 +106,11 @@
   {
     "check_id": "S1-06",
     "system": "vajra-local",
-    "utc": "2026-11-04T12:05:19Z",
+    "utc": "2026-11-04T12:38:43Z",
     "elapsed_ms": 0,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:57504/api/vajra/authority/verify?subject=cyber-p0-test-attacker-50da85a97f",
+      "url": "http://127.0.0.1:62631/api/vajra/authority/verify?subject=cyber-p0-test-attacker-862970c6bd",
       "headers": {},
       "body": null
     },
@@ -122,8 +122,8 @@
       "body": {
         "current_state": "",
         "is_authorized": false,
-        "subject": "cyber-p0-test-attacker-50da85a97f",
-        "verified_at": 1793793919
+        "subject": "cyber-p0-test-attacker-862970c6bd",
+        "verified_at": 1793795923
       }
     }
   }

@@ -2,8 +2,8 @@
   {
     "check_id": "O-02",
     "system": "tantra-live",
-    "utc": "2026-11-04T12:05:18Z",
-    "elapsed_ms": 641,
+    "utc": "2026-11-04T12:38:42Z",
+    "elapsed_ms": 515,
     "request": {
       "method": "GET",
       "url": "http://163.128.209.18:8101/health",
@@ -24,8 +24,8 @@
   {
     "check_id": "O-02",
     "system": "tantra-live",
-    "utc": "2026-11-04T12:05:18Z",
-    "elapsed_ms": 577,
+    "utc": "2026-11-04T12:38:42Z",
+    "elapsed_ms": 515,
     "request": {
       "method": "GET",
       "url": "http://163.128.209.18:8102/health",
@@ -46,8 +46,8 @@
   {
     "check_id": "O-02",
     "system": "tantra-live",
-    "utc": "2026-11-04T12:05:19Z",
-    "elapsed_ms": 655,
+    "utc": "2026-11-04T12:38:43Z",
+    "elapsed_ms": 515,
     "request": {
       "method": "GET",
       "url": "http://163.128.209.18:8103/health",
@@ -58,7 +58,7 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-trace-id": "niyantran-2b83c7833cb4476bbb8052060f18d9c0"
+        "x-trace-id": "niyantran-5e3e5378c3ec4744ad217d8826bf4145"
       },
       "body": {
         "status": "healthy",

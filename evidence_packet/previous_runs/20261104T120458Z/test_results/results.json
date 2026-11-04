@@ -1,0 +1,2690 @@
+{
+  "meta": {
+    "run_id": "20261104T120458Z",
+    "started_utc": "2026-11-04T12:05:16Z",
+    "finished_utc": "2026-11-04T12:07:28Z",
+    "command": "python verification/run_verification.py --vajra-bin ../.vajra-local/bin/vajra-relay.exe --vajra-repo ../bhiv-VAJRA_Blockchain --tantra live --tantra-base http://163.128.209.18 --work-root C:/tmp --out C:/tmp/cyber-p0-rerun-120457",
+    "mode": {
+      "tantra": "live",
+      "tantra_base": "http://163.128.209.18",
+      "live_tantra_write_allowed": false
+    },
+    "versions": {
+      "cybersecurity_repo_commit": "8c7f38716570dba137aedbae7671af169b0a0c5a",
+      "vajra_repo_commit": "07d683c3656b936152367989e8458d18941471a7",
+      "python": "3.12.7",
+      "os": "Windows-11-10.0.26300-SP0"
+    },
+    "services": {
+      "cybersecurity-api": [
+        {
+          "utc": "2026-11-04T12:05:11Z",
+          "seconds_to_healthy": 7.36,
+          "pid": 8908
+        },
+        {
+          "utc": "2026-11-04T12:05:40Z",
+          "seconds_to_healthy": 8.12,
+          "pid": 12072
+        },
+        {
+          "utc": "2026-11-04T12:05:57Z",
+          "seconds_to_healthy": 7.06,
+          "pid": 3920
+        },
+        {
+          "utc": "2026-11-04T12:06:13Z",
+          "seconds_to_healthy": 3.94,
+          "pid": 11136
+        },
+        {
+          "utc": "2026-11-04T12:06:22Z",
+          "seconds_to_healthy": 3.89,
+          "pid": 11452
+        },
+        {
+          "utc": "2026-11-04T12:06:39Z",
+          "seconds_to_healthy": 3.83,
+          "pid": 26208
+        },
+        {
+          "utc": "2026-11-04T12:06:43Z",
+          "seconds_to_healthy": 4.19,
+          "pid": 1060
+        },
+        {
+          "utc": "2026-11-04T12:06:53Z",
+          "seconds_to_healthy": 3.84,
+          "pid": 12544
+        },
+        {
+          "utc": "2026-11-04T12:06:57Z",
+          "seconds_to_healthy": 3.88,
+          "pid": 7920
+        },
+        {
+          "utc": "2026-11-04T12:07:03Z",
+          "seconds_to_healthy": 3.88,
+          "pid": 9176
+        },
+        {
+          "utc": "2026-11-04T12:07:07Z",
+          "seconds_to_healthy": 3.92,
+          "pid": 29804
+        },
+        {
+          "utc": "2026-11-04T12:07:12Z",
+          "seconds_to_healthy": 4.48,
+          "pid": 18568
+        }
+      ],
+      "vajra-relay-node": [
+        {
+          "utc": "2026-11-04T12:05:03Z",
+          "seconds_to_healthy": 0.7,
+          "pid": 27284
+        },
+        {
+          "utc": "2026-11-04T12:07:22Z",
+          "seconds_to_healthy": 0.89,
+          "pid": 16532
+        },
+        {
+          "utc": "2026-11-04T12:07:23Z",
+          "seconds_to_healthy": 0.78,
+          "pid": 25044
+        },
+        {
+          "utc": "2026-11-04T12:07:26Z",
+          "seconds_to_healthy": 0.89,
+          "pid": 6252
+        },
+        {
+          "utc": "2026-11-04T12:07:27Z",
+          "seconds_to_healthy": 1.12,
+          "pid": 5768
+        },
+        {
+          "utc": "2026-11-04T12:07:28Z",
+          "seconds_to_healthy": 0.92,
+          "pid": 5336
+        }
+      ]
+    },
+    "summary": {
+      "PASS": 42,
+      "FAIL": 3,
+      "ERROR": 0,
+      "BLOCKED": 0,
+      "SKIPPED": 1
+    },
+    "total": 46
+  },
+  "results": [
+    {
+      "id": "O-01",
+      "title": "Health endpoints report real state; peer topology is shown only to a superadmin",
+      "scenario": "Observability",
+      "refs": [
+        "Task1 C health/status",
+        "Task1 H health endpoint",
+        "10-day Hemanth observability checks"
+      ],
+      "systems": [
+        "cybersecurity",
+        "vajra-local"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "cyber /health status",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "cyber /api/v1/system/health status (anonymous)",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "anonymous health hides VAJRA/TANTRA topology",
+          "expected": false,
+          "actual": false,
+          "ok": true
+        },
+        {
+          "what": "anonymous health shows no server file-system paths",
+          "expected": false,
+          "actual": false,
+          "ok": true
+        },
+        {
+          "what": "system health: database ok",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "superadmin health: VAJRA API reachable",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "superadmin health: VAJRA write token configured",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "VAJRA /api/health status",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        }
+      ],
+      "trace_ids": [],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:05:16Z",
+      "duration_ms": 562
+    },
+    {
+      "id": "O-02",
+      "title": "TANTRA live services healthy (read-only GET)",
+      "scenario": "Observability",
+      "refs": [
+        "Task1 E observable execution",
+        "EOD InsightFlow/Pravah actual state"
+      ],
+      "systems": [
+        "tantra-live"
+      ],
+      "evidence_level": "LIVE-VERIFIED (read-only)",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "tantra_validation /health status",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "tantra_validation reports healthy",
+          "expected": "healthy",
+          "actual": "healthy",
+          "ok": true
+        },
+        {
+          "what": "tantra_karma /health status",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "tantra_karma reports healthy",
+          "expected": "healthy",
+          "actual": "healthy",
+          "ok": true
+        },
+        {
+          "what": "tantra_prana /health status",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "tantra_prana reports healthy",
+          "expected": "healthy",
+          "actual": "healthy",
+          "ok": true
+        }
+      ],
+      "trace_ids": [],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:05:17Z",
+      "duration_ms": 1890
+    },
+    {
+      "id": "S1-01",
+      "title": "Anonymous request is denied at the enforcement point, with actor/resource/decision/reason recorded",
+      "scenario": "S1 Unauthorized access",
+      "refs": [
+        "EOD scenario: Unauthorized access",
+        "Task1 C authorization"
+      ],
+      "systems": [
+        "cybersecurity"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "HTTP status",
+          "expected": 401,
+          "actual": 401,
+          "ok": true
+        },
+        {
+          "what": "error code",
+          "expected": "AUTHENTICATION_REQUIRED",
+          "actual": "AUTHENTICATION_REQUIRED",
+          "ok": true
+        },
+        {
+          "what": "X-Trace-Id echoed",
+          "expected": "454593c0-f44c-479b-bf4c-45ca5bfb1a72",
+          "actual": "454593c0-f44c-479b-bf4c-45ca5bfb1a72",
+          "ok": true
+        },
+        {
+          "what": "trace_id in error body",
+          "expected": "454593c0-f44c-479b-bf4c-45ca5bfb1a72",
+          "actual": "454593c0-f44c-479b-bf4c-45ca5bfb1a72",
+          "ok": true
+        },
+        {
+          "what": "audit event recorded for this trace",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "audit actor",
+          "expected": "anonymous",
+          "actual": "anonymous",
+          "ok": true
+        },
+        {
+          "what": "audit resource",
+          "expected": "/api/v1/cases",
+          "actual": "/api/v1/cases",
+          "ok": true
+        },
+        {
+          "what": "audit decision",
+          "expected": "DENIED",
+          "actual": "DENIED",
+          "ok": true
+        },
+        {
+          "what": "audit reason",
+          "expected": "AUTHENTICATION_REQUIRED",
+          "actual": "AUTHENTICATION_REQUIRED",
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "454593c0-f44c-479b-bf4c-45ca5bfb1a72"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:05:19Z",
+      "duration_ms": 47
+    },
+    {
+      "id": "S1-02",
+      "title": "Forged token is rejected",
+      "scenario": "S1 Unauthorized access",
+      "refs": [
+        "EOD scenario: Unauthorized access",
+        "Task1 C authentication"
+      ],
+      "systems": [
+        "cybersecurity"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "HTTP status",
+          "expected": 401,
+          "actual": 401,
+          "ok": true
+        },
+        {
+          "what": "error code",
+          "expected": "INVALID_CREDENTIALS",
+          "actual": "INVALID_CREDENTIALS",
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "259b525e-cbf5-4fdd-a12a-b90c9d76c4e9"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:05:19Z",
+      "duration_ms": 0
+    },
+    {
+      "id": "S1-03",
+      "title": "Investigator cannot call a superadmin-only control (revoke)",
+      "scenario": "S1 Unauthorized access",
+      "refs": [
+        "EOD scenario: Unauthorized access",
+        "Task1 C access-control boundaries"
+      ],
+      "systems": [
+        "cybersecurity"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "HTTP status",
+          "expected": 403,
+          "actual": 403,
+          "ok": true
+        },
+        {
+          "what": "error code",
+          "expected": "INSUFFICIENT_PERMISSIONS",
+          "actual": "INSUFFICIENT_PERMISSIONS",
+          "ok": true
+        },
+        {
+          "what": "audit actor is the investigator",
+          "expected": "cc_usr_2",
+          "actual": "cc_usr_2",
+          "ok": true
+        },
+        {
+          "what": "audit reason",
+          "expected": "INSUFFICIENT_PERMISSIONS",
+          "actual": "INSUFFICIENT_PERMISSIONS",
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "f60f5453-a9c4-474b-b718-aaeab6a2c56a"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:05:19Z",
+      "duration_ms": 32
+    },
+    {
+      "id": "S1-07",
+      "title": "Anonymous call to the protected-access API is rejected",
+      "scenario": "S1 Unauthorized access",
+      "refs": [
+        "EOD scenario: Unauthorized access"
+      ],
+      "systems": [
+        "cybersecurity"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "HTTP status",
+          "expected": 401,
+          "actual": 401,
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "32fd20b8-c631-40dc-802b-67a8d212e2a6"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:05:19Z",
+      "duration_ms": 15
+    },
+    {
+      "id": "S1-06",
+      "title": "VAJRA write routes reject callers without the bearer token (VAJRA enforcement point)",
+      "scenario": "S1 Unauthorized access",
+      "refs": [
+        "EOD scenario: Unauthorized access",
+        "10-day TANTRA: refuse actions outside contract"
+      ],
+      "systems": [
+        "vajra-local"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "transition without token",
+          "expected": 401,
+          "actual": 401,
+          "ok": true
+        },
+        {
+          "what": "transition with wrong token",
+          "expected": 401,
+          "actual": 401,
+          "ok": true
+        },
+        {
+          "what": "evidence write without token",
+          "expected": 401,
+          "actual": 401,
+          "ok": true
+        },
+        {
+          "what": "attacker subject gained no authority",
+          "expected": false,
+          "actual": false,
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "7496f9b3-659d-4386-9d75-72806b329d60",
+        "51b1a9d9-f3b4-40e2-a266-5fdda5e2cb3a",
+        "1a109776-8557-451d-a10e-ba7364f9d7f1"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:05:19Z",
+      "duration_ms": 15
+    },
+    {
+      "id": "V-01",
+      "title": "VAJRA privileged state-changing routes reject unauthenticated callers (local node)",
+      "scenario": "S1 Unauthorized access",
+      "refs": [
+        "EOD scenario: Unauthorized access",
+        "EOD VAJRA: no asset-protection claim without boundary proof"
+      ],
+      "systems": [
+        "vajra-local"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED",
+      "status": "FAIL",
+      "expectations": [
+        {
+          "what": "POST /api/admin/add-tokens without credentials is refused",
+          "expected": "401 or 403",
+          "actual": "200, handler ran; reply: {\"error\":\"token BHX not found\",\"success\":false}",
+          "ok": false
+        },
+        {
+          "what": "POST /api/v1/permission/grant without credentials is refused",
+          "expected": "401 or 403",
+          "actual": "201, handler ran; reply: {\"commitment\":\"bc9d61291a0cf57d9a70f053aaad1cff398a0b94cd578f64be7728fc43f78d61\",\"permission_id\":\"perm-cyber-p0-test-subj-\",\"record\":{\"permission_id\":\"perm-cybe",
+          "ok": false
+        },
+        {
+          "what": "POST /api/cybercrime/freeze without credentials is refused",
+          "expected": "401 or 403",
+          "actual": "200, handler ran; reply: {\"success\":true}",
+          "ok": false
+        }
+      ],
+      "trace_ids": [
+        "a0876b88-fb35-43f2-98c6-9413bedc2268"
+      ],
+      "notes": [],
+      "defects": [
+        "VAJ-06"
+      ],
+      "started_utc": "2026-11-04T12:05:19Z",
+      "duration_ms": 15
+    },
+    {
+      "id": "V-02",
+      "title": "VAJRA permission ids are unique per grant (local node)",
+      "scenario": "S2 Revoked permission",
+      "refs": [
+        "EOD scenario: Revoked permission"
+      ],
+      "systems": [
+        "vajra-local"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED",
+      "status": "FAIL",
+      "expectations": [
+        {
+          "what": "grant for app-alpha created",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "grant for app-beta created",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "two different grants get two different permission ids",
+          "expected": true,
+          "actual": false,
+          "ok": false
+        },
+        {
+          "what": "revoked grant (beta) is denied",
+          "expected": false,
+          "actual": false,
+          "ok": true
+        },
+        {
+          "what": "untouched grant (alpha) is still allowed",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "9fd63bde-7317-4ba1-88f6-734e1c9d5ca6",
+        "cdfa3d96-bf0e-4943-9df8-fab9dc40b104",
+        "a415c40d-0392-4720-b1fb-4ab1133463c1",
+        "2509bf58-8c2b-4f34-b8c5-e5f5f8306e01",
+        "9bed34fa-675e-4ddf-87d2-7718281f0d61"
+      ],
+      "notes": [
+        "permission ids: ['perm-cyber-p0-test-long-', 'perm-cyber-p0-test-long-']; revoke(beta) -> HTTP 200"
+      ],
+      "defects": [
+        "VAJ-07"
+      ],
+      "started_utc": "2026-11-04T12:05:19Z",
+      "duration_ms": 0
+    },
+    {
+      "id": "S1-05",
+      "title": "Subject without VAJRA consent is denied; decision and evidence recorded",
+      "scenario": "S1 Unauthorized access",
+      "refs": [
+        "EOD scenario: Unauthorized access",
+        "Task1 M Vajra boundary",
+        "Task1 D"
+      ],
+      "systems": [
+        "cybersecurity",
+        "vajra-local"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "HTTP status",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "decision",
+          "expected": "DENY",
+          "actual": "DENY",
+          "ok": true
+        },
+        {
+          "what": "reason",
+          "expected": "VAJRA_AUTHORITY_NOT_GRANTED",
+          "actual": "VAJRA_AUTHORITY_NOT_GRANTED",
+          "ok": true
+        },
+        {
+          "what": "VAJRA evidence recorded",
+          "expected": "RECORDED",
+          "actual": "RECORDED",
+          "ok": true
+        },
+        {
+          "what": "local audit event id present",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "one VAJRA TruthStore row for this decision, decision DENY",
+          "expected": [
+            "DENY"
+          ],
+          "actual": [
+            "DENY"
+          ],
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "53ccbb0c-4240-4904-88f9-8c96d44e64e5"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:05:19Z",
+      "duration_ms": 1438
+    },
+    {
+      "id": "S1-04",
+      "title": "Self-registered account cannot read investigator data without approval",
+      "scenario": "S1 Unauthorized access",
+      "refs": [
+        "EOD scenario: Unauthorized access",
+        "Task1 C authentication/authorization"
+      ],
+      "systems": [
+        "cybersecurity"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "anonymous self-registration does not yield investigator data access",
+          "expected": "registration refused (401/403), account pending (login 401/403), or data access 401/403",
+          "actual": "register=401, login=401, GET /api/v1/cases/=None",
+          "ok": true
+        }
+      ],
+      "trace_ids": [],
+      "notes": [
+        "public register returned HTTP 401, role=None, is_active=None"
+      ],
+      "defects": [],
+      "started_utc": "2026-11-04T12:05:20Z",
+      "duration_ms": 968
+    },
+    {
+      "id": "S2-01",
+      "title": "Proof B REVOCATION: active permission -> VAJRA revoke -> next request denied -> stale grant cannot return",
+      "scenario": "S2 Revoked permission",
+      "refs": [
+        "EOD scenario: Revoked permission",
+        "10-day 20.B"
+      ],
+      "systems": [
+        "cybersecurity",
+        "vajra-local"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED; VAJRA consent SIMULATED (harness plays the VAJRA user journey)",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-revocable-user-a7e8165e48",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "VAJRA USE transition accepted for cyber-p0-test-revocable-user-a7e8165e48",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "before revoke: decision",
+          "expected": "ALLOW",
+          "actual": "ALLOW",
+          "ok": true
+        },
+        {
+          "what": "VAJRA revoke accepted",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "after revoke: decision",
+          "expected": "DENY",
+          "actual": "DENY",
+          "ok": true
+        },
+        {
+          "what": "after revoke: VAJRA state",
+          "expected": "REVOKE",
+          "actual": "REVOKE",
+          "ok": true
+        },
+        {
+          "what": "after revoke: evidence recorded at VAJRA",
+          "expected": "RECORDED",
+          "actual": "RECORDED",
+          "ok": true
+        },
+        {
+          "what": "illegal REVOKE -> USE rejected by VAJRA",
+          "expected": 403,
+          "actual": 403,
+          "ok": true
+        },
+        {
+          "what": "stale grant does not persist: still denied",
+          "expected": "DENY",
+          "actual": "DENY",
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "0f6bc7f3-2ac4-4000-935b-c45dc434993d",
+        "185fe64c-a29c-430f-b981-aa1431e7517b",
+        "769ad27d-10ff-4ca7-a070-4134404b24ce",
+        "cda09cf2-ed8e-4097-aefd-2dc9c7cefb66",
+        "b55e4b8b-a5ac-437f-9744-0e8a2dc1fbad",
+        "55f36f1f-ebc4-45d9-a9d3-7f8659f091ec",
+        "f2b523be-2b88-4d3f-943e-06d602f06248"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:05:21Z",
+      "duration_ms": 4452
+    },
+    {
+      "id": "S4-01",
+      "title": "Duplicate signal (same idempotency key, same request) is answered once; nothing re-executed",
+      "scenario": "S4 Duplicate event",
+      "refs": [
+        "EOD scenario: Duplicate event"
+      ],
+      "systems": [
+        "cybersecurity",
+        "vajra-local"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED; VAJRA consent SIMULATED (harness plays the VAJRA user journey)",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-dup-32cb01e22b",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "VAJRA USE transition accepted for cyber-p0-test-dup-32cb01e22b",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "first is not a duplicate",
+          "expected": false,
+          "actual": false,
+          "ok": true
+        },
+        {
+          "what": "second is flagged duplicate",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "same decision id (no second decision)",
+          "expected": "557e3e0545dd4112a867e9862ee4b1a1",
+          "actual": "557e3e0545dd4112a867e9862ee4b1a1",
+          "ok": true
+        },
+        {
+          "what": "same audit event",
+          "expected": "973c215d-4306-474c-962e-94340246c164",
+          "actual": "973c215d-4306-474c-962e-94340246c164",
+          "ok": true
+        },
+        {
+          "what": "exactly one new VAJRA evidence record",
+          "expected": 5,
+          "actual": 5,
+          "ok": true
+        },
+        {
+          "what": "no audit decision written for the duplicate",
+          "expected": 0,
+          "actual": 0,
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "6b7c6c03-17e7-4cfd-ba26-1079d737d40c",
+        "04d4f9f9-f22a-4915-88a3-284e62b54cdb",
+        "43779a42-aca0-4220-9f27-6e01838ed9f8",
+        "ff7062a2-7f3a-4b15-8b9b-c2d68c02b4b0"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:05:26Z",
+      "duration_ms": 2312
+    },
+    {
+      "id": "S4-02",
+      "title": "VAJRA refuses a second evidence record for the same trace",
+      "scenario": "S4 Duplicate event",
+      "refs": [
+        "EOD scenario: Duplicate event"
+      ],
+      "systems": [
+        "vajra-local"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "first write",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "duplicate write",
+          "expected": 409,
+          "actual": 409,
+          "ok": true
+        },
+        {
+          "what": "duplicate flagged",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "only one row for the trace",
+          "expected": 1,
+          "actual": 1,
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "c7df35b7-f124-427b-bcb4-5ee1c6f4a866"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:05:28Z",
+      "duration_ms": 47
+    },
+    {
+      "id": "S4-04",
+      "title": "Same idempotency key with a different request is refused",
+      "scenario": "S4 Duplicate event",
+      "refs": [
+        "EOD scenario: Duplicate event"
+      ],
+      "systems": [
+        "cybersecurity",
+        "vajra-local"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED; VAJRA consent SIMULATED (harness plays the VAJRA user journey)",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-key-owner-3a78660c19",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "VAJRA USE transition accepted for cyber-p0-test-key-owner-3a78660c19",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "first request decided",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "different request under the same key",
+          "expected": 409,
+          "actual": 409,
+          "ok": true
+        },
+        {
+          "what": "error code",
+          "expected": "IDEMPOTENCY_KEY_CONFLICT",
+          "actual": "IDEMPOTENCY_KEY_CONFLICT",
+          "ok": true
+        },
+        {
+          "what": "nothing re-executed (one VAJRA record)",
+          "expected": 7,
+          "actual": 7,
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "8e069227-1008-4f64-a148-9bc38a17ff4d",
+        "3e0e0920-c815-4fdf-9b62-2871c950a21c",
+        "c9281d7d-755e-49b4-9e2b-a1cfaa567b48",
+        "777b1076-5a7c-4653-99b9-09207bf7742a"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:05:28Z",
+      "duration_ms": 1577
+    },
+    {
+      "id": "S4-05",
+      "title": "A repeated key cannot bring back an ALLOW after VAJRA revoked the subject",
+      "scenario": "S4 Duplicate event",
+      "refs": [
+        "EOD scenario: Duplicate event",
+        "EOD scenario: Revoked permission (stale grants do not persist)"
+      ],
+      "systems": [
+        "cybersecurity",
+        "vajra-local"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED; VAJRA consent SIMULATED (harness plays the VAJRA user journey)",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-replay-after-revoke-74aa8c4e49",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "VAJRA USE transition accepted for cyber-p0-test-replay-after-revoke-74aa8c4e49",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "first decision",
+          "expected": "ALLOW",
+          "actual": "ALLOW",
+          "ok": true
+        },
+        {
+          "what": "VAJRA revoke accepted",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "replay refused",
+          "expected": 409,
+          "actual": 409,
+          "ok": true
+        },
+        {
+          "what": "error code",
+          "expected": "STALE_DECISION",
+          "actual": "STALE_DECISION",
+          "ok": true
+        },
+        {
+          "what": "no ALLOW returned",
+          "expected": false,
+          "actual": false,
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "22051848-6820-4a64-985a-a7663f4e139c",
+        "817f4936-0180-49c5-bd91-596090d27277",
+        "8182a12f-4850-4078-9fe8-c1c7facc9900",
+        "e0f215f1-b6ae-46d0-a0e9-8065eacbb778",
+        "b8996b7b-8749-4fd3-9373-402c4e805ed6"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:05:30Z",
+      "duration_ms": 2266
+    },
+    {
+      "id": "P-A",
+      "title": "Proof A NORMAL: identity -> consent -> authorised access -> evidence",
+      "scenario": "Mandatory proof A (10-day)",
+      "refs": [
+        "10-day 20.A",
+        "Task1 M Vajra boundary path"
+      ],
+      "systems": [
+        "cybersecurity",
+        "vajra-local",
+        "tantra-live"
+      ],
+      "evidence_level": "LIVE-VERIFIED (TANTRA contract gate) + OFFLINE-VERIFIED (cyber, local VAJRA); VAJRA consent SIMULATED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "identity: authenticated investigator",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-consenting-user-c5a5ea9fe2",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "VAJRA USE transition accepted for cyber-p0-test-consenting-user-c5a5ea9fe2",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "decision",
+          "expected": "ALLOW",
+          "actual": "ALLOW",
+          "ok": true
+        },
+        {
+          "what": "VAJRA state seen by Cybersecurity",
+          "expected": "USE",
+          "actual": "USE",
+          "ok": true
+        },
+        {
+          "what": "response states that scope was not checked",
+          "expected": false,
+          "actual": false,
+          "ok": true
+        },
+        {
+          "what": "local audit event recorded",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "VAJRA evidence recorded",
+          "expected": "RECORDED",
+          "actual": "RECORDED",
+          "ok": true
+        },
+        {
+          "what": "TANTRA reached and answered for this decision",
+          "expected": "one of CONTRACT_REJECTED/VALIDATED/RECORDED/RECORDED_UNVERIFIED",
+          "actual": "CONTRACT_REJECTED",
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "0d06b66d-59c9-4400-ba5b-68ed55c599da",
+        "61c62537-2018-466d-829b-c26cc610d369",
+        "7e80c4d2-006d-45c4-87a9-950ef2961629",
+        "cyber-p0-test-d5104b4a-cc02-48f8-8a2f-e187e31636f1"
+      ],
+      "notes": [
+        "TANTRA evidence status: CONTRACT_REJECTED (event_type_not_registered); evidence.complete=False, gaps=['tantra']"
+      ],
+      "defects": [],
+      "started_utc": "2026-11-04T12:05:40Z",
+      "duration_ms": 3295
+    },
+    {
+      "id": "S8-01",
+      "title": "One trace id links request, decision, audit record and VAJRA evidence",
+      "scenario": "S8 Trace / replay",
+      "refs": [
+        "EOD scenario: Trace / replay",
+        "Task1 E trace identifier/provenance/replay reference"
+      ],
+      "systems": [
+        "cybersecurity",
+        "vajra-local",
+        "tantra-live"
+      ],
+      "evidence_level": "LIVE-VERIFIED (TANTRA contract gate) + OFFLINE-VERIFIED (cyber, local VAJRA); VAJRA consent SIMULATED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-traced-61664c14d9",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "VAJRA USE transition accepted for cyber-p0-test-traced-61664c14d9",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "response header trace",
+          "expected": "cyber-p0-test-da205076-03ac-4a39-b08b-484d5f6798b8",
+          "actual": "cyber-p0-test-da205076-03ac-4a39-b08b-484d5f6798b8",
+          "ok": true
+        },
+        {
+          "what": "response body trace",
+          "expected": "cyber-p0-test-da205076-03ac-4a39-b08b-484d5f6798b8",
+          "actual": "cyber-p0-test-da205076-03ac-4a39-b08b-484d5f6798b8",
+          "ok": true
+        },
+        {
+          "what": "audit record for the trace",
+          "expected": 1,
+          "actual": 1,
+          "ok": true
+        },
+        {
+          "what": "audit event id matches the response",
+          "expected": "4421ff08-7b30-46a4-bedc-60cb73084a41",
+          "actual": "4421ff08-7b30-46a4-bedc-60cb73084a41",
+          "ok": true
+        },
+        {
+          "what": "one VAJRA row for this decision",
+          "expected": 1,
+          "actual": 1,
+          "ok": true
+        },
+        {
+          "what": "audit record points to the VAJRA row",
+          "expected": "cyber-p0-test-da205076-03ac-4a39-b08b-484d5f6798b8::4cf67ca2a4fc40bc8f817be507ebfdee",
+          "actual": "cyber-p0-test-da205076-03ac-4a39-b08b-484d5f6798b8::4cf67ca2a4fc40bc8f817be507ebfdee",
+          "ok": true
+        },
+        {
+          "what": "VAJRA row carries the decision",
+          "expected": "ALLOW",
+          "actual": "ALLOW",
+          "ok": true
+        },
+        {
+          "what": "VAJRA evidence hash matches the response",
+          "expected": "sha256:8ef4031553f1976173c21f52862f1bae965b3ac2ff30b79c4feb1f20b078fc89",
+          "actual": "sha256:8ef4031553f1976173c21f52862f1bae965b3ac2ff30b79c4feb1f20b078fc89",
+          "ok": true
+        },
+        {
+          "what": "VAJRA chain intact (replayable)",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "TANTRA reached and answered for this trace",
+          "expected": "one of CONTRACT_REJECTED/VALIDATED/RECORDED/RECORDED_UNVERIFIED",
+          "actual": "CONTRACT_REJECTED",
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "983a6345-363d-4686-ab04-ddbe8198f0ea",
+        "d9b7238b-5d97-4b2e-b7c4-d73de9c852cd",
+        "cyber-p0-test-da205076-03ac-4a39-b08b-484d5f6798b8"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:05:43Z",
+      "duration_ms": 3047
+    },
+    {
+      "id": "S5-01",
+      "title": "TANTRA contract gate rejects the unregistered security event; no bypass; gap visible",
+      "scenario": "S5 TANTRA denial / outage",
+      "refs": [
+        "EOD scenario: TANTRA denial",
+        "Task1 E contract/error handling"
+      ],
+      "systems": [
+        "cybersecurity",
+        "vajra-local",
+        "tantra-live"
+      ],
+      "evidence_level": "LIVE-VERIFIED (TANTRA contract gate) + OFFLINE-VERIFIED (cyber, local VAJRA); VAJRA consent SIMULATED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-tantra-gate-4b95059075",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "VAJRA USE transition accepted for cyber-p0-test-tantra-gate-4b95059075",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "decision still made by Cybersecurity + VAJRA",
+          "expected": "ALLOW",
+          "actual": "ALLOW",
+          "ok": true
+        },
+        {
+          "what": "TANTRA status",
+          "expected": "CONTRACT_REJECTED",
+          "actual": "CONTRACT_REJECTED",
+          "ok": true
+        },
+        {
+          "what": "TANTRA reason",
+          "expected": "event_type_not_registered",
+          "actual": "event_type_not_registered",
+          "ok": true
+        },
+        {
+          "what": "gap listed",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "evidence not claimed complete",
+          "expected": false,
+          "actual": false,
+          "ok": true
+        },
+        {
+          "what": "nothing stored by TANTRA for the rejected event (PRANA replay lookup)",
+          "expected": 404,
+          "actual": 404,
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "e8aba8de-b6d9-4975-aedc-f2d653ffa931",
+        "2bd8c478-3e57-4550-a113-62524ac8dabb",
+        "cyber-p0-test-f3fcb75d-6ffa-4848-a77e-fcc5143e6fea"
+      ],
+      "notes": [
+        "TANTRA registered event types reported by the live gate: ['adaptive_decision', 'bucket_memory_saved', 'integrity_probe', 'review_completed', 'task_submit', 'task_submit_failed', 'truth_classification']"
+      ],
+      "defects": [],
+      "started_utc": "2026-11-04T12:05:47Z",
+      "duration_ms": 3141
+    },
+    {
+      "id": "S5-04",
+      "title": "TANTRA rejects a malformed envelope (live, validation endpoint)",
+      "scenario": "S5 TANTRA denial / outage",
+      "refs": [
+        "EOD scenario: TANTRA denial",
+        "Task1 E error handling"
+      ],
+      "systems": [
+        "tantra-live"
+      ],
+      "evidence_level": "LIVE-VERIFIED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "HTTP status",
+          "expected": 422,
+          "actual": 422,
+          "ok": true
+        },
+        {
+          "what": "TANTRA verdict",
+          "expected": "rejected",
+          "actual": "rejected",
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "cyber-p0-test-9d205ed8-daf2-4609-a18d-6042aafbe5d6"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:05:57Z",
+      "duration_ms": 608
+    },
+    {
+      "id": "S8-02",
+      "title": "TANTRA ledger participation: probe written, replay-verified and forwarded (live write)",
+      "scenario": "S8 Trace / replay",
+      "refs": [
+        "Task1 E TANTRA participation",
+        "Task1 M TANTRA runtime participation",
+        "EOD trace/replay"
+      ],
+      "systems": [
+        "cybersecurity",
+        "tantra-live"
+      ],
+      "evidence_level": "NOT RUN (skipped in this mode)",
+      "status": "SKIPPED",
+      "expectations": [],
+      "trace_ids": [],
+      "notes": [
+        "live TANTRA write not enabled (--allow-live-tantra-write); nothing sent"
+      ],
+      "defects": [],
+      "started_utc": "2026-11-04T12:05:57Z",
+      "duration_ms": 0
+    },
+    {
+      "id": "S3-01",
+      "title": "Ambiguous signal: uncertainty is visible in the intelligence output",
+      "scenario": "S3 Ambiguous / low confidence",
+      "refs": [
+        "EOD scenario: Ambiguous / low confidence",
+        "EOD Shivam: expose confidence and uncertainty"
+      ],
+      "systems": [
+        "cybersecurity"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "analysis returned",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "structured confidence/uncertainty field present",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "791458bb-2681-4c25-8234-6c179d2999d4"
+      ],
+      "notes": [
+        "output fields: ['confidence', 'data_basis', 'detected_patterns', 'graph_data', 'observed_tx_count', 'report_id', 'risk_level', 'risk_score', 'summary', 'system_conclusion', 'timeline', 'transactions', 'uncertainty', 'wallet']; risk_score=0.0, risk_level=INSUFFICIENT DATA; system_conclusion='No recorded transactions were found for this wallet, so no fraud assessment was made. Add transaction data or evidence and analyse again.'"
+      ],
+      "defects": [],
+      "started_utc": "2026-11-04T12:05:57Z",
+      "duration_ms": 141
+    },
+    {
+      "id": "S3-02",
+      "title": "Ambiguous signal: no autonomous high-impact action recorded",
+      "scenario": "S3 Ambiguous / low confidence",
+      "refs": [
+        "EOD scenario: Ambiguous / low confidence",
+        "10-day rule 8 no silent authority"
+      ],
+      "systems": [
+        "cybersecurity"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "analysis returned",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "no freeze/revoke/deactivate/terminate action recorded by the analysis",
+          "expected": 0,
+          "actual": 0,
+          "ok": true
+        },
+        {
+          "what": "response does not claim an executed action",
+          "expected": false,
+          "actual": false,
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "56005ec8-b0d8-4a86-ad1f-af63edb75817"
+      ],
+      "notes": [
+        "heuristic check: based on the audit store and the response fields (absence of recorded actions)"
+      ],
+      "defects": [],
+      "started_utc": "2026-11-04T12:05:57Z",
+      "duration_ms": 93
+    },
+    {
+      "id": "S3-03",
+      "title": "Analysis of a wallet with no recorded history does not present generated transactions as evidence",
+      "scenario": "S3 Ambiguous / low confidence",
+      "refs": [
+        "EOD scenario: Ambiguous / low confidence",
+        "EOD Shivam: separate observed facts from inference",
+        "Task1 C security intelligence"
+      ],
+      "systems": [
+        "cybersecurity"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "analysis returned",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "no unlabelled transactions are reported for a wallet with no history",
+          "expected": "0 transactions, or every transaction labelled synthetic",
+          "actual": "0 transactions, labelled synthetic: True",
+          "ok": true
+        },
+        {
+          "what": "no fraud pattern asserted without observed data",
+          "expected": [],
+          "actual": [],
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "4e4d4aaf-952b-4334-b15b-25303b915924"
+      ],
+      "notes": [
+        "returned 0 transactions, patterns=[], risk=INSUFFICIENT DATA; conclusion='No recorded transactions were found for this wallet, so no fraud assessment was made. Add transaction data or evidence and analyse again.'"
+      ],
+      "defects": [],
+      "started_utc": "2026-11-04T12:05:58Z",
+      "duration_ms": 31
+    },
+    {
+      "id": "S6-04",
+      "title": "Evidence upload without Bucket does not claim anchoring",
+      "scenario": "S6 Evidence failure",
+      "refs": [
+        "EOD scenario: Evidence failure"
+      ],
+      "systems": [
+        "cybersecurity"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "upload accepted",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "anchor status is not claimed",
+          "expected": "pending",
+          "actual": "pending",
+          "ok": true
+        },
+        {
+          "what": "upload reports the Bucket outcome (Bucket not configured in this run)",
+          "expected": "not_configured",
+          "actual": "not_configured",
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "e6d55857-c03b-473f-8b89-0a41ce10b4e4"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:05:58Z",
+      "duration_ms": 62
+    },
+    {
+      "id": "P-C1",
+      "title": "Proof C ATTACK (signal): repeated failed logins are denied and recorded as security events",
+      "scenario": "Mandatory proof C (10-day)",
+      "refs": [
+        "10-day 20.C",
+        "10-day 19 repeated failed login",
+        "Task1 C security-event ingestion"
+      ],
+      "systems": [
+        "cybersecurity"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "every failed attempt denied",
+          "expected": [
+            401,
+            401,
+            401,
+            401,
+            401,
+            401
+          ],
+          "actual": [
+            401,
+            401,
+            401,
+            401,
+            401,
+            401
+          ],
+          "ok": true
+        },
+        {
+          "what": "failed logins recorded as security events in the audit store",
+          "expected": ">= 6",
+          "actual": 7,
+          "ok": true
+        },
+        {
+          "what": "login error does not reveal whether the account exists",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        }
+      ],
+      "trace_ids": [],
+      "notes": [
+        "correct password after 6 failures: HTTP 200 (no lockout or step-up observed)"
+      ],
+      "defects": [],
+      "started_utc": "2026-11-04T12:05:58Z",
+      "duration_ms": 5670
+    },
+    {
+      "id": "P-C2",
+      "title": "Proof C ATTACK (intelligence): the failed logins are detected and correlated into one incident for review",
+      "scenario": "Mandatory proof C (10-day)",
+      "refs": [
+        "10-day 20.C",
+        "EOD Shivam threat assessment",
+        "EOD Aryan correlation",
+        "10-day rule 8 no silent authority"
+      ],
+      "systems": [
+        "cybersecurity"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "incident list readable by a superadmin",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "one open incident correlates the failed logins on the attacked account",
+          "expected": 1,
+          "actual": 1,
+          "ok": true
+        },
+        {
+          "what": "incident links >= 5 failed-login security events found in the audit store",
+          "expected": ">= 5",
+          "actual": 7,
+          "ok": true
+        },
+        {
+          "what": "confidence stated (0-1)",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "uncertainty stated",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "rule id and version recorded",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "left open for human review (no autonomous action)",
+          "expected": [
+            "open",
+            true
+          ],
+          "actual": [
+            "open",
+            true
+          ],
+          "ok": true
+        },
+        {
+          "what": "one threat.detected security event for the incident",
+          "expected": 1,
+          "actual": 1,
+          "ok": true
+        },
+        {
+          "what": "attacked account still usable (detection blocks no one)",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "c5ff4bcb-a88b-4258-9316-bed667bf60b6"
+      ],
+      "notes": [
+        "incident 8c7ee2e6-6d36-4dea-897f-ebb06e6ecf45: 7 events, severity medium, confidence 0.7; uncertainty: ['Rule-based count (7 failed logins within 10 minutes); not a trained model, and the confidence is a fixed function of the count, not a calibrated probability.', 'Cannot tell an attacker from a user who forgot the password.', '1 distinct source address(es) seen; no IP reputation or geolocation data is used.']"
+      ],
+      "defects": [],
+      "started_utc": "2026-11-04T12:06:03Z",
+      "duration_ms": 454
+    },
+    {
+      "id": "P-C3",
+      "title": "Proof C ATTACK (containment): ISOLATE/TERMINATE at VAJRA blocks the actor",
+      "scenario": "Mandatory proof C (10-day)",
+      "refs": [
+        "10-day 20.C",
+        "Task1 M controlled downstream response"
+      ],
+      "systems": [
+        "cybersecurity",
+        "vajra-local"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED; VAJRA consent and TANTRA approval SIMULATED (harness plays both roles)",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-compromised-actor-860810b93f",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "VAJRA USE transition accepted for cyber-p0-test-compromised-actor-860810b93f",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "before containment: allowed",
+          "expected": "ALLOW",
+          "actual": "ALLOW",
+          "ok": true
+        },
+        {
+          "what": "ISOLATE (TANTRA governance simulated)",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "isolated actor denied",
+          "expected": "DENY",
+          "actual": "DENY",
+          "ok": true
+        },
+        {
+          "what": "TERMINATE (TANTRA governance simulated)",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "terminated actor denied",
+          "expected": "DENY",
+          "actual": "DENY",
+          "ok": true
+        },
+        {
+          "what": "VAJRA state",
+          "expected": "TERMINATE",
+          "actual": "TERMINATE",
+          "ok": true
+        },
+        {
+          "what": "containment decision evidenced at VAJRA",
+          "expected": "RECORDED",
+          "actual": "RECORDED",
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "5d2e84f2-3d5d-4158-a83b-36923473075c",
+        "d1e53dc5-508a-4da1-a87a-76c86d5e11f0",
+        "c4ea3606-6709-4883-ad66-67f1ddcab626",
+        "d178916a-f977-4c9e-9f11-65c02d48e006",
+        "9f3a2348-279f-4dc1-8858-d68d071778b6",
+        "dffe9bed-ab30-4c7e-b832-9fe00018a103",
+        "d2ba73c0-7fad-40bd-ae6d-d547dfbdfbc3"
+      ],
+      "notes": [
+        "Cybersecurity did not execute the containment; the transitions were issued by the harness standing in for TANTRA."
+      ],
+      "defects": [],
+      "started_utc": "2026-11-04T12:06:04Z",
+      "duration_ms": 4670
+    },
+    {
+      "id": "S2-02",
+      "title": "Revoked session token (JTI) is rejected on the next request",
+      "scenario": "S2 Revoked permission",
+      "refs": [
+        "EOD scenario: Revoked permission",
+        "10-day Kaushlendra revocation path"
+      ],
+      "systems": [
+        "cybersecurity"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "token works before revocation",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "revocation accepted",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "revocation status",
+          "expected": "REVOKED",
+          "actual": "REVOKED",
+          "ok": true
+        },
+        {
+          "what": "next request with revoked token",
+          "expected": 401,
+          "actual": 401,
+          "ok": true
+        },
+        {
+          "what": "error code",
+          "expected": "INVALID_CREDENTIALS",
+          "actual": "INVALID_CREDENTIALS",
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "08842415-6dc3-46fb-bfae-0f99264f7308",
+        "d6841c4d-4881-466b-9a8e-6367cb55bdd7",
+        "09ad2e1b-65f8-435c-89b5-d8326dbe08a1"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:06:08Z",
+      "duration_ms": 79
+    },
+    {
+      "id": "S2-03",
+      "title": "Deactivated account is rejected on the next request",
+      "scenario": "S2 Revoked permission",
+      "refs": [
+        "EOD scenario: Revoked permission"
+      ],
+      "systems": [
+        "cybersecurity"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "account works before deactivation",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "deactivation status",
+          "expected": "REVOKED",
+          "actual": "REVOKED",
+          "ok": true
+        },
+        {
+          "what": "next request",
+          "expected": 403,
+          "actual": 403,
+          "ok": true
+        },
+        {
+          "what": "error code",
+          "expected": "ACCOUNT_DEACTIVATED",
+          "actual": "ACCOUNT_DEACTIVATED",
+          "ok": true
+        },
+        {
+          "what": "trace id carried in denial",
+          "expected": "8f36e0f0-07f5-4264-b2d6-6f5b83b287c1",
+          "actual": "8f36e0f0-07f5-4264-b2d6-6f5b83b287c1",
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "eb4f92ca-db50-4508-a514-fb6320627b1b",
+        "5049a93f-baf5-4cd8-af58-792b6c4b96f2",
+        "8f36e0f0-07f5-4264-b2d6-6f5b83b287c1"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:06:09Z",
+      "duration_ms": 62
+    },
+    {
+      "id": "S4-03",
+      "title": "Repeating a deactivation does not repeat the privileged action",
+      "scenario": "S4 Duplicate event",
+      "refs": [
+        "EOD scenario: Duplicate event"
+      ],
+      "systems": [
+        "cybersecurity"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "first deactivation, then the repeat is recognised",
+          "expected": [
+            "REVOKED",
+            "ALREADY_INACTIVE"
+          ],
+          "actual": [
+            "REVOKED",
+            "ALREADY_INACTIVE"
+          ],
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "92bd1b8e-525f-4d86-a4c8-7855f3dbedac",
+        "01e49913-d304-434a-91e5-81aa9c3959a6"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:06:09Z",
+      "duration_ms": 47
+    },
+    {
+      "id": "S7-01",
+      "title": "After a crash-restart of Cybersecurity, revoked sessions and accounts stay blocked",
+      "scenario": "S7 Recovery failure",
+      "refs": [
+        "EOD scenario: Recovery failure",
+        "10-day 20.D"
+      ],
+      "systems": [
+        "cybersecurity"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED; process killed and restarted",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "fresh session revoked",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "account deactivated",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "revoked token still rejected",
+          "expected": 401,
+          "actual": 401,
+          "ok": true
+        },
+        {
+          "what": "deactivated account still rejected",
+          "expected": 403,
+          "actual": 403,
+          "ok": true
+        },
+        {
+          "what": "unaffected session still works",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "8ba5dc12-c818-403b-bd07-9f6b448179cd",
+        "895b7f9a-03fe-4021-bcb0-0d40cf436567",
+        "0b5daa3c-195c-4ade-97f4-8180df2fe092",
+        "b1f15986-9b2f-4d02-a312-54f1831e7678",
+        "adfde61f-6c32-4854-83ba-c51873d61537"
+      ],
+      "notes": [
+        "cyber service healthy 3.94 s after a crash-restart"
+      ],
+      "defects": [],
+      "started_utc": "2026-11-04T12:06:09Z",
+      "duration_ms": 4702
+    },
+    {
+      "id": "S7-02",
+      "title": "Proof D (staged recovery): a contained actor stays restricted until the full recovery path completes",
+      "scenario": "S7 Recovery failure",
+      "refs": [
+        "EOD scenario: Recovery failure",
+        "10-day 20.D"
+      ],
+      "systems": [
+        "cybersecurity",
+        "vajra-local"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED; VAJRA consent and TANTRA approval SIMULATED (harness plays both roles)",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-recovering-actor-d4687a320d",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "VAJRA USE transition accepted for cyber-p0-test-recovering-actor-d4687a320d",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "ISOLATE accepted",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "TERMINATE accepted",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "TERMINATE -> USE shortcut rejected",
+          "expected": 403,
+          "actual": 403,
+          "ok": true
+        },
+        {
+          "what": "RECOVER accepted",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "still restricted at RECOVER",
+          "expected": "DENY",
+          "actual": "DENY",
+          "ok": true
+        },
+        {
+          "what": "REINSTATE accepted",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "still restricted at REINSTATE",
+          "expected": "DENY",
+          "actual": "DENY",
+          "ok": true
+        },
+        {
+          "what": "GRANT accepted",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "access returns only after re-GRANT",
+          "expected": "ALLOW",
+          "actual": "ALLOW",
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "2a4d4a0b-89f5-4d91-9c4e-9014a7f99a3d",
+        "98f97ac8-1dad-4e02-86dc-2396cb987f24",
+        "3a33fa2c-eb7e-477e-b2a1-b3b2d96363a2",
+        "36017019-3180-43d0-ab8e-480d25de0a5c",
+        "696f3b43-78e8-43c9-a63e-712058f469e0",
+        "acf5f60a-bee7-49dd-aad7-748a175d6f24",
+        "1e10f282-3110-45b2-bce6-501ceb55dc21",
+        "83efeb62-497e-44ab-8982-8c1564d9b7e4",
+        "9fb2a4f6-37fe-4449-83ef-9b852d94d876",
+        "d3806304-7c89-4eed-a58c-185c8c6a2f0f",
+        "66fc2e5a-9b0a-4a8b-9916-19f932c8e391"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:06:13Z",
+      "duration_ms": 4437
+    },
+    {
+      "id": "S7-04",
+      "title": "Recovery anchor check rejects a corrupt candidate (inputs synthetic)",
+      "scenario": "S7 Recovery failure",
+      "refs": [
+        "10-day 20.D",
+        "10-day Prakash recovery verification path"
+      ],
+      "systems": [
+        "vajra-local"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED; signatures are placeholders in VAJRA (SIMULATED)",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "recovery package served",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "corrupt candidate not qualified",
+          "expected": false,
+          "actual": false,
+          "ok": true
+        }
+      ],
+      "trace_ids": [],
+      "notes": [
+        "recovery package keys: ['recovery_package', 'success']",
+        "informational only: a candidate copied from the node's own package -> qualified=False; VAJRA counts placeholder signature strings, so this is not cryptographic proof (VAJ-05)"
+      ],
+      "defects": [],
+      "started_utc": "2026-11-04T12:06:18Z",
+      "duration_ms": 15
+    },
+    {
+      "id": "S5-02",
+      "title": "TANTRA unreachable: decision still made by Cybersecurity + VAJRA, TANTRA gap reported and visible in health",
+      "scenario": "S5 TANTRA denial / outage",
+      "refs": [
+        "EOD scenario: TANTRA outage"
+      ],
+      "systems": [
+        "cybersecurity",
+        "vajra-local"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED; VAJRA consent SIMULATED (harness plays the VAJRA user journey); induced outage (closed port)",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-tantra-down-3a373eb749",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "VAJRA USE transition accepted for cyber-p0-test-tantra-down-3a373eb749",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "decision unaffected by the TANTRA outage",
+          "expected": "ALLOW",
+          "actual": "ALLOW",
+          "ok": true
+        },
+        {
+          "what": "TANTRA status",
+          "expected": "UNAVAILABLE",
+          "actual": "UNAVAILABLE",
+          "ok": true
+        },
+        {
+          "what": "gap listed",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "evidence not claimed complete",
+          "expected": false,
+          "actual": false,
+          "ok": true
+        },
+        {
+          "what": "superadmin health shows TANTRA unreachable",
+          "expected": false,
+          "actual": false,
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "cbc97f07-a5e8-400a-acaa-b65ed35e1605",
+        "dcd43802-33d3-4c86-8f3b-3598441d2abe",
+        "28e29248-067d-4ff5-b4f2-0a6f5645f4ce"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:06:18Z",
+      "duration_ms": 21047
+    },
+    {
+      "id": "S5-05",
+      "title": "A slow TANTRA peer does not stall the rest of the API",
+      "scenario": "S5 TANTRA denial / outage",
+      "refs": [
+        "EOD scenario: TANTRA outage (failure observable, fails safely)"
+      ],
+      "systems": [
+        "cybersecurity",
+        "vajra-local"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED; VAJRA consent SIMULATED (harness plays the VAJRA user journey); induced slow peer (socket that never answers)",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-slow-peer-2f8a4d6a90",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "VAJRA USE transition accepted for cyber-p0-test-slow-peer-2f8a4d6a90",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "/health answered while a protected request waits on the slow peer",
+          "expected": "< 1.5 s",
+          "actual": "0.02 s (HTTP 200)",
+          "ok": true
+        },
+        {
+          "what": "slow TANTRA reported as UNAVAILABLE (timeout), not as recorded",
+          "expected": "UNAVAILABLE",
+          "actual": "UNAVAILABLE",
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "2af37c10-ed02-4166-9d5c-42d4a035c930",
+        "de65632e-a091-4229-8015-a9194d58fd77",
+        "72a66d02-b359-4963-916b-da6e0d506edc"
+      ],
+      "notes": [
+        "protected request took 6.48 s with a 4 s peer timeout"
+      ],
+      "defects": [],
+      "started_utc": "2026-11-04T12:06:39Z",
+      "duration_ms": 14530
+    },
+    {
+      "id": "S6-01",
+      "title": "VAJRA refuses the evidence write: no ALLOW without evidence; the gap is visible",
+      "scenario": "S6 Evidence failure",
+      "refs": [
+        "EOD scenario: Evidence failure"
+      ],
+      "systems": [
+        "cybersecurity",
+        "vajra-local"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED; VAJRA consent SIMULATED (harness plays the VAJRA user journey)",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-evidence-refused-4908c4154c",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "VAJRA USE transition accepted for cyber-p0-test-evidence-refused-4908c4154c",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "decision",
+          "expected": "DENY",
+          "actual": "DENY",
+          "ok": true
+        },
+        {
+          "what": "reason",
+          "expected": "VAJRA_EVIDENCE_NOT_RECORDED",
+          "actual": "VAJRA_EVIDENCE_NOT_RECORDED",
+          "ok": true
+        },
+        {
+          "what": "VAJRA evidence status",
+          "expected": "UNAUTHORIZED",
+          "actual": "UNAUTHORIZED",
+          "ok": true
+        },
+        {
+          "what": "gap listed",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "evidence not claimed complete",
+          "expected": false,
+          "actual": false,
+          "ok": true
+        },
+        {
+          "what": "audit keeps the tentative ALLOW and the superseding DENY that points to it",
+          "expected": "9662d96b-2818-4a2f-bff2-29b5a95bca35",
+          "actual": "9662d96b-2818-4a2f-bff2-29b5a95bca35",
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "8d45890e-03ab-4df4-9002-2c12d81f1023",
+        "950dd73b-4f99-4857-8fb5-cf3c79148f73",
+        "35084d76-7915-4c40-ab23-af39bc3f99d9"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:06:53Z",
+      "duration_ms": 9547
+    },
+    {
+      "id": "S6-03",
+      "title": "Audit store cannot be written: no decision is released",
+      "scenario": "S6 Evidence failure",
+      "refs": [
+        "EOD scenario: Evidence failure (no false proof of completion)"
+      ],
+      "systems": [
+        "cybersecurity",
+        "vajra-local"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED; VAJRA consent SIMULATED (harness plays the VAJRA user journey); induced fault (database file set read-only)",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-audit-down-0ee9359131",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "VAJRA USE transition accepted for cyber-p0-test-audit-down-0ee9359131",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "HTTP status",
+          "expected": 503,
+          "actual": 503,
+          "ok": true
+        },
+        {
+          "what": "error code",
+          "expected": "EVIDENCE_PERSISTENCE_FAILED",
+          "actual": "EVIDENCE_PERSISTENCE_FAILED",
+          "ok": true
+        },
+        {
+          "what": "no decision in the response",
+          "expected": false,
+          "actual": false,
+          "ok": true
+        },
+        {
+          "what": "no VAJRA evidence row for the withheld decision",
+          "expected": [],
+          "actual": [],
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "8f1f010b-0132-42a4-a33e-894225e8f4e1",
+        "327d5660-7eb1-467e-bf82-0ed77889b98a",
+        "ef368ec9-9376-4182-ae76-1a3d58f58b45"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:07:03Z",
+      "duration_ms": 9422
+    },
+    {
+      "id": "S6-02",
+      "title": "VAJRA down: access fails closed and the outage is visible",
+      "scenario": "S6 Evidence failure",
+      "refs": [
+        "EOD scenario: Evidence failure",
+        "EOD scenario: Recovery failure"
+      ],
+      "systems": [
+        "cybersecurity",
+        "vajra-local"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED; induced outage (VAJRA process stopped)",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "decision",
+          "expected": "DENY",
+          "actual": "DENY",
+          "ok": true
+        },
+        {
+          "what": "reason",
+          "expected": "VAJRA_UNAVAILABLE",
+          "actual": "VAJRA_UNAVAILABLE",
+          "ok": true
+        },
+        {
+          "what": "VAJRA evidence status",
+          "expected": "UNAVAILABLE",
+          "actual": "UNAVAILABLE",
+          "ok": true
+        },
+        {
+          "what": "superadmin health shows VAJRA unreachable",
+          "expected": false,
+          "actual": false,
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "84d7ccec-d50d-4bef-903a-0059f25dc4a1"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:07:12Z",
+      "duration_ms": 9858
+    },
+    {
+      "id": "S7-03",
+      "title": "After a VAJRA crash-restart, Cybersecurity follows VAJRA's reported state; evidence survives",
+      "scenario": "S7 Recovery failure",
+      "refs": [
+        "EOD scenario: Recovery failure",
+        "10-day Samsoorya restart and state recovery"
+      ],
+      "systems": [
+        "cybersecurity",
+        "vajra-local"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED; VAJRA consent SIMULATED (harness plays the VAJRA user journey); process killed and restarted",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-survivor-42a04c131c",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "VAJRA USE transition accepted for cyber-p0-test-survivor-42a04c131c",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "TruthStore evidence rows survive restart",
+          "expected": 19,
+          "actual": 19,
+          "ok": true
+        },
+        {
+          "what": "TruthStore chain intact after restart",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "decision follows VAJRA's state after restart (state 'none')",
+          "expected": "DENY",
+          "actual": "DENY",
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "49acdf31-745a-48dc-87b1-43bda97c3dd4",
+        "a0d592d2-32c2-4590-98ab-8683ef43b021",
+        "cd1f23eb-1519-41e1-9fd1-34f846c622ba"
+      ],
+      "notes": [
+        "VAJRA node healthy 0.78 s after a crash-restart"
+      ],
+      "defects": [],
+      "started_utc": "2026-11-04T12:07:22Z",
+      "duration_ms": 2391
+    },
+    {
+      "id": "S7-05",
+      "title": "VAJRA authority state survives a node restart",
+      "scenario": "S7 Recovery failure",
+      "refs": [
+        "10-day Samsoorya: prove restart and state recovery",
+        "10-day Prakash authority lifecycle"
+      ],
+      "systems": [
+        "vajra-local"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED; process killed and restarted",
+      "status": "FAIL",
+      "expectations": [
+        {
+          "what": "VAJRA GRANT transition accepted for cyber-p0-test-persistence-1eae3573af",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "VAJRA USE transition accepted for cyber-p0-test-persistence-1eae3573af",
+          "expected": 200,
+          "actual": 200,
+          "ok": true
+        },
+        {
+          "what": "authority state after restart (subject was USE)",
+          "expected": "USE",
+          "actual": "",
+          "ok": false
+        }
+      ],
+      "trace_ids": [
+        "6fe4f7b4-9915-4787-ae92-42c27e79e35a",
+        "9d5b6ef7-8264-4136-b60c-14566041acaa"
+      ],
+      "notes": [],
+      "defects": [
+        "VAJ-02"
+      ],
+      "started_utc": "2026-11-04T12:07:25Z",
+      "duration_ms": 1047
+    },
+    {
+      "id": "S8-03",
+      "title": "Tampering with stored evidence is detected by VAJRA's chain check",
+      "scenario": "S8 Trace / replay",
+      "refs": [
+        "10-day Hemanth replay/integrity verification",
+        "EOD replay proves history"
+      ],
+      "systems": [
+        "vajra-local"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED; induced fault (one stored row edited)",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "TruthStore has rows to tamper with",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "tampered store reported broken",
+          "expected": false,
+          "actual": false,
+          "ok": true
+        },
+        {
+          "what": "restored store reported intact",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        }
+      ],
+      "trace_ids": [],
+      "notes": [
+        "chain-integrity after tamper: HTTP 409 {'broken_at': 0, 'error': 'truth store chain integrity violation detected \u2014 possible tampering', 'intact': False, 'success': False}"
+      ],
+      "defects": [],
+      "started_utc": "2026-11-04T12:07:26Z",
+      "duration_ms": 2327
+    },
+    {
+      "id": "S5-03",
+      "title": "No bypass executor: Cybersecurity exposes no route that changes VAJRA authority",
+      "scenario": "S5 TANTRA denial / outage",
+      "refs": [
+        "EOD: no bypass executor",
+        "Task1 non-goal: no absorbed authority"
+      ],
+      "systems": [
+        "cybersecurity"
+      ],
+      "evidence_level": "CODE-VERIFIED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "published API has no authority-transition route",
+          "expected": false,
+          "actual": false,
+          "ok": true
+        },
+        {
+          "what": "no code calls VAJRA /authority/transition",
+          "expected": [],
+          "actual": [],
+          "ok": true
+        }
+      ],
+      "trace_ids": [],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:07:28Z",
+      "duration_ms": 47
+    },
+    {
+      "id": "O-03",
+      "title": "Error responses follow the canonical error contract (code, trace_id, request_id, timestamp)",
+      "scenario": "Observability",
+      "refs": [
+        "Task1 E error handling",
+        "Task1 C structured outputs"
+      ],
+      "systems": [
+        "cybersecurity"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "error body has 'error'",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "error body has 'code'",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "error body has 'message'",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "error body has 'trace_id'",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "error body has 'request_id'",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "error body has 'timestamp'",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "error body has 'status_code'",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        },
+        {
+          "what": "X-Request-Id header present",
+          "expected": true,
+          "actual": true,
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "fa9fc492-cf2b-4e17-95d0-cd9df43f6989"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:07:28Z",
+      "duration_ms": 15
+    },
+    {
+      "id": "O-04",
+      "title": "Collection route without trailing slash is served or redirected (API contract)",
+      "scenario": "Observability",
+      "refs": [
+        "Task1 C API contracts"
+      ],
+      "systems": [
+        "cybersecurity"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "GET /api/v1/cases (no slash) by an authorised investigator",
+          "expected": "200 or 307",
+          "actual": 307,
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "09f77960-04cc-4ad3-a530-6b94e7873c51"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:07:28Z",
+      "duration_ms": 15
+    },
+    {
+      "id": "S2-04",
+      "title": "Tier-1 permission revocation takes effect on the next request",
+      "scenario": "S2 Revoked permission",
+      "refs": [
+        "EOD scenario: Revoked permission (stale grants do not persist)"
+      ],
+      "systems": [
+        "cybersecurity"
+      ],
+      "evidence_level": "OFFLINE-VERIFIED",
+      "status": "PASS",
+      "expectations": [
+        {
+          "what": "revocation reported",
+          "expected": "REVOKED",
+          "actual": "REVOKED",
+          "ok": true
+        },
+        {
+          "what": "investigator read after 'read' was revoked",
+          "expected": "403 (denied)",
+          "actual": 403,
+          "ok": true
+        },
+        {
+          "what": "authz decision for investigator read after revocation",
+          "expected": "DENY",
+          "actual": "DENY",
+          "ok": true
+        }
+      ],
+      "trace_ids": [
+        "cfa4b39d-39c1-48d2-a3e0-1a4beb1cb724",
+        "2c858df0-e1d0-4e9e-b5e6-a5c7c0b50e8b",
+        "e385bc1b-1cb8-4eea-bfc6-edd0559ead09"
+      ],
+      "notes": [],
+      "defects": [],
+      "started_utc": "2026-11-04T12:07:28Z",
+      "duration_ms": 109
+    }
+  ]
+}

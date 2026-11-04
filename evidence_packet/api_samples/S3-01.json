@@ -2,18 +2,18 @@
   {
     "check_id": "S3-01",
     "system": "cybersecurity",
-    "utc": "2026-11-04T12:05:57Z",
-    "elapsed_ms": 141,
+    "utc": "2026-11-04T12:39:14Z",
+    "elapsed_ms": 109,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:57509/api/v1/incidents/analyze",
+      "url": "http://127.0.0.1:62636/api/v1/incidents/analyze",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "791458bb-2681-4c25-8234-6c179d2999d4",
+        "x-trace-id": "cd0f2f74-4228-48a1-afd0-cb6015e1a1e6",
         "content-type": "application/json"
       },
       "body": {
-        "wallet_address": "0xAMBIGUOUS1c9e0f5531f6",
+        "wallet_address": "0xAMBIGUOUS2e775068f404",
         "description": "unclear activity, possibly unusual, not sure (synthetic)",
         "investigator_id": 2
       }
@@ -22,11 +22,11 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "0e8ce998-b60c-4eb4-bbb3-52c524937ae5",
-        "x-trace-id": "791458bb-2681-4c25-8234-6c179d2999d4"
+        "x-request-id": "3767aa29-ca1c-46e2-85ff-c2e7baee61ce",
+        "x-trace-id": "cd0f2f74-4228-48a1-afd0-cb6015e1a1e6"
       },
       "body": {
-        "wallet": "0xAMBIGUOUS1c9e0f5531f6",
+        "wallet": "0xAMBIGUOUS2e775068f404",
         "risk_score": 0.0,
         "risk_level": "INSUFFICIENT DATA",
         "detected_patterns": [],
@@ -41,11 +41,11 @@
         "graph_data": [],
         "timeline": [],
         "transactions": [],
-        "system_conclusion": "No recorded transactions were found for this wallet, so no fraud assessment was made. Add transaction data or evidence and analyse again.",
+        "system_conclusion": "No transaction records were found for this wallet, so no fraud assessment was made. Add transaction data or evidence and analyse again.",
         "report_id": "1",
         "confidence": 0.0,
         "uncertainty": [
-          "No recorded transactions were found for this wallet, so no fraud assessment was made.",
+          "No transaction records were found for this wallet, so no fraud assessment was made.",
           "The description text is not evidence and did not raise any score."
         ],
         "data_basis": "none",

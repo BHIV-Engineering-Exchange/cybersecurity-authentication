@@ -2,19 +2,19 @@
   {
     "check_id": "S1-05",
     "system": "cybersecurity",
-    "utc": "2026-11-04T12:05:20Z",
-    "elapsed_ms": 1422,
+    "utc": "2026-11-04T12:38:44Z",
+    "elapsed_ms": 1280,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:57509/api/v1/protected/access",
+      "url": "http://127.0.0.1:62636/api/v1/protected/access",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "53ccbb0c-4240-4904-88f9-8c96d44e64e5",
+        "x-trace-id": "cce4b35e-d9ae-45d2-9ec5-85af70676686",
         "content-type": "application/json"
       },
       "body": {
         "contract_version": "1.0.0",
-        "vajra_subject": "cyber-p0-test-never-granted-4187299816",
+        "vajra_subject": "cyber-p0-test-never-granted-c423488064",
         "action": "read",
         "resource": {
           "type": "evidence",
@@ -27,17 +27,17 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "304ec50f-1d66-46c4-aefa-7cc6649f5cb8",
-        "x-trace-id": "53ccbb0c-4240-4904-88f9-8c96d44e64e5"
+        "x-request-id": "59ee42e8-c698-42f9-852a-75ce4d619cc7",
+        "x-trace-id": "cce4b35e-d9ae-45d2-9ec5-85af70676686"
       },
       "body": {
         "contract_version": "1.0.0",
         "decision": "DENY",
         "reason_code": "VAJRA_AUTHORITY_NOT_GRANTED",
         "reason": "Access denied: VAJRA authority state is 'NONE', which does not permit access.",
-        "decision_id": "d57515c40ca748c49f11c72ad60ecd54",
-        "trace_id": "53ccbb0c-4240-4904-88f9-8c96d44e64e5",
-        "request_id": "304ec50f-1d66-46c4-aefa-7cc6649f5cb8",
+        "decision_id": "a3b40dc449fd4dc78af841b8b5ffd5fc",
+        "trace_id": "cce4b35e-d9ae-45d2-9ec5-85af70676686",
+        "request_id": "59ee42e8-c698-42f9-852a-75ce4d619cc7",
         "idempotency_key": null,
         "duplicate": false,
         "actor_id": "cc_usr_2",
@@ -47,25 +47,25 @@
           "id": "EV-P0-0001"
         },
         "vajra": {
-          "subject_ref": "subj_sha256_a82f9009375693a4",
+          "subject_ref": "subj_sha256_63b2e2fbb83af222",
           "status": "OK",
           "is_authorized": false,
           "current_state": "",
           "scope_checked": false
         },
         "evidence": {
-          "local_audit_event_id": "947143cb-79cc-4d32-912b-f7605b7022b0",
+          "local_audit_event_id": "b9ebe90d-0137-436f-819d-9ea280ecb0c4",
           "superseded_audit_event_id": null,
           "vajra": {
             "status": "RECORDED",
             "http_status": 200,
             "detail": "",
             "data": {
-              "evidence_hash": "sha256:17588e4fe6687aa460962fef2f40001c008a66bc3fa929c08752a7b895047bfb",
+              "evidence_hash": "sha256:00458453753646b05d1f33492d93b503782907b984338a4e3397b60af430aad1",
               "stored_in": [
                 "TruthStore (tantra_truth.jsonl)"
               ],
-              "recorded_at": 1793793920
+              "recorded_at": 1793795924
             }
           },
           "tantra": {
@@ -79,18 +79,18 @@
           ]
         },
         "policy_applied": "vajra_authority_v1",
-        "evaluated_at": "2026-11-04T12:05:19.471Z"
+        "evaluated_at": "2026-11-04T12:38:43.526Z"
       }
     }
   },
   {
     "check_id": "S1-05",
     "system": "vajra-local",
-    "utc": "2026-11-04T12:05:20Z",
-    "elapsed_ms": 16,
+    "utc": "2026-11-04T12:38:44Z",
+    "elapsed_ms": 15,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:57504/api/tantra/records",
+      "url": "http://127.0.0.1:62631/api/tantra/records",
       "headers": {},
       "body": null
     },
@@ -103,15 +103,15 @@
         "count": 1,
         "records": [
           {
-            "trace_id": "53ccbb0c-4240-4904-88f9-8c96d44e64e5::d57515c40ca748c49f11c72ad60ecd54",
-            "execution_hash": "sha256:17588e4fe6687aa460962fef2f40001c008a66bc3fa929c08752a7b895047bfb",
-            "validation_hash": "sha256:17588e4fe6687aa460962fef2f40001c008a66bc3fa929c08752a7b895047bfb",
-            "replay_hash": "sha256:17588e4fe6687aa460962fef2f40001c008a66bc3fa929c08752a7b895047bfb",
-            "tx_hash": "evidence_53ccbb0c-4240-4904-88f9-8c96d44e64e5::d57515c40ca748c49f11c72ad60ecd54",
+            "trace_id": "cce4b35e-d9ae-45d2-9ec5-85af70676686::a3b40dc449fd4dc78af841b8b5ffd5fc",
+            "execution_hash": "sha256:00458453753646b05d1f33492d93b503782907b984338a4e3397b60af430aad1",
+            "validation_hash": "sha256:00458453753646b05d1f33492d93b503782907b984338a4e3397b60af430aad1",
+            "replay_hash": "sha256:00458453753646b05d1f33492d93b503782907b984338a4e3397b60af430aad1",
+            "tx_hash": "evidence_cce4b35e-d9ae-45d2-9ec5-85af70676686::a3b40dc449fd4dc78af841b8b5ffd5fc",
             "fraud_decision": "DENY",
-            "timestamp": 1793793920,
+            "timestamp": 1793795924,
             "prev_hash": "genesis",
-            "entry_hash": "aa7a3e7dead84f96076e86722b9754f80c815400851900655228d16e39ddf43a"
+            "entry_hash": "dfa3a62ecec45f6e05e332e9bc706ef31850f82b507f890e5fa8576ec1996253"
           }
         ],
         "success": true
