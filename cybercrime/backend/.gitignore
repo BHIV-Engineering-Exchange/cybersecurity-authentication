@@ -59,3 +59,8 @@ uploads/
 # OS
 .DS_Store
 Thumbs.db
+
+# Runtime event buffer (written when BHIV Core is unreachable)
+event_buffer/
+# Local evidence files written by the evidence upload endpoint
+evidence_storage/

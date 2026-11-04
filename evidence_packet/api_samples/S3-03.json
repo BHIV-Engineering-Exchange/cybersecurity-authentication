@@ -1,0 +1,377 @@
+[
+  {
+    "check_id": "S3-03",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T10:40:51Z",
+    "elapsed_ms": 31,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:51300/api/v1/incidents/analyze",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "e66c431e-2e24-4a56-a958-b00a629466b1",
+        "content-type": "application/json"
+      },
+      "body": {
+        "wallet_address": "0xNOHISTORYc0eec521f883",
+        "description": "routine check of an unknown wallet (synthetic)",
+        "investigator_id": 2
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "5c866b12-fe9d-4a91-8556-5046e2764f4a",
+        "x-trace-id": "e66c431e-2e24-4a56-a958-b00a629466b1"
+      },
+      "body": {
+        "wallet": "0xNOHISTORYc0eec521f883",
+        "risk_score": 0.6,
+        "risk_level": "HIGH",
+        "detected_patterns": [
+          "Money Laundering (Layering)",
+          "Multiple Hop Transfers",
+          "Circular Movement",
+          "High Transaction Frequency"
+        ],
+        "summary": {
+          "total_in": 80674.0,
+          "total_out": 80309.0,
+          "tx_count": 16,
+          "unique_senders": 12,
+          "unique_receivers": 11,
+          "pattern_type": "Money Laundering"
+        },
+        "graph_data": [
+          {
+            "from": "VICTIM_7068",
+            "to": "0xNOHISTORYc0eec521f883",
+            "amount": 22009.0
+          },
+          {
+            "from": "VICTIM_1064",
+            "to": "0xNOHISTORYc0eec521f883",
+            "amount": 8664.0
+          },
+          {
+            "from": "VICTIM_5464",
+            "to": "0xNOHISTORYc0eec521f883",
+            "amount": 15522.0
+          },
+          {
+            "from": "VICTIM_2894",
+            "to": "0xNOHISTORYc0eec521f883",
+            "amount": 10003.0
+          },
+          {
+            "from": "VICTIM_8876",
+            "to": "0xNOHISTORYc0eec521f883",
+            "amount": 24476.0
+          },
+          {
+            "from": "0xNOHISTORYc0eec521f883",
+            "to": "MULE_5296",
+            "amount": 19891.0
+          },
+          {
+            "from": "MULE_5296",
+            "to": "EXIT_9605",
+            "amount": 19788.0
+          },
+          {
+            "from": "0xNOHISTORYc0eec521f883",
+            "to": "MULE_1554",
+            "amount": 20214.0
+          },
+          {
+            "from": "MULE_1554",
+            "to": "INTERMEDIATE_1467",
+            "amount": 20027.0
+          },
+          {
+            "from": "INTERMEDIATE_1467",
+            "to": "EXIT_5400",
+            "amount": 20032.0
+          },
+          {
+            "from": "0xNOHISTORYc0eec521f883",
+            "to": "MULE_6934",
+            "amount": 19894.0
+          },
+          {
+            "from": "MULE_6934",
+            "to": "INTERMEDIATE_5945",
+            "amount": 19761.0
+          },
+          {
+            "from": "INTERMEDIATE_5945",
+            "to": "EXIT_8658",
+            "amount": 19739.0
+          },
+          {
+            "from": "0xNOHISTORYc0eec521f883",
+            "to": "MULE_6418",
+            "amount": 20310.0
+          },
+          {
+            "from": "MULE_6418",
+            "to": "INTERMEDIATE_9098",
+            "amount": 20211.0
+          },
+          {
+            "from": "INTERMEDIATE_9098",
+            "to": "EXIT_8395",
+            "amount": 20137.0
+          }
+        ],
+        "timeline": [
+          {
+            "time": "12:10",
+            "amount": 22009.0,
+            "timestamp": "2026-11-04T12:10:51.454659"
+          },
+          {
+            "time": "12:13",
+            "amount": 8664.0,
+            "timestamp": "2026-11-04T12:13:51.454659"
+          },
+          {
+            "time": "12:16",
+            "amount": 15522.0,
+            "timestamp": "2026-11-04T12:16:51.454659"
+          },
+          {
+            "time": "12:19",
+            "amount": 10003.0,
+            "timestamp": "2026-11-04T12:19:51.454659"
+          },
+          {
+            "time": "12:22",
+            "amount": 24476.0,
+            "timestamp": "2026-11-04T12:22:51.454659"
+          },
+          {
+            "time": "12:55",
+            "amount": 19891.0,
+            "timestamp": "2026-11-04T12:55:51.454659"
+          },
+          {
+            "time": "13:00",
+            "amount": 20214.0,
+            "timestamp": "2026-11-04T13:00:51.454659"
+          },
+          {
+            "time": "13:05",
+            "amount": 20027.0,
+            "timestamp": "2026-11-04T13:05:51.454659"
+          },
+          {
+            "time": "13:05",
+            "amount": 19894.0,
+            "timestamp": "2026-11-04T13:05:51.454659"
+          },
+          {
+            "time": "13:10",
+            "amount": 19788.0,
+            "timestamp": "2026-11-04T13:10:51.454659"
+          },
+          {
+            "time": "13:10",
+            "amount": 20032.0,
+            "timestamp": "2026-11-04T13:10:51.454659"
+          },
+          {
+            "time": "13:10",
+            "amount": 19761.0,
+            "timestamp": "2026-11-04T13:10:51.454659"
+          },
+          {
+            "time": "13:10",
+            "amount": 20310.0,
+            "timestamp": "2026-11-04T13:10:51.454659"
+          },
+          {
+            "time": "13:15",
+            "amount": 19739.0,
+            "timestamp": "2026-11-04T13:15:51.454659"
+          },
+          {
+            "time": "13:15",
+            "amount": 20211.0,
+            "timestamp": "2026-11-04T13:15:51.454659"
+          },
+          {
+            "time": "13:20",
+            "amount": 20137.0,
+            "timestamp": "2026-11-04T13:20:51.454659"
+          }
+        ],
+        "transactions": [
+          {
+            "id": 1,
+            "from_address": "VICTIM_7068",
+            "to_address": "0xNOHISTORYc0eec521f883",
+            "amount": 22009.0,
+            "direction": "incoming",
+            "timestamp": "2026-11-04T12:10:51.454659",
+            "type": "TRANSFER",
+            "suspicious": true
+          },
+          {
+            "id": 2,
+            "from_address": "VICTIM_1064",
+            "to_address": "0xNOHISTORYc0eec521f883",
+            "amount": 8664.0,
+            "direction": "incoming",
+            "timestamp": "2026-11-04T12:13:51.454659",
+            "type": "TRANSFER",
+            "suspicious": false
+          },
+          {
+            "id": 3,
+            "from_address": "VICTIM_5464",
+            "to_address": "0xNOHISTORYc0eec521f883",
+            "amount": 15522.0,
+            "direction": "incoming",
+            "timestamp": "2026-11-04T12:16:51.454659",
+            "type": "TRANSFER",
+            "suspicious": true
+          },
+          {
+            "id": 4,
+            "from_address": "VICTIM_2894",
+            "to_address": "0xNOHISTORYc0eec521f883",
+            "amount": 10003.0,
+            "direction": "incoming",
+            "timestamp": "2026-11-04T12:19:51.454659",
+            "type": "TRANSFER",
+            "suspicious": true
+          },
+          {
+            "id": 5,
+            "from_address": "VICTIM_8876",
+            "to_address": "0xNOHISTORYc0eec521f883",
+            "amount": 24476.0,
+            "direction": "incoming",
+            "timestamp": "2026-11-04T12:22:51.454659",
+            "type": "TRANSFER",
+            "suspicious": true
+          },
+          {
+            "id": 6,
+            "from_address": "0xNOHISTORYc0eec521f883",
+            "to_address": "MULE_5296",
+            "amount": 19891.0,
+            "direction": "outgoing",
+            "timestamp": "2026-11-04T12:55:51.454659",
+            "type": "TRANSFER",
+            "suspicious": true
+          },
+          {
+            "id": 7,
+            "from_address": "MULE_5296",
+            "to_address": "EXIT_9605",
+            "amount": 19788.0,
+            "direction": "related",
+            "timestamp": "2026-11-04T13:10:51.454659",
+            "type": "TRANSFER",
+            "suspicious": true
+          },
+          {
+            "id": 8,
+            "from_address": "0xNOHISTORYc0eec521f883",
+            "to_address": "MULE_1554",
+            "amount": 20214.0,
+            "direction": "outgoing",
+            "timestamp": "2026-11-04T13:00:51.454659",
+            "type": "TRANSFER",
+            "suspicious": true
+          },
+          {
+            "id": 9,
+            "from_address": "MULE_1554",
+            "to_address": "INTERMEDIATE_1467",
+            "amount": 20027.0,
+            "direction": "related",
+            "timestamp": "2026-11-04T13:05:51.454659",
+            "type": "TRANSFER",
+            "suspicious": true
+          },
+          {
+            "id": 10,
+            "from_address": "INTERMEDIATE_1467",
+            "to_address": "EXIT_5400",
+            "amount": 20032.0,
+            "direction": "related",
+            "timestamp": "2026-11-04T13:10:51.454659",
+            "type": "TRANSFER",
+            "suspicious": true
+          },
+          {
+            "id": 11,
+            "from_address": "0xNOHISTORYc0eec521f883",
+            "to_address": "MULE_6934",
+            "amount": 19894.0,
+            "direction": "outgoing",
+            "timestamp": "2026-11-04T13:05:51.454659",
+            "type": "TRANSFER",
+            "suspicious": true
+          },
+          {
+            "id": 12,
+            "from_address": "MULE_6934",
+            "to_address": "INTERMEDIATE_5945",
+            "amount": 19761.0,
+            "direction": "related",
+            "timestamp": "2026-11-04T13:10:51.454659",
+            "type": "TRANSFER",
+            "suspicious": true
+          },
+          {
+            "id": 13,
+            "from_address": "INTERMEDIATE_5945",
+            "to_address": "EXIT_8658",
+            "amount": 19739.0,
+            "direction": "related",
+            "timestamp": "2026-11-04T13:15:51.454659",
+            "type": "TRANSFER",
+            "suspicious": true
+          },
+          {
+            "id": 14,
+            "from_address": "0xNOHISTORYc0eec521f883",
+            "to_address": "MULE_6418",
+            "amount": 20310.0,
+            "direction": "outgoing",
+            "timestamp": "2026-11-04T13:10:51.454659",
+            "type": "TRANSFER",
+            "suspicious": true
+          },
+          {
+            "id": 15,
+            "from_address": "MULE_6418",
+            "to_address": "INTERMEDIATE_9098",
+            "amount": 20211.0,
+            "direction": "related",
+            "timestamp": "2026-11-04T13:15:51.454659",
+            "type": "TRANSFER",
+            "suspicious": true
+          },
+          {
+            "id": 16,
+            "from_address": "INTERMEDIATE_9098",
+            "to_address": "EXIT_8395",
+            "amount": 20137.0,
+            "direction": "related",
+            "timestamp": "2026-11-04T13:20:51.454659",
+            "type": "TRANSFER",
+            "suspicious": true
+          }
+        ],
+        "system_conclusion": "This wallet exhibits behavior consistent with money laundering via layering, involving rapid fund aggregation followed by multi-hop transfers through intermediate wallets to obscure the origin of funds. The risk score of 60% indicates a high likelihood of suspicious activity.",
+        "report_id": "3"
+      }
+    }
+  }
+]

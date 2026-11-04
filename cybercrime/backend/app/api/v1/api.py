@@ -27,12 +27,14 @@ from app.api.v1.endpoints import (
     tts,
     authz,
     access,
+    protected_access,
 )
 
 api_router = APIRouter()
 
 api_router.include_router(authz.router, prefix="/authz", tags=["authorization"])
 api_router.include_router(access.router, prefix="/access", tags=["access-control"])
+api_router.include_router(protected_access.router, prefix="/protected", tags=["protected-access"])
 api_router.include_router(auth.router, prefix="/auth", tags=["authentication"])
 api_router.include_router(cases.router, prefix="/cases", tags=["cases"])
 api_router.include_router(wallets.router, prefix="/wallets", tags=["wallets"])

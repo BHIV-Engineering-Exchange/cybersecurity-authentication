@@ -1,0 +1,107 @@
+[
+  {
+    "check_id": "S2-03",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T10:40:59Z",
+    "elapsed_ms": 16,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:51300/api/v1/auth/me",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "3e30f1ef-f68d-4a43-b19a-f26652ff6fb9"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "091ccf0d-59ae-494a-ac0c-fdb9d6638bd4",
+        "x-trace-id": "3e30f1ef-f68d-4a43-b19a-f26652ff6fb9"
+      },
+      "body": {
+        "email": "investigator.c@bhiv-verification.example",
+        "full_name": "investigator_c (synthetic)",
+        "role": "investigator",
+        "id": 4,
+        "is_active": true,
+        "created_at": "2026-11-04T10:39:41.667460"
+      }
+    }
+  },
+  {
+    "check_id": "S2-03",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T10:40:59Z",
+    "elapsed_ms": 15,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:51300/api/v1/access/revoke",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "42f8266e-0252-4526-8e6f-7c5861c87e0f",
+        "content-type": "application/json"
+      },
+      "body": {
+        "contract_version": "1.0.0",
+        "revocation_type": "user_deactivation",
+        "target": {
+          "actor_id": "cc_usr_4"
+        },
+        "reason": "account deactivated by P0 verification (synthetic)",
+        "requested_by": "cc_usr_1"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "c8e6853e-bd7e-4288-851e-5540b5adc6c5",
+        "x-trace-id": "42f8266e-0252-4526-8e6f-7c5861c87e0f"
+      },
+      "body": {
+        "contract_version": "1.0.0",
+        "revocation_id": "b9629784-5913-40c8-83ac-9bdd0cabf434",
+        "revocation_type": "user_deactivation",
+        "status": "REVOKED",
+        "effective_at": "2026-11-04T10:40:59.898Z",
+        "trace_id": "42f8266e-0252-4526-8e6f-7c5861c87e0f",
+        "audit_event_id": "84cff0b1-520a-4230-8ae1-7c946820063c"
+      }
+    }
+  },
+  {
+    "check_id": "S2-03",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T10:40:59Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:51300/api/v1/auth/me",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "6d7901d5-7a8f-4376-b116-a765b7b29c48"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 403,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "c750d4e5-1494-441e-99c4-d8fd514a9952",
+        "x-trace-id": "6d7901d5-7a8f-4376-b116-a765b7b29c48"
+      },
+      "body": {
+        "error": true,
+        "code": "ACCOUNT_DEACTIVATED",
+        "status_code": 403,
+        "message": "Account is deactivated. Access denied.",
+        "trace_id": "6d7901d5-7a8f-4376-b116-a765b7b29c48",
+        "request_id": "c750d4e5-1494-441e-99c4-d8fd514a9952",
+        "timestamp": "2026-11-04T10:40:59.916Z",
+        "details": []
+      }
+    }
+  }
+]

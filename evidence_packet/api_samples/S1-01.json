@@ -1,0 +1,163 @@
+[
+  {
+    "check_id": "S1-01",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T10:39:55Z",
+    "elapsed_ms": 16,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:51300/api/v1/cases",
+      "headers": {
+        "x-trace-id": "58a92b86-47d4-4087-ad4a-702a2d451d38"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 401,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "525123b9-a173-44c5-82ab-8f8c92ecb0c5",
+        "x-trace-id": "58a92b86-47d4-4087-ad4a-702a2d451d38"
+      },
+      "body": {
+        "error": true,
+        "code": "AUTHENTICATION_REQUIRED",
+        "status_code": 401,
+        "message": "Authentication required.",
+        "trace_id": "58a92b86-47d4-4087-ad4a-702a2d451d38",
+        "request_id": "525123b9-a173-44c5-82ab-8f8c92ecb0c5",
+        "timestamp": "2026-11-04T10:39:55.516Z",
+        "details": []
+      }
+    }
+  },
+  {
+    "check_id": "S1-01",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T10:39:55Z",
+    "elapsed_ms": 30,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:51300/api/v1/audit/?limit=500",
+      "headers": {
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "9499becb-ff2d-4952-8623-252b45c4c68b",
+        "x-trace-id": "07912966-938c-4622-af5a-29ed95cbe486"
+      },
+      "body": [
+        {
+          "id": 7,
+          "action": "authz.decision:read",
+          "message": "Authentication required.",
+          "entity_type": "policy",
+          "entity_id": "/api/v1/cases",
+          "status": "denied",
+          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"5a654c0e-cde3-4e0e-89f0-8ec54dcd0c69\",\"event_type\":\"authz.decision\",\"timestamp\":\"2026-11-04T10:39:55.504Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"58a92b86-47d4-4087-ad4a-702a2d451d38\",\"request_id\":\"525123b9-a173-44c5-82ab-8f8c92ecb0c5\",\"actor\":{\"actor_id\":\"anonymous\",\"actor_type\":\"user\",\"role\":\"public\",\"display_name\":null,\"authenticated\":false,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"policy\",\"resource_id\":\"/api/v1/cases\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"DENIED\",\"status_code\":401,\"reason_code\":\"AUTHENTICATION_REQUIRED\",\"message\":\"Authentication required.\"},\"policy_reference\":{\"policy_id\":\"rbac_permissions_v1\",\"rule_name\":null,\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"path\":\"/api/v1/cases\",\"method\":\"GET\",\"role\":\"public\"},\"extensions\":null}",
+          "user_id": null,
+          "ip_address": null,
+          "request_id": "525123b9-a173-44c5-82ab-8f8c92ecb0c5",
+          "path": "/api/v1/cases",
+          "method": "GET",
+          "timestamp": "2026-11-04T10:39:55.506206"
+        },
+        {
+          "id": 6,
+          "action": "auth.login",
+          "message": "User logged in successfully.",
+          "entity_type": "user",
+          "entity_id": "6",
+          "status": "success",
+          "details": "User investigator.e@bhiv-verification.example logged in successfully",
+          "user_id": 6,
+          "ip_address": null,
+          "request_id": null,
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T10:39:53.090049"
+        },
+        {
+          "id": 5,
+          "action": "auth.login",
+          "message": "User logged in successfully.",
+          "entity_type": "user",
+          "entity_id": "5",
+          "status": "success",
+          "details": "User investigator.d@bhiv-verification.example logged in successfully",
+          "user_id": 5,
+          "ip_address": null,
+          "request_id": null,
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T10:39:52.571362"
+        },
+        {
+          "id": 4,
+          "action": "auth.login",
+          "message": "User logged in successfully.",
+          "entity_type": "user",
+          "entity_id": "4",
+          "status": "success",
+          "details": "User investigator.c@bhiv-verification.example logged in successfully",
+          "user_id": 4,
+          "ip_address": null,
+          "request_id": null,
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T10:39:52.058605"
+        },
+        {
+          "id": 3,
+          "action": "auth.login",
+          "message": "User logged in successfully.",
+          "entity_type": "user",
+          "entity_id": "3",
+          "status": "success",
+          "details": "User investigator.b@bhiv-verification.example logged in successfully",
+          "user_id": 3,
+          "ip_address": null,
+          "request_id": null,
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T10:39:51.494533"
+        },
+        {
+          "id": 2,
+          "action": "auth.login",
+          "message": "User logged in successfully.",
+          "entity_type": "user",
+          "entity_id": "2",
+          "status": "success",
+          "details": "User investigator.a@bhiv-verification.example logged in successfully",
+          "user_id": 2,
+          "ip_address": null,
+          "request_id": null,
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T10:39:50.961830"
+        },
+        {
+          "id": 1,
+          "action": "auth.login",
+          "message": "User logged in successfully.",
+          "entity_type": "user",
+          "entity_id": "1",
+          "status": "success",
+          "details": "User superadmin@bhiv-verification.example logged in successfully",
+          "user_id": 1,
+          "ip_address": null,
+          "request_id": null,
+          "path": null,
+          "method": null,
+          "timestamp": "2026-11-04T10:39:50.388442"
+        }
+      ]
+    }
+  }
+]

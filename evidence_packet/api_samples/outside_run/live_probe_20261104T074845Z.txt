@@ -1,0 +1,30 @@
+=== GET http://163.128.209.18:8103/health @ 2026-11-04T07:48:45Z
+{"status":"healthy","service":"bhiv-prana","forwarding_enabled":true,"mongodb":{"mongodb_connected":true,"database_name":"prana","connection_status":"connected"}}
+HTTP 200 time 0.835534s
+
+=== GET http://163.128.209.18:8103/prana/system/health @ 2026-11-04T07:48:47Z
+{"status":"healthy","mode":"stateful","_redacted":"after capture on 2026-11-04: TANTRA's internal service map (service addresses, registry URL) removed from this public evidence; the full reply is TANTRA's own public /prana/system/health output"}
+HTTP 200 time 0.663421s
+
+=== GET http://163.128.209.18:8101/health @ 2026-11-04T07:48:49Z
+{"status":"healthy","service":"bhiv-validation-layer"}
+HTTP 200 time 1.460034s
+
+=== GET http://163.128.209.18:8102/health @ 2026-11-04T07:48:50Z
+{"status":"healthy","service":"bhiv-karma-helper"}
+HTTP 200 time 0.508234s
+
+=== GET https://bhiv-bucket-i1l6.onrender.com/health @ 2026-11-04T07:48:51Z
+{"status":"degraded","bucket_version":"1.0.0","append_only_storage":{"status":"active","artifact_count":11,"last_hash":"eb86fc983802549cafa4fa9514431951bf214a80572e094301459fec43df9470","log_size_mb":0.01,"certification":"APPEND_ONLY_ENFORCED"},"governance":{"gate_active":true,"approved_integrations":0,"certification":"enterprise_ready","certification_date":"2026-01-19","constitutional_governance":"active"},"services":{"mongodb":"connected","socketio":"disabled","redis":"disconnected","audit_middleware":"active","constitutional_enforcement":"active","append_only_storage":"active"},"bucket_philosophy":"System memory, never system decision","guarantees":{"immutability":true,"deterministic_hashes":true,"chain_integrity":true,"replayability":true,"domain_neutrality":true}}
+HTTP 200 time 1.314070s
+
+=== GET https://vajra.blackholeinfiverse.com/api/health @ 2026-11-04T07:48:53Z
+{"data":{"block_height":1,"pending_txs":0,"total_supply":1000000000},"message":"Blockchain API is running","status":"healthy","success":true}
+
+HTTP 200 time 1.586404s
+
+=== GET https://vajra.blackholeinfiverse.com/identity @ 2026-11-04T07:48:55Z
+{"adjacent":["fraud-service:9090","bridge:8084","wallet:9000"],"authority":["PDV_EQUALITY","SIGNATURE_VERIFICATION","NONCE_GOVERNANCE","TRACE_CONTINUITY","BUCKET_TRUTH","AKASHIC_LINEAGE"],"commit_sha":"unknown","endpoints":["POST /api/relay/submit","GET  /api/health","GET  /api/tantra/status","GET  /api/constitution/declaration","GET  /api/convergence/proof","GET  /api/vajra/contracts","POST /api/vajra/authority/transition  [auth]","GET  /api/vajra/authority/verify","POST /api/vajra/evidence/record       [auth]","POST /api/vajra/provenance/retrieval  [auth]","GET  /identity"],"git_commit":"unknown","non_authority":["GOVERNANCE_LEGITIMACY","SEMANTIC_TRUTH","SOVEREIGN_CORRECTNESS"],"port":8080,"service":"vajra-blockchain-node","timestamp":"2026-11-04T07:48:57Z","trust_layer":"VAJRA Blockchain","version":"vNEXT-ganesh-masterdb-integration"}
+
+HTTP 200 time 0.748037s
+

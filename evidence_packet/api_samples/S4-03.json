@@ -1,0 +1,84 @@
+[
+  {
+    "check_id": "S4-03",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T10:40:59Z",
+    "elapsed_ms": 15,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:51300/api/v1/access/revoke",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "645079a0-64d2-4614-bf56-267ebb16809c",
+        "content-type": "application/json"
+      },
+      "body": {
+        "contract_version": "1.0.0",
+        "revocation_type": "user_deactivation",
+        "target": {
+          "actor_id": "cc_usr_5"
+        },
+        "reason": "deactivation repeated on purpose (P0 verification, synthetic)",
+        "requested_by": "cc_usr_1"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "002122d0-1d04-4190-8ee0-7b24d359a218",
+        "x-trace-id": "645079a0-64d2-4614-bf56-267ebb16809c"
+      },
+      "body": {
+        "contract_version": "1.0.0",
+        "revocation_id": "99475a6c-1c62-4105-ba0e-6b7643e8099e",
+        "revocation_type": "user_deactivation",
+        "status": "REVOKED",
+        "effective_at": "2026-11-04T10:40:59.926Z",
+        "trace_id": "645079a0-64d2-4614-bf56-267ebb16809c",
+        "audit_event_id": "775f5ed9-28b7-462e-af1b-fd4abf1779e1"
+      }
+    }
+  },
+  {
+    "check_id": "S4-03",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T10:40:59Z",
+    "elapsed_ms": 31,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:51300/api/v1/access/revoke",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "beb707cf-9a78-4c16-88bb-5ef3639c7bb7",
+        "content-type": "application/json"
+      },
+      "body": {
+        "contract_version": "1.0.0",
+        "revocation_type": "user_deactivation",
+        "target": {
+          "actor_id": "cc_usr_5"
+        },
+        "reason": "deactivation repeated on purpose (P0 verification, synthetic)",
+        "requested_by": "cc_usr_1"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "b74ae546-f707-4aad-b382-804b78f84869",
+        "x-trace-id": "beb707cf-9a78-4c16-88bb-5ef3639c7bb7"
+      },
+      "body": {
+        "contract_version": "1.0.0",
+        "revocation_id": "a983f7d2-e80b-43ca-8c19-42b4271ebc2d",
+        "revocation_type": "user_deactivation",
+        "status": "ALREADY_INACTIVE",
+        "effective_at": "2026-11-04T10:40:59.959Z",
+        "trace_id": "beb707cf-9a78-4c16-88bb-5ef3639c7bb7",
+        "audit_event_id": "783307d3-2f06-4098-887e-98eaf6593bc0"
+      }
+    }
+  }
+]

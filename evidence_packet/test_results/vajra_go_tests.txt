@@ -1,0 +1,68 @@
+# Raw output: VAJRA's own Go tests (run by Hemanth as VAJRA's requested acceptance gate)
+# cwd: bhiv-VAJRA_Blockchain/core/relay-chain ; VAJRA_TANTRA_SECRET unset ; go1.26.1 windows/amd64
+# The tracked file review_packets/CYBER-BIQOS-10DAY/test_results/mandatory_proofs_report.json that the test rewrites was restored afterwards (git checkout).
+utc: 2026-11-04T08:45:46Z
+vajra commit: 07d683c3656b936152367989e8458d18941471a7
+cmd: go test -count=1 -v ./authority/... ./permission/...
+=== RUN   TestAuthorityLifecycle_HappyPath
+--- PASS: TestAuthorityLifecycle_HappyPath (0.00s)
+=== RUN   TestAuthorityLifecycle_IllegalTransitionsBlocked
+--- PASS: TestAuthorityLifecycle_IllegalTransitionsBlocked (0.00s)
+=== RUN   TestRecoveryTrustPackageAndNodeVerification
+--- PASS: TestRecoveryTrustPackageAndNodeVerification (0.00s)
+=== RUN   TestMCPBridge_Rule8_NoSilentAuthority
+--- PASS: TestMCPBridge_Rule8_NoSilentAuthority (0.00s)
+=== RUN   TestMandatoryProofs_EndToEnd
+    mandatory_proofs_test.go:53: Empirical proof report saved successfully to ..\..\..\review_packets\CYBER-BIQOS-10DAY\test_results\mandatory_proofs_report.json
+--- PASS: TestMandatoryProofs_EndToEnd (0.00s)
+PASS
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/authority	1.339s
+=== RUN   TestPermissionLifecycle_NormalAndOptOut
+--- PASS: TestPermissionLifecycle_NormalAndOptOut (0.00s)
+=== RUN   TestAuthorityLifecycle_FullChain
+--- PASS: TestAuthorityLifecycle_FullChain (0.00s)
+=== RUN   TestPermission_Expiry
+--- PASS: TestPermission_Expiry (2.00s)
+PASS
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/permission	3.294s
+exit=0
+
+cmd: go test -count=1 -v -run "TestVajra|TestPermissionHandlers" ./api/...
+=== RUN   TestVajraMasterDBRetrievalProvenance_ValidRequest_Returns200
+--- PASS: TestVajraMasterDBRetrievalProvenance_ValidRequest_Returns200 (0.01s)
+=== RUN   TestVajraMasterDBRetrievalProvenance_Duplicate_Returns409
+--- PASS: TestVajraMasterDBRetrievalProvenance_Duplicate_Returns409 (0.02s)
+=== RUN   TestVajraMasterDBRetrievalProvenance_MissingRequiredFields_Returns400
+--- PASS: TestVajraMasterDBRetrievalProvenance_MissingRequiredFields_Returns400 (0.00s)
+=== RUN   TestVajraMasterDBRetrievalProvenance_NoStore_Returns503
+--- PASS: TestVajraMasterDBRetrievalProvenance_NoStore_Returns503 (0.00s)
+=== RUN   TestVajraMasterDBRetrievalProvenance_WrongMethod_Returns405
+--- PASS: TestVajraMasterDBRetrievalProvenance_WrongMethod_Returns405 (0.00s)
+=== RUN   TestVajraBearerTokenAuth_NoSecret_FailsClosed
+2026/11/04 12:46:33 [VAJRA][SECURITY][ERROR] VAJRA_TANTRA_SECRET not set; route /api/vajra/test is locked down (fail-closed)
+--- PASS: TestVajraBearerTokenAuth_NoSecret_FailsClosed (0.00s)
+=== RUN   TestVajraBearerTokenAuth_WithSecret_NoHeader_Returns401
+2026/11/04 12:46:33 [VAJRA][SECURITY] Unauthorized access attempt: POST /api/vajra/evidence/record (missing Bearer)
+--- PASS: TestVajraBearerTokenAuth_WithSecret_NoHeader_Returns401 (0.00s)
+=== RUN   TestVajraBearerTokenAuth_WrongToken_Returns401
+2026/11/04 12:46:33 [VAJRA][SECURITY] Unauthorized access attempt: POST /api/vajra/evidence/record (invalid token)
+--- PASS: TestVajraBearerTokenAuth_WrongToken_Returns401 (0.00s)
+=== RUN   TestVajraBearerTokenAuth_CorrectToken_Passes
+--- PASS: TestVajraBearerTokenAuth_CorrectToken_Passes (0.00s)
+=== RUN   TestVajraMasterDBRetrievalProvenance_ConcurrentSameTraceID_OnlyOneSucceeds
+--- PASS: TestVajraMasterDBRetrievalProvenance_ConcurrentSameTraceID_OnlyOneSucceeds (0.02s)
+=== RUN   TestPermissionHandlers_E2EUserJourney
+--- PASS: TestPermissionHandlers_E2EUserJourney (0.00s)
+=== RUN   TestVajraAuthorityTransitionAndVerify
+--- PASS: TestVajraAuthorityTransitionAndVerify (0.00s)
+=== RUN   TestVajraEvidenceRecord_NoStore_Returns503
+--- PASS: TestVajraEvidenceRecord_NoStore_Returns503 (0.00s)
+=== RUN   TestVajraEvidenceRecord_Duplicate_Returns409
+--- PASS: TestVajraEvidenceRecord_Duplicate_Returns409 (0.02s)
+=== RUN   TestVajraRecoveryEndpoints
+--- PASS: TestVajraRecoveryEndpoints (0.00s)
+=== RUN   TestVajraAgentStateView
+--- PASS: TestVajraAgentStateView (0.00s)
+PASS
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/api	0.291s
+exit=0

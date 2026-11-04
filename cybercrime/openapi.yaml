@@ -9,14 +9,14 @@ components:
         full_name:
           title: Full Name
           type: string
-        requested_password:
-          title: Requested Password
-          type: string
         reason:
           anyOf:
           - type: string
           - type: 'null'
           title: Reason
+        requested_password:
+          title: Requested Password
+          type: string
       required:
       - full_name
       - email
@@ -172,18 +172,73 @@ components:
       required:
       - id
       - action
-      - message
       - entity_type
       - entity_id
       - status
       - details
       - user_id
-      - ip_address
-      - request_id
-      - path
-      - method
       - timestamp
       title: AuditLogResponse
+      type: object
+    AuthzCheckRequest:
+      properties:
+        action:
+          title: Action
+          type: string
+        context:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Context
+        contract_version:
+          default: 1.0.0
+          title: Contract Version
+          type: string
+        resource:
+          $ref: '#/components/schemas/ResourceCheckModel'
+        subject:
+          $ref: '#/components/schemas/SubjectModel'
+      required:
+      - subject
+      - action
+      - resource
+      title: AuthzCheckRequest
+      type: object
+    AuthzCheckResponse:
+      properties:
+        contract_version:
+          default: 1.0.0
+          title: Contract Version
+          type: string
+        decision:
+          title: Decision
+          type: string
+        evaluated_at:
+          title: Evaluated At
+          type: string
+        policy_applied:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: rbac_permissions_v1
+          title: Policy Applied
+        reason:
+          title: Reason
+          type: string
+        reason_code:
+          title: Reason Code
+          type: string
+        trace_id:
+          title: Trace Id
+          type: string
+      required:
+      - decision
+      - reason_code
+      - reason
+      - trace_id
+      - evaluated_at
+      title: AuthzCheckResponse
       type: object
     Body_create_evidence_api_v1_evidence__post:
       properties:
@@ -231,14 +286,16 @@ components:
           anyOf:
           - type: string
           - type: 'null'
+          format: password
           title: Client Secret
         grant_type:
           anyOf:
-          - pattern: password
+          - pattern: ^password$
             type: string
           - type: 'null'
           title: Grant Type
         password:
+          format: password
           title: Password
           type: string
         scope:
@@ -320,8 +377,6 @@ components:
       required:
       - case_id
       - title
-      - description
-      - status
       - id
       - investigator_id
       - created_at
@@ -438,6 +493,11 @@ components:
           - type: string
           - type: 'null'
           title: Internal Notes
+        investigator_email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Investigator Email
         investigator_id:
           anyOf:
           - type: integer
@@ -468,6 +528,11 @@ components:
           - type: number
           - type: 'null'
           title: Investigator Location Longitude
+        investigator_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Investigator Name
         officer_address:
           anyOf:
           - type: string
@@ -511,23 +576,9 @@ components:
       required:
       - id
       - wallet_address
-      - investigator_id
       - officer_designation
-      - officer_address
-      - officer_email
-      - officer_mobile
-      - officer_telephone
       - incident_description
-      - internal_notes
-      - evidence_ids
-      - investigator_location_city
-      - investigator_location_country
-      - investigator_location_latitude
-      - investigator_location_longitude
-      - investigator_location_ip
       - status
-      - created_at
-      - updated_at
       title: ComplaintResponse
       type: object
     EvidenceResponse:
@@ -593,18 +644,46 @@ components:
       required:
       - evidence_id
       - title
-      - description
       - hash
-      - file_path
-      - file_size
-      - file_type
-      - anchor_status
-      - immutable
       - id
       - investigator_id
       - case_id
       - created_at
       title: EvidenceResponse
+      type: object
+    EvidenceView:
+      properties:
+        complete:
+          title: Complete
+          type: boolean
+        gaps:
+          items:
+            type: string
+          title: Gaps
+          type: array
+        local_audit_event_id:
+          title: Local Audit Event Id
+          type: string
+        superseded_audit_event_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Superseded Audit Event Id
+        tantra:
+          additionalProperties: true
+          title: Tantra
+          type: object
+        vajra:
+          additionalProperties: true
+          title: Vajra
+          type: object
+      required:
+      - local_audit_event_id
+      - vajra
+      - tantra
+      - complete
+      - gaps
+      title: EvidenceView
       type: object
     FreezeWalletRequest:
       properties:
@@ -714,9 +793,7 @@ components:
       - summary
       - graph_data
       - timeline
-      - transactions
       - system_conclusion
-      - report_id
       title: IncidentReportResponse
       type: object
     MessageCreate:
@@ -817,9 +894,6 @@ components:
       - priority
       - created_at
       - read_at
-      - sender_email
-      - recipient_email
-      - recipient_name
       title: MessageResponse
       type: object
     PasswordResetRequest:
@@ -845,6 +919,127 @@ components:
       - new_password
       title: PasswordResetRequest
       type: object
+    ProtectedAccessRequest:
+      properties:
+        action:
+          description: Canonical action (read, update, download, ...)
+          title: Action
+          type: string
+        contract_version:
+          default: 1.0.0
+          title: Contract Version
+          type: string
+        idempotency_key:
+          anyOf:
+          - maxLength: 128
+            minLength: 8
+            type: string
+          - type: 'null'
+          title: Idempotency Key
+        purpose:
+          maxLength: 256
+          minLength: 3
+          title: Purpose
+          type: string
+        resource:
+          $ref: '#/components/schemas/ProtectedResource'
+        vajra_subject:
+          description: VAJRA subject whose consent governs the resource
+          maxLength: 256
+          minLength: 1
+          title: Vajra Subject
+          type: string
+      required:
+      - vajra_subject
+      - action
+      - resource
+      - purpose
+      title: ProtectedAccessRequest
+      type: object
+    ProtectedAccessResponse:
+      properties:
+        action:
+          title: Action
+          type: string
+        actor_id:
+          title: Actor Id
+          type: string
+        contract_version:
+          default: 1.0.0
+          title: Contract Version
+          type: string
+        decision:
+          title: Decision
+          type: string
+        decision_id:
+          title: Decision Id
+          type: string
+        duplicate:
+          default: false
+          title: Duplicate
+          type: boolean
+        evaluated_at:
+          title: Evaluated At
+          type: string
+        evidence:
+          $ref: '#/components/schemas/EvidenceView'
+        idempotency_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Idempotency Key
+        policy_applied:
+          default: vajra_authority_v1
+          title: Policy Applied
+          type: string
+        reason:
+          title: Reason
+          type: string
+        reason_code:
+          title: Reason Code
+          type: string
+        request_id:
+          title: Request Id
+          type: string
+        resource:
+          $ref: '#/components/schemas/ProtectedResource'
+        trace_id:
+          title: Trace Id
+          type: string
+        vajra:
+          $ref: '#/components/schemas/VajraAuthorityView'
+      required:
+      - decision
+      - reason_code
+      - reason
+      - decision_id
+      - trace_id
+      - request_id
+      - actor_id
+      - action
+      - resource
+      - vajra
+      - evidence
+      - evaluated_at
+      title: ProtectedAccessResponse
+      type: object
+    ProtectedResource:
+      properties:
+        id:
+          maxLength: 256
+          minLength: 1
+          title: Id
+          type: string
+        type:
+          description: One of the canonical resource types (evidence, case, wallet,
+            ...)
+          title: Type
+          type: string
+      required:
+      - type
+      - id
+      title: ProtectedResource
+      type: object
     RLFeedbackRequest:
       properties:
         actual_is_fraud:
@@ -859,6 +1054,7 @@ components:
           - type: 'null'
           title: Reward
         transaction_data:
+          additionalProperties: true
           title: Transaction Data
           type: object
       required:
@@ -870,6 +1066,7 @@ components:
     RLPredictionRequest:
       properties:
         transaction_data:
+          additionalProperties: true
           title: Transaction Data
           type: object
       required:
@@ -896,6 +1093,107 @@ components:
           - type: 'null'
           title: Transaction Ids
       title: RLTrainRequest
+      type: object
+    ResourceCheckModel:
+      properties:
+        id:
+          title: Id
+          type: string
+        owner_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Owner Id
+        type:
+          title: Type
+          type: string
+      required:
+      - type
+      - id
+      title: ResourceCheckModel
+      type: object
+    RevocationRequest:
+      properties:
+        contract_version:
+          default: 1.0.0
+          title: Contract Version
+          type: string
+        reason:
+          maxLength: 256
+          minLength: 10
+          title: Reason
+          type: string
+        requested_by:
+          title: Requested By
+          type: string
+        revocation_type:
+          title: Revocation Type
+          type: string
+        target:
+          $ref: '#/components/schemas/RevocationTargetModel'
+      required:
+      - revocation_type
+      - target
+      - reason
+      - requested_by
+      title: RevocationRequest
+      type: object
+    RevocationResponse:
+      properties:
+        audit_event_id:
+          title: Audit Event Id
+          type: string
+        contract_version:
+          default: 1.0.0
+          title: Contract Version
+          type: string
+        effective_at:
+          title: Effective At
+          type: string
+        revocation_id:
+          title: Revocation Id
+          type: string
+        revocation_type:
+          title: Revocation Type
+          type: string
+        status:
+          title: Status
+          type: string
+        trace_id:
+          title: Trace Id
+          type: string
+      required:
+      - revocation_id
+      - revocation_type
+      - status
+      - effective_at
+      - trace_id
+      - audit_event_id
+      title: RevocationResponse
+      type: object
+    RevocationTargetModel:
+      properties:
+        action:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Action
+        actor_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Actor Id
+        jti:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Jti
+        role:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Role
+      title: RevocationTargetModel
       type: object
     RiskScoreCreate:
       properties:
@@ -956,7 +1254,6 @@ components:
       - category
       - score
       - level
-      - description
       - id
       - case_id
       - created_at
@@ -1002,6 +1299,36 @@ components:
       required:
       - email
       title: SendWelcomeEmailRequest
+      type: object
+    SubjectModel:
+      properties:
+        actor_id:
+          title: Actor Id
+          type: string
+        is_active:
+          default: true
+          title: Is Active
+          type: boolean
+        role:
+          title: Role
+          type: string
+      required:
+      - actor_id
+      - role
+      title: SubjectModel
+      type: object
+    TTSRequest:
+      properties:
+        language:
+          default: en
+          title: Language
+          type: string
+        text:
+          title: Text
+          type: string
+      required:
+      - text
+      title: TTSRequest
       type: object
     TimelineEntry:
       properties:
@@ -1119,9 +1446,6 @@ components:
       - to_address
       - amount
       - direction
-      - timestamp
-      - type
-      - suspicious
       title: TransactionDetail
       type: object
     TransactionResponse:
@@ -1178,9 +1502,6 @@ components:
       - hash
       - from_address
       - to_address
-      - amount
-      - transaction_type
-      - flagged
       - id
       - case_id
       - wallet_id
@@ -1284,12 +1605,37 @@ components:
           title: Role
       required:
       - email
-      - full_name
-      - role
       - id
       - is_active
       - created_at
       title: UserResponse
+      type: object
+    VajraAuthorityView:
+      properties:
+        current_state:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Current State
+        is_authorized:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Authorized
+        scope_checked:
+          default: false
+          title: Scope Checked
+          type: boolean
+        status:
+          title: Status
+          type: string
+        subject_ref:
+          title: Subject Ref
+          type: string
+      required:
+      - subject_ref
+      - status
+      title: VajraAuthorityView
       type: object
     ValidationError:
       properties:
@@ -1395,10 +1741,6 @@ components:
           title: Risk Level
       required:
       - address
-      - label
-      - balance
-      - risk_level
-      - anchor_status
       - id
       - case_id
       - last_activity
@@ -1595,6 +1937,45 @@ paths:
       summary: Review Access Request
       tags:
       - access-requests
+  /api/v1/access/revoke:
+    post:
+      description: 'Executes Tier 1 (permission modification), Tier 2 (account deactivation),
+
+        or Tier 3 (token invalidation) revocations.
+
+        Conforms to Phase 2 Access Control Contract POST /api/v1/access/revoke.'
+      operationId: revoke_access_api_v1_access_revoke_post
+      parameters:
+      - in: header
+        name: X-Trace-Id
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: X-Trace-Id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RevocationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RevocationResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Revoke Access
+      tags:
+      - access-control
   /api/v1/audit/:
     get:
       description: Get audit log entries
@@ -1701,6 +2082,46 @@ paths:
       summary: Register
       tags:
       - authentication
+  /api/v1/authz/check:
+    post:
+      description: 'Evaluates an authorization request under strict deny-by-default
+        rules.
+
+        Conforms to Phase 2 Access Control Contract POST /api/v1/authz/check.
+
+        Requires verified authenticated caller.'
+      operationId: check_authorization_api_v1_authz_check_post
+      parameters:
+      - in: header
+        name: X-Trace-Id
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: X-Trace-Id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthzCheckRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthzCheckResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Check Authorization
+      tags:
+      - authorization
   /api/v1/cases/:
     get:
       description: Get all investigation cases
@@ -2309,6 +2730,7 @@ paths:
         content:
           application/json:
             schema:
+              additionalProperties: true
               title: Transaction
               type: object
         required: true
@@ -2423,6 +2845,7 @@ paths:
             application/json:
               schema:
                 items:
+                  additionalProperties: true
                   type: object
                 title: Response Get Fraud Transactions Api V1 Fraud Transactions  Get
                 type: array
@@ -2592,6 +3015,7 @@ paths:
             application/json:
               schema:
                 items:
+                  additionalProperties: true
                   type: object
                 title: Response Get Incident Reports Api V1 Incidents Reports Get
                 type: array
@@ -2628,6 +3052,7 @@ paths:
           content:
             application/json:
               schema:
+                additionalProperties: true
                 title: Response Get Incident Report Api V1 Incidents Reports  Report
                   Id  Get
                 type: object
@@ -3142,6 +3567,7 @@ paths:
           content:
             application/json:
               schema:
+                additionalProperties: true
                 title: Response Broadcast Announcement Api V1 Messages Broadcast Post
                 type: object
           description: Successful Response
@@ -3394,6 +3820,31 @@ paths:
       summary: Mark Message As Read
       tags:
       - messages
+  /api/v1/protected/access:
+    post:
+      operationId: protected_access_api_v1_protected_access_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProtectedAccessRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProtectedAccessResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Protected Access
+      tags:
+      - protected-access
   /api/v1/risk/:
     get:
       description: Get all risk scores
@@ -3611,6 +4062,7 @@ paths:
           content:
             application/json:
               schema:
+                additionalProperties: true
                 title: Response System Health Api V1 System Health Get
                 type: object
           description: Successful Response
@@ -3625,6 +4077,7 @@ paths:
           content:
             application/json:
               schema:
+                additionalProperties: true
                 title: Response Flush Queue Api V1 System Queue Flush Post
                 type: object
           description: Successful Response
@@ -3739,6 +4192,31 @@ paths:
       summary: Get Transaction
       tags:
       - transactions
+  /api/v1/tts/:
+    post:
+      description: Generate speech from text using Coqui XTTS v2 with gTTS fallback.
+      operationId: generate_tts_api_v1_tts__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TTSRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Generate Tts
+      tags:
+      - text-to-speech
   /api/v1/wallet-fraud/search/transactions:
     get:
       description: 'Search for a wallet address in fraud transactions
@@ -4201,6 +4679,7 @@ paths:
             application/json:
               schema:
                 items:
+                  additionalProperties: true
                   type: object
                 title: Response Get Watchlist Api V1 Watchlist  Get
                 type: array
@@ -4222,6 +4701,7 @@ paths:
           content:
             application/json:
               schema:
+                additionalProperties: true
                 title: Response Add To Watchlist Api V1 Watchlist  Post
                 type: object
           description: Successful Response
@@ -4245,6 +4725,7 @@ paths:
           content:
             application/json:
               schema:
+                additionalProperties: true
                 title: Response Batch Analyze Watchlist Api V1 Watchlist Batch Analyze
                   Post
                 type: object
@@ -4268,6 +4749,7 @@ paths:
           content:
             application/json:
               schema:
+                additionalProperties: true
                 title: Response Remove From Watchlist Api V1 Watchlist  Watch Id  Delete
                 type: object
           description: Successful Response
@@ -4297,6 +4779,7 @@ paths:
           content:
             application/json:
               schema:
+                additionalProperties: true
                 title: Response Analyze Watchlist Wallet Api V1 Watchlist  Watch Id  Analyze
                   Post
                 type: object

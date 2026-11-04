@@ -148,7 +148,27 @@ class Settings(BaseSettings):
     EVENT_BUFFER_PATH: str = "./event_buffer/events.jsonl"
     KAFKA_BOOTSTRAP_SERVERS: Optional[str] = None
     KAFKA_EVENT_TOPIC: str = "cybercrime-governance-events"
-    
+
+    # BHIV runtime bridge (TANTRA layer + VAJRA trust node). Every integration is
+    # disabled until its URL is set; nothing is assumed to exist.
+    # TANTRA (bhiv-TANTRA_Layer): validation layer, karma helper, PRANA.
+    TANTRA_VALIDATION_URL: Optional[str] = None   # e.g. http://<tantra-host>:8101
+    TANTRA_KARMA_URL: Optional[str] = None        # e.g. http://<tantra-host>:8102
+    TANTRA_PRANA_URL: Optional[str] = None        # e.g. http://<tantra-host>:8103 (read-only replay lookup)
+    TANTRA_REGISTRY: str = "prana.event.contracts"
+    TANTRA_EVENT_TYPE: str = "security_decision"  # must be registered by TANTRA before events are accepted
+    TANTRA_CONTRACT_VERSION: str = "1.0.0"
+    TANTRA_SOURCE_SYSTEM: str = "cybersecurity"
+    TANTRA_SUBMISSION_PREFIX: str = ""            # e.g. "cyber-p0-test-" so test traffic is recognisable
+    # VAJRA (bhiv-VAJRA_Blockchain relay node). Use the HTTP API port (default 8080), not the P2P port.
+    VAJRA_API_URL: Optional[str] = None           # e.g. http://<vajra-host>:8080
+    VAJRA_TANTRA_SECRET: Optional[str] = None     # Bearer token for VAJRA write routes; never logged
+    BHIV_RUNTIME_TIMEOUT_SECONDS: float = 5.0
+    # A repeated idempotency key replays an earlier ALLOW only inside this window and only after VAJRA
+    # confirms the authority again; otherwise the client must send a new request.
+    PROTECTED_ACCESS_REPLAY_TTL_SECONDS: int = 300
+    BHIV_HEALTH_CACHE_SECONDS: float = 15.0      # peer reachability probes are cached this long
+
     @field_validator("BREVO_API_KEY", mode="before")
     @classmethod
     def validate_brevo_api_key(cls, v):

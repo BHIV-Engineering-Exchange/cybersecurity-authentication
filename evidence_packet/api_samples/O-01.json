@@ -1,0 +1,173 @@
+[
+  {
+    "check_id": "O-01",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T10:39:53Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:51300/health",
+      "headers": {},
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "a6f0ea42-9ab5-4d00-b30d-0bd6f9a73cde",
+        "x-trace-id": "c7ef6353-6c8b-4465-920c-ca8124852c60"
+      },
+      "body": {
+        "status": "healthy",
+        "service": "cybercrime-investigation-api"
+      }
+    }
+  },
+  {
+    "check_id": "O-01",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T10:39:53Z",
+    "elapsed_ms": 15,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:51300/api/v1/system/health",
+      "headers": {},
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "3881f8ef-9bb5-495f-a1d1-f4d6f13b3fbd",
+        "x-trace-id": "37b0ae99-1e3c-491e-8c2f-bcac4864b1b7"
+      },
+      "body": {
+        "status": "healthy",
+        "database": {
+          "ok": true,
+          "error": null
+        },
+        "integrations": {
+          "storage": {
+            "path": "C:\\tmp\\cyber-p0-verify-20261104T103939Z-paj3nl11\\evidence_storage",
+            "exists": true,
+            "writable": true
+          },
+          "event_queue": {
+            "buffer_path": "C:\\tmp\\cyber-p0-verify-20261104T103939Z-paj3nl11\\event_buffer\\events.jsonl",
+            "buffer_exists": false,
+            "buffered_events": 0,
+            "kafka_configured": false,
+            "kafka_topic": "cybercrime-governance-events"
+          },
+          "bucket": {
+            "configured": false
+          },
+          "core": {
+            "configured": false
+          }
+        }
+      }
+    }
+  },
+  {
+    "check_id": "O-01",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T10:39:53Z",
+    "elapsed_ms": 765,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:51300/api/v1/system/health",
+      "headers": {
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "358c276a-bcb0-4871-a222-ad0f9fd15f66",
+        "x-trace-id": "c61c822c-72c4-4a03-af97-1c7399621a78"
+      },
+      "body": {
+        "status": "healthy",
+        "database": {
+          "ok": true,
+          "error": null
+        },
+        "integrations": {
+          "storage": {
+            "path": "C:\\tmp\\cyber-p0-verify-20261104T103939Z-paj3nl11\\evidence_storage",
+            "exists": true,
+            "writable": true
+          },
+          "event_queue": {
+            "buffer_path": "C:\\tmp\\cyber-p0-verify-20261104T103939Z-paj3nl11\\event_buffer\\events.jsonl",
+            "buffer_exists": false,
+            "buffered_events": 0,
+            "kafka_configured": false,
+            "kafka_topic": "cybercrime-governance-events"
+          },
+          "bucket": {
+            "configured": false
+          },
+          "core": {
+            "configured": false
+          }
+        },
+        "bhiv_runtime": {
+          "tantra": {
+            "validation": {
+              "configured": false
+            },
+            "karma": {
+              "configured": false
+            },
+            "prana": {
+              "configured": false
+            },
+            "event_type": "security_decision"
+          },
+          "vajra": {
+            "api": {
+              "configured": true,
+              "reachable": true,
+              "http_status": 200,
+              "healthy": true
+            },
+            "write_token_configured": true
+          }
+        }
+      }
+    }
+  },
+  {
+    "check_id": "O-01",
+    "system": "vajra-local",
+    "utc": "2026-11-04T10:39:53Z",
+    "elapsed_ms": 16,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:51295/api/health",
+      "headers": {},
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "data": {
+          "block_height": 1,
+          "pending_txs": 0,
+          "total_supply": 1000000000
+        },
+        "message": "Blockchain API is running",
+        "status": "healthy",
+        "success": true
+      }
+    }
+  }
+]

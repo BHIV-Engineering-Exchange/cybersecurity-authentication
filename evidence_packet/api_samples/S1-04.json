@@ -1,0 +1,89 @@
+[
+  {
+    "check_id": "S1-04",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T10:39:57Z",
+    "elapsed_ms": 515,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:51300/api/v1/auth/register",
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "email": "selfreg-5dae6d64@bhiv-verification.example",
+        "password": "[REDACTED]",
+        "full_name": "Self-registered stranger (synthetic)"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "e16d97b3-de6f-46b9-ada6-9831c2abded0",
+        "x-trace-id": "00f642bb-d40d-4c67-a96f-16ed632b285f"
+      },
+      "body": {
+        "email": "selfreg-5dae6d64@bhiv-verification.example",
+        "full_name": "Self-registered stranger (synthetic)",
+        "role": "investigator",
+        "id": 7,
+        "is_active": true,
+        "created_at": "2026-11-04T10:39:57.472270"
+      }
+    }
+  },
+  {
+    "check_id": "S1-04",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T10:39:58Z",
+    "elapsed_ms": 547,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:51300/api/v1/auth/login",
+      "headers": {
+        "content-type": "application/x-www-form-urlencoded"
+      },
+      "body": {
+        "username": "selfreg-5dae6d64%40bhiv-verification.example",
+        "password": "[REDACTED]"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "da301015-bef7-4c7d-9f61-917b2488c692",
+        "x-trace-id": "64440b99-aa67-49dd-ad0f-bbca10bf9d73"
+      },
+      "body": {
+        "access_token": "[REDACTED]",
+        "token_type": "bearer"
+      }
+    }
+  },
+  {
+    "check_id": "S1-04",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T10:39:58Z",
+    "elapsed_ms": 15,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:51300/api/v1/cases/",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "2a57ea1f-d72b-4e80-b6a5-f2da37475990"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "03fb4132-da7f-4ab5-8699-e9d0cd8cee0c",
+        "x-trace-id": "2a57ea1f-d72b-4e80-b6a5-f2da37475990"
+      },
+      "body": []
+    }
+  }
+]

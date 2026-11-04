@@ -1,0 +1,35 @@
+[
+  {
+    "check_id": "S1-02",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T10:39:55Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:51300/api/v1/cases",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "cffd7518-93d9-4678-ab4c-f1d245415666"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 401,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "bd051573-021a-4eef-9c39-70d44f52357f",
+        "x-trace-id": "cffd7518-93d9-4678-ab4c-f1d245415666"
+      },
+      "body": {
+        "error": true,
+        "code": "INVALID_CREDENTIALS",
+        "status_code": 401,
+        "message": "Invalid or expired credentials.",
+        "trace_id": "cffd7518-93d9-4678-ab4c-f1d245415666",
+        "request_id": "bd051573-021a-4eef-9c39-70d44f52357f",
+        "timestamp": "2026-11-04T10:39:55.568Z",
+        "details": []
+      }
+    }
+  }
+]

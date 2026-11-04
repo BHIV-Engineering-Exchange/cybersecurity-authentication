@@ -67,7 +67,8 @@
         "/api/v1/rl-engine*",
         "/api/v1/dashboard/notifications/mark-all-read",
         "/api/v1/investigators/reset-password",
-        "/api/v1/authz*"
+        "/api/v1/authz*",
+        "/api/v1/protected/access"
       ]
     },
     {

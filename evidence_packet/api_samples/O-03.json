@@ -1,0 +1,34 @@
+[
+  {
+    "check_id": "O-03",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T10:42:12Z",
+    "elapsed_ms": 16,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:51300/api/v1/wallets",
+      "headers": {
+        "x-trace-id": "87ae6a1c-80d9-41db-8740-584fc22b0890"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 401,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "ccb89c3e-4edf-4216-b97a-727304fadc36",
+        "x-trace-id": "87ae6a1c-80d9-41db-8740-584fc22b0890"
+      },
+      "body": {
+        "error": true,
+        "code": "AUTHENTICATION_REQUIRED",
+        "status_code": 401,
+        "message": "Authentication required.",
+        "trace_id": "87ae6a1c-80d9-41db-8740-584fc22b0890",
+        "request_id": "ccb89c3e-4edf-4216-b97a-727304fadc36",
+        "timestamp": "2026-11-04T10:42:12.516Z",
+        "details": []
+      }
+    }
+  }
+]

@@ -1,0 +1,46 @@
+{
+  "note": "Manual record (written after the fact) of calls on 2026-11-04 that have no raw request log. Each entry says where its time comes from.",
+  "calls": [
+    {
+      "utc": "2026-11-04T08:16:51Z",
+      "method": "GET",
+      "url": "http://163.128.209.18:8101/openapi.json",
+      "http": "not recorded (full OpenAPI document saved)",
+      "what": "read TANTRA validation layer's API description",
+      "time_source": "modification time of the saved response file"
+    },
+    {
+      "utc": "2026-11-04T08:16:53Z",
+      "method": "GET",
+      "url": "http://163.128.209.18:8102/openapi.json",
+      "http": "not recorded (full OpenAPI document saved)",
+      "what": "read TANTRA karma helper's API description",
+      "time_source": "modification time of the saved response file"
+    },
+    {
+      "utc": "2026-11-04T08:16:53Z",
+      "method": "GET",
+      "url": "http://163.128.209.18:8103/openapi.json",
+      "http": "not recorded (full OpenAPI document saved)",
+      "what": "read TANTRA PRANA's API description",
+      "time_source": "modification time of the saved response file"
+    },
+    {
+      "utc": "2026-11-04T10:43:26Z (shortly after)",
+      "method": "GET",
+      "url": "http://163.128.209.18:8101/health",
+      "http": "not recorded (page rendered)",
+      "what": "screenshot 06 (headless browser)",
+      "time_source": "capture stamp in screenshots/SCREENSHOTS_INDEX.md"
+    },
+    {
+      "utc": "2026-11-04T10:43:26Z (shortly after)",
+      "method": "GET",
+      "url": "http://163.128.209.18:8103/prana/system/health",
+      "http": "not recorded (page rendered)",
+      "what": "screenshot 07 (headless browser; image withdrawn from the packet, see SCREENSHOTS_INDEX.md)",
+      "time_source": "capture stamp in screenshots/SCREENSHOTS_INDEX.md"
+    }
+  ],
+  "not_recorded": "An earlier attempt of the same screenshot script, a minute or two before 10:43Z, failed to save its images. If its browser reached the two TANTRA pages, that adds up to 2 more read-only GETs. No ledger write was possible from it."
+}
