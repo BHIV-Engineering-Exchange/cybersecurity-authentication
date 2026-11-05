@@ -54,7 +54,7 @@ python verification/build_reports.py
 
 | Variable | Purpose |
 |---|---|
-| `VAJRA_API_URL`, `VAJRA_TANTRA_SECRET` | VAJRA relay node HTTP API (port 8080 by default) and its bearer token for write routes. |
+| `VAJRA_API_URL`, `VAJRA_CYBER_SECRET`, `VAJRA_TANTRA_SECRET` | VAJRA relay node HTTP API (port 8080 by default) and the bearer token for evidence writes: the evidence-only `VAJRA_CYBER_SECRET` when set, else the high-privilege `VAJRA_TANTRA_SECRET` (health then warns). See INTEGRATION.md section 2. |
 | `TANTRA_VALIDATION_URL`, `TANTRA_KARMA_URL`, `TANTRA_PRANA_URL` | TANTRA layer services (validation, karma ledger, PRANA replay). |
 | `TANTRA_EVENT_TYPE` | Event type sent to TANTRA; must be registered by TANTRA first. |
 | `BHIV_CORE_EVENT_URL`, `BHIV_BUCKET_EVIDENCE_URL` | Earlier BHIV Core/Bucket hooks used by evidence upload. |
@@ -71,8 +71,9 @@ Contracts, errors and statuses: [INTEGRATION.md](INTEGRATION.md). Responsibiliti
 ## Status in one paragraph
 
 The VAJRA consent path works against the real VAJRA code run locally: consent read, decision, audit and VAJRA
-evidence. ALLOW means the subject's consent is active. It does not mean the requested action is in scope, because
-VAJRA's verify contract has no scope (CYB-13).
+evidence. ALLOW means the subject's consent is active and, since 2026-11-05, that the scope VAJRA reports contains
+the requested `<action>:<resource type>`. It does not mean the caller may act for that subject (CYB-13, still open).
+The 2026-11-05 re-check of VAJRA's fixes (commit `3cc883f`) is in `evidence_packet/test_results/VAJRA_RECHECK.md`.
 
 TANTRA's contract gate answers live, but TANTRA has no registered contract for cybersecurity events yet, so security
 decisions are not in the TANTRA ledger.

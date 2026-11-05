@@ -1,0 +1,73 @@
+# VAJRA full module tests at 3cc883f, 2026-11-05T14:00:50Z
+$ go test -count=1 ./...
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/akashic	1.606s
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/api	1.056s
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/authority	1.141s
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/bht	[no test files]
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/bridge	3.126s
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cache	[no test files]
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/chain	1.683s
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cmd/alpha-poc-e2e	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cmd/constitutional-convergence-e2e	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cmd/fraud-service	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cmd/full-runtime-activation-e2e	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cmd/governance-proof	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cmd/hostile-proof	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cmd/mainnet-closure-e2e	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cmd/nonce-coord-proof	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cmd/nonce-proof	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cmd/noncecoord	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cmd/pdv-agent	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cmd/pdv-convergence-e2e	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cmd/pdv-proof	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cmd/recovery-proof	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cmd/relay	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cmd/selftest	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cmd/sig-proof	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cmd/startuptest	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cmd/tantra-operationalization-e2e	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cmd/vajra-e2e-proof	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cmd/vajra-inspect	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cmd/validation-v2	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cmd/wallet-token-e2e	[no test files]
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/consensus	0.860s
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/constitution	2.062s
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/crypto	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/cybersecurity	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/dex	[no test files]
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/diagnostics	1.022s
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/enforcement	2.856s
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/escrow	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/explorer	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/faucet	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/fraud	[no test files]
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/governance	0.352s [no tests to run]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/interoperability	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/karmachain	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/ksml	[no test files]
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/monitoring	1.815s
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/multisig	[no test files]
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/noncecoord	2.114s
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/noncestore	1.027s
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/otc	3.925s
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/parachains	[no test files]
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/pdv	3.158s
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/permission	4.016s
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/registry	[no test files]
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/replayverifier	3.010s
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/runtime	2.842s
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/schema	0.971s
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/selftest	[no test files]
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/sigverify	1.966s
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/smartcontracts	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/smartcontracts/contracts	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/smartcontracts/deploy	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/smartcontracts/deploy/main	[no test files]
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/startupcheck	0.795s
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/token	1.376s
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/token/demo	[no test files]
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/trace	1.362s
+ok  	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/truthstore	1.709s
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/validation	[no test files]
+?   	github.com/Shivam-Patel-G/blackhole-blockchain/core/relay-chain/workflow	[no test files]
+exit=0

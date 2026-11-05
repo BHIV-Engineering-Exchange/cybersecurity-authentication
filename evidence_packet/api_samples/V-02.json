@@ -2,17 +2,19 @@
   {
     "check_id": "V-02",
     "system": "vajra-local",
-    "utc": "2026-11-04T13:32:50Z",
+    "utc": "2026-11-05T14:32:45Z",
     "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:62507/api/v1/permission/grant",
+      "url": "http://127.0.0.1:56277/api/v1/permission/grant",
       "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "4a62e80c-d5d1-4710-b7fe-9a25135716cc",
         "content-type": "application/json"
       },
       "body": {
-        "trace_id": "f7b208ff-1d79-4c85-aec4-37d99125a583",
-        "subject": "cyber-p0-test-long-subject-c06536",
+        "trace_id": "d529e2be-8c67-4a8e-b7fe-0408296193b1",
+        "subject": "cyber-p0-test-long-subject-569841",
         "requester": "app-alpha",
         "purpose": "P0 verification (synthetic)",
         "scope": "read",
@@ -25,27 +27,27 @@
         "content-type": "application/json"
       },
       "body": {
-        "commitment": "b6338e94050606f9d8464c08e9f0d8f63528b6f4f95223b9f2c4bd4ddffb2216",
-        "permission_id": "perm-cyber-p0-test-long-",
+        "commitment": "180671764566772f8b0b334bdc7bbc667fbde2c448ea0628a8a5a452336bf924",
+        "permission_id": "perm-cyber-p0-tes-44fe0dcbd77f16e3",
         "record": {
-          "permission_id": "perm-cyber-p0-test-long-",
-          "trace_id": "f7b208ff-1d79-4c85-aec4-37d99125a583",
-          "subject": "cyber-p0-test-long-subject-c06536",
+          "permission_id": "perm-cyber-p0-tes-44fe0dcbd77f16e3",
+          "trace_id": "d529e2be-8c67-4a8e-b7fe-0408296193b1",
+          "subject": "cyber-p0-test-long-subject-569841",
           "requester": "app-alpha",
           "purpose": "P0 verification (synthetic)",
           "scope": "read",
           "state": "GRANT",
-          "created_at": 1793799170,
-          "updated_at": 1793799170,
-          "expires_at": 1793799770,
-          "commitment_hash": "b6338e94050606f9d8464c08e9f0d8f63528b6f4f95223b9f2c4bd4ddffb2216",
+          "created_at": 1793889165,
+          "updated_at": 1793889165,
+          "expires_at": 1793889765,
+          "commitment_hash": "180671764566772f8b0b334bdc7bbc667fbde2c448ea0628a8a5a452336bf924",
           "transitions": [
             {
               "from_state": "",
               "to_state": "GRANT",
-              "timestamp": 1793799170,
+              "timestamp": 1793889165,
               "reason": "Initial user consent grant",
-              "trace_id": "f7b208ff-1d79-4c85-aec4-37d99125a583"
+              "trace_id": "d529e2be-8c67-4a8e-b7fe-0408296193b1"
             }
           ]
         },
@@ -56,17 +58,19 @@
   {
     "check_id": "V-02",
     "system": "vajra-local",
-    "utc": "2026-11-04T13:32:50Z",
+    "utc": "2026-11-05T14:32:45Z",
     "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:62507/api/v1/permission/grant",
+      "url": "http://127.0.0.1:56277/api/v1/permission/grant",
       "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "5c205e23-12f8-44cf-bf7a-b97c7cc6a774",
         "content-type": "application/json"
       },
       "body": {
-        "trace_id": "08087568-c16b-4d4e-aca0-ab5ab206de97",
-        "subject": "cyber-p0-test-long-subject-c06536",
+        "trace_id": "d120b59a-df80-4236-89df-09142cf8e31c",
+        "subject": "cyber-p0-test-long-subject-569841",
         "requester": "app-beta",
         "purpose": "P0 verification (synthetic)",
         "scope": "write",
@@ -79,27 +83,27 @@
         "content-type": "application/json"
       },
       "body": {
-        "commitment": "43d94b2afcf6b3908949a1422811c23190a06542612d036e6dc2081c1cce8421",
-        "permission_id": "perm-cyber-p0-test-long-",
+        "commitment": "9347f6d4a79a030a08fb4aeb0a2bb61e08559c19100ba9191d145d05b4b40e62",
+        "permission_id": "perm-cyber-p0-tes-65dcbfdc6ba9a38f",
         "record": {
-          "permission_id": "perm-cyber-p0-test-long-",
-          "trace_id": "08087568-c16b-4d4e-aca0-ab5ab206de97",
-          "subject": "cyber-p0-test-long-subject-c06536",
+          "permission_id": "perm-cyber-p0-tes-65dcbfdc6ba9a38f",
+          "trace_id": "d120b59a-df80-4236-89df-09142cf8e31c",
+          "subject": "cyber-p0-test-long-subject-569841",
           "requester": "app-beta",
           "purpose": "P0 verification (synthetic)",
           "scope": "write",
           "state": "GRANT",
-          "created_at": 1793799170,
-          "updated_at": 1793799170,
-          "expires_at": 1793799770,
-          "commitment_hash": "43d94b2afcf6b3908949a1422811c23190a06542612d036e6dc2081c1cce8421",
+          "created_at": 1793889165,
+          "updated_at": 1793889165,
+          "expires_at": 1793889765,
+          "commitment_hash": "9347f6d4a79a030a08fb4aeb0a2bb61e08559c19100ba9191d145d05b4b40e62",
           "transitions": [
             {
               "from_state": "",
               "to_state": "GRANT",
-              "timestamp": 1793799170,
+              "timestamp": 1793889165,
               "reason": "Initial user consent grant",
-              "trace_id": "08087568-c16b-4d4e-aca0-ab5ab206de97"
+              "trace_id": "d120b59a-df80-4236-89df-09142cf8e31c"
             }
           ]
         },
@@ -110,17 +114,19 @@
   {
     "check_id": "V-02",
     "system": "vajra-local",
-    "utc": "2026-11-04T13:32:50Z",
+    "utc": "2026-11-05T14:32:45Z",
     "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:62507/api/v1/permission/revoke",
+      "url": "http://127.0.0.1:56277/api/v1/permission/revoke",
       "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "c87fb8f2-936b-48b1-b4f5-b569586cd8d5",
         "content-type": "application/json"
       },
       "body": {
-        "permission_id": "perm-cyber-p0-test-long-",
-        "trace_id": "15b28bd0-0614-48b9-a9a8-cf81fddc10aa",
+        "permission_id": "perm-cyber-p0-tes-65dcbfdc6ba9a38f",
+        "trace_id": "db08d996-fe9e-4681-82e8-f7fd25c721e5",
         "reason": "revoke beta only (synthetic)"
       }
     },
@@ -130,33 +136,33 @@
         "content-type": "application/json"
       },
       "body": {
-        "permission_id": "perm-cyber-p0-test-long-",
+        "permission_id": "perm-cyber-p0-tes-65dcbfdc6ba9a38f",
         "record": {
-          "permission_id": "perm-cyber-p0-test-long-",
-          "trace_id": "08087568-c16b-4d4e-aca0-ab5ab206de97",
-          "subject": "cyber-p0-test-long-subject-c06536",
+          "permission_id": "perm-cyber-p0-tes-65dcbfdc6ba9a38f",
+          "trace_id": "d120b59a-df80-4236-89df-09142cf8e31c",
+          "subject": "cyber-p0-test-long-subject-569841",
           "requester": "app-beta",
           "purpose": "P0 verification (synthetic)",
           "scope": "write",
           "state": "REVOKE",
-          "created_at": 1793799170,
-          "updated_at": 1793799170,
-          "expires_at": 1793799770,
-          "commitment_hash": "43d94b2afcf6b3908949a1422811c23190a06542612d036e6dc2081c1cce8421",
+          "created_at": 1793889165,
+          "updated_at": 1793889165,
+          "expires_at": 1793889765,
+          "commitment_hash": "9347f6d4a79a030a08fb4aeb0a2bb61e08559c19100ba9191d145d05b4b40e62",
           "transitions": [
             {
               "from_state": "",
               "to_state": "GRANT",
-              "timestamp": 1793799170,
+              "timestamp": 1793889165,
               "reason": "Initial user consent grant",
-              "trace_id": "08087568-c16b-4d4e-aca0-ab5ab206de97"
+              "trace_id": "d120b59a-df80-4236-89df-09142cf8e31c"
             },
             {
               "from_state": "GRANT",
               "to_state": "REVOKE",
-              "timestamp": 1793799170,
+              "timestamp": 1793889165,
               "reason": "revoke beta only (synthetic)",
-              "trace_id": "15b28bd0-0614-48b9-a9a8-cf81fddc10aa"
+              "trace_id": "db08d996-fe9e-4681-82e8-f7fd25c721e5"
             }
           ]
         },
@@ -167,17 +173,19 @@
   {
     "check_id": "V-02",
     "system": "vajra-local",
-    "utc": "2026-11-04T13:32:50Z",
+    "utc": "2026-11-05T14:32:45Z",
     "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:62507/api/v1/permission/check",
+      "url": "http://127.0.0.1:56277/api/v1/permission/check",
       "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "69450a86-859f-401f-b9b4-535a53f2924d",
         "content-type": "application/json"
       },
       "body": {
-        "trace_id": "3b78ef08-613d-4a8f-be55-ed947a4d3382",
-        "subject": "cyber-p0-test-long-subject-c06536",
+        "trace_id": "b24c3d8f-0bca-421c-9cc9-e74afbd0e7cb",
+        "subject": "cyber-p0-test-long-subject-569841",
         "requester": "app-beta",
         "scope": "write"
       }
@@ -191,27 +199,29 @@
         "allowed": false,
         "state": "REVOKE",
         "reason": "DENY: User has REVOKED consent (Opt-Out enforced)",
-        "trace_id": "3b78ef08-613d-4a8f-be55-ed947a4d3382",
-        "permission_id": "perm-cyber-p0-test-long-",
-        "commitment_hash": "43d94b2afcf6b3908949a1422811c23190a06542612d036e6dc2081c1cce8421",
-        "evaluated_at": 1793799170
+        "trace_id": "b24c3d8f-0bca-421c-9cc9-e74afbd0e7cb",
+        "permission_id": "perm-cyber-p0-tes-65dcbfdc6ba9a38f",
+        "commitment_hash": "9347f6d4a79a030a08fb4aeb0a2bb61e08559c19100ba9191d145d05b4b40e62",
+        "evaluated_at": 1793889165
       }
     }
   },
   {
     "check_id": "V-02",
     "system": "vajra-local",
-    "utc": "2026-11-04T13:32:50Z",
-    "elapsed_ms": 15,
+    "utc": "2026-11-05T14:32:45Z",
+    "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:62507/api/v1/permission/check",
+      "url": "http://127.0.0.1:56277/api/v1/permission/check",
       "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "8d1dd7f1-5c61-44ee-b010-90f64d2a954a",
         "content-type": "application/json"
       },
       "body": {
-        "trace_id": "4aab88d2-d029-4b85-94da-f605209eb16b",
-        "subject": "cyber-p0-test-long-subject-c06536",
+        "trace_id": "5e9f46ba-17e1-48d9-a91e-1e811bfce5a8",
+        "subject": "cyber-p0-test-long-subject-569841",
         "requester": "app-alpha",
         "scope": "read"
       }
@@ -225,10 +235,10 @@
         "allowed": true,
         "state": "GRANT",
         "reason": "ALLOW: Valid permission in state 'GRANT'",
-        "trace_id": "4aab88d2-d029-4b85-94da-f605209eb16b",
-        "permission_id": "perm-cyber-p0-test-long-",
-        "commitment_hash": "b6338e94050606f9d8464c08e9f0d8f63528b6f4f95223b9f2c4bd4ddffb2216",
-        "evaluated_at": 1793799170
+        "trace_id": "5e9f46ba-17e1-48d9-a91e-1e811bfce5a8",
+        "permission_id": "perm-cyber-p0-tes-44fe0dcbd77f16e3",
+        "commitment_hash": "180671764566772f8b0b334bdc7bbc667fbde2c448ea0628a8a5a452336bf924",
+        "evaluated_at": 1793889165
       }
     }
   }

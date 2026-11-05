@@ -39,6 +39,8 @@ BASE_COMMIT = "59d2d63"  # last commit on main before this change (2026-10-27)
 # The earlier live run that made the single TANTRA ledger write. Later runs do not repeat that write, so its evidence is
 # kept under evidence_packet/previous_runs/<id>/ and carried over, labelled with its run id.
 PREVIOUS_LIVE_RUN = "20261104T103939Z"
+# The last run that called live TANTRA at all (read-only; the 04 Nov final run). Later runs with TANTRA off point to it.
+LAST_LIVE_TANTRA_RUN = "20261104T133229Z"
 EVIDENCE_DIR = REPO / "evidence_packet"  # set from --evidence in main(); defect statuses read recorded files under it
 CORE_FILES = [
     ("cybercrime/backend/app/api/v1/endpoints/protected_access.py", "Entry point and core flow of the protected-access decision"),
@@ -200,6 +202,30 @@ def previous_run_dir(evidence: Optional[Path] = None) -> Path:
     return (evidence or EVIDENCE_DIR) / "previous_runs" / PREVIOUS_LIVE_RUN
 
 
+TANTRA_CHECKS = ("O-02", "S5-01", "S5-04", "S8-02")
+
+
+def last_live_tantra(evidence: Optional[Path] = None) -> dict:
+    """TANTRA check statuses of the last run that called live TANTRA, read from its archived results.json."""
+    f = (evidence or EVIDENCE_DIR) / "previous_runs" / LAST_LIVE_TANTRA_RUN / "test_results" / "results.json"
+    if not f.exists():
+        return {}
+    return {r["id"]: r["status"] for r in json.loads(f.read_text(encoding="utf-8"))["results"] if r["id"] in TANTRA_CHECKS}
+
+
+def last_live_note(meta, evidence: Optional[Path] = None) -> str:
+    """For a run with TANTRA off: where the last live TANTRA results are (empty for a live run)."""
+    if meta["mode"]["tantra"] == "live":
+        return ""
+    prev = last_live_tantra(evidence)
+    if not prev:
+        return "TANTRA was not called in this run, and no archived live run was found."
+    return (f"TANTRA was not called in this run (mode off, on purpose). The last run that called live TANTRA (read-only), "
+            f"`{LAST_LIVE_TANTRA_RUN}`, is archived under `previous_runs/{LAST_LIVE_TANTRA_RUN}/`; its TANTRA checks: "
+            + ", ".join(f"{k} {v}" for k, v in prev.items())
+            + f". The one TANTRA ledger write (S8-02) was made in run `{PREVIOUS_LIVE_RUN}`.")
+
+
 def probe_record(samples: dict, evidence: Optional[Path] = None):
     """S8-02 exchanges from this run, else from the archived earlier live run, and a label saying which."""
     if samples.get("S8-02"):
@@ -348,9 +374,11 @@ def test_report(meta, results, by_id, suites, samples) -> str:
         "",
         f"- Run id: `{meta['run_id']}` - started {meta['started_utc']}, finished {meta['finished_utc']} (UTC)",
         f"- Command: `{meta['command']}`",
-        f"- TANTRA mode: `{meta['mode']['tantra']}`; live TANTRA ledger write allowed: `{meta['mode']['live_tantra_write_allowed']}`",
+        f"- TANTRA mode: `{meta['mode']['tantra']}`; live TANTRA ledger write allowed: `{meta['mode']['live_tantra_write_allowed']}`"
+        + (f"\n- {last_live_note(meta)}" if last_live_note(meta) else ""),
         f"- Cybersecurity repository commit: `{meta['versions']['cybersecurity_repo_commit']}`",
-        f"- VAJRA repository commit (node binary source): `{meta['versions']['vajra_repo_commit']}`",
+        f"- VAJRA repository commit (node binary source): `{meta['versions']['vajra_repo_commit']}`"
+        + (f"; node binary SHA-256 `{meta['versions']['vajra_binary_sha256']}`" if meta["versions"].get("vajra_binary_sha256") else ""),
         f"- Python {meta['versions']['python']} on {meta['versions']['os']}",
         "",
         "## Summary",
@@ -476,7 +504,7 @@ ROWS = [
     ("10-day - mandatory proof", "C ATTACK: threat -> detect -> correlate -> govern -> contain -> evidence", ["P-C1", "P-C2", "P-C3"],
      {"cap": "the govern step (TANTRA approval) was played by the harness (SIMULATED); the approval contract is UNKNOWN"}),
     ("10-day - mandatory proof", "D RECOVERY: failure -> candidate -> verify -> replay/integrity -> rebuild -> reinstate",
-     ["S7-02", "S7-03", "S7-04", "S7-05", "S8-03"]),
+     ["S7-02", "S7-03", "S7-04", "S7-05", "S8-03", "V-06", "V-08"]),
     ("Task 1 section M - live path", "Input signal / data-access event -> Cybersecurity processing -> decision", ["S1-05", "P-A"],
      {"needs_live": True}),
     ("Task 1 section M - live path", "Controlled downstream response (containment through VAJRA)", ["P-C3", "S7-02"],
@@ -518,17 +546,23 @@ def acceptance(meta, by_id, evidence: Path, suites: list) -> list[tuple]:
         ("EVIDENCE EXISTS", "YES" if not missing else "PARTIAL",
          "all evidence folders present" if not missing else f"missing or empty: {', '.join(missing)}"),
         ("VM DEPLOYMENT WORKS", "NO", "BLOCKED-EXTERNAL: no VM reference was provided to this work (owner: Rajaryan)"),
-        ("TANTRA PARTICIPATION IS PROVEN", "PARTIAL" if gate else "NO",
+        ("TANTRA PARTICIPATION IS PROVEN",
+         "PARTIAL" if gate else (f"PARTIAL (archived run {LAST_LIVE_TANTRA_RUN})"
+                                 if meta["mode"]["tantra"] != "live" and last_live_tantra(evidence).get("S5-01") == "PASS"
+                                 else "NO"),
          ("LIVE-VERIFIED: TANTRA's contract gate answered the module's decisions"
           + ({"PASS": "; the registered integrity_probe contract was written and replay-verified (S8-02)",
               "CARRIED": f"; the registered integrity_probe contract was written and replay-verified in run {PREVIOUS_LIVE_RUN} "
                          "(S8-02, carried over from previous_runs/; the write was not repeated in this run)"}
              .get(probe, "; no ledger write in this run"))
           + "; security decisions cannot enter the TANTRA ledger until TANTRA registers a contract (TAN-01)") if gate
+         else ("not exercised in this run. " + last_live_note(meta, evidence)) if meta["mode"]["tantra"] != "live"
          else "not exercised in this run"),
         ("VAJRA BOUNDARY IS PROVEN", "PARTIAL" if vajra_ok else "NO",
-         "OFFLINE-VERIFIED against the real VAJRA code run locally, for consent state only; scope and caller binding are not "
-         "enforced (CYB-13); live VAJRA not used (VAJRA asks for no test records on its live node)"),
+         f"OFFLINE-VERIFIED against the real VAJRA code (commit {meta['versions']['vajra_repo_commit'][:7]}) run locally: "
+         + ("consent state and granted scope (S1-08 PASS)" if status_of(by_id, "S1-08") == "PASS" else "consent state")
+         + f"; the caller is not bound to the subject (CYB-13); least-privilege token set-up S6-05 {status_of(by_id, 'S6-05')}; "
+           "live VAJRA not used (VAJRA asks for no test records on its live node)"),
         ("BCAES ALIGNMENT IS DOCUMENTED", "YES" if (REPO / "BCAES_ALIGNMENT.md").exists() else "NO",
          "BCAES_ALIGNMENT.md (unknowns marked UNKNOWN)"),
         ("HANDOVER IS COMPLETE", "PENDING" if (REPO / "HANDOVER.md").exists() else "NO",
@@ -544,7 +578,7 @@ def proof_matrix(meta, by_id, evidence: Path, suites: list) -> str:
              "passed but the requirement asks for more than the run showed (the reason follows the bracket); NOT VERIFIED = "
              "none passed. The bracket lists the systems the passing checks touched (live or local) and whether the harness "
              "simulated a role.", "",
-             f"Run `{meta['run_id']}`, TANTRA mode `{meta['mode']['tantra']}`.", "",
+             f"Run `{meta['run_id']}`, TANTRA mode `{meta['mode']['tantra']}`. {last_live_note(meta, evidence)}".rstrip(), "",
              "| Source | Requirement | Checks (result) | Status |", "|---|---|---|---|"]
     for group, req, checks, *opts in ROWS:
         detail = ", ".join(f"{c} {status_of(by_id, c)}" for c in checks)
@@ -608,7 +642,8 @@ def readiness_board(by_id) -> list[tuple]:
         ("VAJRA authority lifecycle + bearer gate", "bhiv-VAJRA_Blockchain", "Prakash", st("S1-06", "S2-01", "S7-02")),
         ("VAJRA authority durability across restart", "bhiv-VAJRA_Blockchain", "Prakash / Samsoorya", st("S7-05")),
         ("VAJRA privileged routes auth (mint, permission, freeze)", "bhiv-VAJRA_Blockchain", "Prakash", st("V-01")),
-        ("VAJRA recovery anchors (real signatures)", "bhiv-VAJRA_Blockchain", "Prakash / Samsoorya", "SIMULATED"),
+        ("VAJRA recovery anchors (real signatures)", "bhiv-VAJRA_Blockchain", "Prakash / Samsoorya",
+         st("V-06") if "V-06" in by_id else "SIMULATED"),
         ("VM deployment of Cybersecurity", "assigned VM (UNKNOWN)", "Rajaryan", "BLOCKED"),
     ]
 
@@ -687,7 +722,7 @@ def review_packet(meta, results, by_id, samples, branch) -> str:
                    + {"PASS": "; registered probe contract written and replay-verified (S8-02 PASS)",
                       "CARRIED": f"; registered probe contract written and replay-verified in run {PREVIOUS_LIVE_RUN} "
                                  "(S8-02 PASS there, carried over; not repeated)"}.get(probe, f"; ledger probe {probe}")
-                   ) if meta["mode"]["tantra"] == "live" else "not exercised in this run"
+                   ) if meta["mode"]["tantra"] == "live" else "not exercised in this run. " + last_live_note(meta)
     vajra_line = ("consent read, evidence record, bearer gate and lifecycle - "
                   + ("OFFLINE-VERIFIED on a local node, consent SIMULATED" if all(status_of(by_id, x) == "PASS" for x in ("S1-05", "S2-01", "P-A", "S1-06"))
                      else "not all checks passing"))
@@ -723,10 +758,17 @@ def review_packet(meta, results, by_id, samples, branch) -> str:
         "",
         "## 11. Known limitations",
         "",
-        "- VAJRA was run locally from its repository (VAJRA asks for no test records on its live node). VAJRA authority "
-        "state is held in memory (VAJ-02).",
-        "- ALLOW does not check scope or bind the caller to the subject (CYB-13); the VAJRA token is unscoped (it also "
-        "authorizes VAJRA transitions).",
+        f"- VAJRA was run locally from its repository, commit `{meta['versions']['vajra_repo_commit'][:7]}` (VAJRA asks for "
+        "no test records on its live node). Open VAJRA defects confirmed in this run: "
+        + (", ".join(f"{d['id']} ({d['severity']})" for d in DEFECTS if d["system"] == "VAJRA"
+                     and "CONFIRMED" in defect_status(d, by_id)) or "none") + " (DEFECTS.md).",
+        "- " + ("ALLOW checks the scope VAJRA reports (S1-08 PASS) but does not bind the caller to the subject (CYB-13)."
+                if status_of(by_id, "S1-08") == "PASS" else
+                "ALLOW does not check scope or bind the caller to the subject (CYB-13).")
+        + {"FAIL": " With only the evidence-only VAJRA token, evidence writes fail and every decision fails closed "
+                   "(S6-05 FAIL), so this run gave the API the governance token, which also authorizes VAJRA transitions.",
+           "PASS": " The API holds only the evidence-only VAJRA token (S6-05 PASS)."}.get(status_of(by_id, "S6-05"),
+                                                                                     " The VAJRA token set-up was not checked."),
         "- TANTRA has no registered contract for cybersecurity events (TAN-01), so decisions are not in the TANTRA ledger.",
         "- The harness plays the VAJRA user journey and TANTRA governance roles (labelled SIMULATED per check).",
         "- Failed-login detection is a count rule (5 in 10 minutes per account), not a model; its confidence is a fixed "
@@ -1096,8 +1138,9 @@ def vajra_recheck(meta, by_id) -> str:
              "## 1. VAJRA's re-verification steps", "",
              "| Step | VAJRA's step (paraphrased) | Check | Result in this run |", "|---|---|---|---|"]
     setup = {"1": f"set-up: node built from `{commit}`",
-             "2": "set-up: fresh random values for both secrets. The relay reads HTTP_PORT, not PORT "
-                  "(core/relay-chain/cmd/relay/main.go:230), so PORT=8080 has no effect; 8080 is only the default."}
+             "2": "set-up: fresh random values for both secrets, and HTTP_PORT set to a free local port (the harness runs "
+                  "the node on a free port). The relay reads HTTP_PORT, not PORT (core/relay-chain/cmd/relay/main.go:230), "
+                  "so PORT=8080 has no effect; 8080 is only the default."}
     for step, text, chk, what in VAJRA_RECHECK_STEPS:
         if not chk:
             lines.append(f"| {step} | {text} | - | {md_escape(setup[step])} |")
@@ -1115,17 +1158,25 @@ def vajra_recheck(meta, by_id) -> str:
             continue
         claim = VAJRA_CLAIMS.get(d["id"], "new: found in this re-check")
         lines.append(f"| {d['id']} | {d['severity']} | {md_escape(claim)} | {md_escape(defect_status(d, by_id))} |")
+    titles = {d["id"]: d["title"] for d in DEFECTS}
+
+    def linked(*check_ids):
+        ids = sorted({x for c in check_ids for x in (by_id.get(c) or {}).get("defects", [])
+                      if (by_id.get(c) or {}).get("status") == "FAIL"})
+        return "; ".join(f"{x}: {titles.get(x, '?')}" for x in ids) or "no defect linked in this run"
+
     lines += ["", "Details, steps and suggested fixes for every item: [DEFECTS.md](DEFECTS.md).", "",
               "## 3. The two asks", "",
               f"- Evidence-only token: V-03 {status_of(by_id, 'V-03')}, S6-05 {status_of(by_id, 'S6-05')}. "
-              "The token is refused where it is needed (evidence/record, VAJ-10) and accepted where it should not be "
-              "(permission grant/revoke, admin submit-transaction, VAJ-11).",
-              f"- Scope in verify: shown (V-05 step 6 above); Cybersecurity now checks it (S1-08 {status_of(by_id, 'S1-08')}). "
-              f"A later transition replaces the scope (V-05 {status_of(by_id, 'V-05')}, VAJ-12).",
-              "- Token issuer: VAJRA's reply names TANTRA's security/jwt_handler.py (RS256). CODE-VERIFIED at the tested "
-              "commit: VAJRA compares the bearer with a fixed value from its environment (core/relay-chain/api/server.go:381-424) "
-              "and checks no JWT; jwt_handler.py is in neither repository we can read. Who issues and rotates the value is "
-              "still UNKNOWN.", ""]
+              f"Linked defects: {linked('V-03', 'S6-05')}.",
+              f"- Scope in verify: step 6 above; Cybersecurity checks it (S1-08 {status_of(by_id, 'S1-08')}). "
+              f"Scope after a later transition: V-05 {status_of(by_id, 'V-05')}; linked defects: {linked('V-05')}.",
+              "- Token issuer: VAJRA's reply names security/jwt_handler.py (RS256) and TANTRA/Pravesh. CODE-VERIFIED at the "
+              "tested commit: that file is in VAJRA's own repository (an RS256 JWT engine, default issuer "
+              "'tantra.governance.niyantran', used by VAJRA's Python services api/production.py and "
+              "evaluation_engine/rule_engine.py), but the Go relay's bearer gate does not use it: it compares the bearer with "
+              "two fixed values from its environment (core/relay-chain/api/server.go:380-439). Who issues and rotates those "
+              "two values is still UNKNOWN.", ""]
     return "\n".join(lines)
 
 

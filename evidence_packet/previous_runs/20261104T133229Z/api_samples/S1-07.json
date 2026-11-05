@@ -1,0 +1,44 @@
+[
+  {
+    "check_id": "S1-07",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T13:32:50Z",
+    "elapsed_ms": 15,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:62513/api/v1/protected/access",
+      "headers": {
+        "x-trace-id": "36dd0fab-9c50-414a-a8e1-aa9490b34db8",
+        "content-type": "application/json"
+      },
+      "body": {
+        "contract_version": "1.0.0",
+        "vajra_subject": "x",
+        "action": "read",
+        "resource": {
+          "type": "evidence",
+          "id": "EV-1"
+        },
+        "purpose": "anonymous attempt"
+      }
+    },
+    "response": {
+      "status": 401,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "9e97aea1-5fcf-49b2-aafb-602990dd3321",
+        "x-trace-id": "36dd0fab-9c50-414a-a8e1-aa9490b34db8"
+      },
+      "body": {
+        "error": true,
+        "code": "AUTHENTICATION_REQUIRED",
+        "status_code": 401,
+        "message": "Authentication required.",
+        "trace_id": "36dd0fab-9c50-414a-a8e1-aa9490b34db8",
+        "request_id": "9e97aea1-5fcf-49b2-aafb-602990dd3321",
+        "timestamp": "2026-11-04T13:32:50.504Z",
+        "details": []
+      }
+    }
+  }
+]

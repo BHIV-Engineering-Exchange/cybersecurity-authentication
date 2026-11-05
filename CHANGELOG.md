@@ -1,5 +1,38 @@
 # Changelog
 
+## 2026-11-05 - VAJRA re-check, scope check in protected access (Hemanth)
+
+VAJRA's owner reported VAJ-01..VAJ-09 fixed on branch `vajra-tantra-runtime-increment` (commit `3cc883f`) and added
+two things Cybersecurity asked for: an evidence-only token tier (`VAJRA_CYBER_SECRET`) and the granted scope in
+`authority/verify`. Everything was re-checked on a local node built from `3cc883f`; nothing was sent to VAJRA's live
+node or to TANTRA.
+
+- **Protected access checks scope (CYB-13, partly fixed):** ALLOW now also needs `<action>:<resource type>` (for
+  example `read:evidence`) in the scope VAJRA reports. Exact match, no wildcards; no reported scope means DENY. New
+  reason codes `VAJRA_SCOPE_NOT_GRANTED`, `VAJRA_SCOPE_UNAVAILABLE`. A replayed ALLOW re-checks the scope too. The
+  caller is still not bound to the subject. The scope form is a proposal to agree with VAJRA and TANTRA.
+- **Evidence-only VAJRA token:** new setting `VAJRA_CYBER_SECRET`, used for evidence writes when set;
+  `VAJRA_TANTRA_SECRET` (VAJRA's governance token) is only a fallback, and superadmin health then warns
+  (`write_credential`, `warnings`).
+- **Verification:** new checks V-03..V-08, S1-08 and S6-05; V-02 and V-01 updated for routes that now need a token;
+  S7-04 reads the recovery package correctly. Run `20261105T143237Z`: 43 PASS, 7 FAIL, 0 ERROR, 0 BLOCKED, 4 SKIPPED
+  of 54. All 7 failures are VAJRA defects. The 4 skipped checks need live TANTRA, which was not called. Unit tests:
+  119 passed. VAJRA's own Go tests at `3cc883f`: 27 passed with the 04 Nov command, and 24 packages ok in the whole
+  module.
+- **What the re-check found in VAJRA:**
+  - Fixed: VAJ-02, VAJ-04, VAJ-06, VAJ-08.
+  - Partly fixed: VAJ-01, VAJ-03, VAJ-07, VAJ-09.
+  - Not fixed: VAJ-05.
+  - New: VAJ-10 (the evidence-only token is refused by evidence/record), VAJ-11 (it still reaches permission
+    grant/revoke and admin submit-transaction), VAJ-12 (a later transition replaces the granted scope), VAJ-13 (a
+    revocation can be undone by a restart; the authority ledger is trusted on reload), VAJ-14 (one anonymous report
+    can freeze any wallet).
+
+  Details: `evidence_packet/test_results/VAJRA_RECHECK.md` and `DEFECTS.md`.
+- **Evidence layout:** the 04 Nov final run (`20261104T133229Z`, the one the 04 Nov EOD describes) is archived in
+  full under `evidence_packet/previous_runs/`. The 04 Nov review packet and EOD are unchanged. The 05 Nov packet is
+  `review_packets/CYBER-VAJRA-RECHECK-2026-11-05/`. `build_reports.py` writes a packet folder only when one is named.
+
 ## 2026-11-04 (evening) - Remaining P0 items for other members (Hemanth, for the owners' review)
 
 A check of the P0 task against every member's assignment found these items still open in this repository. Each is

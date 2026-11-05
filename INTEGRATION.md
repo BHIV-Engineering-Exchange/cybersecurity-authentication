@@ -4,7 +4,8 @@ Cybersecurity talks to two BHIV systems through `cybercrime/backend/app/core/bhi
 off until its URL is set. Contracts were taken from the owners' repositories and their live OpenAPI documents on
 2026-11-04:
 
-- VAJRA: `BHIV-SYSTEM/bhiv-VAJRA_Blockchain` at commit `07d683c`.
+- VAJRA: `BHIV-SYSTEM/bhiv-VAJRA_Blockchain` at commit `07d683c`; re-checked on 2026-11-05 against commit `3cc883f`
+  (branch `vajra-tantra-runtime-increment`) on a local node. Results: `evidence_packet/test_results/VAJRA_RECHECK.md`.
 - TANTRA: `BHIV-Engineering-Exchange/bhiv-TANTRA_Layer` (scripts and docs) and its live services.
 
 The order validate, then ingest, then verify is the order TANTRA's own end-to-end test uses
@@ -32,7 +33,8 @@ Response fields:
 - `decision` (ALLOW / DENY), `reason_code`, `reason` and `decision_id`.
 - `trace_id`, `request_id`, `idempotency_key` and `duplicate`.
 - `actor_id`, `action` and `resource`.
-- `vajra`: `subject_ref`, `status`, `is_authorized`, `current_state` and `scope_checked` (always false today).
+- `vajra`: `subject_ref`, `status`, `is_authorized`, `current_state` and `scope_checked` (true when the required scope
+  was compared with the scope VAJRA reported).
 - `evidence`: `local_audit_event_id` (the final audit event), `superseded_audit_event_id` (set when a tentative ALLOW
   became DENY), plus `vajra` and `tantra` sink results, `complete` and `gaps`.
 - `policy_applied` and `evaluated_at`.
@@ -41,15 +43,25 @@ Response fields:
 
 - The caller passed RBAC.
 - VAJRA reports the subject's authority state as GRANT or USE.
+- The scope VAJRA reports for the subject contains `<action>:<resource type>`, for example `read:evidence` (since
+  2026-11-05; VAJRA's verify reports a scope since VAJRA commit `3cc883f`).
 - VAJRA confirmed the evidence record for this decision.
 
-**What ALLOW does not mean:** VAJRA's verify returns no scope, so the requested action and resource are not checked
-against what the subject granted, and nothing links the calling user to the subject (defect CYB-13). Treat ALLOW as
-"consent state is active", not as "this action is permitted by the user".
+**Scope rule:** exact, case-sensitive match of one list entry; no wildcards and no implied supersets (`admin` or `*`
+do not match). If VAJRA reports no scope (field missing or not a list of strings) the answer is DENY
+`VAJRA_SCOPE_UNAVAILABLE`. The `<action>:<resource type>` form follows VAJRA's own example (`read:telemetry`); VAJRA
+defines no scope vocabulary, so this form is Cybersecurity's proposal and still needs the VAJRA and TANTRA owners'
+agreement (whoever issues GRANTs must use it). The agreed vocabulary is UNKNOWN until then.
+
+**What ALLOW does not mean:** the resource id and the purpose are recorded but not checked, and nothing links the
+calling user to the subject (defect CYB-13, still open; who may ask about which subject is UNKNOWN). Note also VAJ-12: VAJRA reports the scope of the subject's
+latest transition, so a later USE can widen or erase what the GRANT gave; Cybersecurity follows what VAJRA reports.
 
 | Reason code | Meaning |
 |---|---|
-| `ALLOWED_BY_VAJRA_AUTHORITY` | VAJRA state GRANT/USE, RBAC passed, VAJRA evidence RECORDED |
+| `ALLOWED_BY_VAJRA_AUTHORITY` | VAJRA state GRANT/USE, required scope in the VAJRA scope, RBAC passed, VAJRA evidence RECORDED |
+| `VAJRA_SCOPE_NOT_GRANTED` | Consent is active, but the scope VAJRA reports does not contain `<action>:<resource type>` |
+| `VAJRA_SCOPE_UNAVAILABLE` | Consent is active, but VAJRA reported no scope, so the action cannot be checked: deny |
 | `VAJRA_AUTHORITY_NOT_GRANTED` | Any other VAJRA state (REVOKE, ISOLATE, TERMINATE, RECOVER, REINSTATE, unknown) |
 | `VAJRA_EVIDENCE_NOT_RECORDED` | Consent was active, but VAJRA did not confirm the evidence record: no access without evidence |
 | `VAJRA_UNAVAILABLE` | VAJRA could not be reached or answered unexpectedly: deny (fail closed) |
@@ -62,7 +74,7 @@ against what the subject granted, and nothing links the calling user to the subj
 | 400 `INVALID_TRACE_ID` | `X-Trace-Id` must be 1-128 characters of `A-Z a-z 0-9 . _ : -` (it becomes part of the VAJRA record id) |
 | 409 `IDEMPOTENCY_KEY_CONFLICT` | The key was used for a different request |
 | 409 `DUPLICATE_IN_PROGRESS` | The same request is still being processed |
-| 409 `STALE_DECISION` | The earlier ALLOW expired (`PROTECTED_ACCESS_REPLAY_TTL_SECONDS`, default 300) or VAJRA no longer reports GRANT/USE; send a new request with a new key |
+| 409 `STALE_DECISION` | The earlier ALLOW expired (`PROTECTED_ACCESS_REPLAY_TTL_SECONDS`, default 300) or VAJRA no longer reports GRANT/USE with the required scope; send a new request with a new key |
 | 503 `EVIDENCE_PERSISTENCE_FAILED` | The audit record could not be written, so no decision was released |
 
 Order of work (VAJRA and TANTRA are written only after the local audit is stored):
@@ -85,7 +97,7 @@ How idempotent repeats work:
 
 - A repeat of the same request returns the first decision with `duplicate: true`. Nothing is re-executed: no new
   audit event and no new VAJRA or TANTRA record.
-- A stored ALLOW is replayed only after VAJRA confirms the authority again.
+- A stored ALLOW is replayed only after VAJRA confirms the authority and the scope again.
 - A claim left PENDING for more than 120 seconds (a crashed request) is taken over by the next attempt.
 
 Errors use the canonical error body: `error`, `code`, `status_code`, `message`, `trace_id`, `request_id`, `timestamp`
@@ -109,18 +121,26 @@ and `details`. A caller sending more than `PROTECTED_ACCESS_RATE_LIMIT_PER_MINUT
 Outbound change: the Bucket API key now travels in an `X-API-Key` header, not in the JSON body. The Bucket owner must
 confirm the Bucket reads it from there.
 
+### 1b. Changed on 2026-11-05
+
+| What | Contract |
+|---|---|
+| `POST /api/v1/protected/access` | ALLOW also needs `<action>:<resource type>` in the scope VAJRA reports (section 1). New reason codes `VAJRA_SCOPE_NOT_GRANTED` and `VAJRA_SCOPE_UNAVAILABLE`; `vajra.scope_checked` is true when the comparison was made. The request and response shapes are unchanged (contract 1.0.0). The local audit event and the TANTRA projection carry `required_scope`; the audit event also carries `vajra_authority`. |
+| VAJRA credential | New setting `VAJRA_CYBER_SECRET` (VAJRA's evidence-only tier), used for evidence writes when set. `VAJRA_TANTRA_SECRET` is now only a fallback (section 2). |
+| `GET /api/v1/system/health` (superadmin) | `bhiv_runtime.vajra` adds `write_credential` (`cyber_evidence_only`, `tantra_governance` or `none`; never the token) and `warnings`. |
+
 ## 2. VAJRA (relay node HTTP API)
 
 | Property | Value |
 |---|---|
 | Base URL | `VAJRA_API_URL`. The node's HTTP port is `HTTP_PORT`, 8080 by default. Port 4000 in some VAJRA docs is the P2P port. Use https in production: the verify response is unauthenticated, so its integrity depends on the transport. |
-| Authority read | `GET /api/vajra/authority/verify?subject=<id>`. No auth. Returns `{subject, current_state, is_authorized, verified_at}`; `is_authorized` is true only for GRANT/USE, and Cybersecurity accepts only a JSON boolean true. |
-| Evidence write | `POST /api/vajra/evidence/record` with `Authorization: Bearer <VAJRA_TANTRA_SECRET>`. Body: `trace_id, source, threat_type, severity, action_taken, actor, details, evidence_hex, metadata`. |
+| Authority read | `GET /api/vajra/authority/verify?subject=<id>`. No auth. Returns `{subject, current_state, is_authorized, verified_at}`, and since commit `3cc883f` also `scope` (list of strings) and `authority`; `is_authorized` is true only for GRANT/USE, and Cybersecurity accepts only a JSON boolean true and only a list of strings as a scope. |
+| Evidence write | `POST /api/vajra/evidence/record` with `Authorization: Bearer <token>` (see "The tokens"). Body: `trace_id, source, threat_type, severity, action_taken, actor, details, evidence_hex, metadata`. |
 | One record per decision | VAJRA keeps one row per `trace_id`, so Cybersecurity sends `trace_id = "<request trace>::<decision_id>"`. The audit event stores that value as `metadata.vajra_trace_id`. |
-| Evidence responses | 200 `stored:true` maps to RECORDED; 200 `simulated:true` (trace starting `test_probe_`) maps to SIMULATED; 409 maps to DUPLICATE_TRACE; 401 to UNAUTHORIZED; 400 to REJECTED; 5xx or network failure to UNAVAILABLE. Only RECORDED allows an ALLOW. |
+| Evidence responses | 200 `stored:true` maps to RECORDED; 200 `simulated:true` (trace starting `test_probe_`) maps to SIMULATED; 409 maps to DUPLICATE_TRACE; 401 or 403 to UNAUTHORIZED; 400 to REJECTED; 5xx or network failure to UNAVAILABLE. Only RECORDED allows an ALLOW. The sink result names the credential kind used (`credential`). |
 | Provenance | `evidence_hex` is the SHA-256 of the stored canonical audit event (exactly the JSON in `audit_logs.details`). VAJRA hashes the full request into `evidence_hash`, so the VAJRA row commits to our audit event. TruthStore rows are hash-chained. |
 | Replay reference | `GET /api/tantra/records`, `GET /api/tantra/chain-integrity` on the VAJRA node. |
-| The token | `VAJRA_TANTRA_SECRET` is one shared value. VAJRA does not scope it: the same token authorizes `/api/vajra/authority/transition` and `/api/vajra/provenance/retrieval`, so treat it as high-privilege. VAJRA's code names it the TANTRA secret; who issues it to Cybersecurity is UNKNOWN. An evidence-only credential is to be requested from the VAJRA owner. |
+| The tokens | Two shared values; VAJRA compares the bearer with them as fixed strings (no JWT is checked). `VAJRA_CYBER_SECRET`, VAJRA's evidence-only tier (commit `3cc883f`), is what Cybersecurity should hold and is used when set. `VAJRA_TANTRA_SECRET` is VAJRA's governance token: it also authorizes `/api/vajra/authority/transition`, so Cybersecurity uses it only when the evidence-only token is not configured, and health then warns. Re-check of `3cc883f` (2026-11-05, local node): evidence/record still accepts only the governance token, so the evidence-only token gets 401 there (VAJ-10; with only that token every decision fails closed), and the evidence-only token is still accepted by permission grant/revoke and admin submit-transaction (VAJ-11). VAJRA's reply names `security/jwt_handler.py` (RS256) as the issuer; that file is in VAJRA's repository and is used by its Python services, but the relay's gate does not use it. Who issues and rotates the two fixed values is UNKNOWN (asked of the VAJRA owner). |
 | Not called in this slice | `POST /api/vajra/authority/transition` (a deliberate scope choice). VAJRA's integration package (`VAJRA_EXTERNAL_INTEGRATION_PACKAGE.md:18`) assigns opt-out revocation through this route to "Kaushlendra / User UX"; who calls it is a team decision that has not been made yet. |
 
 ## 3. TANTRA (validation layer, karma helper, PRANA)
@@ -131,7 +151,7 @@ confirm the Bucket reads it from there.
 | Schema / version | Registry `prana.event.contracts`, version `1.0.0`. Event type `TANTRA_EVENT_TYPE` (default `security_decision`). |
 | Current state | Live TANTRA answers `422 event_type_not_registered` for `security_decision`. Registered types on 2026-11-04: adaptive_decision, bucket_memory_saved, integrity_probe, review_completed, task_submit, task_submit_failed, truth_classification. |
 | Ledger write | Only after `status: valid`: `POST {TANTRA_KARMA_URL}/karma/ingest` with the validated envelope, then `POST /karma/verify?event_id=...`. MATCH maps to RECORDED; any other replay result maps to RECORDED_UNVERIFIED, which is reported as a gap. A rejected event is never written by another route. |
-| Payload | A projection of the canonical security event (schema 1.0.0; one contract, not a second schema). It carries `event_id, event_type, timestamp, source_system, trace_id, request_id, actor (actor_id is the internal pseudonymous user id), action, resource, outcome, policy_reference` and these metadata fields: `decision, decision_id, vajra_subject_ref, vajra_status, vajra_state, vajra_trace_id, scope_checked, supersedes_event_id`. The free-text `purpose` and the idempotency key are not sent. `vajra_subject_ref` is an unsalted SHA-256 prefix: pseudonymous and linkable, not anonymous. |
+| Payload | A projection of the canonical security event (schema 1.0.0; one contract, not a second schema). It carries `event_id, event_type, timestamp, source_system, trace_id, request_id, actor (actor_id is the internal pseudonymous user id), action, resource, outcome, policy_reference` and these metadata fields: `decision, decision_id, vajra_subject_ref, vajra_status, vajra_state, vajra_trace_id, scope_checked, required_scope, supersedes_event_id`. The free-text `purpose` and the idempotency key are not sent. `vajra_subject_ref` is an unsalted SHA-256 prefix: pseudonymous and linkable, not anonymous. |
 | Test traffic | `TANTRA_SUBMISSION_PREFIX` (for example `cyber-p0-test-`) is prepended to every submission id. |
 | Authentication | The TANTRA services accepted our calls without credentials (observed 2026-11-04). |
 | Errors | 422 maps to CONTRACT_REJECTED (with TANTRA's reason); 5xx, timeout or network failure to UNAVAILABLE. The decision is unaffected, and the gap is listed in `evidence.gaps`. |
@@ -141,7 +161,8 @@ confirm the Bucket reads it from there.
 ## 4. Observability of the integrations
 
 - `GET /api/v1/system/health` shows `bhiv_runtime` only to a superadmin. It lists configuration and reachability of
-  each TANTRA service and the VAJRA API, plus whether the VAJRA token is configured (never the token itself).
+  each TANTRA service and the VAJRA API, plus whether a VAJRA token is configured, which kind is used
+  (`write_credential`) and any warning (never the token itself).
   Probes are cached for `BHIV_HEALTH_CACHE_SECONDS` (default 15). Anonymous callers get the earlier health body and
   trigger no outbound probes.
 - Every external call writes one JSON log line, `bhiv_runtime.<sink>`, with status, HTTP code, trace id and a
@@ -154,5 +175,5 @@ confirm the Bucket reads it from there.
 | Owner | Needed |
 |---|---|
 | TANTRA team | Register a contract for cybersecurity decisions (or name the registered type to use); a dry-run lane for the enforcement and authority-validation routes |
-| VAJRA (Prakash) | An evidence-only credential and its issuer; a staging node or test prefix for live tests; a scope-aware verify contract (CYB-13); durable authority state |
+| VAJRA (Prakash) | After the 2026-11-05 re-check of `3cc883f`: accept the evidence-only token on evidence/record (VAJ-10) and refuse it elsewhere (VAJ-11); keep the GRANT scope fixed (VAJ-12); a ledger that fails closed and checks its hash chain (VAJ-13); no freeze from anonymous reports (VAJ-14); unique permission ids (VAJ-07); real recovery signatures (VAJ-05); the token issuer and rotation; agreement on the scope form; a staging node or test prefix for live tests |
 | Integration lead (Rajaryan) | The VM; deployment URLs for VAJRA and TANTRA; the decision on who calls VAJRA transitions for opt-out |

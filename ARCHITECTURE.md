@@ -49,7 +49,7 @@ a stage that has no implementation yet, the stage is marked **not built** with t
 | Authorization decision | `app/api/v1/endpoints/authz.py` | Deny by default; non-superadmins can only ask about themselves |
 | Revocation | `app/api/v1/endpoints/access.py` | Tiers: token, account, permission. Permission revocations are stored in `revoked_permissions` and enforced by the RBAC middleware and `/authz/check`; `/access/restore` undoes one |
 | Threat detection and correlation (new) | `app/core/threat_detection.py`, `app/api/v1/endpoints/threats.py` | Rule `auth.repeated_failed_login` v1.0.0 over the canonical failed-login events; one open incident per account and window; decision support only (never blocks) |
-| Protected access (new) | `app/api/v1/endpoints/protected_access.py` | VAJRA consent state (not scope: CYB-13), no ALLOW without VAJRA evidence, fail closed, per-caller idempotency bound to the request, per-sink evidence status |
+| Protected access (new) | `app/api/v1/endpoints/protected_access.py` | VAJRA consent state and scope (`<action>:<resource type>`, since 2026-11-05; caller binding not checked: CYB-13), no ALLOW without VAJRA evidence, fail closed, per-caller idempotency bound to the request, per-sink evidence status |
 | BHIV runtime bridge (new) | `app/core/bhiv_runtime.py` | VAJRA verify/evidence, TANTRA validate/ingest/verify, health probes |
 | Earlier BHIV Core/Bucket hooks | `app/core/sovereign_integrations.py` | Evidence copy to Bucket, governance events to Core, local buffer when unreachable |
 | Data | `app/db/models.py` | SQLAlchemy models; SQLite by default; tables `protected_access_decisions`, `revoked_permissions` and `security_incidents` added (created at start-up) |
@@ -69,5 +69,6 @@ Deny by default on unknown or anonymous callers, token revocation and account de
 request and survive a restart, VAJRA consent is required for protected access and its absence fails closed, no ALLOW
 without a VAJRA evidence record, no decision is released if the audit record cannot be written, duplicates do not
 re-execute and cannot revive a revoked grant, slow peers do not stall the API, and evidence gaps are reported
-instead of hidden. Not provided: scope checking and caller-to-subject binding (CYB-13). Results per property:
+instead of hidden. The action must be inside the scope VAJRA reports (since 2026-11-05). Not provided:
+caller-to-subject binding (CYB-13). Results per property:
 `evidence_packet/test_results/PROOF_MATRIX.md`.

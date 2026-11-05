@@ -1,4 +1,4 @@
-# Golden trace `cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77`
+# Golden trace `b87529b7-cd7a-42fb-9be6-a2b0f5a5a30e`
 
 One synthetic protected-access decision followed through every place it was recorded (check S8-01). VAJRA stores the decision under `<trace>::<decision_id>`; the audit event names that VAJRA row.
 
@@ -8,15 +8,15 @@ One synthetic protected-access decision followed through every place it was reco
 {
   "request": {
     "method": "POST",
-    "url": "http://127.0.0.1:62513/api/v1/protected/access",
+    "url": "http://127.0.0.1:56282/api/v1/protected/access",
     "headers": {
       "authorization": "[REDACTED]",
-      "x-trace-id": "cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77",
+      "x-trace-id": "b87529b7-cd7a-42fb-9be6-a2b0f5a5a30e",
       "content-type": "application/json"
     },
     "body": {
       "contract_version": "1.0.0",
-      "vajra_subject": "cyber-p0-test-traced-fbb67a88d0",
+      "vajra_subject": "cyber-p0-test-traced-614268e1f4",
       "action": "read",
       "resource": {
         "type": "evidence",
@@ -29,17 +29,17 @@ One synthetic protected-access decision followed through every place it was reco
     "status": 200,
     "headers": {
       "content-type": "application/json",
-      "x-request-id": "ba1d0bf1-9a08-4a02-8b55-0d02850ad2e4",
-      "x-trace-id": "cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77"
+      "x-request-id": "5fc48c34-3c0c-492d-b8c3-693a821d8a91",
+      "x-trace-id": "b87529b7-cd7a-42fb-9be6-a2b0f5a5a30e"
     },
     "body": {
       "contract_version": "1.0.0",
       "decision": "ALLOW",
       "reason_code": "ALLOWED_BY_VAJRA_AUTHORITY",
-      "reason": "Access permitted: VAJRA authority state is 'USE', the caller passed RBAC and VAJRA recorded the evidence. Scope (action/resource) is not checked by VAJRA's verify contract.",
-      "decision_id": "364826d5b0d04140ab72965389a1e092",
-      "trace_id": "cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77",
-      "request_id": "ba1d0bf1-9a08-4a02-8b55-0d02850ad2e4",
+      "reason": "Access permitted: VAJRA authority state is 'USE', the granted scope includes 'read:evidence', the caller passed RBAC and VAJRA recorded the evidence.",
+      "decision_id": "57a15ba90703430d85f5973b6a27c897",
+      "trace_id": "b87529b7-cd7a-42fb-9be6-a2b0f5a5a30e",
+      "request_id": "5fc48c34-3c0c-492d-b8c3-693a821d8a91",
       "idempotency_key": null,
       "duplicate": false,
       "actor_id": "cc_usr_2",
@@ -49,44 +49,32 @@ One synthetic protected-access decision followed through every place it was reco
         "id": "EV-P0-0001"
       },
       "vajra": {
-        "subject_ref": "subj_sha256_a8f50d05637f8368",
+        "subject_ref": "subj_sha256_d3f49615d10ab745",
         "status": "OK",
         "is_authorized": true,
         "current_state": "USE",
-        "scope_checked": false
+        "scope_checked": true
       },
       "evidence": {
-        "local_audit_event_id": "0a96efea-4d21-4720-be42-ed3d3df49b52",
+        "local_audit_event_id": "3325c83e-83ae-4485-9913-b96c7c089c6d",
         "superseded_audit_event_id": null,
         "vajra": {
           "status": "RECORDED",
           "http_status": 200,
           "detail": "",
           "data": {
-            "evidence_hash": "sha256:83865c8477b957be6b68940fa4f47a6aab7e2e4dbed17194d5e8d54eff87ac91",
+            "evidence_hash": "sha256:5a9ca43d12be148d65080c8673038d81787882222fe21eb8fcbe4d70768f99da",
             "stored_in": [
               "TruthStore (tantra_truth.jsonl)"
             ],
-            "recorded_at": 1793799193
+            "recorded_at": 1793889172,
+            "credential": "tantra_governance"
           }
         },
         "tantra": {
-          "status": "CONTRACT_REJECTED",
-          "http_status": 422,
-          "detail": "event_type_not_registered",
-          "data": {
-            "reason": "event_type_not_registered",
-            "message": "event_type 'security_decision' is not registered for PRANA ingress",
-            "registered_event_types": [
-              "adaptive_decision",
-              "bucket_memory_saved",
-              "integrity_probe",
-              "review_completed",
-              "task_submit",
-              "task_submit_failed",
-              "truth_classification"
-            ]
-          }
+          "status": "NOT_CONFIGURED",
+          "http_status": null,
+          "detail": "TANTRA_VALIDATION_URL is not set"
         },
         "complete": false,
         "gaps": [
@@ -94,7 +82,7 @@ One synthetic protected-access decision followed through every place it was reco
         ]
       },
       "policy_applied": "vajra_authority_v1",
-      "evaluated_at": "2026-11-04T13:33:11.722Z"
+      "evaluated_at": "2026-11-05T14:32:51.742Z"
     }
   }
 }
@@ -105,21 +93,21 @@ One synthetic protected-access decision followed through every place it was reco
 ```json
 {
   "audit_row": {
-    "id": 21,
+    "id": 26,
     "action": "protected_access.decision:read",
     "status": "success",
     "entity_type": "evidence",
     "entity_id": "EV-P0-0001",
-    "timestamp": "2026-11-04T13:33:12.411620"
+    "timestamp": "2026-11-05T14:32:51.942275"
   },
   "canonical_event": {
     "schema_version": "1.0.0",
-    "event_id": "0a96efea-4d21-4720-be42-ed3d3df49b52",
+    "event_id": "3325c83e-83ae-4485-9913-b96c7c089c6d",
     "event_type": "protected_access.decision",
-    "timestamp": "2026-11-04T13:33:12.411Z",
+    "timestamp": "2026-11-05T14:32:51.941Z",
     "source_system": "cybercrime",
-    "trace_id": "cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77",
-    "request_id": "ba1d0bf1-9a08-4a02-8b55-0d02850ad2e4",
+    "trace_id": "b87529b7-cd7a-42fb-9be6-a2b0f5a5a30e",
+    "request_id": "5fc48c34-3c0c-492d-b8c3-693a821d8a91",
     "actor": {
       "actor_id": "cc_usr_2",
       "actor_type": "user",
@@ -140,7 +128,7 @@ One synthetic protected-access decision followed through every place it was reco
       "status": "SUCCESS",
       "status_code": 200,
       "reason_code": "ALLOWED_BY_VAJRA_AUTHORITY",
-      "message": "Access permitted: VAJRA authority state is 'USE', the caller passed RBAC and VAJRA recorded the evidence. Scope (action/resource) is not checked by VAJRA's verify contract."
+      "message": "Access permitted: VAJRA authority state is 'USE', the granted scope includes 'read:evidence', the caller passed RBAC and VAJRA recorded the evidence."
     },
     "policy_reference": {
       "policy_id": "vajra_authority_v1",
@@ -149,12 +137,14 @@ One synthetic protected-access decision followed through every place it was reco
       "boundary_checked": null
     },
     "metadata": {
-      "decision_id": "364826d5b0d04140ab72965389a1e092",
-      "vajra_subject_ref": "subj_sha256_a8f50d05637f8368",
+      "decision_id": "57a15ba90703430d85f5973b6a27c897",
+      "vajra_subject_ref": "subj_sha256_d3f49615d10ab745",
       "vajra_status": "OK",
       "vajra_state": "USE",
-      "vajra_trace_id": "cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77::364826d5b0d04140ab72965389a1e092",
-      "scope_checked": false,
+      "vajra_authority": "AUTH_ROLE_CLIENT",
+      "vajra_trace_id": "b87529b7-cd7a-42fb-9be6-a2b0f5a5a30e::57a15ba90703430d85f5973b6a27c897",
+      "scope_checked": true,
+      "required_scope": "read:evidence",
       "purpose": "P0 verification (synthetic)",
       "idempotency_key": {},
       "decision": "ALLOW"
@@ -168,15 +158,15 @@ One synthetic protected-access decision followed through every place it was reco
 
 ```json
 {
-  "trace_id": "cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77::364826d5b0d04140ab72965389a1e092",
-  "execution_hash": "sha256:83865c8477b957be6b68940fa4f47a6aab7e2e4dbed17194d5e8d54eff87ac91",
-  "validation_hash": "sha256:83865c8477b957be6b68940fa4f47a6aab7e2e4dbed17194d5e8d54eff87ac91",
-  "replay_hash": "sha256:83865c8477b957be6b68940fa4f47a6aab7e2e4dbed17194d5e8d54eff87ac91",
-  "tx_hash": "evidence_cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77::364826d5b0d04140ab72965389a1e092",
+  "trace_id": "b87529b7-cd7a-42fb-9be6-a2b0f5a5a30e::57a15ba90703430d85f5973b6a27c897",
+  "execution_hash": "sha256:5a9ca43d12be148d65080c8673038d81787882222fe21eb8fcbe4d70768f99da",
+  "validation_hash": "sha256:5a9ca43d12be148d65080c8673038d81787882222fe21eb8fcbe4d70768f99da",
+  "replay_hash": "sha256:5a9ca43d12be148d65080c8673038d81787882222fe21eb8fcbe4d70768f99da",
+  "tx_hash": "evidence_b87529b7-cd7a-42fb-9be6-a2b0f5a5a30e::57a15ba90703430d85f5973b6a27c897",
   "fraud_decision": "ALLOW",
-  "timestamp": 1793799193,
-  "prev_hash": "26ce42008a05a142914244532ec1008bd7ddd2a0b04632948f61b8ef37c54f89",
-  "entry_hash": "55dc7ea5bac3e0a76f031c444a0817f5854e62f19b52052648f22f1735a87e76"
+  "timestamp": 1793889172,
+  "prev_hash": "7e486ead0775b6900569bc8dc650b4b07f82d48466d212daf9c28bf5b18f24fa",
+  "entry_hash": "6d75c985fa551aaab1853dd6d4fc1266cc695d8b22199a1cff4f977afc4dfe20"
 }
 ```
 

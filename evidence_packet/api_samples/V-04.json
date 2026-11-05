@@ -1,0 +1,245 @@
+[
+  {
+    "check_id": "V-04",
+    "system": "vajra-local",
+    "utc": "2026-11-05T14:32:45Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:56277/api/v1/permission/grant",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "b975a1dc-08ff-46ef-b7ce-8a72b13e52f3",
+        "content-type": "application/json"
+      },
+      "body": {
+        "trace_id": "75a4dda4-810d-4148-a46b-1b0ad8163d51",
+        "subject": "cyber-p0-test-collide-a-fe5482b087",
+        "requester": "app-alpha",
+        "purpose": "P0 verification (synthetic)",
+        "scope": "read",
+        "ttl_seconds": 600
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "commitment": "b8ae5e28c916a50c4537518a93cef87b6a95bc5d8c8c1c17aae36f54940e113a",
+        "permission_id": "perm-cyber-p0-tes-44fe0dcbd77f16e3",
+        "record": {
+          "permission_id": "perm-cyber-p0-tes-44fe0dcbd77f16e3",
+          "trace_id": "75a4dda4-810d-4148-a46b-1b0ad8163d51",
+          "subject": "cyber-p0-test-collide-a-fe5482b087",
+          "requester": "app-alpha",
+          "purpose": "P0 verification (synthetic)",
+          "scope": "read",
+          "state": "GRANT",
+          "created_at": 1793889165,
+          "updated_at": 1793889165,
+          "expires_at": 1793889765,
+          "commitment_hash": "b8ae5e28c916a50c4537518a93cef87b6a95bc5d8c8c1c17aae36f54940e113a",
+          "transitions": [
+            {
+              "from_state": "",
+              "to_state": "GRANT",
+              "timestamp": 1793889165,
+              "reason": "Initial user consent grant",
+              "trace_id": "75a4dda4-810d-4148-a46b-1b0ad8163d51"
+            }
+          ]
+        },
+        "status": "GRANTED"
+      }
+    }
+  },
+  {
+    "check_id": "V-04",
+    "system": "vajra-local",
+    "utc": "2026-11-05T14:32:45Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:56277/api/v1/permission/grant",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "b0467664-5df0-4868-9943-1e87a661e30a",
+        "content-type": "application/json"
+      },
+      "body": {
+        "trace_id": "ad4dd4e7-4d44-4a29-a0b5-db6005d7176c",
+        "subject": "cyber-p0-test-collide-b-f4ff16375f",
+        "requester": "app-alpha",
+        "purpose": "P0 verification (synthetic)",
+        "scope": "read",
+        "ttl_seconds": 600
+      }
+    },
+    "response": {
+      "status": 201,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "commitment": "9832081ec0817a47395919611b016c230e1b712900e907fbc23f83990275cdcb",
+        "permission_id": "perm-cyber-p0-tes-44fe0dcbd77f16e3",
+        "record": {
+          "permission_id": "perm-cyber-p0-tes-44fe0dcbd77f16e3",
+          "trace_id": "ad4dd4e7-4d44-4a29-a0b5-db6005d7176c",
+          "subject": "cyber-p0-test-collide-b-f4ff16375f",
+          "requester": "app-alpha",
+          "purpose": "P0 verification (synthetic)",
+          "scope": "read",
+          "state": "GRANT",
+          "created_at": 1793889165,
+          "updated_at": 1793889165,
+          "expires_at": 1793889765,
+          "commitment_hash": "9832081ec0817a47395919611b016c230e1b712900e907fbc23f83990275cdcb",
+          "transitions": [
+            {
+              "from_state": "",
+              "to_state": "GRANT",
+              "timestamp": 1793889165,
+              "reason": "Initial user consent grant",
+              "trace_id": "ad4dd4e7-4d44-4a29-a0b5-db6005d7176c"
+            }
+          ]
+        },
+        "status": "GRANTED"
+      }
+    }
+  },
+  {
+    "check_id": "V-04",
+    "system": "vajra-local",
+    "utc": "2026-11-05T14:32:45Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:56277/api/v1/permission/revoke",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "2a9e319c-f5d6-47c9-b978-7269493eaa5f",
+        "content-type": "application/json"
+      },
+      "body": {
+        "permission_id": "perm-cyber-p0-tes-44fe0dcbd77f16e3",
+        "trace_id": "4890604d-5c08-4397-9df8-870c29939d24",
+        "reason": "revoke subject A only (synthetic)"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "permission_id": "perm-cyber-p0-tes-44fe0dcbd77f16e3",
+        "record": {
+          "permission_id": "perm-cyber-p0-tes-44fe0dcbd77f16e3",
+          "trace_id": "ad4dd4e7-4d44-4a29-a0b5-db6005d7176c",
+          "subject": "cyber-p0-test-collide-b-f4ff16375f",
+          "requester": "app-alpha",
+          "purpose": "P0 verification (synthetic)",
+          "scope": "read",
+          "state": "REVOKE",
+          "created_at": 1793889165,
+          "updated_at": 1793889165,
+          "expires_at": 1793889765,
+          "commitment_hash": "9832081ec0817a47395919611b016c230e1b712900e907fbc23f83990275cdcb",
+          "transitions": [
+            {
+              "from_state": "",
+              "to_state": "GRANT",
+              "timestamp": 1793889165,
+              "reason": "Initial user consent grant",
+              "trace_id": "ad4dd4e7-4d44-4a29-a0b5-db6005d7176c"
+            },
+            {
+              "from_state": "GRANT",
+              "to_state": "REVOKE",
+              "timestamp": 1793889165,
+              "reason": "revoke subject A only (synthetic)",
+              "trace_id": "4890604d-5c08-4397-9df8-870c29939d24"
+            }
+          ]
+        },
+        "status": "REVOKED"
+      }
+    }
+  },
+  {
+    "check_id": "V-04",
+    "system": "vajra-local",
+    "utc": "2026-11-05T14:32:45Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:56277/api/v1/permission/check",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "bc68cc7c-6048-4287-91a3-99efc330c4b9",
+        "content-type": "application/json"
+      },
+      "body": {
+        "trace_id": "c90d3c18-1120-4460-a1ee-a2b8789916a7",
+        "subject": "cyber-p0-test-collide-a-fe5482b087",
+        "requester": "app-alpha",
+        "scope": "read"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "allowed": true,
+        "state": "GRANT",
+        "reason": "ALLOW: Valid permission in state 'GRANT'",
+        "trace_id": "c90d3c18-1120-4460-a1ee-a2b8789916a7",
+        "permission_id": "perm-cyber-p0-tes-44fe0dcbd77f16e3",
+        "commitment_hash": "b8ae5e28c916a50c4537518a93cef87b6a95bc5d8c8c1c17aae36f54940e113a",
+        "evaluated_at": 1793889165
+      }
+    }
+  },
+  {
+    "check_id": "V-04",
+    "system": "vajra-local",
+    "utc": "2026-11-05T14:32:45Z",
+    "elapsed_ms": 15,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:56277/api/v1/permission/check",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "aa2ccdd5-3a6d-4262-8c0e-987bc1dc07a8",
+        "content-type": "application/json"
+      },
+      "body": {
+        "trace_id": "78a2830b-3399-4254-8e30-7e33e694f44e",
+        "subject": "cyber-p0-test-collide-b-f4ff16375f",
+        "requester": "app-alpha",
+        "scope": "read"
+      }
+    },
+    "response": {
+      "status": 403,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "allowed": false,
+        "state": "REVOKE",
+        "reason": "DENY: User has REVOKED consent (Opt-Out enforced)",
+        "trace_id": "78a2830b-3399-4254-8e30-7e33e694f44e",
+        "permission_id": "perm-cyber-p0-tes-44fe0dcbd77f16e3",
+        "commitment_hash": "9832081ec0817a47395919611b016c230e1b712900e907fbc23f83990275cdcb",
+        "evaluated_at": 1793889165
+      }
+    }
+  }
+]

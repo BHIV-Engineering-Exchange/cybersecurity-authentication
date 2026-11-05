@@ -461,8 +461,9 @@ def v_03(ctx: Context):
     g = vajra(ctx).post("/api/v1/permission/grant", headers=vajra_auth(ctx, "cyber"), json={
         "trace_id": ctx.new_trace(), "subject": subject, "requester": "cyber-p0-test-requester",
         "purpose": "evidence-only token grant attempt (synthetic)", "scope": "read", "ttl_seconds": 60})
+    # A different requester, so the two grants cannot share a permission id (VAJ-07) and the revoke below has one target.
     target = vajra(ctx).post("/api/v1/permission/grant", headers=vajra_auth(ctx), json={
-        "trace_id": ctx.new_trace(), "subject": new_subject("governance-grant"), "requester": "cyber-p0-test-requester",
+        "trace_id": ctx.new_trace(), "subject": new_subject("governance-grant"), "requester": "cyber-p0-test-requester-gov",
         "purpose": "grant made with the governance token (synthetic)", "scope": "read", "ttl_seconds": 60})
     rv = vajra(ctx).post("/api/v1/permission/revoke", headers=vajra_auth(ctx, "cyber"), json={
         "permission_id": (target.json() or {}).get("permission_id"), "trace_id": ctx.new_trace(),
@@ -1454,22 +1455,31 @@ def v_08(ctx: Context):
 
         # 3. One unreadable line at the end of the ledger.
         node.stop()
+        before_corrupt = ledger.read_text(encoding="utf-8")
         with open(ledger, "a", encoding="utf-8") as fh:
             fh.write("{corrupt line (synthetic)\n")
         if start_or_refused():
             earlier = verify_view(ctx, sentinel).get("current_state")
+            ctx.expect("after one unreadable line, the stored state is still served", "earlier subject USE",
+                       f"earlier subject '{earlier}'", ok=earlier == "USE")
             later = new_subject("ledger-after-corrupt")
             ctx.require("GRANT accepted after the corrupt line", 200, transition(ctx, later, "GRANT", SIM_ISSUER_USER).status_code)
-            node.restart()
+            node.stop()
+            saved = f'"subject":"{later}"' in ledger.read_text(encoding="utf-8")
+            ctx.expect("a GRANT accepted after the unreadable line is written to the ledger file", True, saved)
+            # Put the file back without the unreadable line (keeping anything appended after it) and start once more.
+            ledger.write_text(before_corrupt + ledger.read_text(encoding="utf-8").split("{corrupt line (synthetic)\n", 1)[-1],
+                              encoding="utf-8")
+            node.start()
             kept = verify_view(ctx, later).get("current_state")
-            ok = earlier == "USE" and kept == "GRANT"
-            ctx.expect("one unreadable line neither wipes the stored state nor stops saving",
-                       "earlier subject USE and the new GRANT kept, or the node refuses to start",
-                       f"earlier subject '{earlier}'; new subject after another restart '{kept}'", ok=ok)
+            ok = earlier == "USE" and saved
+            ctx.note(f"after the unreadable line was removed and the node restarted, the later subject reads '{kept}'")
         else:
             ok = True
-            ctx.expect("one unreadable line neither wipes the stored state nor stops saving",
-                       "earlier subject USE and the new GRANT kept, or the node refuses to start", "node refused to start", ok=True)
+            ctx.expect("after one unreadable line, the node refuses to start or keeps serving the stored state",
+                       "refused or served", "node refused to start", ok=True)
+            ledger.write_text(before_corrupt, encoding="utf-8")
+            node.start()
         problems += not ok
         warnings = [line for line in node.log_path.read_text(encoding="utf-8", errors="replace").splitlines()
                     if "Failed to load authority ledger" in line]

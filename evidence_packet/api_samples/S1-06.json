@@ -2,24 +2,24 @@
   {
     "check_id": "S1-06",
     "system": "vajra-local",
-    "utc": "2026-11-04T13:32:50Z",
-    "elapsed_ms": 0,
+    "utc": "2026-11-05T14:32:45Z",
+    "elapsed_ms": 15,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:62507/api/vajra/authority/transition",
+      "url": "http://127.0.0.1:56277/api/vajra/authority/transition",
       "headers": {
-        "x-trace-id": "439c1290-a6ca-47a8-9348-9bddaca6e51d",
+        "x-trace-id": "769164f4-b17e-4162-b629-93e6b01d6328",
         "content-type": "application/json"
       },
       "body": {
-        "trace_id": "439c1290-a6ca-47a8-9348-9bddaca6e51d",
-        "subject": "cyber-p0-test-attacker-249fd12de3",
+        "trace_id": "769164f4-b17e-4162-b629-93e6b01d6328",
+        "subject": "cyber-p0-test-attacker-f2d2450305",
         "authority": "AUTH_ROLE_CLIENT",
         "issuer": "ATTACKER (synthetic)",
         "target": "VAJRA_LEDGER",
         "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)",
         "scope": [
-          "read"
+          "read:evidence"
         ],
         "to_state": "GRANT",
         "policy_version": "v1.0.0",
@@ -40,25 +40,25 @@
   {
     "check_id": "S1-06",
     "system": "vajra-local",
-    "utc": "2026-11-04T13:32:50Z",
-    "elapsed_ms": 16,
+    "utc": "2026-11-05T14:32:45Z",
+    "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:62507/api/vajra/authority/transition",
+      "url": "http://127.0.0.1:56277/api/vajra/authority/transition",
       "headers": {
-        "x-trace-id": "01bfbdeb-3fc8-4672-b4bd-f3f2ea53e56d",
+        "x-trace-id": "2712e389-cdbf-453f-9050-cf456da42404",
         "authorization": "[REDACTED]",
         "content-type": "application/json"
       },
       "body": {
-        "trace_id": "01bfbdeb-3fc8-4672-b4bd-f3f2ea53e56d",
-        "subject": "cyber-p0-test-attacker-249fd12de3",
+        "trace_id": "2712e389-cdbf-453f-9050-cf456da42404",
+        "subject": "cyber-p0-test-attacker-f2d2450305",
         "authority": "AUTH_ROLE_CLIENT",
         "issuer": "ATTACKER (synthetic)",
         "target": "VAJRA_LEDGER",
         "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)",
         "scope": [
-          "read"
+          "read:evidence"
         ],
         "to_state": "GRANT",
         "policy_version": "v1.0.0",
@@ -79,16 +79,16 @@
   {
     "check_id": "S1-06",
     "system": "vajra-local",
-    "utc": "2026-11-04T13:32:50Z",
+    "utc": "2026-11-05T14:32:45Z",
     "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:62507/api/vajra/evidence/record",
+      "url": "http://127.0.0.1:56277/api/vajra/evidence/record",
       "headers": {
         "content-type": "application/json"
       },
       "body": {
-        "trace_id": "e0c3e02a-1dea-4948-9907-a8e747e4ee7c",
+        "trace_id": "42204a0a-a257-4dba-a164-68aa7ed0dbfb",
         "action_taken": "ALLOW"
       }
     },
@@ -106,11 +106,11 @@
   {
     "check_id": "S1-06",
     "system": "vajra-local",
-    "utc": "2026-11-04T13:32:50Z",
+    "utc": "2026-11-05T14:32:45Z",
     "elapsed_ms": 0,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:62507/api/vajra/authority/verify?subject=cyber-p0-test-attacker-249fd12de3",
+      "url": "http://127.0.0.1:56277/api/vajra/authority/verify?subject=cyber-p0-test-attacker-f2d2450305",
       "headers": {},
       "body": null
     },
@@ -120,10 +120,12 @@
         "content-type": "application/json"
       },
       "body": {
+        "authority": "",
         "current_state": "",
         "is_authorized": false,
-        "subject": "cyber-p0-test-attacker-249fd12de3",
-        "verified_at": 1793799170
+        "scope": [],
+        "subject": "cyber-p0-test-attacker-f2d2450305",
+        "verified_at": 1793889165
       }
     }
   }

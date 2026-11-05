@@ -27,6 +27,7 @@ Usage (from the repository root, with the backend virtualenv's python):
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import platform
@@ -142,7 +143,9 @@ def main() -> int:
     redactor = Redactor()
     secret_key, vajra_secret, vajra_cyber_secret = (secrets.token_urlsafe(32), secrets.token_urlsafe(32),
                                                     secrets.token_urlsafe(32))
-    redactor.add(secret_key, vajra_secret, vajra_cyber_secret)
+    redactor.add(secret_key)
+    redactor.add_named(vajra_secret, "VAJRA_TANTRA_SECRET")  # recordings then show which token a call used
+    redactor.add_named(vajra_cyber_secret, "VAJRA_CYBER_SECRET")
 
     db_path = work / "cyber.db"
     tantra_live_env = {}
@@ -243,6 +246,8 @@ def main() -> int:
         "versions": {
             "cybersecurity_repo_commit": git_head(REPO),
             "vajra_repo_commit": git_head(args.vajra_repo) if args.vajra_repo else "not recorded",
+            # The node binary itself (go build embeds no VCS stamp in this layout), so the tested build can be matched.
+            "vajra_binary_sha256": hashlib.sha256(args.vajra_bin.resolve().read_bytes()).hexdigest(),
             "python": platform.python_version(), "os": platform.platform(),
         },
         "services": {"cybersecurity-api": cyber.starts, "vajra-relay-node": vajra.starts},

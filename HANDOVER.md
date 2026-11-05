@@ -18,13 +18,13 @@ decisions, the security audit trail and investigation services. It also takes pa
 and TANTRA (contracts and evidence ledger) without taking over their authority. Overview: [README.md](README.md).
 Limits: [BCAES_ALIGNMENT.md](BCAES_ALIGNMENT.md).
 
-## 2. Build state (2026-11-04)
+## 2. Build state (2026-11-04; VAJRA re-check and scope check 2026-11-05)
 
 | What exists | Status | Where the proof is |
 |---|---|---|
 | FastAPI service `cybercrime/backend` | OFFLINE-VERIFIED: starts, health, RBAC deny paths, token and account revocation (also after a crash-restart) | `evidence_packet/test_results/TEST_REPORT.md` |
 | Protected access + BHIV bridge (new) | OFFLINE-VERIFIED against a local VAJRA node: consent read, fail-closed decisions, no ALLOW without VAJRA evidence, audit, idempotency, gaps reported | Same; checks P-A, S1-05, S2-01, S4-*, S6-* |
-| VAJRA integration | OFFLINE-VERIFIED against the real VAJRA code (commit `07d683c`) on a local node; consent state only, scope not checked (CYB-13) | Same |
+| VAJRA integration | OFFLINE-VERIFIED against the real VAJRA code on a local node: commit `07d683c` (04 Nov), re-checked on commit `3cc883f` (05 Nov); consent state and scope checked, caller binding not checked (CYB-13); 7 of the 05 Nov run's checks fail on VAJRA defects | Same; `evidence_packet/test_results/VAJRA_RECHECK.md` |
 | TANTRA integration | Contract gate: see checks S5-01, S5-04; ledger probe: see check S8-02 (both need a `--tantra live` run) | `evidence_packet/test_results/LIVE_TANTRA_CALLS.md` |
 | fraud-evidence-system | Its own Jest suite runs; failures listed (FES-01) | `evidence_packet/test_results/` |
 | Deployment | OFFLINE-VERIFIED as local processes; VM BLOCKED-EXTERNAL | `evidence_packet/deployment_proof/` |
@@ -44,7 +44,9 @@ See the table in [README.md](README.md). Key files for the core flow:
    have real ones.
 3. Optional peers:
    - VAJRA node: `cd core/relay-chain && go build ./cmd/relay` in `bhiv-VAJRA_Blockchain`, then run it with
-     `BLOCKCHAIN_DOCKER=true HTTP_PORT=8080 VAJRA_TANTRA_SECRET=<token>`.
+     `BLOCKCHAIN_DOCKER=true HTTP_PORT=8080 VAJRA_TANTRA_SECRET=<governance token> VAJRA_CYBER_SECRET=<evidence-only token>`
+     (the relay reads `HTTP_PORT`, not `PORT`). Give Cybersecurity only `VAJRA_CYBER_SECRET` once VAJRA accepts it on
+     evidence/record (VAJ-10); until then it needs `VAJRA_TANTRA_SECRET`, and health warns.
    - TANTRA: no local build is possible (TAN-02); use the TANTRA team's deployment.
 4. Start: `python -m uvicorn main:app --host 0.0.0.0 --port 3000` from `cybercrime/backend`.
 
@@ -77,10 +79,14 @@ The checklist is in [DEP/README.md](DEP/README.md).
 
 Full list with steps and fixes: [DEFECTS.md](evidence_packet/test_results/DEFECTS.md). The most important:
 
-- **CYB-13:** protected access checks consent state only, not scope, and the VAJRA token is unscoped.
+- **CYB-13 (partly fixed 2026-11-05):** protected access now checks the scope VAJRA reports; the caller is still not
+  bound to the subject.
 - **TAN-01:** no TANTRA contract for cybersecurity events.
-- **VAJ-02:** VAJRA authority state is lost on restart.
-- **VAJ-06:** VAJRA permission-grant and freeze routes (and the token-mint route) run without authentication.
+- **VAJRA, after the 2026-11-05 re-check of `3cc883f`:** VAJ-02 and VAJ-06 are fixed by the owner. Open and HIGH:
+  VAJ-10 (evidence-only token refused by evidence/record), VAJ-11 (that token still reaches permission grant/revoke
+  and admin submit-transaction), VAJ-13 (a revocation can be undone by a restart; the ledger is trusted on reload),
+  VAJ-14 (an anonymous report can freeze any wallet), VAJ-07 (a revoke by id can hit the wrong subject). Also open:
+  VAJ-05, VAJ-12 and doc items VAJ-01, VAJ-03, VAJ-09. See `evidence_packet/test_results/VAJRA_RECHECK.md`.
 
 Fixed on 2026-11-04 by Hemanth at the team's request, for the lane owners' review:
 - CYB-01, CYB-02, CYB-04, CYB-05, CYB-07, CYB-08, CYB-09, CYB-12, CYB-15 (Kaushlendra);
@@ -99,10 +105,10 @@ review). Details: CHANGELOG.md and DEFECTS.md.
 | Review the threat taxonomy and scenarios; close the declared gaps (password spray, exfiltration, insider misuse, agents, unknown behaviour) | Shivam |
 | Review CYB-03, CYB-06 and the detection rule `auth.repeated_failed_login` (threshold, window, confidence) | Shivam |
 | Review the correlation (one open incident per account and window); decide how incidents close | Aryan Dias |
-| Review and merge the branch; decide scope and caller binding with Prakash (CYB-13); provide the VM | Rajaryan |
+| Review and merge the branch; agree the scope form (`<action>:<resource type>`) and the caller binding with Prakash (CYB-13); provide the VM | Rajaryan |
 | Confirm the Bucket reads its API key from the `X-API-Key` header (CYB-09) | Bucket owner (UNKNOWN) |
 | Register the cybersecurity contract; a test lane for enforcement and authority validation; PRANA to Bucket (TAN-01..TAN-04, TAN-06) | TANTRA team |
-| Durable authority state; auth on privileged routes; an evidence-only token; docs (VAJ-01..VAJ-09) | Prakash |
+| Fix VAJ-10, VAJ-11, VAJ-13, VAJ-14 and VAJ-07 (HIGH), VAJ-05 and VAJ-12, and the doc items VAJ-01, VAJ-03, VAJ-09; say who issues and rotates the VAJRA tokens | Prakash |
 | Central Depository / BHEX submission | Rajaryan (submission reference UNKNOWN) |
 
 ## 10. FAQ

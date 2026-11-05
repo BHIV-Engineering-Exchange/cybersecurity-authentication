@@ -1,0 +1,130 @@
+[
+  {
+    "check_id": "S1-06",
+    "system": "vajra-local",
+    "utc": "2026-11-04T13:32:50Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:62507/api/vajra/authority/transition",
+      "headers": {
+        "x-trace-id": "439c1290-a6ca-47a8-9348-9bddaca6e51d",
+        "content-type": "application/json"
+      },
+      "body": {
+        "trace_id": "439c1290-a6ca-47a8-9348-9bddaca6e51d",
+        "subject": "cyber-p0-test-attacker-249fd12de3",
+        "authority": "AUTH_ROLE_CLIENT",
+        "issuer": "ATTACKER (synthetic)",
+        "target": "VAJRA_LEDGER",
+        "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)",
+        "scope": [
+          "read"
+        ],
+        "to_state": "GRANT",
+        "policy_version": "v1.0.0",
+        "evidence_ref": "synthetic-test"
+      }
+    },
+    "response": {
+      "status": 401,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "error": "UNAUTHORIZED",
+        "message": "Missing or malformed Authorization: Bearer [REDACTED]"
+      }
+    }
+  },
+  {
+    "check_id": "S1-06",
+    "system": "vajra-local",
+    "utc": "2026-11-04T13:32:50Z",
+    "elapsed_ms": 16,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:62507/api/vajra/authority/transition",
+      "headers": {
+        "x-trace-id": "01bfbdeb-3fc8-4672-b4bd-f3f2ea53e56d",
+        "authorization": "[REDACTED]",
+        "content-type": "application/json"
+      },
+      "body": {
+        "trace_id": "01bfbdeb-3fc8-4672-b4bd-f3f2ea53e56d",
+        "subject": "cyber-p0-test-attacker-249fd12de3",
+        "authority": "AUTH_ROLE_CLIENT",
+        "issuer": "ATTACKER (synthetic)",
+        "target": "VAJRA_LEDGER",
+        "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)",
+        "scope": [
+          "read"
+        ],
+        "to_state": "GRANT",
+        "policy_version": "v1.0.0",
+        "evidence_ref": "synthetic-test"
+      }
+    },
+    "response": {
+      "status": 401,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "error": "UNAUTHORIZED",
+        "message": "Invalid bearer [REDACTED]"
+      }
+    }
+  },
+  {
+    "check_id": "S1-06",
+    "system": "vajra-local",
+    "utc": "2026-11-04T13:32:50Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:62507/api/vajra/evidence/record",
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "trace_id": "e0c3e02a-1dea-4948-9907-a8e747e4ee7c",
+        "action_taken": "ALLOW"
+      }
+    },
+    "response": {
+      "status": 401,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "error": "UNAUTHORIZED",
+        "message": "Missing or malformed Authorization: Bearer [REDACTED]"
+      }
+    }
+  },
+  {
+    "check_id": "S1-06",
+    "system": "vajra-local",
+    "utc": "2026-11-04T13:32:50Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:62507/api/vajra/authority/verify?subject=cyber-p0-test-attacker-249fd12de3",
+      "headers": {},
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "current_state": "",
+        "is_authorized": false,
+        "subject": "cyber-p0-test-attacker-249fd12de3",
+        "verified_at": 1793799170
+      }
+    }
+  }
+]

@@ -18,7 +18,7 @@ What ALLOW means (and does not mean)
     not report (field missing or not a list of strings) denies with VAJRA_SCOPE_UNAVAILABLE, a scope without the
     required entry denies with VAJRA_SCOPE_NOT_GRANTED. The "<action>:<resource type>" form follows VAJRA's own
     example ("read:telemetry"); it is Cybersecurity's proposal and still needs VAJRA/TANTRA agreement, because
-    VAJRA defines no scope vocabulary.
+    VAJRA defines no scope vocabulary (the agreed vocabulary is UNKNOWN until then).
   * Not checked: the resource id and the purpose (recorded only), and nothing binds the calling user to the
     subject. Both need a contract that does not exist yet.
 
@@ -39,8 +39,9 @@ Other rules
   * Idempotency: keys are scoped to the calling user and bound to the request content. A repeat of the
     same request returns the first decision with duplicate=true and re-executes nothing. A different
     request under the same key is refused (409). A stored ALLOW is replayed only within
-    PROTECTED_ACCESS_REPLAY_TTL_SECONDS and only if VAJRA still reports GRANT/USE; otherwise 409
-    STALE_DECISION. A claim left PENDING for more than 120 s (crashed request) is taken over.
+    PROTECTED_ACCESS_REPLAY_TTL_SECONDS and only if VAJRA still reports GRANT/USE with the required scope
+    (the same _decide as a fresh request); otherwise 409 STALE_DECISION. A claim left PENDING for more than
+    120 s (crashed request) is taken over.
   * Trace ids are limited to 128 characters of [A-Za-z0-9._:-] (they become part of the VAJRA record id).
   * This is a plain (sync) endpoint so slow VAJRA/TANTRA calls run in a worker thread and never block
     the server's event loop.
@@ -247,8 +248,8 @@ def _replay_or_refuse(existing: ProtectedAccessDecision, req: ProtectedAccessReq
                                     "recheck_reason_code": recheck_verdict["reason_code"] if recheck_verdict else None,
                                     "required_scope": required_scope})
             return _error(409, "STALE_DECISION",
-                          "The earlier ALLOW expired or VAJRA no longer reports this authority; send a new request "
-                          "with a new idempotency_key.", trace_id, request_id)
+                          "The earlier ALLOW expired, or VAJRA no longer reports this authority with the required "
+                          "scope; send a new request with a new idempotency_key.", trace_id, request_id)
     first["duplicate"] = True
     emit_audit_log(action="protected_access.duplicate", status="warning",
                    message="Duplicate request answered from the first decision; nothing re-executed.",

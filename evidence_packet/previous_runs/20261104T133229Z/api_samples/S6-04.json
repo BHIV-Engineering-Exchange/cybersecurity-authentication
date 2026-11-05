@@ -1,0 +1,42 @@
+[
+  {
+    "check_id": "S6-04",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T13:33:24Z",
+    "elapsed_ms": 62,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:62513/api/v1/evidence/",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "e7297fef-aae8-433b-94f7-41f8799e1b9f",
+        "content-type": "multipart/form-data; boundary=adc0d0ac5a3b26c5ef1ab91789dc2e5d"
+      },
+      "body": "<multipart upload: synthetic file, body not recorded>"
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "ada5a502-42a6-4ed8-9b52-4be945d86f1f",
+        "x-trace-id": "e7297fef-aae8-433b-94f7-41f8799e1b9f"
+      },
+      "body": {
+        "evidence_id": "EV-1793784803986",
+        "title": "P0 synthetic evidence",
+        "description": "Wallet: 0xSYNTHETIC-WALLET\nRisk level: low",
+        "hash": "f1f8caba55d283560e64f83e2bcaef8957517020693224bdc54a78e2622375d2",
+        "file_path": "C:\\tmp\\cyber-p0-verify-20261104T133229Z-hq04mu9_\\evidence_storage\\EV-1793784803986.txt",
+        "file_size": 38,
+        "file_type": "text/plain",
+        "anchor_status": "pending",
+        "immutable": true,
+        "id": 1,
+        "investigator_id": 2,
+        "case_id": null,
+        "created_at": "2026-11-04T13:33:23.991589",
+        "bucket_status": "not_configured"
+      }
+    }
+  }
+]

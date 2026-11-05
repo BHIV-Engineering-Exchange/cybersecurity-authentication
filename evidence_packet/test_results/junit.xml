@@ -1,98 +1,121 @@
-<testsuite name="cyber-p0-verification" tests="46" failures="3" errors="0" skipped="1">
-  <testcase classname="Observability" name="O-01 Health endpoints report real state; peer topology is shown only to a superadmin" time="0.937">
+<testsuite name="cyber-p0-verification" tests="54" failures="7" errors="0" skipped="4">
+  <testcase classname="Observability" name="O-01 Health endpoints report real state; peer topology is shown only to a superadmin" time="0.266">
   </testcase>
-  <testcase classname="Observability" name="O-02 TANTRA live services healthy (read-only GET)" time="1.609">
+  <testcase classname="Observability" name="O-02 TANTRA live services healthy (read-only GET)" time="0.000">
+    <skipped message="SKIPPED: TANTRA live mode not enabled for this run (--tantra off)"/>
   </testcase>
-  <testcase classname="S1 Unauthorized access" name="S1-01 Anonymous request is denied at the enforcement point, with actor/resource/decision/reason recorded" time="0.077">
+  <testcase classname="S1 Unauthorized access" name="S1-01 Anonymous request is denied at the enforcement point, with actor/resource/decision/reason recorded" time="0.015">
   </testcase>
   <testcase classname="S1 Unauthorized access" name="S1-02 Forged token is rejected" time="0.015">
   </testcase>
-  <testcase classname="S1 Unauthorized access" name="S1-03 Investigator cannot call a superadmin-only control (revoke)" time="0.047">
+  <testcase classname="S1 Unauthorized access" name="S1-03 Investigator cannot call a superadmin-only control (revoke)" time="0.015">
   </testcase>
-  <testcase classname="S1 Unauthorized access" name="S1-07 Anonymous call to the protected-access API is rejected" time="0.015">
+  <testcase classname="S1 Unauthorized access" name="S1-07 Anonymous call to the protected-access API is rejected" time="0.000">
   </testcase>
-  <testcase classname="S1 Unauthorized access" name="S1-06 VAJRA write routes reject callers without the bearer token (VAJRA enforcement point)" time="0.016">
+  <testcase classname="S1 Unauthorized access" name="S1-06 VAJRA write routes reject callers without the bearer token (VAJRA enforcement point)" time="0.015">
   </testcase>
-  <testcase classname="S1 Unauthorized access" name="V-01 VAJRA privileged state-changing routes reject unauthenticated callers (local node)" time="0.015">
-    <failure message="POST /api/admin/add-tokens without credentials is refused: expected '401 or 403', got '200, handler ran; reply: {"error":"token BHX not found","success":false}'; POST /api/v1/permission/grant without credentials is refused: expected '401 or 403', got '201, handler ran; reply: {"commitment":"2ea2808d8d18edb56324e7c94e11560e3b923615a0026398357943cfac2162ac","permission_id":"perm-cyber-p0-test-subj-","record":{"permission_id":"perm-cybe'; POST /api/cybercrime/freeze without credentials is refused: expected '401 or 403', got '200, handler ran; reply: {"success":true}'"/>
+  <testcase classname="S1 Unauthorized access" name="V-01 VAJRA privileged state-changing routes reject unauthenticated callers (local node)" time="0.000">
   </testcase>
-  <testcase classname="S2 Revoked permission" name="V-02 VAJRA permission ids are unique per grant (local node)" time="0.015">
-    <failure message="two different grants get two different permission ids: expected True, got False"/>
+  <testcase classname="S2 Revoked permission" name="V-02 VAJRA permission ids are unique per grant (local node)" time="0.016">
   </testcase>
-  <testcase classname="S1 Unauthorized access" name="S1-05 Subject without VAJRA consent is denied; decision and evidence recorded" time="1.515">
+  <testcase classname="S1 Unauthorized access" name="V-03 VAJRA evidence-only token (VAJRA_CYBER_SECRET): accepted for evidence, refused for governance and admin routes (local node)" time="0.000">
+    <failure message="evidence/record with the evidence-only token is stored: expected '200, success=true', got '401: {"details":"Authorization: Bearer &lt;VAJRA_TANTRA_SECRET&gt; required","error":"UNAUTHORIZED","success":false}'; permission/grant with the evidence-only token is refused: expected '401 or 403', got '201, handler ran: {"commitment":"b817965201a52c904464c855ec02696aa7abba76666917926c0349f13414e9c7","permission_id":"perm-cyber-p0-tes-c33664cb93316277","record":{"permission_id":'; permission/revoke with the evidence-only token is refused: expected '401 or 403', got '200, handler ran: {"permission_id":"perm-cyber-p0-tes-c33664cb93316277","record":{"permission_id":"perm-cyber-p0-tes-c33664cb93316277","trace_id":"62f46ae6-4487-4b96-a614-c58fb09'; admin/submit-transaction with the evidence-only token is refused: expected '401 or 403', got '200, handler ran: {"error":"Invalid request format","success":false"/>
   </testcase>
-  <testcase classname="S1 Unauthorized access" name="S1-04 Self-registered account cannot read investigator data without approval" time="1.250">
+  <testcase classname="S2 Revoked permission" name="V-04 VAJRA permission ids stay unique for subjects that share a prefix (same requester, scope and second; local node)" time="0.015">
+    <failure message="the two grants get different permission ids: expected 'different', got 'perm-cyber-p0-tes-44fe0dcbd77f16e3 / perm-cyber-p0-tes-44fe0dcbd77f16e3'; revoking subject A's permission id denies subject A: expected False, got True; revoking subject A's permission id leaves subject B allowed: expected True, got False"/>
   </testcase>
-  <testcase classname="S2 Revoked permission" name="S2-01 Proof B REVOCATION: active permission -&gt; VAJRA revoke -&gt; next request denied -&gt; stale grant cannot return" time="4.640">
+  <testcase classname="S1 Unauthorized access" name="V-05 VAJRA verify reports the granted scope and authority; a later transition does not change the granted scope (local node)" time="0.842">
+    <failure message="a USE sent without scope keeps the scope granted at GRANT: expected ['read:evidence'], got []; a USE sent with a wider scope does not widen the grant: expected ['read:evidence'], got ['read:evidence', 'delete:evidence']"/>
   </testcase>
-  <testcase classname="S4 Duplicate event" name="S4-01 Duplicate signal (same idempotency key, same request) is answered once; nothing re-executed" time="2.344">
+  <testcase classname="S1 Unauthorized access" name="S1-05 Subject without VAJRA consent is denied; decision and evidence recorded" time="0.454">
   </testcase>
-  <testcase classname="S4 Duplicate event" name="S4-02 VAJRA refuses a second evidence record for the same trace" time="0.030">
+  <testcase classname="S1 Unauthorized access" name="S1-08 An action outside the scope VAJRA reports is denied; inside it is allowed (CYB-13)" time="1.295">
   </testcase>
-  <testcase classname="S4 Duplicate event" name="S4-04 Same idempotency key with a different request is refused" time="1.625">
+  <testcase classname="S1 Unauthorized access" name="S1-04 Self-registered account cannot read investigator data without approval" time="0.469">
   </testcase>
-  <testcase classname="S4 Duplicate event" name="S4-05 A repeated key cannot bring back an ALLOW after VAJRA revoked the subject" time="2.282">
+  <testcase classname="S2 Revoked permission" name="S2-01 Proof B REVOCATION: active permission -&gt; VAJRA revoke -&gt; next request denied -&gt; stale grant cannot return" time="1.250">
   </testcase>
-  <testcase classname="Mandatory proof A (10-day)" name="P-A Proof A NORMAL: identity -&gt; consent -&gt; authorised access -&gt; evidence" time="3.015">
+  <testcase classname="S4 Duplicate event" name="S4-01 Duplicate signal (same idempotency key, same request) is answered once; nothing re-executed" time="0.719">
   </testcase>
-  <testcase classname="S8 Trace / replay" name="S8-01 One trace id links request, decision, audit record and VAJRA evidence" time="2.844">
+  <testcase classname="S4 Duplicate event" name="S4-02 VAJRA refuses a second evidence record for the same trace" time="0.015">
   </testcase>
-  <testcase classname="S5 TANTRA denial / outage" name="S5-01 TANTRA contract gate rejects the unregistered security event; no bypass; gap visible" time="3.577">
+  <testcase classname="S4 Duplicate event" name="S4-04 Same idempotency key with a different request is refused" time="0.437">
   </testcase>
-  <testcase classname="S5 TANTRA denial / outage" name="S5-04 TANTRA rejects a malformed envelope (live, validation endpoint)" time="0.562">
+  <testcase classname="S4 Duplicate event" name="S4-05 A repeated key cannot bring back an ALLOW after VAJRA revoked the subject" time="0.625">
+  </testcase>
+  <testcase classname="Mandatory proof A (10-day)" name="P-A Proof A NORMAL: identity -&gt; consent -&gt; authorised access -&gt; evidence" time="0.422">
+  </testcase>
+  <testcase classname="S8 Trace / replay" name="S8-01 One trace id links request, decision, audit record and VAJRA evidence" time="0.436">
+  </testcase>
+  <testcase classname="S5 TANTRA denial / outage" name="S5-01 TANTRA contract gate rejects the unregistered security event; no bypass; gap visible" time="0.000">
+    <skipped message="SKIPPED: needs --tantra live"/>
+  </testcase>
+  <testcase classname="S5 TANTRA denial / outage" name="S5-04 TANTRA rejects a malformed envelope (live, validation endpoint)" time="0.000">
+    <skipped message="SKIPPED: needs --tantra live"/>
   </testcase>
   <testcase classname="S8 Trace / replay" name="S8-02 TANTRA ledger participation: probe written, replay-verified and forwarded (live write)" time="0.000">
-    <skipped message="SKIPPED: live TANTRA write not enabled (--allow-live-tantra-write); nothing sent"/>
+    <skipped message="SKIPPED: needs --tantra live"/>
   </testcase>
-  <testcase classname="S3 Ambiguous / low confidence" name="S3-01 Ambiguous signal: uncertainty is visible in the intelligence output" time="0.187">
+  <testcase classname="S3 Ambiguous / low confidence" name="S3-01 Ambiguous signal: uncertainty is visible in the intelligence output" time="0.016">
   </testcase>
-  <testcase classname="S3 Ambiguous / low confidence" name="S3-02 Ambiguous signal: no autonomous high-impact action recorded" time="0.062">
+  <testcase classname="S3 Ambiguous / low confidence" name="S3-02 Ambiguous signal: no autonomous high-impact action recorded" time="0.030">
   </testcase>
-  <testcase classname="S3 Ambiguous / low confidence" name="S3-03 Analysis of a wallet with no recorded history does not present generated transactions as evidence" time="0.031">
+  <testcase classname="S3 Ambiguous / low confidence" name="S3-03 Analysis of a wallet with no recorded history does not present generated transactions as evidence" time="0.016">
   </testcase>
-  <testcase classname="S6 Evidence failure" name="S6-04 Evidence upload without Bucket does not claim anchoring" time="0.062">
+  <testcase classname="S6 Evidence failure" name="S6-04 Evidence upload without Bucket does not claim anchoring" time="0.015">
   </testcase>
-  <testcase classname="Mandatory proof C (10-day)" name="P-C1 Proof C ATTACK (signal): repeated failed logins are denied and recorded as security events" time="6.030">
+  <testcase classname="Mandatory proof C (10-day)" name="P-C1 Proof C ATTACK (signal): repeated failed logins are denied and recorded as security events" time="2.234">
   </testcase>
-  <testcase classname="Mandatory proof C (10-day)" name="P-C2 Proof C ATTACK (intelligence): the failed logins are detected and correlated into one incident for review" time="0.640">
+  <testcase classname="Mandatory proof C (10-day)" name="P-C2 Proof C ATTACK (intelligence): the failed logins are detected and correlated into one incident for review" time="0.250">
   </testcase>
-  <testcase classname="Mandatory proof C (10-day)" name="P-C3 Proof C ATTACK (containment): ISOLATE/TERMINATE at VAJRA blocks the actor" time="4.782">
+  <testcase classname="Mandatory proof C (10-day)" name="P-C3 Proof C ATTACK (containment): ISOLATE/TERMINATE at VAJRA blocks the actor" time="1.358">
   </testcase>
-  <testcase classname="S2 Revoked permission" name="S2-02 Revoked session token (JTI) is rejected on the next request" time="0.062">
+  <testcase classname="S2 Revoked permission" name="S2-02 Revoked session token (JTI) is rejected on the next request" time="0.032">
   </testcase>
-  <testcase classname="S2 Revoked permission" name="S2-03 Deactivated account is rejected on the next request" time="0.047">
+  <testcase classname="S2 Revoked permission" name="S2-03 Deactivated account is rejected on the next request" time="0.015">
   </testcase>
-  <testcase classname="S4 Duplicate event" name="S4-03 Repeating a deactivation does not repeat the privileged action" time="0.047">
+  <testcase classname="S4 Duplicate event" name="S4-03 Repeating a deactivation does not repeat the privileged action" time="0.015">
   </testcase>
-  <testcase classname="S7 Recovery failure" name="S7-01 After a crash-restart of Cybersecurity, revoked sessions and accounts stay blocked" time="5.640">
+  <testcase classname="S7 Recovery failure" name="S7-01 After a crash-restart of Cybersecurity, revoked sessions and accounts stay blocked" time="3.250">
   </testcase>
-  <testcase classname="S7 Recovery failure" name="S7-02 Proof D (staged recovery): a contained actor stays restricted until the full recovery path completes" time="4.265">
+  <testcase classname="S7 Recovery failure" name="S7-02 Proof D (staged recovery): a contained actor stays restricted until the full recovery path completes" time="1.406">
   </testcase>
-  <testcase classname="S7 Recovery failure" name="S7-04 Recovery anchor check rejects a corrupt candidate (inputs synthetic)" time="0.015">
+  <testcase classname="S7 Recovery failure" name="S7-04 Recovery anchor check rejects a corrupt candidate (inputs synthetic)" time="0.000">
   </testcase>
-  <testcase classname="S5 TANTRA denial / outage" name="S5-02 TANTRA unreachable: decision still made by Cybersecurity + VAJRA, TANTRA gap reported and visible in health" time="22.031">
+  <testcase classname="S7 Recovery failure" name="V-06 VAJRA recovery anchor check rejects a candidate whose validator signatures are made up (local node)" time="0.000">
+    <failure message="a candidate with four made-up signatures is not qualified as recovery anchor: expected False, got True"/>
   </testcase>
-  <testcase classname="S5 TANTRA denial / outage" name="S5-05 A slow TANTRA peer does not stall the rest of the API" time="15.812">
+  <testcase classname="S1 Unauthorized access" name="V-07 One anonymous report cannot freeze a wallet, and a negative severity cannot hide reports (local node)" time="0.000">
+    <failure message="one report without a token, severity 15, does not freeze the wallet: expected 'wallet not frozen', got 'report HTTP 200; wallet frozen (by SYSTEM_AUTO_FREEZE)'; a report with severity -1000 cannot cancel two later reports of 10 (freeze threshold 15): expected 'wallet frozen', got 'wallet active, total severity -980'"/>
   </testcase>
-  <testcase classname="S6 Evidence failure" name="S6-01 VAJRA refuses the evidence write: no ALLOW without evidence; the gap is visible" time="10.250">
+  <testcase classname="S5 TANTRA denial / outage" name="S5-02 TANTRA unreachable: decision still made by Cybersecurity + VAJRA, TANTRA gap reported and visible in health" time="15.625">
   </testcase>
-  <testcase classname="S6 Evidence failure" name="S6-03 Audit store cannot be written: no decision is released" time="10.359">
+  <testcase classname="S5 TANTRA denial / outage" name="S5-05 A slow TANTRA peer does not stall the rest of the API" time="10.625">
   </testcase>
-  <testcase classname="S6 Evidence failure" name="S6-02 VAJRA down: access fails closed and the outage is visible" time="9.202">
+  <testcase classname="S6 Evidence failure" name="S6-01 VAJRA refuses the evidence write: no ALLOW without evidence; the gap is visible" time="6.327">
   </testcase>
-  <testcase classname="S7 Recovery failure" name="S7-03 After a VAJRA crash-restart, Cybersecurity follows VAJRA's reported state; evidence survives" time="2.140">
+  <testcase classname="S6 Evidence failure" name="S6-03 Audit store cannot be written: no decision is released" time="6.234">
   </testcase>
-  <testcase classname="S7 Recovery failure" name="S7-05 VAJRA authority state survives a node restart" time="0.734">
-    <failure message="authority state after restart (subject was USE): expected 'USE', got ''"/>
+  <testcase classname="S6 Evidence failure" name="S6-02 VAJRA down: access fails closed and the outage is visible" time="7.092">
   </testcase>
-  <testcase classname="S8 Trace / replay" name="S8-03 Tampering with stored evidence is detected by VAJRA's chain check" time="1.500">
+  <testcase classname="S6 Evidence failure" name="S6-05 Least-privilege set-up: with only VAJRA's evidence-only token, Cybersecurity records evidence and allows in-scope access" time="6.657">
+    <failure message="VAJRA records the evidence sent with the evidence-only token: expected 'RECORDED', got 'UNAUTHORIZED (HTTP 401; VAJRA refused the VAJRA_CYBER_SECRET bearer token on evidence/record)'; in-scope access is allowed: expected 'ALLOW', got 'DENY'"/>
   </testcase>
-  <testcase classname="S5 TANTRA denial / outage" name="S5-03 No bypass executor: Cybersecurity exposes no route that changes VAJRA authority" time="0.047">
+  <testcase classname="S7 Recovery failure" name="S7-03 After a VAJRA crash-restart, Cybersecurity follows VAJRA's reported state; evidence survives" time="0.765">
   </testcase>
-  <testcase classname="Observability" name="O-03 Error responses follow the canonical error contract (code, trace_id, request_id, timestamp)" time="0.030">
+  <testcase classname="S7 Recovery failure" name="S7-05 VAJRA authority state survives a node restart" time="0.234">
   </testcase>
-  <testcase classname="Observability" name="O-04 Collection route without trailing slash is served or redirected (API contract)" time="0.000">
+  <testcase classname="S8 Trace / replay" name="S8-03 Tampering with stored evidence is detected by VAJRA's chain check" time="0.515">
   </testcase>
-  <testcase classname="S2 Revoked permission" name="S2-04 Tier-1 permission revocation takes effect on the next request" time="0.109">
+  <testcase classname="S7 Recovery failure" name="V-08 VAJRA authority ledger: an edited, unsaved or unreadable record is not trusted after a restart (local node)" time="1.172">
+    <failure message="a REVOKE record edited to USE on disk is not trusted after restart: expected 'still REVOKE, or the node refuses the edited ledger', got 'after restart: USE, is_authorized=True'; a REVOKE that could not be saved is not answered as done: expected 'an error reply, or REVOKE after restart', got 'REVOKE reply HTTP 200; after restart: USE, is_authorized=True'; one unreadable line neither wipes the stored state nor stops saving: expected 'earlier subject USE and the new GRANT kept, or the node refuses to start', got "earlier subject ''; new subject after another restart ''""/>
+  </testcase>
+  <testcase classname="S5 TANTRA denial / outage" name="S5-03 No bypass executor: Cybersecurity exposes no route that changes VAJRA authority" time="0.000">
+  </testcase>
+  <testcase classname="Observability" name="O-03 Error responses follow the canonical error contract (code, trace_id, request_id, timestamp)" time="0.000">
+  </testcase>
+  <testcase classname="Observability" name="O-04 Collection route without trailing slash is served or redirected (API contract)" time="0.015">
+  </testcase>
+  <testcase classname="S2 Revoked permission" name="S2-04 Tier-1 permission revocation takes effect on the next request" time="0.015">
   </testcase>
 </testsuite>

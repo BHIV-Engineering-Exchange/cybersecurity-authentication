@@ -1,0 +1,717 @@
+[
+  {
+    "check_id": "S7-03",
+    "system": "vajra-local",
+    "utc": "2026-11-04T13:34:53Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:62507/api/vajra/authority/transition",
+      "headers": {
+        "x-trace-id": "618a5f44-2a31-46a3-a09c-7e8cb18d9c2f",
+        "authorization": "[REDACTED]",
+        "content-type": "application/json"
+      },
+      "body": {
+        "trace_id": "618a5f44-2a31-46a3-a09c-7e8cb18d9c2f",
+        "subject": "cyber-p0-test-survivor-cb709b7af4",
+        "authority": "AUTH_ROLE_CLIENT",
+        "issuer": "VAJRA_USER_CONTROL_SIMULATOR (verification harness)",
+        "target": "VAJRA_LEDGER",
+        "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)",
+        "scope": [
+          "read"
+        ],
+        "to_state": "GRANT",
+        "policy_version": "v1.0.0",
+        "evidence_ref": "synthetic-test"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "record": {
+          "record_id": "auth_1793799293_cyber-p0",
+          "trace_id": "618a5f44-2a31-46a3-a09c-7e8cb18d9c2f",
+          "subject": "cyber-p0-test-survivor-cb709b7af4",
+          "authority": "AUTH_ROLE_CLIENT",
+          "issuer": "VAJRA_USER_CONTROL_SIMULATOR (verification harness)",
+          "target": "VAJRA_LEDGER",
+          "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)",
+          "scope": [
+            "read"
+          ],
+          "state_transition": {
+            "from": "",
+            "to": "GRANT"
+          },
+          "policy_version": "v1.0.0",
+          "timestamp": 1793799293,
+          "evidence_reference": "synthetic-test",
+          "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "entry_hash": "65c8c54c75ea748db8edbb47d22c700cc43758b79b82ad7efc346c81d9e16d55"
+        },
+        "success": true
+      }
+    }
+  },
+  {
+    "check_id": "S7-03",
+    "system": "vajra-local",
+    "utc": "2026-11-04T13:34:53Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:62507/api/vajra/authority/transition",
+      "headers": {
+        "x-trace-id": "a0325a2e-9591-4255-95e8-3558a4c29589",
+        "authorization": "[REDACTED]",
+        "content-type": "application/json"
+      },
+      "body": {
+        "trace_id": "a0325a2e-9591-4255-95e8-3558a4c29589",
+        "subject": "cyber-p0-test-survivor-cb709b7af4",
+        "authority": "AUTH_ROLE_CLIENT",
+        "issuer": "VAJRA_USER_CONTROL_SIMULATOR (verification harness)",
+        "target": "VAJRA_LEDGER",
+        "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)",
+        "scope": [
+          "read"
+        ],
+        "to_state": "USE",
+        "policy_version": "v1.0.0",
+        "evidence_ref": "synthetic-test"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "record": {
+          "record_id": "auth_1793799293_cyber-p0",
+          "trace_id": "a0325a2e-9591-4255-95e8-3558a4c29589",
+          "subject": "cyber-p0-test-survivor-cb709b7af4",
+          "authority": "AUTH_ROLE_CLIENT",
+          "issuer": "VAJRA_USER_CONTROL_SIMULATOR (verification harness)",
+          "target": "VAJRA_LEDGER",
+          "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)",
+          "scope": [
+            "read"
+          ],
+          "state_transition": {
+            "from": "GRANT",
+            "to": "USE"
+          },
+          "policy_version": "v1.0.0",
+          "timestamp": 1793799293,
+          "evidence_reference": "synthetic-test",
+          "prev_hash": "65c8c54c75ea748db8edbb47d22c700cc43758b79b82ad7efc346c81d9e16d55",
+          "entry_hash": "66243d6c84a0256b667b3f869b94d294f283503dfa407f22613f2f8e63620ec4"
+        },
+        "success": true
+      }
+    }
+  },
+  {
+    "check_id": "S7-03",
+    "system": "vajra-local",
+    "utc": "2026-11-04T13:34:53Z",
+    "elapsed_ms": 15,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:62507/api/tantra/records",
+      "headers": {},
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "count": 19,
+        "records": [
+          {
+            "trace_id": "3ac6921e-998e-4546-a949-1cb98382c194::40c5926f3de949309a3026e0377aa2d9",
+            "execution_hash": "sha256:35b87958a8ec70a1397ac3d80fb0ac7435fcb9986dee0f1d9d207997ce898fb1",
+            "validation_hash": "sha256:35b87958a8ec70a1397ac3d80fb0ac7435fcb9986dee0f1d9d207997ce898fb1",
+            "replay_hash": "sha256:35b87958a8ec70a1397ac3d80fb0ac7435fcb9986dee0f1d9d207997ce898fb1",
+            "tx_hash": "evidence_3ac6921e-998e-4546-a949-1cb98382c194::40c5926f3de949309a3026e0377aa2d9",
+            "fraud_decision": "DENY",
+            "timestamp": 1793799172,
+            "prev_hash": "genesis",
+            "entry_hash": "72b6126c9cfcf5bf4ff81ad024cbe4cb8fc7f7be240e201c112ed3bad2a66707"
+          },
+          {
+            "trace_id": "1a99bfec-7d80-4083-89be-187098e520ab::83deb558007a4c3a9889c6ad1ba7767d",
+            "execution_hash": "sha256:ad9ed9908cba965bea34951f1e74db8b20fd96776c93f864385e3c608696d76f",
+            "validation_hash": "sha256:ad9ed9908cba965bea34951f1e74db8b20fd96776c93f864385e3c608696d76f",
+            "replay_hash": "sha256:ad9ed9908cba965bea34951f1e74db8b20fd96776c93f864385e3c608696d76f",
+            "tx_hash": "evidence_1a99bfec-7d80-4083-89be-187098e520ab::83deb558007a4c3a9889c6ad1ba7767d",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793799174,
+            "prev_hash": "72b6126c9cfcf5bf4ff81ad024cbe4cb8fc7f7be240e201c112ed3bad2a66707",
+            "entry_hash": "530942cabac09463e4fed1e2bec8250c273d825d7171f9c2703407a96434a7d4"
+          },
+          {
+            "trace_id": "9b47b68f-090d-4aa5-b2e7-f122314fa360::455b803fc9804366baff9d4719b7ace8",
+            "execution_hash": "sha256:b307f37fc48f7771214eca64e3e9c27961cf13d1c2b97efd5e27e9e8af1ad9cb",
+            "validation_hash": "sha256:b307f37fc48f7771214eca64e3e9c27961cf13d1c2b97efd5e27e9e8af1ad9cb",
+            "replay_hash": "sha256:b307f37fc48f7771214eca64e3e9c27961cf13d1c2b97efd5e27e9e8af1ad9cb",
+            "tx_hash": "evidence_9b47b68f-090d-4aa5-b2e7-f122314fa360::455b803fc9804366baff9d4719b7ace8",
+            "fraud_decision": "DENY",
+            "timestamp": 1793799176,
+            "prev_hash": "530942cabac09463e4fed1e2bec8250c273d825d7171f9c2703407a96434a7d4",
+            "entry_hash": "f12d25855b87631fd614f18472f54e3eaf2b99519f37771477bca063d4f6c41b"
+          },
+          {
+            "trace_id": "22c9d65c-3c95-4cbc-8762-69c5804bc17c::6b1d89d771e94248b9ce1c67e134ae0b",
+            "execution_hash": "sha256:404c90104e1b7ecc0f9bc0e41255984819c29be406e45ed4954e06d9a6cc1af8",
+            "validation_hash": "sha256:404c90104e1b7ecc0f9bc0e41255984819c29be406e45ed4954e06d9a6cc1af8",
+            "replay_hash": "sha256:404c90104e1b7ecc0f9bc0e41255984819c29be406e45ed4954e06d9a6cc1af8",
+            "tx_hash": "evidence_22c9d65c-3c95-4cbc-8762-69c5804bc17c::6b1d89d771e94248b9ce1c67e134ae0b",
+            "fraud_decision": "DENY",
+            "timestamp": 1793799177,
+            "prev_hash": "f12d25855b87631fd614f18472f54e3eaf2b99519f37771477bca063d4f6c41b",
+            "entry_hash": "b76b8f789acc10b4ee87fed1c4675eb864f23a7adbdbd4b645d09d03bdf99e3c"
+          },
+          {
+            "trace_id": "5d99f118-c1bc-4df8-869d-70d157397560::de9c70046c6648d3b08f061fed847fa5",
+            "execution_hash": "sha256:e887f6c8ac9bcaa0fc7a9135b4c54d8e11408ebc2898ca3786eb372b4ae39f31",
+            "validation_hash": "sha256:e887f6c8ac9bcaa0fc7a9135b4c54d8e11408ebc2898ca3786eb372b4ae39f31",
+            "replay_hash": "sha256:e887f6c8ac9bcaa0fc7a9135b4c54d8e11408ebc2898ca3786eb372b4ae39f31",
+            "tx_hash": "evidence_5d99f118-c1bc-4df8-869d-70d157397560::de9c70046c6648d3b08f061fed847fa5",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793799179,
+            "prev_hash": "b76b8f789acc10b4ee87fed1c4675eb864f23a7adbdbd4b645d09d03bdf99e3c",
+            "entry_hash": "3b5b712f44fa69da51e2b33c00191967adf878f0bb886a88ab579fffbbdb5e33"
+          },
+          {
+            "trace_id": "be2a5426-90e9-43be-9c49-61f324668b6f",
+            "execution_hash": "sha256:eb9ec1638e9d88374f2887eec29d5ae46d8aba2b76f9ee6416abec604dd8b24d",
+            "validation_hash": "sha256:eb9ec1638e9d88374f2887eec29d5ae46d8aba2b76f9ee6416abec604dd8b24d",
+            "replay_hash": "sha256:eb9ec1638e9d88374f2887eec29d5ae46d8aba2b76f9ee6416abec604dd8b24d",
+            "tx_hash": "evidence_be2a5426-90e9-43be-9c49-61f324668b6f",
+            "fraud_decision": "DENY",
+            "timestamp": 1793799180,
+            "prev_hash": "3b5b712f44fa69da51e2b33c00191967adf878f0bb886a88ab579fffbbdb5e33",
+            "entry_hash": "1d7c1aa64be2105a759b4f6cc511dd0ff7f28f8937b439153d1d9f56814a6de9"
+          },
+          {
+            "trace_id": "70d6d0b6-830f-4d14-90cd-00896489539b::95c3d318366040dfa9f6df3e525620ad",
+            "execution_hash": "sha256:04a914090e0f7c663b9c5b1d9a003cfa1ecd1ed00f6f00708dd84af3584c3d46",
+            "validation_hash": "sha256:04a914090e0f7c663b9c5b1d9a003cfa1ecd1ed00f6f00708dd84af3584c3d46",
+            "replay_hash": "sha256:04a914090e0f7c663b9c5b1d9a003cfa1ecd1ed00f6f00708dd84af3584c3d46",
+            "tx_hash": "evidence_70d6d0b6-830f-4d14-90cd-00896489539b::95c3d318366040dfa9f6df3e525620ad",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793799181,
+            "prev_hash": "1d7c1aa64be2105a759b4f6cc511dd0ff7f28f8937b439153d1d9f56814a6de9",
+            "entry_hash": "24c5a1477fe086564a2dff903a98d8c1e1d3e3decbd27cb49c2725c671312bcc"
+          },
+          {
+            "trace_id": "539cc815-5b77-4574-8068-8dcf2febf8fb::665cd89608954d65a06349bacb2ff49d",
+            "execution_hash": "sha256:b950fead7b270ff40e8da7aa0a7501911ca311d506b39f52e46736dc3307da25",
+            "validation_hash": "sha256:b950fead7b270ff40e8da7aa0a7501911ca311d506b39f52e46736dc3307da25",
+            "replay_hash": "sha256:b950fead7b270ff40e8da7aa0a7501911ca311d506b39f52e46736dc3307da25",
+            "tx_hash": "evidence_539cc815-5b77-4574-8068-8dcf2febf8fb::665cd89608954d65a06349bacb2ff49d",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793799183,
+            "prev_hash": "24c5a1477fe086564a2dff903a98d8c1e1d3e3decbd27cb49c2725c671312bcc",
+            "entry_hash": "6c0e885bc873cfa3398b17a3eddf585209a2b1543da46d28d8db14cf444ff869"
+          },
+          {
+            "trace_id": "cyber-p0-test-2bac3fe6-29e1-4c70-b81d-ca01188a9127::b8855859f42f4fa784dd5e9ac53e5527",
+            "execution_hash": "sha256:8f993fb1b510eb5747040dbfa56526cf0c5793b6cc228556057628db2b8af513",
+            "validation_hash": "sha256:8f993fb1b510eb5747040dbfa56526cf0c5793b6cc228556057628db2b8af513",
+            "replay_hash": "sha256:8f993fb1b510eb5747040dbfa56526cf0c5793b6cc228556057628db2b8af513",
+            "tx_hash": "evidence_cyber-p0-test-2bac3fe6-29e1-4c70-b81d-ca01188a9127::b8855859f42f4fa784dd5e9ac53e5527",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793799190,
+            "prev_hash": "6c0e885bc873cfa3398b17a3eddf585209a2b1543da46d28d8db14cf444ff869",
+            "entry_hash": "26ce42008a05a142914244532ec1008bd7ddd2a0b04632948f61b8ef37c54f89"
+          },
+          {
+            "trace_id": "cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77::364826d5b0d04140ab72965389a1e092",
+            "execution_hash": "sha256:83865c8477b957be6b68940fa4f47a6aab7e2e4dbed17194d5e8d54eff87ac91",
+            "validation_hash": "sha256:83865c8477b957be6b68940fa4f47a6aab7e2e4dbed17194d5e8d54eff87ac91",
+            "replay_hash": "sha256:83865c8477b957be6b68940fa4f47a6aab7e2e4dbed17194d5e8d54eff87ac91",
+            "tx_hash": "evidence_cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77::364826d5b0d04140ab72965389a1e092",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793799193,
+            "prev_hash": "26ce42008a05a142914244532ec1008bd7ddd2a0b04632948f61b8ef37c54f89",
+            "entry_hash": "55dc7ea5bac3e0a76f031c444a0817f5854e62f19b52052648f22f1735a87e76"
+          },
+          {
+            "trace_id": "cyber-p0-test-3d551675-ca1a-4a29-a940-b6a4a6b8de02::3b021d8d0a1e49b49b8e4aa8da8db28b",
+            "execution_hash": "sha256:3f802af79ff47cf58b9cb44a9eb16f93c21e17b41e31529236c93e4a86bde83c",
+            "validation_hash": "sha256:3f802af79ff47cf58b9cb44a9eb16f93c21e17b41e31529236c93e4a86bde83c",
+            "replay_hash": "sha256:3f802af79ff47cf58b9cb44a9eb16f93c21e17b41e31529236c93e4a86bde83c",
+            "tx_hash": "evidence_cyber-p0-test-3d551675-ca1a-4a29-a940-b6a4a6b8de02::3b021d8d0a1e49b49b8e4aa8da8db28b",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793799196,
+            "prev_hash": "55dc7ea5bac3e0a76f031c444a0817f5854e62f19b52052648f22f1735a87e76",
+            "entry_hash": "3e65ee8efff410936d220b604e2c5b40a4ef70465be93bdb20cf8166eab3566e"
+          },
+          {
+            "trace_id": "0ac6868c-a9b3-49ae-b2f1-c176d3efd367::2011e0ea5ec6480faafa129005049468",
+            "execution_hash": "sha256:9b4524c8e992ce13f867b4cde4e52b09fdfe0faca62b4a062d5a6b8f09fc90fb",
+            "validation_hash": "sha256:9b4524c8e992ce13f867b4cde4e52b09fdfe0faca62b4a062d5a6b8f09fc90fb",
+            "replay_hash": "sha256:9b4524c8e992ce13f867b4cde4e52b09fdfe0faca62b4a062d5a6b8f09fc90fb",
+            "tx_hash": "evidence_0ac6868c-a9b3-49ae-b2f1-c176d3efd367::2011e0ea5ec6480faafa129005049468",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793799212,
+            "prev_hash": "3e65ee8efff410936d220b604e2c5b40a4ef70465be93bdb20cf8166eab3566e",
+            "entry_hash": "0a2116ab59832896a09aa5f45b703f9c8364a420b579d41dbb7c6f6a9fd4837b"
+          },
+          {
+            "trace_id": "e0399402-dcec-497d-a72b-fc05f01186e3::3387e9422b1845c08313313caba7f516",
+            "execution_hash": "sha256:2609237745217764413ce1ec136c98dea81f3777e8b3d1a219ac79322b42466f",
+            "validation_hash": "sha256:2609237745217764413ce1ec136c98dea81f3777e8b3d1a219ac79322b42466f",
+            "replay_hash": "sha256:2609237745217764413ce1ec136c98dea81f3777e8b3d1a219ac79322b42466f",
+            "tx_hash": "evidence_e0399402-dcec-497d-a72b-fc05f01186e3::3387e9422b1845c08313313caba7f516",
+            "fraud_decision": "DENY",
+            "timestamp": 1793799213,
+            "prev_hash": "0a2116ab59832896a09aa5f45b703f9c8364a420b579d41dbb7c6f6a9fd4837b",
+            "entry_hash": "17e3cb05e6ba7c3d8978972bcf11ed2d1aa2fc5c63693511e6f49122d66ee64d"
+          },
+          {
+            "trace_id": "5f245e4c-6d27-40b8-863d-0a2234e2bd98::67d40286d4414e3da16ba21c63b90bf1",
+            "execution_hash": "sha256:00d1979e2017c4aab5d2f6819f363ce8e4afc7b6e73d1487398f457160248111",
+            "validation_hash": "sha256:00d1979e2017c4aab5d2f6819f363ce8e4afc7b6e73d1487398f457160248111",
+            "replay_hash": "sha256:00d1979e2017c4aab5d2f6819f363ce8e4afc7b6e73d1487398f457160248111",
+            "tx_hash": "evidence_5f245e4c-6d27-40b8-863d-0a2234e2bd98::67d40286d4414e3da16ba21c63b90bf1",
+            "fraud_decision": "DENY",
+            "timestamp": 1793799215,
+            "prev_hash": "17e3cb05e6ba7c3d8978972bcf11ed2d1aa2fc5c63693511e6f49122d66ee64d",
+            "entry_hash": "496ecd7a836fe51318baf91b4c3422541ae6edec0e09026f68d4e3362cf3644e"
+          },
+          {
+            "trace_id": "322fb6bb-7c62-42bf-b1f4-e8991652b0e3::2aa2ceaa67054b588d5a0760c24193a9",
+            "execution_hash": "sha256:f5b051690261b544fef1646f80c09979f693f44c74b769dbf46ca0b9ccc44e4c",
+            "validation_hash": "sha256:f5b051690261b544fef1646f80c09979f693f44c74b769dbf46ca0b9ccc44e4c",
+            "replay_hash": "sha256:f5b051690261b544fef1646f80c09979f693f44c74b769dbf46ca0b9ccc44e4c",
+            "tx_hash": "evidence_322fb6bb-7c62-42bf-b1f4-e8991652b0e3::2aa2ceaa67054b588d5a0760c24193a9",
+            "fraud_decision": "DENY",
+            "timestamp": 1793799222,
+            "prev_hash": "496ecd7a836fe51318baf91b4c3422541ae6edec0e09026f68d4e3362cf3644e",
+            "entry_hash": "a805582e379bc536db4c2e88682cebcdb1a0acdcedd5f100378acfc9621a747a"
+          },
+          {
+            "trace_id": "2489e560-4441-4385-8834-eee7135f4857::c9a98d77ab4646a494f26effd71f96f9",
+            "execution_hash": "sha256:97c63814db67787d61fcb3dc8995c8a451abc5f21e52fc210dd344da91e8c9fb",
+            "validation_hash": "sha256:97c63814db67787d61fcb3dc8995c8a451abc5f21e52fc210dd344da91e8c9fb",
+            "replay_hash": "sha256:97c63814db67787d61fcb3dc8995c8a451abc5f21e52fc210dd344da91e8c9fb",
+            "tx_hash": "evidence_2489e560-4441-4385-8834-eee7135f4857::c9a98d77ab4646a494f26effd71f96f9",
+            "fraud_decision": "DENY",
+            "timestamp": 1793799224,
+            "prev_hash": "a805582e379bc536db4c2e88682cebcdb1a0acdcedd5f100378acfc9621a747a",
+            "entry_hash": "63af16c6ff370d2f7e5667cb66588ab194dd72b1413b03ab1bc889628462f99a"
+          },
+          {
+            "trace_id": "f681e728-f1f9-453e-bbd8-78d818ea0978::009daa9b25f14bbb9ab0b4dcc60b1b0a",
+            "execution_hash": "sha256:80a5a41f49905c50122e9bc4227788788137e142e557b417367583943f76bd81",
+            "validation_hash": "sha256:80a5a41f49905c50122e9bc4227788788137e142e557b417367583943f76bd81",
+            "replay_hash": "sha256:80a5a41f49905c50122e9bc4227788788137e142e557b417367583943f76bd81",
+            "tx_hash": "evidence_f681e728-f1f9-453e-bbd8-78d818ea0978::009daa9b25f14bbb9ab0b4dcc60b1b0a",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793799225,
+            "prev_hash": "63af16c6ff370d2f7e5667cb66588ab194dd72b1413b03ab1bc889628462f99a",
+            "entry_hash": "1287422c22abb93d02dfe907648ebbc73f46f68be219ae3826fdeef7703b87b8"
+          },
+          {
+            "trace_id": "c87f21d3-3ce4-4a4c-9a80-79e8b52b2049::5d3efe3a58ef492fb554ab0964679c64",
+            "execution_hash": "sha256:6c6718c801ff050656dff1a6329eb0703f86ab8c7bc82cbc5eb42ca088d248b4",
+            "validation_hash": "sha256:6c6718c801ff050656dff1a6329eb0703f86ab8c7bc82cbc5eb42ca088d248b4",
+            "replay_hash": "sha256:6c6718c801ff050656dff1a6329eb0703f86ab8c7bc82cbc5eb42ca088d248b4",
+            "tx_hash": "evidence_c87f21d3-3ce4-4a4c-9a80-79e8b52b2049::5d3efe3a58ef492fb554ab0964679c64",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793799231,
+            "prev_hash": "1287422c22abb93d02dfe907648ebbc73f46f68be219ae3826fdeef7703b87b8",
+            "entry_hash": "28111a4445ce3fbe34bf607443cd7b71b1ba8e5ba5e2cbd45664893dc07c7d83"
+          },
+          {
+            "trace_id": "e36e62d6-03f5-4ea9-9986-a91db05d8d85::52e97d1182a9448a98a4dec586d8e163",
+            "execution_hash": "sha256:2702c25fcb3df8cb8b19c80d7a8e4d8945638c2645535c418cebec74371de2dd",
+            "validation_hash": "sha256:2702c25fcb3df8cb8b19c80d7a8e4d8945638c2645535c418cebec74371de2dd",
+            "replay_hash": "sha256:2702c25fcb3df8cb8b19c80d7a8e4d8945638c2645535c418cebec74371de2dd",
+            "tx_hash": "evidence_e36e62d6-03f5-4ea9-9986-a91db05d8d85::52e97d1182a9448a98a4dec586d8e163",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793799254,
+            "prev_hash": "28111a4445ce3fbe34bf607443cd7b71b1ba8e5ba5e2cbd45664893dc07c7d83",
+            "entry_hash": "62141765a5a50f90ff002ca82387e22fb815a67d21ee836d7e10449bbdb92080"
+          }
+        ],
+        "success": true
+      }
+    }
+  },
+  {
+    "check_id": "S7-03",
+    "system": "vajra-local",
+    "utc": "2026-11-04T13:34:53Z",
+    "elapsed_ms": 15,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:62507/api/tantra/records",
+      "headers": {},
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "count": 19,
+        "records": [
+          {
+            "trace_id": "3ac6921e-998e-4546-a949-1cb98382c194::40c5926f3de949309a3026e0377aa2d9",
+            "execution_hash": "sha256:35b87958a8ec70a1397ac3d80fb0ac7435fcb9986dee0f1d9d207997ce898fb1",
+            "validation_hash": "sha256:35b87958a8ec70a1397ac3d80fb0ac7435fcb9986dee0f1d9d207997ce898fb1",
+            "replay_hash": "sha256:35b87958a8ec70a1397ac3d80fb0ac7435fcb9986dee0f1d9d207997ce898fb1",
+            "tx_hash": "evidence_3ac6921e-998e-4546-a949-1cb98382c194::40c5926f3de949309a3026e0377aa2d9",
+            "fraud_decision": "DENY",
+            "timestamp": 1793799172,
+            "prev_hash": "genesis",
+            "entry_hash": "72b6126c9cfcf5bf4ff81ad024cbe4cb8fc7f7be240e201c112ed3bad2a66707"
+          },
+          {
+            "trace_id": "1a99bfec-7d80-4083-89be-187098e520ab::83deb558007a4c3a9889c6ad1ba7767d",
+            "execution_hash": "sha256:ad9ed9908cba965bea34951f1e74db8b20fd96776c93f864385e3c608696d76f",
+            "validation_hash": "sha256:ad9ed9908cba965bea34951f1e74db8b20fd96776c93f864385e3c608696d76f",
+            "replay_hash": "sha256:ad9ed9908cba965bea34951f1e74db8b20fd96776c93f864385e3c608696d76f",
+            "tx_hash": "evidence_1a99bfec-7d80-4083-89be-187098e520ab::83deb558007a4c3a9889c6ad1ba7767d",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793799174,
+            "prev_hash": "72b6126c9cfcf5bf4ff81ad024cbe4cb8fc7f7be240e201c112ed3bad2a66707",
+            "entry_hash": "530942cabac09463e4fed1e2bec8250c273d825d7171f9c2703407a96434a7d4"
+          },
+          {
+            "trace_id": "9b47b68f-090d-4aa5-b2e7-f122314fa360::455b803fc9804366baff9d4719b7ace8",
+            "execution_hash": "sha256:b307f37fc48f7771214eca64e3e9c27961cf13d1c2b97efd5e27e9e8af1ad9cb",
+            "validation_hash": "sha256:b307f37fc48f7771214eca64e3e9c27961cf13d1c2b97efd5e27e9e8af1ad9cb",
+            "replay_hash": "sha256:b307f37fc48f7771214eca64e3e9c27961cf13d1c2b97efd5e27e9e8af1ad9cb",
+            "tx_hash": "evidence_9b47b68f-090d-4aa5-b2e7-f122314fa360::455b803fc9804366baff9d4719b7ace8",
+            "fraud_decision": "DENY",
+            "timestamp": 1793799176,
+            "prev_hash": "530942cabac09463e4fed1e2bec8250c273d825d7171f9c2703407a96434a7d4",
+            "entry_hash": "f12d25855b87631fd614f18472f54e3eaf2b99519f37771477bca063d4f6c41b"
+          },
+          {
+            "trace_id": "22c9d65c-3c95-4cbc-8762-69c5804bc17c::6b1d89d771e94248b9ce1c67e134ae0b",
+            "execution_hash": "sha256:404c90104e1b7ecc0f9bc0e41255984819c29be406e45ed4954e06d9a6cc1af8",
+            "validation_hash": "sha256:404c90104e1b7ecc0f9bc0e41255984819c29be406e45ed4954e06d9a6cc1af8",
+            "replay_hash": "sha256:404c90104e1b7ecc0f9bc0e41255984819c29be406e45ed4954e06d9a6cc1af8",
+            "tx_hash": "evidence_22c9d65c-3c95-4cbc-8762-69c5804bc17c::6b1d89d771e94248b9ce1c67e134ae0b",
+            "fraud_decision": "DENY",
+            "timestamp": 1793799177,
+            "prev_hash": "f12d25855b87631fd614f18472f54e3eaf2b99519f37771477bca063d4f6c41b",
+            "entry_hash": "b76b8f789acc10b4ee87fed1c4675eb864f23a7adbdbd4b645d09d03bdf99e3c"
+          },
+          {
+            "trace_id": "5d99f118-c1bc-4df8-869d-70d157397560::de9c70046c6648d3b08f061fed847fa5",
+            "execution_hash": "sha256:e887f6c8ac9bcaa0fc7a9135b4c54d8e11408ebc2898ca3786eb372b4ae39f31",
+            "validation_hash": "sha256:e887f6c8ac9bcaa0fc7a9135b4c54d8e11408ebc2898ca3786eb372b4ae39f31",
+            "replay_hash": "sha256:e887f6c8ac9bcaa0fc7a9135b4c54d8e11408ebc2898ca3786eb372b4ae39f31",
+            "tx_hash": "evidence_5d99f118-c1bc-4df8-869d-70d157397560::de9c70046c6648d3b08f061fed847fa5",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793799179,
+            "prev_hash": "b76b8f789acc10b4ee87fed1c4675eb864f23a7adbdbd4b645d09d03bdf99e3c",
+            "entry_hash": "3b5b712f44fa69da51e2b33c00191967adf878f0bb886a88ab579fffbbdb5e33"
+          },
+          {
+            "trace_id": "be2a5426-90e9-43be-9c49-61f324668b6f",
+            "execution_hash": "sha256:eb9ec1638e9d88374f2887eec29d5ae46d8aba2b76f9ee6416abec604dd8b24d",
+            "validation_hash": "sha256:eb9ec1638e9d88374f2887eec29d5ae46d8aba2b76f9ee6416abec604dd8b24d",
+            "replay_hash": "sha256:eb9ec1638e9d88374f2887eec29d5ae46d8aba2b76f9ee6416abec604dd8b24d",
+            "tx_hash": "evidence_be2a5426-90e9-43be-9c49-61f324668b6f",
+            "fraud_decision": "DENY",
+            "timestamp": 1793799180,
+            "prev_hash": "3b5b712f44fa69da51e2b33c00191967adf878f0bb886a88ab579fffbbdb5e33",
+            "entry_hash": "1d7c1aa64be2105a759b4f6cc511dd0ff7f28f8937b439153d1d9f56814a6de9"
+          },
+          {
+            "trace_id": "70d6d0b6-830f-4d14-90cd-00896489539b::95c3d318366040dfa9f6df3e525620ad",
+            "execution_hash": "sha256:04a914090e0f7c663b9c5b1d9a003cfa1ecd1ed00f6f00708dd84af3584c3d46",
+            "validation_hash": "sha256:04a914090e0f7c663b9c5b1d9a003cfa1ecd1ed00f6f00708dd84af3584c3d46",
+            "replay_hash": "sha256:04a914090e0f7c663b9c5b1d9a003cfa1ecd1ed00f6f00708dd84af3584c3d46",
+            "tx_hash": "evidence_70d6d0b6-830f-4d14-90cd-00896489539b::95c3d318366040dfa9f6df3e525620ad",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793799181,
+            "prev_hash": "1d7c1aa64be2105a759b4f6cc511dd0ff7f28f8937b439153d1d9f56814a6de9",
+            "entry_hash": "24c5a1477fe086564a2dff903a98d8c1e1d3e3decbd27cb49c2725c671312bcc"
+          },
+          {
+            "trace_id": "539cc815-5b77-4574-8068-8dcf2febf8fb::665cd89608954d65a06349bacb2ff49d",
+            "execution_hash": "sha256:b950fead7b270ff40e8da7aa0a7501911ca311d506b39f52e46736dc3307da25",
+            "validation_hash": "sha256:b950fead7b270ff40e8da7aa0a7501911ca311d506b39f52e46736dc3307da25",
+            "replay_hash": "sha256:b950fead7b270ff40e8da7aa0a7501911ca311d506b39f52e46736dc3307da25",
+            "tx_hash": "evidence_539cc815-5b77-4574-8068-8dcf2febf8fb::665cd89608954d65a06349bacb2ff49d",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793799183,
+            "prev_hash": "24c5a1477fe086564a2dff903a98d8c1e1d3e3decbd27cb49c2725c671312bcc",
+            "entry_hash": "6c0e885bc873cfa3398b17a3eddf585209a2b1543da46d28d8db14cf444ff869"
+          },
+          {
+            "trace_id": "cyber-p0-test-2bac3fe6-29e1-4c70-b81d-ca01188a9127::b8855859f42f4fa784dd5e9ac53e5527",
+            "execution_hash": "sha256:8f993fb1b510eb5747040dbfa56526cf0c5793b6cc228556057628db2b8af513",
+            "validation_hash": "sha256:8f993fb1b510eb5747040dbfa56526cf0c5793b6cc228556057628db2b8af513",
+            "replay_hash": "sha256:8f993fb1b510eb5747040dbfa56526cf0c5793b6cc228556057628db2b8af513",
+            "tx_hash": "evidence_cyber-p0-test-2bac3fe6-29e1-4c70-b81d-ca01188a9127::b8855859f42f4fa784dd5e9ac53e5527",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793799190,
+            "prev_hash": "6c0e885bc873cfa3398b17a3eddf585209a2b1543da46d28d8db14cf444ff869",
+            "entry_hash": "26ce42008a05a142914244532ec1008bd7ddd2a0b04632948f61b8ef37c54f89"
+          },
+          {
+            "trace_id": "cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77::364826d5b0d04140ab72965389a1e092",
+            "execution_hash": "sha256:83865c8477b957be6b68940fa4f47a6aab7e2e4dbed17194d5e8d54eff87ac91",
+            "validation_hash": "sha256:83865c8477b957be6b68940fa4f47a6aab7e2e4dbed17194d5e8d54eff87ac91",
+            "replay_hash": "sha256:83865c8477b957be6b68940fa4f47a6aab7e2e4dbed17194d5e8d54eff87ac91",
+            "tx_hash": "evidence_cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77::364826d5b0d04140ab72965389a1e092",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793799193,
+            "prev_hash": "26ce42008a05a142914244532ec1008bd7ddd2a0b04632948f61b8ef37c54f89",
+            "entry_hash": "55dc7ea5bac3e0a76f031c444a0817f5854e62f19b52052648f22f1735a87e76"
+          },
+          {
+            "trace_id": "cyber-p0-test-3d551675-ca1a-4a29-a940-b6a4a6b8de02::3b021d8d0a1e49b49b8e4aa8da8db28b",
+            "execution_hash": "sha256:3f802af79ff47cf58b9cb44a9eb16f93c21e17b41e31529236c93e4a86bde83c",
+            "validation_hash": "sha256:3f802af79ff47cf58b9cb44a9eb16f93c21e17b41e31529236c93e4a86bde83c",
+            "replay_hash": "sha256:3f802af79ff47cf58b9cb44a9eb16f93c21e17b41e31529236c93e4a86bde83c",
+            "tx_hash": "evidence_cyber-p0-test-3d551675-ca1a-4a29-a940-b6a4a6b8de02::3b021d8d0a1e49b49b8e4aa8da8db28b",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793799196,
+            "prev_hash": "55dc7ea5bac3e0a76f031c444a0817f5854e62f19b52052648f22f1735a87e76",
+            "entry_hash": "3e65ee8efff410936d220b604e2c5b40a4ef70465be93bdb20cf8166eab3566e"
+          },
+          {
+            "trace_id": "0ac6868c-a9b3-49ae-b2f1-c176d3efd367::2011e0ea5ec6480faafa129005049468",
+            "execution_hash": "sha256:9b4524c8e992ce13f867b4cde4e52b09fdfe0faca62b4a062d5a6b8f09fc90fb",
+            "validation_hash": "sha256:9b4524c8e992ce13f867b4cde4e52b09fdfe0faca62b4a062d5a6b8f09fc90fb",
+            "replay_hash": "sha256:9b4524c8e992ce13f867b4cde4e52b09fdfe0faca62b4a062d5a6b8f09fc90fb",
+            "tx_hash": "evidence_0ac6868c-a9b3-49ae-b2f1-c176d3efd367::2011e0ea5ec6480faafa129005049468",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793799212,
+            "prev_hash": "3e65ee8efff410936d220b604e2c5b40a4ef70465be93bdb20cf8166eab3566e",
+            "entry_hash": "0a2116ab59832896a09aa5f45b703f9c8364a420b579d41dbb7c6f6a9fd4837b"
+          },
+          {
+            "trace_id": "e0399402-dcec-497d-a72b-fc05f01186e3::3387e9422b1845c08313313caba7f516",
+            "execution_hash": "sha256:2609237745217764413ce1ec136c98dea81f3777e8b3d1a219ac79322b42466f",
+            "validation_hash": "sha256:2609237745217764413ce1ec136c98dea81f3777e8b3d1a219ac79322b42466f",
+            "replay_hash": "sha256:2609237745217764413ce1ec136c98dea81f3777e8b3d1a219ac79322b42466f",
+            "tx_hash": "evidence_e0399402-dcec-497d-a72b-fc05f01186e3::3387e9422b1845c08313313caba7f516",
+            "fraud_decision": "DENY",
+            "timestamp": 1793799213,
+            "prev_hash": "0a2116ab59832896a09aa5f45b703f9c8364a420b579d41dbb7c6f6a9fd4837b",
+            "entry_hash": "17e3cb05e6ba7c3d8978972bcf11ed2d1aa2fc5c63693511e6f49122d66ee64d"
+          },
+          {
+            "trace_id": "5f245e4c-6d27-40b8-863d-0a2234e2bd98::67d40286d4414e3da16ba21c63b90bf1",
+            "execution_hash": "sha256:00d1979e2017c4aab5d2f6819f363ce8e4afc7b6e73d1487398f457160248111",
+            "validation_hash": "sha256:00d1979e2017c4aab5d2f6819f363ce8e4afc7b6e73d1487398f457160248111",
+            "replay_hash": "sha256:00d1979e2017c4aab5d2f6819f363ce8e4afc7b6e73d1487398f457160248111",
+            "tx_hash": "evidence_5f245e4c-6d27-40b8-863d-0a2234e2bd98::67d40286d4414e3da16ba21c63b90bf1",
+            "fraud_decision": "DENY",
+            "timestamp": 1793799215,
+            "prev_hash": "17e3cb05e6ba7c3d8978972bcf11ed2d1aa2fc5c63693511e6f49122d66ee64d",
+            "entry_hash": "496ecd7a836fe51318baf91b4c3422541ae6edec0e09026f68d4e3362cf3644e"
+          },
+          {
+            "trace_id": "322fb6bb-7c62-42bf-b1f4-e8991652b0e3::2aa2ceaa67054b588d5a0760c24193a9",
+            "execution_hash": "sha256:f5b051690261b544fef1646f80c09979f693f44c74b769dbf46ca0b9ccc44e4c",
+            "validation_hash": "sha256:f5b051690261b544fef1646f80c09979f693f44c74b769dbf46ca0b9ccc44e4c",
+            "replay_hash": "sha256:f5b051690261b544fef1646f80c09979f693f44c74b769dbf46ca0b9ccc44e4c",
+            "tx_hash": "evidence_322fb6bb-7c62-42bf-b1f4-e8991652b0e3::2aa2ceaa67054b588d5a0760c24193a9",
+            "fraud_decision": "DENY",
+            "timestamp": 1793799222,
+            "prev_hash": "496ecd7a836fe51318baf91b4c3422541ae6edec0e09026f68d4e3362cf3644e",
+            "entry_hash": "a805582e379bc536db4c2e88682cebcdb1a0acdcedd5f100378acfc9621a747a"
+          },
+          {
+            "trace_id": "2489e560-4441-4385-8834-eee7135f4857::c9a98d77ab4646a494f26effd71f96f9",
+            "execution_hash": "sha256:97c63814db67787d61fcb3dc8995c8a451abc5f21e52fc210dd344da91e8c9fb",
+            "validation_hash": "sha256:97c63814db67787d61fcb3dc8995c8a451abc5f21e52fc210dd344da91e8c9fb",
+            "replay_hash": "sha256:97c63814db67787d61fcb3dc8995c8a451abc5f21e52fc210dd344da91e8c9fb",
+            "tx_hash": "evidence_2489e560-4441-4385-8834-eee7135f4857::c9a98d77ab4646a494f26effd71f96f9",
+            "fraud_decision": "DENY",
+            "timestamp": 1793799224,
+            "prev_hash": "a805582e379bc536db4c2e88682cebcdb1a0acdcedd5f100378acfc9621a747a",
+            "entry_hash": "63af16c6ff370d2f7e5667cb66588ab194dd72b1413b03ab1bc889628462f99a"
+          },
+          {
+            "trace_id": "f681e728-f1f9-453e-bbd8-78d818ea0978::009daa9b25f14bbb9ab0b4dcc60b1b0a",
+            "execution_hash": "sha256:80a5a41f49905c50122e9bc4227788788137e142e557b417367583943f76bd81",
+            "validation_hash": "sha256:80a5a41f49905c50122e9bc4227788788137e142e557b417367583943f76bd81",
+            "replay_hash": "sha256:80a5a41f49905c50122e9bc4227788788137e142e557b417367583943f76bd81",
+            "tx_hash": "evidence_f681e728-f1f9-453e-bbd8-78d818ea0978::009daa9b25f14bbb9ab0b4dcc60b1b0a",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793799225,
+            "prev_hash": "63af16c6ff370d2f7e5667cb66588ab194dd72b1413b03ab1bc889628462f99a",
+            "entry_hash": "1287422c22abb93d02dfe907648ebbc73f46f68be219ae3826fdeef7703b87b8"
+          },
+          {
+            "trace_id": "c87f21d3-3ce4-4a4c-9a80-79e8b52b2049::5d3efe3a58ef492fb554ab0964679c64",
+            "execution_hash": "sha256:6c6718c801ff050656dff1a6329eb0703f86ab8c7bc82cbc5eb42ca088d248b4",
+            "validation_hash": "sha256:6c6718c801ff050656dff1a6329eb0703f86ab8c7bc82cbc5eb42ca088d248b4",
+            "replay_hash": "sha256:6c6718c801ff050656dff1a6329eb0703f86ab8c7bc82cbc5eb42ca088d248b4",
+            "tx_hash": "evidence_c87f21d3-3ce4-4a4c-9a80-79e8b52b2049::5d3efe3a58ef492fb554ab0964679c64",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793799231,
+            "prev_hash": "1287422c22abb93d02dfe907648ebbc73f46f68be219ae3826fdeef7703b87b8",
+            "entry_hash": "28111a4445ce3fbe34bf607443cd7b71b1ba8e5ba5e2cbd45664893dc07c7d83"
+          },
+          {
+            "trace_id": "e36e62d6-03f5-4ea9-9986-a91db05d8d85::52e97d1182a9448a98a4dec586d8e163",
+            "execution_hash": "sha256:2702c25fcb3df8cb8b19c80d7a8e4d8945638c2645535c418cebec74371de2dd",
+            "validation_hash": "sha256:2702c25fcb3df8cb8b19c80d7a8e4d8945638c2645535c418cebec74371de2dd",
+            "replay_hash": "sha256:2702c25fcb3df8cb8b19c80d7a8e4d8945638c2645535c418cebec74371de2dd",
+            "tx_hash": "evidence_e36e62d6-03f5-4ea9-9986-a91db05d8d85::52e97d1182a9448a98a4dec586d8e163",
+            "fraud_decision": "ALLOW",
+            "timestamp": 1793799254,
+            "prev_hash": "28111a4445ce3fbe34bf607443cd7b71b1ba8e5ba5e2cbd45664893dc07c7d83",
+            "entry_hash": "62141765a5a50f90ff002ca82387e22fb815a67d21ee836d7e10449bbdb92080"
+          }
+        ],
+        "success": true
+      }
+    }
+  },
+  {
+    "check_id": "S7-03",
+    "system": "vajra-local",
+    "utc": "2026-11-04T13:34:53Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:62507/api/tantra/chain-integrity",
+      "headers": {},
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "intact": true,
+        "message": "truth store chain is intact \u2014 no tampering detected",
+        "success": true
+      }
+    }
+  },
+  {
+    "check_id": "S7-03",
+    "system": "vajra-local",
+    "utc": "2026-11-04T13:34:53Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:62507/api/vajra/authority/verify?subject=cyber-p0-test-survivor-cb709b7af4",
+      "headers": {},
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "current_state": "",
+        "is_authorized": false,
+        "subject": "cyber-p0-test-survivor-cb709b7af4",
+        "verified_at": 1793799293
+      }
+    }
+  },
+  {
+    "check_id": "S7-03",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T13:34:55Z",
+    "elapsed_ms": 1422,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:62513/api/v1/protected/access",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "d5054e02-54b1-4fbb-af6f-be59a54554ab",
+        "content-type": "application/json"
+      },
+      "body": {
+        "contract_version": "1.0.0",
+        "vajra_subject": "cyber-p0-test-survivor-cb709b7af4",
+        "action": "read",
+        "resource": {
+          "type": "evidence",
+          "id": "EV-P0-0001"
+        },
+        "purpose": "P0 verification (synthetic)"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "6cfd8b03-90bf-4c16-a8a7-6a425087ed76",
+        "x-trace-id": "d5054e02-54b1-4fbb-af6f-be59a54554ab"
+      },
+      "body": {
+        "contract_version": "1.0.0",
+        "decision": "DENY",
+        "reason_code": "VAJRA_AUTHORITY_NOT_GRANTED",
+        "reason": "Access denied: VAJRA authority state is 'NONE', which does not permit access.",
+        "decision_id": "72c87dd845994faf82b27f26dd383361",
+        "trace_id": "d5054e02-54b1-4fbb-af6f-be59a54554ab",
+        "request_id": "6cfd8b03-90bf-4c16-a8a7-6a425087ed76",
+        "idempotency_key": null,
+        "duplicate": false,
+        "actor_id": "cc_usr_2",
+        "action": "read",
+        "resource": {
+          "type": "evidence",
+          "id": "EV-P0-0001"
+        },
+        "vajra": {
+          "subject_ref": "subj_sha256_2bd45f4e341910d2",
+          "status": "OK",
+          "is_authorized": false,
+          "current_state": "",
+          "scope_checked": false
+        },
+        "evidence": {
+          "local_audit_event_id": "bc91fcde-1c41-4aea-a0ba-ff48176d8ace",
+          "superseded_audit_event_id": null,
+          "vajra": {
+            "status": "RECORDED",
+            "http_status": 200,
+            "detail": "",
+            "data": {
+              "evidence_hash": "sha256:41405ff8bbe996eb43af3f359ae6828408d4898a10f1bbe6fe38eaaf6d4e5715",
+              "stored_in": [
+                "TruthStore (tantra_truth.jsonl)"
+              ],
+              "recorded_at": 1793799295
+            }
+          },
+          "tantra": {
+            "status": "NOT_CONFIGURED",
+            "http_status": null,
+            "detail": "TANTRA_VALIDATION_URL is not set"
+          },
+          "complete": false,
+          "gaps": [
+            "tantra"
+          ]
+        },
+        "policy_applied": "vajra_authority_v1",
+        "evaluated_at": "2026-11-04T13:34:53.960Z"
+      }
+    }
+  }
+]

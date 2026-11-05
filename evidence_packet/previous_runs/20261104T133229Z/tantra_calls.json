@@ -1,0 +1,80 @@
+[
+  {
+    "utc": "2026-11-04T13:32:49Z",
+    "source": "harness",
+    "check": "O-02",
+    "method": "GET",
+    "path": "/health",
+    "http": 200,
+    "ledger_write": false
+  },
+  {
+    "utc": "2026-11-04T13:32:49Z",
+    "source": "harness",
+    "check": "O-02",
+    "method": "GET",
+    "path": "/health",
+    "http": 200,
+    "ledger_write": false
+  },
+  {
+    "utc": "2026-11-04T13:32:50Z",
+    "source": "harness",
+    "check": "O-02",
+    "method": "GET",
+    "path": "/health",
+    "http": 200,
+    "ledger_write": false
+  },
+  {
+    "utc": "2026-11-04T13:33:11.680165+00:00",
+    "source": "api",
+    "check": "",
+    "method": "POST",
+    "path": "/validate/prana/ingress",
+    "http": 422,
+    "ledger_write": false,
+    "trace_id": "cyber-p0-test-2bac3fe6-29e1-4c70-b81d-ca01188a9127",
+    "outcome": "CONTRACT_REJECTED"
+  },
+  {
+    "utc": "2026-11-04T13:33:14.451153+00:00",
+    "source": "api",
+    "check": "",
+    "method": "POST",
+    "path": "/validate/prana/ingress",
+    "http": 422,
+    "ledger_write": false,
+    "trace_id": "cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77",
+    "outcome": "CONTRACT_REJECTED"
+  },
+  {
+    "utc": "2026-11-04T13:33:17.484713+00:00",
+    "source": "api",
+    "check": "",
+    "method": "POST",
+    "path": "/validate/prana/ingress",
+    "http": 422,
+    "ledger_write": false,
+    "trace_id": "cyber-p0-test-3d551675-ca1a-4a29-a940-b6a4a6b8de02",
+    "outcome": "CONTRACT_REJECTED"
+  },
+  {
+    "utc": "2026-11-04T13:33:18Z",
+    "source": "harness",
+    "check": "S5-01",
+    "method": "GET",
+    "path": "/replay/cyber-p0-test-3d551675-ca1a-4a29-a940-b6a4a6b8de02",
+    "http": 404,
+    "ledger_write": false
+  },
+  {
+    "utc": "2026-11-04T13:33:23Z",
+    "source": "harness",
+    "check": "S5-04",
+    "method": "POST",
+    "path": "/validate/prana/ingress",
+    "http": 422,
+    "ledger_write": false
+  }
+]

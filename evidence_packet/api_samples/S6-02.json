@@ -2,19 +2,19 @@
   {
     "check_id": "S6-02",
     "system": "cybersecurity",
-    "utc": "2026-11-04T13:34:49Z",
-    "elapsed_ms": 5734,
+    "utc": "2026-11-05T14:33:44Z",
+    "elapsed_ms": 4594,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:62513/api/v1/protected/access",
+      "url": "http://127.0.0.1:56282/api/v1/protected/access",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "7d501ac8-a34a-4ab8-a559-832007040d17",
+        "x-trace-id": "b1872544-3291-4ce8-9153-98dfde2e436b",
         "content-type": "application/json"
       },
       "body": {
         "contract_version": "1.0.0",
-        "vajra_subject": "cyber-p0-test-vajra-down-7dfec35293",
+        "vajra_subject": "cyber-p0-test-vajra-down-8b1a1cfb64",
         "action": "read",
         "resource": {
           "type": "evidence",
@@ -27,17 +27,17 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "8a45ee87-f8d3-45ca-bbf3-a312a1f859cf",
-        "x-trace-id": "7d501ac8-a34a-4ab8-a559-832007040d17"
+        "x-request-id": "039b3a4a-97fe-49b2-8e2f-229057e6c1be",
+        "x-trace-id": "b1872544-3291-4ce8-9153-98dfde2e436b"
       },
       "body": {
         "contract_version": "1.0.0",
         "decision": "DENY",
         "reason_code": "VAJRA_UNAVAILABLE",
         "reason": "Access denied: VAJRA authority could not be confirmed (UNAVAILABLE).",
-        "decision_id": "8028fbc19efb4b3fbcc70306da414a35",
-        "trace_id": "7d501ac8-a34a-4ab8-a559-832007040d17",
-        "request_id": "8a45ee87-f8d3-45ca-bbf3-a312a1f859cf",
+        "decision_id": "b43a2b840cc84fcd9768f5fa6d4fe4bb",
+        "trace_id": "b1872544-3291-4ce8-9153-98dfde2e436b",
+        "request_id": "039b3a4a-97fe-49b2-8e2f-229057e6c1be",
         "idempotency_key": null,
         "duplicate": false,
         "actor_id": "cc_usr_2",
@@ -47,19 +47,22 @@
           "id": "EV-P0-0001"
         },
         "vajra": {
-          "subject_ref": "subj_sha256_018b8e24d80d3f69",
+          "subject_ref": "subj_sha256_92d49f03ad883981",
           "status": "UNAVAILABLE",
           "is_authorized": null,
           "current_state": null,
           "scope_checked": false
         },
         "evidence": {
-          "local_audit_event_id": "428577bd-10e4-4c37-a736-21c9347d6981",
+          "local_audit_event_id": "9d73466a-43ed-4847-b01e-8ae2865aca4d",
           "superseded_audit_event_id": null,
           "vajra": {
             "status": "UNAVAILABLE",
             "http_status": null,
-            "detail": "ConnectError"
+            "detail": "ConnectError",
+            "data": {
+              "credential": "tantra_governance"
+            }
           },
           "tantra": {
             "status": "NOT_CONFIGURED",
@@ -73,18 +76,18 @@
           ]
         },
         "policy_applied": "vajra_authority_v1",
-        "evaluated_at": "2026-11-04T13:34:44.172Z"
+        "evaluated_at": "2026-11-05T14:33:39.667Z"
       }
     }
   },
   {
     "check_id": "S6-02",
     "system": "cybersecurity",
-    "utc": "2026-11-04T13:34:52Z",
-    "elapsed_ms": 2719,
+    "utc": "2026-11-05T14:33:46Z",
+    "elapsed_ms": 2265,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:62513/api/v1/system/health",
+      "url": "http://127.0.0.1:56282/api/v1/system/health",
       "headers": {
         "authorization": "[REDACTED]"
       },
@@ -94,8 +97,8 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "1780c5d1-0112-4cd6-bb2a-7d16f0b20a55",
-        "x-trace-id": "03ecccf6-52e2-468e-956e-f82c7cb8e825"
+        "x-request-id": "a460706b-5b50-405b-8bfe-8bf8cede8ae0",
+        "x-trace-id": "e3c98245-b52d-4fb8-af15-d5bb50efca66"
       },
       "body": {
         "status": "healthy",
@@ -105,12 +108,12 @@
         },
         "integrations": {
           "storage": {
-            "path": "C:\\tmp\\cyber-p0-verify-20261104T133229Z-hq04mu9_\\evidence_storage",
+            "path": "C:\\tmp\\cyber-p0-verify-20261105T143237Z-p3844728\\evidence_storage",
             "exists": true,
             "writable": true
           },
           "event_queue": {
-            "buffer_path": "C:\\tmp\\cyber-p0-verify-20261104T133229Z-hq04mu9_\\event_buffer\\events.jsonl",
+            "buffer_path": "C:\\tmp\\cyber-p0-verify-20261105T143237Z-p3844728\\event_buffer\\events.jsonl",
             "buffer_exists": true,
             "buffered_events": 1,
             "kafka_configured": false,
@@ -142,7 +145,11 @@
               "reachable": false,
               "error": "ConnectError"
             },
-            "write_token_configured": true
+            "write_token_configured": true,
+            "write_credential": "tantra_governance",
+            "warnings": [
+              "Evidence writes use VAJRA_TANTRA_SECRET, VAJRA's governance token (it also authorizes authority transitions). Configure the evidence-only VAJRA_CYBER_SECRET instead."
+            ]
           }
         }
       }

@@ -1,6 +1,6 @@
 # REVIEW_PACKET - Cybersecurity P0 verification and BHIV runtime bridge
 
-Branch `hemanth/p0-verification-2026-11-04` - base commit `59d2d63` (main, 2026-10-27). Generated from run `20261104T133229Z` (2026-11-04T13:32:47Z to 2026-11-04T13:34:57Z UTC, TANTRA mode `live`).
+Branch `hemanth/p0-verification-2026-11-04` - base commit `59d2d63` (main, 2026-10-27). Generated from run `20261105T143237Z` (2026-11-05T14:32:44Z to 2026-11-05T14:33:56Z UTC, TANTRA mode `off`).
 
 ## 1. Entry point
 
@@ -26,9 +26,9 @@ Investigator (JWT) --> Cybersecurity RBAC --> POST /api/v1/protected/access
    --> response: decision, reason, decision_id, trace_id, evidence {local, vajra, tantra, complete, gaps}
 ```
 
-What ALLOW means: the caller passed RBAC, VAJRA reports GRANT or USE for the subject, and VAJRA recorded the evidence. The requested action and resource are not checked against a VAJRA scope (`vajra.scope_checked: false`, CYB-13).
+What ALLOW means: the caller passed RBAC, VAJRA reports GRANT or USE for the subject, the scope VAJRA reports contains `<action>:<resource type>` (for example `read:evidence`; `vajra.scope_checked: true`), and VAJRA recorded the evidence. Not checked: the resource id, the purpose, and whether the caller may act for the subject (CYB-13).
 
-Golden trace for review: `cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77` (check S8-01). The id appears in the HTTP response and the audit store, and it prefixes the VAJRA TruthStore row id (`<trace>::<decision_id>`); see `replay_evidence/GOLDEN_TRACE.md`.
+Golden trace for review: `b87529b7-cd7a-42fb-9be6-a2b0f5a5a30e` (check S8-01). The id appears in the HTTP response and the audit store, and it prefixes the VAJRA TruthStore row id (`<trace>::<decision_id>`); see `replay_evidence/GOLDEN_TRACE.md`.
 
 ## 4. Real JSON request/response (recorded, secrets redacted)
 
@@ -38,15 +38,15 @@ Golden trace for review: `cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77` (c
 {
   "request": {
     "method": "POST",
-    "url": "http://127.0.0.1:62513/api/v1/protected/access",
+    "url": "http://127.0.0.1:56282/api/v1/protected/access",
     "headers": {
       "authorization": "[REDACTED]",
-      "x-trace-id": "cyber-p0-test-2bac3fe6-29e1-4c70-b81d-ca01188a9127",
+      "x-trace-id": "3631e3f9-f27f-4b4e-ad36-fb7f11663d8d",
       "content-type": "application/json"
     },
     "body": {
       "contract_version": "1.0.0",
-      "vajra_subject": "cyber-p0-test-consenting-user-5db9e34290",
+      "vajra_subject": "cyber-p0-test-consenting-user-cd82c337d4",
       "action": "read",
       "resource": {
         "type": "evidence",
@@ -59,17 +59,17 @@ Golden trace for review: `cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77` (c
     "status": 200,
     "headers": {
       "content-type": "application/json",
-      "x-request-id": "17c696bb-485c-4908-80cf-b36f8381ddf1",
-      "x-trace-id": "cyber-p0-test-2bac3fe6-29e1-4c70-b81d-ca01188a9127"
+      "x-request-id": "fcfbae5b-7df6-4be5-8904-c219740c9fac",
+      "x-trace-id": "3631e3f9-f27f-4b4e-ad36-fb7f11663d8d"
     },
     "body": {
       "contract_version": "1.0.0",
       "decision": "ALLOW",
       "reason_code": "ALLOWED_BY_VAJRA_AUTHORITY",
-      "reason": "Access permitted: VAJRA authority state is 'USE', the caller passed RBAC and VAJRA recorded the evidence. Scope (action/resource) is not checked by VAJRA's verify contract.",
-      "decision_id": "b8855859f42f4fa784dd5e9ac53e5527",
-      "trace_id": "cyber-p0-test-2bac3fe6-29e1-4c70-b81d-ca01188a9127",
-      "request_id": "17c696bb-485c-4908-80cf-b36f8381ddf1",
+      "reason": "Access permitted: VAJRA authority state is 'USE', the granted scope includes 'read:evidence', the caller passed RBAC and VAJRA recorded the evidence.",
+      "decision_id": "ff212325a79c443496bacb8dee77b2ee",
+      "trace_id": "3631e3f9-f27f-4b4e-ad36-fb7f11663d8d",
+      "request_id": "fcfbae5b-7df6-4be5-8904-c219740c9fac",
       "idempotency_key": null,
       "duplicate": false,
       "actor_id": "cc_usr_2",
@@ -79,123 +79,26 @@ Golden trace for review: `cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77` (c
         "id": "EV-P0-0001"
       },
       "vajra": {
-        "subject_ref": "subj_sha256_cd9acea8b297ae43",
+        "subject_ref": "subj_sha256_48c4e8a4d46cf4c9",
         "status": "OK",
         "is_authorized": true,
         "current_state": "USE",
-        "scope_checked": false
+        "scope_checked": true
       },
       "evidence": {
-        "local_audit_event_id": "ddbc1036-f1d7-4123-a74d-bc8c14cf9aad",
+        "local_audit_event_id": "fb827f48-5965-4c93-8327-e9cc50e3a17a",
         "superseded_audit_event_id": null,
         "vajra": {
           "status": "RECORDED",
           "http_status": 200,
           "detail": "",
           "data": {
-            "evidence_hash": "sha256:8f993fb1b510eb5747040dbfa56526cf0c5793b6cc228556057628db2b8af513",
+            "evidence_hash": "sha256:57af3350c959a2088f43688ca7e4dcd2b91db028ae69e0ea8e8109eb87cba3a3",
             "stored_in": [
               "TruthStore (tantra_truth.jsonl)"
             ],
-            "recorded_at": 1793799190
-          }
-        },
-        "tantra": {
-          "status": "CONTRACT_REJECTED",
-          "http_status": 422,
-          "detail": "event_type_not_registered",
-          "data": {
-            "reason": "event_type_not_registered",
-            "message": "event_type 'security_decision' is not registered for PRANA ingress",
-            "registered_event_types": [
-              "adaptive_decision",
-              "bucket_memory_saved",
-              "integrity_probe",
-              "review_completed",
-              "task_submit",
-              "task_submit_failed",
-              "truth_classification"
-            ]
-          }
-        },
-        "complete": false,
-        "gaps": [
-          "tantra"
-        ]
-      },
-      "policy_applied": "vajra_authority_v1",
-      "evaluated_at": "2026-11-04T13:33:08.844Z"
-    }
-  }
-}
-```
-
-### DENY after VAJRA revocation (check S2-01)
-
-```json
-{
-  "request": {
-    "method": "POST",
-    "url": "http://127.0.0.1:62513/api/v1/protected/access",
-    "headers": {
-      "authorization": "[REDACTED]",
-      "x-trace-id": "9b47b68f-090d-4aa5-b2e7-f122314fa360",
-      "content-type": "application/json"
-    },
-    "body": {
-      "contract_version": "1.0.0",
-      "vajra_subject": "cyber-p0-test-revocable-user-8c03db452e",
-      "action": "read",
-      "resource": {
-        "type": "evidence",
-        "id": "EV-P0-0001"
-      },
-      "purpose": "P0 verification (synthetic)"
-    }
-  },
-  "response": {
-    "status": 200,
-    "headers": {
-      "content-type": "application/json",
-      "x-request-id": "b09afdd4-3681-494f-b517-7772590cf6a8",
-      "x-trace-id": "9b47b68f-090d-4aa5-b2e7-f122314fa360"
-    },
-    "body": {
-      "contract_version": "1.0.0",
-      "decision": "DENY",
-      "reason_code": "VAJRA_AUTHORITY_NOT_GRANTED",
-      "reason": "Access denied: VAJRA authority state is 'REVOKE', which does not permit access.",
-      "decision_id": "455b803fc9804366baff9d4719b7ace8",
-      "trace_id": "9b47b68f-090d-4aa5-b2e7-f122314fa360",
-      "request_id": "b09afdd4-3681-494f-b517-7772590cf6a8",
-      "idempotency_key": null,
-      "duplicate": false,
-      "actor_id": "cc_usr_2",
-      "action": "read",
-      "resource": {
-        "type": "evidence",
-        "id": "EV-P0-0001"
-      },
-      "vajra": {
-        "subject_ref": "subj_sha256_67038b3cd1ba5df1",
-        "status": "OK",
-        "is_authorized": false,
-        "current_state": "REVOKE",
-        "scope_checked": false
-      },
-      "evidence": {
-        "local_audit_event_id": "8a3ddaf8-62d3-4020-a9a7-d1168521fe0f",
-        "superseded_audit_event_id": null,
-        "vajra": {
-          "status": "RECORDED",
-          "http_status": 200,
-          "detail": "",
-          "data": {
-            "evidence_hash": "sha256:b307f37fc48f7771214eca64e3e9c27961cf13d1c2b97efd5e27e9e8af1ad9cb",
-            "stored_in": [
-              "TruthStore (tantra_truth.jsonl)"
-            ],
-            "recorded_at": 1793799176
+            "recorded_at": 1793889171,
+            "credential": "tantra_governance"
           }
         },
         "tantra": {
@@ -209,53 +112,94 @@ Golden trace for review: `cyber-p0-test-1f574eec-e2dc-47a1-888c-ddeadd919e77` (c
         ]
       },
       "policy_applied": "vajra_authority_v1",
-      "evaluated_at": "2026-11-04T13:32:54.708Z"
+      "evaluated_at": "2026-11-05T14:32:51.323Z"
     }
   }
 }
 ```
 
-### TANTRA contract gate rejects the security event (check S5-01, live TANTRA)
+### DENY after VAJRA revocation (check S2-01)
 
 ```json
 {
-  "response_evidence": {
-    "local_audit_event_id": "a1267294-d90f-4a93-8fab-458b75c0e2f7",
-    "superseded_audit_event_id": null,
-    "vajra": {
-      "status": "RECORDED",
-      "http_status": 200,
-      "detail": "",
-      "data": {
-        "evidence_hash": "sha256:3f802af79ff47cf58b9cb44a9eb16f93c21e17b41e31529236c93e4a86bde83c",
-        "stored_in": [
-          "TruthStore (tantra_truth.jsonl)"
-        ],
-        "recorded_at": 1793799196
-      }
+  "request": {
+    "method": "POST",
+    "url": "http://127.0.0.1:56282/api/v1/protected/access",
+    "headers": {
+      "authorization": "[REDACTED]",
+      "x-trace-id": "3b6f4254-3ea7-4d66-8ce0-3adf65a16753",
+      "content-type": "application/json"
     },
-    "tantra": {
-      "status": "CONTRACT_REJECTED",
-      "http_status": 422,
-      "detail": "event_type_not_registered",
-      "data": {
-        "reason": "event_type_not_registered",
-        "message": "event_type 'security_decision' is not registered for PRANA ingress",
-        "registered_event_types": [
-          "adaptive_decision",
-          "bucket_memory_saved",
-          "integrity_probe",
-          "review_completed",
-          "task_submit",
-          "task_submit_failed",
-          "truth_classification"
+    "body": {
+      "contract_version": "1.0.0",
+      "vajra_subject": "cyber-p0-test-revocable-user-bd42b540fa",
+      "action": "read",
+      "resource": {
+        "type": "evidence",
+        "id": "EV-P0-0001"
+      },
+      "purpose": "P0 verification (synthetic)"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json",
+      "x-request-id": "e37fed0e-2bbb-4918-bd63-a3eec9f1caa6",
+      "x-trace-id": "3b6f4254-3ea7-4d66-8ce0-3adf65a16753"
+    },
+    "body": {
+      "contract_version": "1.0.0",
+      "decision": "DENY",
+      "reason_code": "VAJRA_AUTHORITY_NOT_GRANTED",
+      "reason": "Access denied: VAJRA authority state is 'REVOKE', which does not permit access.",
+      "decision_id": "66d698bc8a534f218dcecb5caf410128",
+      "trace_id": "3b6f4254-3ea7-4d66-8ce0-3adf65a16753",
+      "request_id": "e37fed0e-2bbb-4918-bd63-a3eec9f1caa6",
+      "idempotency_key": null,
+      "duplicate": false,
+      "actor_id": "cc_usr_2",
+      "action": "read",
+      "resource": {
+        "type": "evidence",
+        "id": "EV-P0-0001"
+      },
+      "vajra": {
+        "subject_ref": "subj_sha256_699d3999cdd83306",
+        "status": "OK",
+        "is_authorized": false,
+        "current_state": "REVOKE",
+        "scope_checked": false
+      },
+      "evidence": {
+        "local_audit_event_id": "08847e10-f208-45c5-8100-77d43b000d87",
+        "superseded_audit_event_id": null,
+        "vajra": {
+          "status": "RECORDED",
+          "http_status": 200,
+          "detail": "",
+          "data": {
+            "evidence_hash": "sha256:fd9c5b6dcb8c396645c55116b4f65c13e163effe00b9d576f0ebfff519c00b1f",
+            "stored_in": [
+              "TruthStore (tantra_truth.jsonl)"
+            ],
+            "recorded_at": 1793889169,
+            "credential": "tantra_governance"
+          }
+        },
+        "tantra": {
+          "status": "NOT_CONFIGURED",
+          "http_status": null,
+          "detail": "TANTRA_VALIDATION_URL is not set"
+        },
+        "complete": false,
+        "gaps": [
+          "tantra"
         ]
-      }
-    },
-    "complete": false,
-    "gaps": [
-      "tantra"
-    ]
+      },
+      "policy_applied": "vajra_authority_v1",
+      "evaluated_at": "2026-11-05T14:32:48.664Z"
+    }
   }
 }
 ```
@@ -330,7 +274,7 @@ added     verification/harness/redact.py
 added     verification/harness/runner.py
 added     verification/harness/services.py
 added     verification/run_verification.py
-added     evidence_packet/ and review_packets/ (116 generated files)
+added     evidence_packet/ and review_packets/ (186 generated files)
 ```
 
 ## 6. Failure cases
@@ -339,19 +283,19 @@ added     evidence_packet/ and review_packets/ (116 generated files)
 |---|---|---|
 | TANTRA unreachable | S5-02 | PASS |
 | TANTRA slow (never answers) | S5-05 | PASS |
-| TANTRA rejects the contract | S5-01 | PASS |
+| TANTRA rejects the contract | S5-01 | SKIPPED |
 | VAJRA refuses the evidence token | S6-01 | PASS |
 | VAJRA down | S6-02 | PASS |
 | audit store not writable | S6-03 | PASS |
 | VAJRA crash-restart (decision follows VAJRA) | S7-03 | PASS |
-| VAJRA authority after restart | S7-05 | FAIL |
+| VAJRA authority after restart | S7-05 | PASS |
 | stored evidence tampered | S8-03 | PASS |
 | key reused for another request | S4-04 | PASS |
 | replay after revocation | S4-05 | PASS |
 
 ## 7. Proof
 
-- Integrated run: 42 PASS, 3 FAIL, 0 ERROR, 0 BLOCKED, 1 SKIPPED of 46 ([test_results/TEST_REPORT.md](test_results/TEST_REPORT.md)).
+- Integrated run: 43 PASS, 7 FAIL, 0 ERROR, 0 BLOCKED, 4 SKIPPED of 54 ([test_results/TEST_REPORT.md](test_results/TEST_REPORT.md)).
 - Requirement mapping: [test_results/PROOF_MATRIX.md](test_results/PROOF_MATRIX.md).
 - Defects: [test_results/DEFECTS.md](test_results/DEFECTS.md).
 - Raw exchanges: `api_samples/<check>.json`; logs: `runtime_logs/`; replay: `replay_evidence/`; screenshots: `screenshots/`.
@@ -365,7 +309,7 @@ Covered by checks: RBAC middleware, auth (login/register), access revoke (all th
 | Pillar | Status |
 |---|---|
 | VAJRA (local node, real code) | consent read, evidence record, bearer gate and lifecycle - OFFLINE-VERIFIED on a local node, consent SIMULATED |
-| TANTRA (live services) | contract gate exercised live (PASS); registered probe contract written and replay-verified in run 20261104T103939Z (S8-02 PASS there, carried over; not repeated) |
+| TANTRA (live services) | not exercised in this run. TANTRA was not called in this run (mode off, on purpose). The last run that called live TANTRA (read-only), `20261104T133229Z`, is archived under `previous_runs/20261104T133229Z/`; its TANTRA checks: O-02 PASS, S5-01 PASS, S5-04 PASS, S8-02 SKIPPED. The one TANTRA ledger write (S8-02) was made in run `20261104T103939Z`. |
 | Threat assessment / correlation of access signals | PASS (P-C2) |
 
 ## 10. Deployment status
@@ -374,8 +318,8 @@ Local process deployment with health, crash-restart and recovery checks (deploym
 
 ## 11. Known limitations
 
-- VAJRA was run locally from its repository (VAJRA asks for no test records on its live node). VAJRA authority state is held in memory (VAJ-02).
-- ALLOW does not check scope or bind the caller to the subject (CYB-13); the VAJRA token is unscoped (it also authorizes VAJRA transitions).
+- VAJRA was run locally from its repository, commit `3cc883f` (VAJRA asks for no test records on its live node). Open VAJRA defects confirmed in this run: VAJ-05 (MEDIUM), VAJ-07 (HIGH), VAJ-10 (HIGH), VAJ-11 (HIGH), VAJ-12 (MEDIUM), VAJ-13 (HIGH), VAJ-14 (HIGH) (DEFECTS.md).
+- ALLOW checks the scope VAJRA reports (S1-08 PASS) but does not bind the caller to the subject (CYB-13). With only the evidence-only VAJRA token, evidence writes fail and every decision fails closed (S6-05 FAIL), so this run gave the API the governance token, which also authorizes VAJRA transitions.
 - TANTRA has no registered contract for cybersecurity events (TAN-01), so decisions are not in the TANTRA ledger.
 - The harness plays the VAJRA user journey and TANTRA governance roles (labelled SIMULATED per check).
 - Failed-login detection is a count rule (5 in 10 minutes per account), not a model; its confidence is a fixed function of the count. The protected-access rate limit is kept per process.

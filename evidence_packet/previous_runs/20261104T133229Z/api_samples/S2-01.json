@@ -1,0 +1,471 @@
+[
+  {
+    "check_id": "S2-01",
+    "system": "vajra-local",
+    "utc": "2026-11-04T13:32:53Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:62507/api/vajra/authority/transition",
+      "headers": {
+        "x-trace-id": "3172c249-2fea-40e3-8a2b-447be0685f5b",
+        "authorization": "[REDACTED]",
+        "content-type": "application/json"
+      },
+      "body": {
+        "trace_id": "3172c249-2fea-40e3-8a2b-447be0685f5b",
+        "subject": "cyber-p0-test-revocable-user-8c03db452e",
+        "authority": "AUTH_ROLE_CLIENT",
+        "issuer": "VAJRA_USER_CONTROL_SIMULATOR (verification harness)",
+        "target": "VAJRA_LEDGER",
+        "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)",
+        "scope": [
+          "read"
+        ],
+        "to_state": "GRANT",
+        "policy_version": "v1.0.0",
+        "evidence_ref": "synthetic-test"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "record": {
+          "record_id": "auth_1793799173_cyber-p0",
+          "trace_id": "3172c249-2fea-40e3-8a2b-447be0685f5b",
+          "subject": "cyber-p0-test-revocable-user-8c03db452e",
+          "authority": "AUTH_ROLE_CLIENT",
+          "issuer": "VAJRA_USER_CONTROL_SIMULATOR (verification harness)",
+          "target": "VAJRA_LEDGER",
+          "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)",
+          "scope": [
+            "read"
+          ],
+          "state_transition": {
+            "from": "",
+            "to": "GRANT"
+          },
+          "policy_version": "v1.0.0",
+          "timestamp": 1793799173,
+          "evidence_reference": "synthetic-test",
+          "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "entry_hash": "27e6f8f3e0d6d54b44345dc0935ee8178006abe0d2ae6b92f869501c82868dca"
+        },
+        "success": true
+      }
+    }
+  },
+  {
+    "check_id": "S2-01",
+    "system": "vajra-local",
+    "utc": "2026-11-04T13:32:53Z",
+    "elapsed_ms": 15,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:62507/api/vajra/authority/transition",
+      "headers": {
+        "x-trace-id": "a5cb1a93-d27c-479b-a82b-fac175e28938",
+        "authorization": "[REDACTED]",
+        "content-type": "application/json"
+      },
+      "body": {
+        "trace_id": "a5cb1a93-d27c-479b-a82b-fac175e28938",
+        "subject": "cyber-p0-test-revocable-user-8c03db452e",
+        "authority": "AUTH_ROLE_CLIENT",
+        "issuer": "VAJRA_USER_CONTROL_SIMULATOR (verification harness)",
+        "target": "VAJRA_LEDGER",
+        "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)",
+        "scope": [
+          "read"
+        ],
+        "to_state": "USE",
+        "policy_version": "v1.0.0",
+        "evidence_ref": "synthetic-test"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "record": {
+          "record_id": "auth_1793799173_cyber-p0",
+          "trace_id": "a5cb1a93-d27c-479b-a82b-fac175e28938",
+          "subject": "cyber-p0-test-revocable-user-8c03db452e",
+          "authority": "AUTH_ROLE_CLIENT",
+          "issuer": "VAJRA_USER_CONTROL_SIMULATOR (verification harness)",
+          "target": "VAJRA_LEDGER",
+          "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)",
+          "scope": [
+            "read"
+          ],
+          "state_transition": {
+            "from": "GRANT",
+            "to": "USE"
+          },
+          "policy_version": "v1.0.0",
+          "timestamp": 1793799173,
+          "evidence_reference": "synthetic-test",
+          "prev_hash": "27e6f8f3e0d6d54b44345dc0935ee8178006abe0d2ae6b92f869501c82868dca",
+          "entry_hash": "c30b0f2704a6d7d736ce997df575d8e21be8f99f9bad24def8ee8c87242e5e88"
+        },
+        "success": true
+      }
+    }
+  },
+  {
+    "check_id": "S2-01",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T13:32:54Z",
+    "elapsed_ms": 1359,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:62513/api/v1/protected/access",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "1a99bfec-7d80-4083-89be-187098e520ab",
+        "content-type": "application/json"
+      },
+      "body": {
+        "contract_version": "1.0.0",
+        "vajra_subject": "cyber-p0-test-revocable-user-8c03db452e",
+        "action": "read",
+        "resource": {
+          "type": "evidence",
+          "id": "EV-P0-0001"
+        },
+        "purpose": "P0 verification (synthetic)"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "778ad72d-34a6-4c89-8b35-1a6a7a4a231d",
+        "x-trace-id": "1a99bfec-7d80-4083-89be-187098e520ab"
+      },
+      "body": {
+        "contract_version": "1.0.0",
+        "decision": "ALLOW",
+        "reason_code": "ALLOWED_BY_VAJRA_AUTHORITY",
+        "reason": "Access permitted: VAJRA authority state is 'USE', the caller passed RBAC and VAJRA recorded the evidence. Scope (action/resource) is not checked by VAJRA's verify contract.",
+        "decision_id": "83deb558007a4c3a9889c6ad1ba7767d",
+        "trace_id": "1a99bfec-7d80-4083-89be-187098e520ab",
+        "request_id": "778ad72d-34a6-4c89-8b35-1a6a7a4a231d",
+        "idempotency_key": null,
+        "duplicate": false,
+        "actor_id": "cc_usr_2",
+        "action": "read",
+        "resource": {
+          "type": "evidence",
+          "id": "EV-P0-0001"
+        },
+        "vajra": {
+          "subject_ref": "subj_sha256_67038b3cd1ba5df1",
+          "status": "OK",
+          "is_authorized": true,
+          "current_state": "USE",
+          "scope_checked": false
+        },
+        "evidence": {
+          "local_audit_event_id": "113f4526-2282-4778-ab68-14bd6514ef97",
+          "superseded_audit_event_id": null,
+          "vajra": {
+            "status": "RECORDED",
+            "http_status": 200,
+            "detail": "",
+            "data": {
+              "evidence_hash": "sha256:ad9ed9908cba965bea34951f1e74db8b20fd96776c93f864385e3c608696d76f",
+              "stored_in": [
+                "TruthStore (tantra_truth.jsonl)"
+              ],
+              "recorded_at": 1793799174
+            }
+          },
+          "tantra": {
+            "status": "NOT_CONFIGURED",
+            "http_status": null,
+            "detail": "TANTRA_VALIDATION_URL is not set"
+          },
+          "complete": false,
+          "gaps": [
+            "tantra"
+          ]
+        },
+        "policy_applied": "vajra_authority_v1",
+        "evaluated_at": "2026-11-04T13:32:53.336Z"
+      }
+    }
+  },
+  {
+    "check_id": "S2-01",
+    "system": "vajra-local",
+    "utc": "2026-11-04T13:32:54Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:62507/api/vajra/authority/transition",
+      "headers": {
+        "x-trace-id": "321303c2-7798-48ee-a6c6-11033ddc0d91",
+        "authorization": "[REDACTED]",
+        "content-type": "application/json"
+      },
+      "body": {
+        "trace_id": "321303c2-7798-48ee-a6c6-11033ddc0d91",
+        "subject": "cyber-p0-test-revocable-user-8c03db452e",
+        "authority": "AUTH_ROLE_CLIENT",
+        "issuer": "VAJRA_USER_CONTROL_SIMULATOR (verification harness)",
+        "target": "VAJRA_LEDGER",
+        "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)",
+        "scope": [
+          "read"
+        ],
+        "to_state": "REVOKE",
+        "policy_version": "v1.0.0",
+        "evidence_ref": "synthetic-test"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "record": {
+          "record_id": "auth_1793799174_cyber-p0",
+          "trace_id": "321303c2-7798-48ee-a6c6-11033ddc0d91",
+          "subject": "cyber-p0-test-revocable-user-8c03db452e",
+          "authority": "AUTH_ROLE_CLIENT",
+          "issuer": "VAJRA_USER_CONTROL_SIMULATOR (verification harness)",
+          "target": "VAJRA_LEDGER",
+          "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)",
+          "scope": [
+            "read"
+          ],
+          "state_transition": {
+            "from": "USE",
+            "to": "REVOKE"
+          },
+          "policy_version": "v1.0.0",
+          "timestamp": 1793799174,
+          "evidence_reference": "synthetic-test",
+          "prev_hash": "c30b0f2704a6d7d736ce997df575d8e21be8f99f9bad24def8ee8c87242e5e88",
+          "entry_hash": "96db8d6c985666e3bf21789b75c009ebf8678f7933c86358f45c96446effc4c1"
+        },
+        "success": true
+      }
+    }
+  },
+  {
+    "check_id": "S2-01",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T13:32:56Z",
+    "elapsed_ms": 1656,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:62513/api/v1/protected/access",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "9b47b68f-090d-4aa5-b2e7-f122314fa360",
+        "content-type": "application/json"
+      },
+      "body": {
+        "contract_version": "1.0.0",
+        "vajra_subject": "cyber-p0-test-revocable-user-8c03db452e",
+        "action": "read",
+        "resource": {
+          "type": "evidence",
+          "id": "EV-P0-0001"
+        },
+        "purpose": "P0 verification (synthetic)"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "b09afdd4-3681-494f-b517-7772590cf6a8",
+        "x-trace-id": "9b47b68f-090d-4aa5-b2e7-f122314fa360"
+      },
+      "body": {
+        "contract_version": "1.0.0",
+        "decision": "DENY",
+        "reason_code": "VAJRA_AUTHORITY_NOT_GRANTED",
+        "reason": "Access denied: VAJRA authority state is 'REVOKE', which does not permit access.",
+        "decision_id": "455b803fc9804366baff9d4719b7ace8",
+        "trace_id": "9b47b68f-090d-4aa5-b2e7-f122314fa360",
+        "request_id": "b09afdd4-3681-494f-b517-7772590cf6a8",
+        "idempotency_key": null,
+        "duplicate": false,
+        "actor_id": "cc_usr_2",
+        "action": "read",
+        "resource": {
+          "type": "evidence",
+          "id": "EV-P0-0001"
+        },
+        "vajra": {
+          "subject_ref": "subj_sha256_67038b3cd1ba5df1",
+          "status": "OK",
+          "is_authorized": false,
+          "current_state": "REVOKE",
+          "scope_checked": false
+        },
+        "evidence": {
+          "local_audit_event_id": "8a3ddaf8-62d3-4020-a9a7-d1168521fe0f",
+          "superseded_audit_event_id": null,
+          "vajra": {
+            "status": "RECORDED",
+            "http_status": 200,
+            "detail": "",
+            "data": {
+              "evidence_hash": "sha256:b307f37fc48f7771214eca64e3e9c27961cf13d1c2b97efd5e27e9e8af1ad9cb",
+              "stored_in": [
+                "TruthStore (tantra_truth.jsonl)"
+              ],
+              "recorded_at": 1793799176
+            }
+          },
+          "tantra": {
+            "status": "NOT_CONFIGURED",
+            "http_status": null,
+            "detail": "TANTRA_VALIDATION_URL is not set"
+          },
+          "complete": false,
+          "gaps": [
+            "tantra"
+          ]
+        },
+        "policy_applied": "vajra_authority_v1",
+        "evaluated_at": "2026-11-04T13:32:54.708Z"
+      }
+    }
+  },
+  {
+    "check_id": "S2-01",
+    "system": "vajra-local",
+    "utc": "2026-11-04T13:32:56Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:62507/api/vajra/authority/transition",
+      "headers": {
+        "x-trace-id": "37e2659b-5520-4114-83a1-df66e6bb64fc",
+        "authorization": "[REDACTED]",
+        "content-type": "application/json"
+      },
+      "body": {
+        "trace_id": "37e2659b-5520-4114-83a1-df66e6bb64fc",
+        "subject": "cyber-p0-test-revocable-user-8c03db452e",
+        "authority": "AUTH_ROLE_CLIENT",
+        "issuer": "STALE_GRANT_REPLAY (synthetic)",
+        "target": "VAJRA_LEDGER",
+        "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)",
+        "scope": [
+          "read"
+        ],
+        "to_state": "USE",
+        "policy_version": "v1.0.0",
+        "evidence_ref": "synthetic-test"
+      }
+    },
+    "response": {
+      "status": 403,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "details": "illegal authority transition for cyber-p0-test-revocable-user-8c03db452e: REVOKE -> USE is forbidden",
+        "error": "TRANSITION_REJECTED",
+        "trace_id": "37e2659b-5520-4114-83a1-df66e6bb64fc"
+      }
+    }
+  },
+  {
+    "check_id": "S2-01",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T13:32:57Z",
+    "elapsed_ms": 1608,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:62513/api/v1/protected/access",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "22c9d65c-3c95-4cbc-8762-69c5804bc17c",
+        "content-type": "application/json"
+      },
+      "body": {
+        "contract_version": "1.0.0",
+        "vajra_subject": "cyber-p0-test-revocable-user-8c03db452e",
+        "action": "read",
+        "resource": {
+          "type": "evidence",
+          "id": "EV-P0-0001"
+        },
+        "purpose": "P0 verification (synthetic)"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "feb2b696-6878-4d4c-8194-c63ba32c13e7",
+        "x-trace-id": "22c9d65c-3c95-4cbc-8762-69c5804bc17c"
+      },
+      "body": {
+        "contract_version": "1.0.0",
+        "decision": "DENY",
+        "reason_code": "VAJRA_AUTHORITY_NOT_GRANTED",
+        "reason": "Access denied: VAJRA authority state is 'REVOKE', which does not permit access.",
+        "decision_id": "6b1d89d771e94248b9ce1c67e134ae0b",
+        "trace_id": "22c9d65c-3c95-4cbc-8762-69c5804bc17c",
+        "request_id": "feb2b696-6878-4d4c-8194-c63ba32c13e7",
+        "idempotency_key": null,
+        "duplicate": false,
+        "actor_id": "cc_usr_2",
+        "action": "read",
+        "resource": {
+          "type": "evidence",
+          "id": "EV-P0-0001"
+        },
+        "vajra": {
+          "subject_ref": "subj_sha256_67038b3cd1ba5df1",
+          "status": "OK",
+          "is_authorized": false,
+          "current_state": "REVOKE",
+          "scope_checked": false
+        },
+        "evidence": {
+          "local_audit_event_id": "1df6ce56-4155-400b-99bf-96d6ca895f87",
+          "superseded_audit_event_id": null,
+          "vajra": {
+            "status": "RECORDED",
+            "http_status": 200,
+            "detail": "",
+            "data": {
+              "evidence_hash": "sha256:404c90104e1b7ecc0f9bc0e41255984819c29be406e45ed4954e06d9a6cc1af8",
+              "stored_in": [
+                "TruthStore (tantra_truth.jsonl)"
+              ],
+              "recorded_at": 1793799177
+            }
+          },
+          "tantra": {
+            "status": "NOT_CONFIGURED",
+            "http_status": null,
+            "detail": "TANTRA_VALIDATION_URL is not set"
+          },
+          "complete": false,
+          "gaps": [
+            "tantra"
+          ]
+        },
+        "policy_applied": "vajra_authority_v1",
+        "evaluated_at": "2026-11-04T13:32:56.384Z"
+      }
+    }
+  }
+]

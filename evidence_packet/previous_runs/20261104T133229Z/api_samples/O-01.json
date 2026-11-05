@@ -1,0 +1,171 @@
+[
+  {
+    "check_id": "O-01",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T13:32:47Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:62513/health",
+      "headers": {},
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "cd5464a3-fc8d-49d2-a943-c43f88484c21",
+        "x-trace-id": "eaf1d30b-ae29-4f42-87dc-a8c0e3b06e80"
+      },
+      "body": {
+        "status": "healthy",
+        "service": "cybercrime-investigation-api"
+      }
+    }
+  },
+  {
+    "check_id": "O-01",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T13:32:47Z",
+    "elapsed_ms": 15,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:62513/api/v1/system/health",
+      "headers": {},
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "2a8034dd-6252-4e0a-a41c-a6e4a58043a7",
+        "x-trace-id": "128de774-6a7d-4729-bb67-bbb981246949"
+      },
+      "body": {
+        "status": "healthy",
+        "database": {
+          "ok": true,
+          "error": null
+        },
+        "integrations": {
+          "storage": {
+            "exists": true,
+            "writable": true
+          },
+          "event_queue": {
+            "buffer_exists": false,
+            "buffered_events": 0,
+            "kafka_configured": false,
+            "kafka_topic": "cybercrime-governance-events"
+          },
+          "bucket": {
+            "configured": false
+          },
+          "core": {
+            "configured": false
+          }
+        }
+      }
+    }
+  },
+  {
+    "check_id": "O-01",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T13:32:48Z",
+    "elapsed_ms": 922,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:62513/api/v1/system/health",
+      "headers": {
+        "authorization": "[REDACTED]"
+      },
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "93b8cdd1-9b67-40f2-91f3-90d28d636658",
+        "x-trace-id": "fb038038-2a11-4791-a1df-e783a09ade62"
+      },
+      "body": {
+        "status": "healthy",
+        "database": {
+          "ok": true,
+          "error": null
+        },
+        "integrations": {
+          "storage": {
+            "path": "C:\\tmp\\cyber-p0-verify-20261104T133229Z-hq04mu9_\\evidence_storage",
+            "exists": true,
+            "writable": true
+          },
+          "event_queue": {
+            "buffer_path": "C:\\tmp\\cyber-p0-verify-20261104T133229Z-hq04mu9_\\event_buffer\\events.jsonl",
+            "buffer_exists": false,
+            "buffered_events": 0,
+            "kafka_configured": false,
+            "kafka_topic": "cybercrime-governance-events"
+          },
+          "bucket": {
+            "configured": false
+          },
+          "core": {
+            "configured": false
+          }
+        },
+        "bhiv_runtime": {
+          "tantra": {
+            "validation": {
+              "configured": false
+            },
+            "karma": {
+              "configured": false
+            },
+            "prana": {
+              "configured": false
+            },
+            "event_type": "security_decision"
+          },
+          "vajra": {
+            "api": {
+              "configured": true,
+              "reachable": true,
+              "http_status": 200,
+              "healthy": true
+            },
+            "write_token_configured": true
+          }
+        }
+      }
+    }
+  },
+  {
+    "check_id": "O-01",
+    "system": "vajra-local",
+    "utc": "2026-11-04T13:32:48Z",
+    "elapsed_ms": 0,
+    "request": {
+      "method": "GET",
+      "url": "http://127.0.0.1:62507/api/health",
+      "headers": {},
+      "body": null
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "data": {
+          "block_height": 1,
+          "pending_txs": 0,
+          "total_supply": 1000000000
+        },
+        "message": "Blockchain API is running",
+        "status": "healthy",
+        "success": true
+      }
+    }
+  }
+]

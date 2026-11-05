@@ -1,0 +1,56 @@
+[
+  {
+    "check_id": "S3-01",
+    "system": "cybersecurity",
+    "utc": "2026-11-04T13:33:23Z",
+    "elapsed_ms": 187,
+    "request": {
+      "method": "POST",
+      "url": "http://127.0.0.1:62513/api/v1/incidents/analyze",
+      "headers": {
+        "authorization": "[REDACTED]",
+        "x-trace-id": "92a19b2f-7761-4f06-b8b3-f40bc6d4df58",
+        "content-type": "application/json"
+      },
+      "body": {
+        "wallet_address": "0xAMBIGUOUS922a2ddb9613",
+        "description": "unclear activity, possibly unusual, not sure (synthetic)",
+        "investigator_id": 2
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "x-request-id": "bb9d37f5-d4da-4f80-a364-4113b7bf075e",
+        "x-trace-id": "92a19b2f-7761-4f06-b8b3-f40bc6d4df58"
+      },
+      "body": {
+        "wallet": "0xAMBIGUOUS922a2ddb9613",
+        "risk_score": 0.0,
+        "risk_level": "INSUFFICIENT DATA",
+        "detected_patterns": [],
+        "summary": {
+          "total_in": 0.0,
+          "total_out": 0.0,
+          "tx_count": 0,
+          "unique_senders": 0,
+          "unique_receivers": 0,
+          "pattern_type": "None"
+        },
+        "graph_data": [],
+        "timeline": [],
+        "transactions": [],
+        "system_conclusion": "No transaction records were found for this wallet, so no fraud assessment was made. Add transaction data or evidence and analyse again.",
+        "report_id": "1",
+        "confidence": 0.0,
+        "uncertainty": [
+          "No transaction records were found for this wallet, so no fraud assessment was made.",
+          "The description text is not evidence and did not raise any score."
+        ],
+        "data_basis": "none",
+        "observed_tx_count": 0
+      }
+    }
+  }
+]

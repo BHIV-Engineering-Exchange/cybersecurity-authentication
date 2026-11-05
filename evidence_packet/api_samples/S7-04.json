@@ -2,11 +2,11 @@
   {
     "check_id": "S7-04",
     "system": "vajra-local",
-    "utc": "2026-11-04T13:33:45Z",
+    "utc": "2026-11-05T14:33:00Z",
     "elapsed_ms": 0,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:62507/api/vajra/recovery/package",
+      "url": "http://127.0.0.1:56277/api/vajra/recovery/package",
       "headers": {},
       "body": null
     },
@@ -25,12 +25,12 @@
               "block_hash": "28aa643d20079274e707ea742e33193edc5bacbe1ae290779c462203bf245253",
               "state_root": "28aa643d20079274e707ea742e33193edc5bacbe1ae290779c462203bf245253",
               "signatures": [
-                "val1_sig",
-                "val2_sig",
-                "val3_sig",
-                "val4_sig"
+                "val1_sig_ed25519_5a87f0e6fbf24325",
+                "val2_sig_ed25519_fef605abf411735c",
+                "val3_sig_ed25519_5b32026841a5f9fe",
+                "val4_sig_ed25519_ab653925492f07fb"
               ],
-              "timestamp": 1793799225
+              "timestamp": 1793889180
             }
           ],
           "state_commitment_root": "28aa643d20079274e707ea742e33193edc5bacbe1ae290779c462203bf245253",
@@ -46,8 +46,8 @@
           ],
           "revocation_state_root": "clean_revocation_root",
           "recovery_policy": "CANONICAL_CHECKPOINT_REPLAY_POLICY",
-          "generated_at": 1793799225,
-          "package_hash": "e26bcc571bafe669bbdcc3602545bec0ddbc0c2a4ad20f25177df5dedce0ebf5"
+          "generated_at": 1793889180,
+          "package_hash": "1e1953ffff45fd7623e52f207c9017017fafeecfb9020bca597c0bfdeb4d3f4a"
         },
         "success": true
       }
@@ -56,19 +56,30 @@
   {
     "check_id": "S7-04",
     "system": "vajra-local",
-    "utc": "2026-11-04T13:33:45Z",
-    "elapsed_ms": 15,
+    "utc": "2026-11-05T14:33:00Z",
+    "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:62507/api/vajra/recovery/verify-anchor",
+      "url": "http://127.0.0.1:56277/api/vajra/recovery/verify-anchor",
       "headers": {
         "content-type": "application/json"
       },
       "body": {
         "node_id": "cyber-p0-test-candidate",
         "genesis_id": "forged-genesis",
-        "config_hash": null,
-        "latest_checkpoint": {},
+        "config_hash": "cluster_config_hardened_sha256",
+        "latest_checkpoint": {
+          "block_height": 1,
+          "block_hash": "28aa643d20079274e707ea742e33193edc5bacbe1ae290779c462203bf245253",
+          "state_root": "28aa643d20079274e707ea742e33193edc5bacbe1ae290779c462203bf245253",
+          "signatures": [
+            "val1_sig_ed25519_5a87f0e6fbf24325",
+            "val2_sig_ed25519_fef605abf411735c",
+            "val3_sig_ed25519_5b32026841a5f9fe",
+            "val4_sig_ed25519_ab653925492f07fb"
+          ],
+          "timestamp": 1793889180
+        },
         "current_state_root": "0xdeadbeef",
         "akashic_lineage_hash": "unknown",
         "chain_intact": false,
@@ -87,15 +98,14 @@
           "qualified": false,
           "failure_reasons": [
             "Genesis mismatch: got forged-genesis, expected vajra_canonical_genesis_hash_001",
-            "Quorum failed: have 0 signatures, need 4",
             "AKASHIC Lineage verification failed: broken chain or missing hash",
-            "State root mismatch: current 0xdeadbeef != checkpoint "
+            "State root mismatch: current 0xdeadbeef != checkpoint 28aa643d20079274e707ea742e33193edc5bacbe1ae290779c462203bf245253"
           ],
           "genesis_match": false,
-          "quorum_satisfied": false,
+          "quorum_satisfied": true,
           "lineage_intact": false,
           "state_root_valid": false,
-          "certified_at": 1793799225
+          "certified_at": 1793889180
         }
       }
     }
@@ -103,20 +113,31 @@
   {
     "check_id": "S7-04",
     "system": "vajra-local",
-    "utc": "2026-11-04T13:33:45Z",
+    "utc": "2026-11-05T14:33:00Z",
     "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:62507/api/vajra/recovery/verify-anchor",
+      "url": "http://127.0.0.1:56277/api/vajra/recovery/verify-anchor",
       "headers": {
         "content-type": "application/json"
       },
       "body": {
         "node_id": "cyber-p0-test-candidate",
-        "genesis_id": null,
-        "config_hash": null,
-        "latest_checkpoint": {},
-        "current_state_root": null,
+        "genesis_id": "vajra_canonical_genesis_hash_001",
+        "config_hash": "cluster_config_hardened_sha256",
+        "latest_checkpoint": {
+          "block_height": 1,
+          "block_hash": "28aa643d20079274e707ea742e33193edc5bacbe1ae290779c462203bf245253",
+          "state_root": "28aa643d20079274e707ea742e33193edc5bacbe1ae290779c462203bf245253",
+          "signatures": [
+            "val1_sig_ed25519_5a87f0e6fbf24325",
+            "val2_sig_ed25519_fef605abf411735c",
+            "val3_sig_ed25519_5b32026841a5f9fe",
+            "val4_sig_ed25519_ab653925492f07fb"
+          ],
+          "timestamp": 1793889180
+        },
+        "current_state_root": "28aa643d20079274e707ea742e33193edc5bacbe1ae290779c462203bf245253",
         "akashic_lineage_hash": "unknown",
         "chain_intact": true,
         "validator_count": 0
@@ -131,17 +152,13 @@
         "success": true,
         "verification": {
           "node_id": "cyber-p0-test-candidate",
-          "qualified": false,
-          "failure_reasons": [
-            "Genesis mismatch: got , expected vajra_canonical_genesis_hash_001",
-            "Quorum failed: have 0 signatures, need 4",
-            "State root mismatch: current  != checkpoint "
-          ],
-          "genesis_match": false,
-          "quorum_satisfied": false,
+          "qualified": true,
+          "genesis_match": true,
+          "quorum_satisfied": true,
           "lineage_intact": true,
-          "state_root_valid": false,
-          "certified_at": 1793799225
+          "state_root_valid": true,
+          "certificate_hash": "0a2b202110d38874871e9decb90421b8ff846f0e0cbb31a71f27cb0ac613abfd",
+          "certified_at": 1793889180
         }
       }
     }

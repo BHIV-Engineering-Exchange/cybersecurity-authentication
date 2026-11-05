@@ -10,11 +10,17 @@ Runtime position (Task 1 sections D and M):
     -> replay references in the response.
 
 What ALLOW means (and does not mean)
-  * The caller passed RBAC, VAJRA reports the subject's authority state as GRANT or USE, and VAJRA
-    confirmed the evidence record for this decision.
-  * VAJRA's authority/verify returns no scope, so the requested action, resource and purpose are
-    recorded but NOT checked against what the subject granted (response field vajra.scope_checked=false),
-    and nothing binds the calling user to the subject. Both need a VAJRA contract that does not exist yet.
+  * The caller passed RBAC, VAJRA reports the subject's authority state as GRANT or USE, the scope VAJRA reports
+    for the subject contains the required scope "<action>:<resource type>" (for example "read:evidence"), and
+    VAJRA confirmed the evidence record for this decision. Response field vajra.scope_checked=true means that
+    comparison was made.
+  * Scope rule (CYB-13, since 05 Nov 2026): exact, case-sensitive string match; no wildcards; a scope VAJRA does
+    not report (field missing or not a list of strings) denies with VAJRA_SCOPE_UNAVAILABLE, a scope without the
+    required entry denies with VAJRA_SCOPE_NOT_GRANTED. The "<action>:<resource type>" form follows VAJRA's own
+    example ("read:telemetry"); it is Cybersecurity's proposal and still needs VAJRA/TANTRA agreement, because
+    VAJRA defines no scope vocabulary (the agreed vocabulary is UNKNOWN until then).
+  * Not checked: the resource id and the purpose (recorded only), and nothing binds the calling user to the
+    subject. Both need a contract that does not exist yet.
 
 Order of work (VAJRA and TANTRA are written only after the local audit is stored)
   1. Read VAJRA authority (fail closed) and form the decision.
@@ -33,8 +39,9 @@ Other rules
   * Idempotency: keys are scoped to the calling user and bound to the request content. A repeat of the
     same request returns the first decision with duplicate=true and re-executes nothing. A different
     request under the same key is refused (409). A stored ALLOW is replayed only within
-    PROTECTED_ACCESS_REPLAY_TTL_SECONDS and only if VAJRA still reports GRANT/USE; otherwise 409
-    STALE_DECISION. A claim left PENDING for more than 120 s (crashed request) is taken over.
+    PROTECTED_ACCESS_REPLAY_TTL_SECONDS and only if VAJRA still reports GRANT/USE with the required scope
+    (the same _decide as a fresh request); otherwise 409 STALE_DECISION. A claim left PENDING for more than
+    120 s (crashed request) is taken over.
   * Trace ids are limited to 128 characters of [A-Za-z0-9._:-] (they become part of the VAJRA record id).
   * This is a plain (sync) endpoint so slow VAJRA/TANTRA calls run in a worker thread and never block
     the server's event loop.
@@ -97,7 +104,7 @@ def _within_rate_limit(actor_id: str) -> bool:
         window.append(now)
         return True
 TANTRA_METADATA_FIELDS = ("decision", "decision_id", "vajra_subject_ref", "vajra_status", "vajra_state",
-                          "vajra_trace_id", "scope_checked", "supersedes_event_id")
+                          "vajra_trace_id", "scope_checked", "required_scope", "supersedes_event_id")
 
 
 class ProtectedResource(BaseModel):
@@ -119,7 +126,7 @@ class VajraAuthorityView(BaseModel):
     status: str
     is_authorized: Optional[bool] = None
     current_state: Optional[str] = None
-    scope_checked: bool = False  # VAJRA's verify returns no scope; see module docstring
+    scope_checked: bool = False  # True when the required scope was compared with the scope VAJRA reported
 
 
 class EvidenceView(BaseModel):
@@ -177,21 +184,33 @@ def _fingerprint(req: ProtectedAccessRequest, action: str, resource_type: str) -
     return hashlib.sha256(bhiv_runtime.compact_json(content).encode("utf-8")).hexdigest()
 
 
-def _decide(authority: bhiv_runtime.SinkResult) -> Dict[str, str]:
-    """Deny by default; a tentative ALLOW only when VAJRA reports GRANT or USE."""
+def required_scope_for(action: str, resource_type: str) -> str:
+    """The VAJRA scope entry an action needs (Cybersecurity's proposed form, see the module docstring)."""
+    return f"{action}:{resource_type}"
+
+
+def _decide(authority: bhiv_runtime.SinkResult, required_scope: str) -> Dict[str, Any]:
+    """Deny by default; a tentative ALLOW only when VAJRA reports GRANT or USE and a scope containing required_scope."""
     if authority.status == "NOT_CONFIGURED":
-        return {"decision": "DENY", "reason_code": "VAJRA_NOT_CONFIGURED",
+        return {"decision": "DENY", "reason_code": "VAJRA_NOT_CONFIGURED", "scope_checked": False,
                 "reason": "Access denied: VAJRA authority service is not configured, so consent cannot be confirmed."}
     if authority.status != "OK":
-        return {"decision": "DENY", "reason_code": "VAJRA_UNAVAILABLE",
+        return {"decision": "DENY", "reason_code": "VAJRA_UNAVAILABLE", "scope_checked": False,
                 "reason": f"Access denied: VAJRA authority could not be confirmed ({authority.status})."}
     state = authority.data.get("current_state") or "NONE"
     if authority.data.get("is_authorized") is not True:
-        return {"decision": "DENY", "reason_code": "VAJRA_AUTHORITY_NOT_GRANTED",
+        return {"decision": "DENY", "reason_code": "VAJRA_AUTHORITY_NOT_GRANTED", "scope_checked": False,
                 "reason": f"Access denied: VAJRA authority state is '{state}', which does not permit access."}
-    return {"decision": "ALLOW", "reason_code": "ALLOWED_BY_VAJRA_AUTHORITY",
-            "reason": f"Access permitted: VAJRA authority state is '{state}', the caller passed RBAC and VAJRA "
-                      "recorded the evidence. Scope (action/resource) is not checked by VAJRA's verify contract."}
+    granted = authority.data.get("scope")
+    if granted is None:
+        return {"decision": "DENY", "reason_code": "VAJRA_SCOPE_UNAVAILABLE", "scope_checked": False,
+                "reason": f"Access denied: VAJRA did not report the granted scope, so '{required_scope}' cannot be checked."}
+    if required_scope not in granted:
+        return {"decision": "DENY", "reason_code": "VAJRA_SCOPE_NOT_GRANTED", "scope_checked": True,
+                "reason": f"Access denied: the scope VAJRA reports for this subject does not include '{required_scope}'."}
+    return {"decision": "ALLOW", "reason_code": "ALLOWED_BY_VAJRA_AUTHORITY", "scope_checked": True,
+            "reason": f"Access permitted: VAJRA authority state is '{state}', the granted scope includes "
+                      f"'{required_scope}', the caller passed RBAC and VAJRA recorded the evidence."}
 
 
 def _tantra_projection(event_json: str) -> Dict[str, Any]:
@@ -204,7 +223,7 @@ def _tantra_projection(event_json: str) -> Dict[str, Any]:
 
 
 def _replay_or_refuse(existing: ProtectedAccessDecision, req: ProtectedAccessRequest, fingerprint: str,
-                      trace_id: str, request_id: str):
+                      required_scope: str, trace_id: str, request_id: str):
     """Answer a repeated idempotency key without re-executing anything (or refuse)."""
     if existing.request_fingerprint != fingerprint:
         return _error(409, "IDEMPOTENCY_KEY_CONFLICT",
@@ -217,16 +236,20 @@ def _replay_or_refuse(existing: ProtectedAccessDecision, req: ProtectedAccessReq
         too_old = _now() - _aware(existing.created_at) > timedelta(seconds=settings.PROTECTED_ACCESS_REPLAY_TTL_SECONDS)
         recheck = None if too_old else bhiv_runtime.vajra_verify_authority(req.vajra_subject, trace_id=trace_id,
                                                                              request_id=request_id)
-        still_allowed = recheck is not None and recheck.status == "OK" and recheck.data.get("is_authorized") is True
+        # The same rule as a fresh request: authority state AND scope must still permit the action.
+        recheck_verdict = _decide(recheck, required_scope) if recheck is not None else None
+        still_allowed = recheck_verdict is not None and recheck_verdict["decision"] == "ALLOW"
         if not still_allowed:
             emit_audit_log(action="protected_access.stale_replay_refused", status="warning",
                            message="A repeated key asked for an ALLOW that is expired or no longer authorized.",
                            trace_id=trace_id, request_id=request_id,
                            details={"first_decision_id": first.get("decision_id"), "expired": too_old,
-                                    "vajra_status": recheck.status if recheck else None})
+                                    "vajra_status": recheck.status if recheck else None,
+                                    "recheck_reason_code": recheck_verdict["reason_code"] if recheck_verdict else None,
+                                    "required_scope": required_scope})
             return _error(409, "STALE_DECISION",
-                          "The earlier ALLOW expired or VAJRA no longer reports this authority; send a new request "
-                          "with a new idempotency_key.", trace_id, request_id)
+                          "The earlier ALLOW expired, or VAJRA no longer reports this authority with the required "
+                          "scope; send a new request with a new idempotency_key.", trace_id, request_id)
     first["duplicate"] = True
     emit_audit_log(action="protected_access.duplicate", status="warning",
                    message="Duplicate request answered from the first decision; nothing re-executed.",
@@ -297,6 +320,7 @@ def protected_access(req: ProtectedAccessRequest, request: Request, db: Session 
 
     actor_id = f"cc_usr_{current_user.id}"
     fingerprint = _fingerprint(req, action, resource_type)
+    required_scope = required_scope_for(action, resource_type)
     claim: Optional[ProtectedAccessDecision] = None
 
     # Idempotency: claim (actor, key) before doing anything, so a repeat cannot re-execute.
@@ -320,7 +344,7 @@ def protected_access(req: ProtectedAccessRequest, request: Request, db: Session 
                     db.delete(existing)  # abandoned claim (crashed request): take it over once
                     db.commit()
                     continue
-                return _replay_or_refuse(existing, req, fingerprint, trace_id, request_id)
+                return _replay_or_refuse(existing, req, fingerprint, required_scope, trace_id, request_id)
         if claim is None:
             return _error(409, "DUPLICATE_IN_PROGRESS", "Could not claim the idempotency_key.", trace_id, request_id)
 
@@ -342,14 +366,17 @@ def protected_access(req: ProtectedAccessRequest, request: Request, db: Session 
         # 1. Consent / authority: read VAJRA state (fail closed).
         authority = bhiv_runtime.vajra_verify_authority(req.vajra_subject, trace_id=trace_id, request_id=request_id)
         bhiv_runtime.log_sink_outcome("vajra_verify", authority, trace_id=trace_id, request_id=request_id)
-        verdict = _decide(authority)
+        verdict = _decide(authority, required_scope)
+        scope_checked = verdict.pop("scope_checked")
         base_meta = {
             "decision_id": decision_id,
             "vajra_subject_ref": subject_ref,
             "vajra_status": authority.status,
             "vajra_state": authority.data.get("current_state") if authority.data else None,
+            "vajra_authority": authority.data.get("authority") if authority.data else None,
             "vajra_trace_id": vajra_trace,
-            "scope_checked": False,
+            "scope_checked": scope_checked,
+            "required_scope": required_scope,
             "purpose": req.purpose,
             "idempotency_key": req.idempotency_key,
         }
@@ -432,7 +459,7 @@ def protected_access(req: ProtectedAccessRequest, request: Request, db: Session 
                 status=authority.status,
                 is_authorized=authority.data.get("is_authorized") if authority.data else None,
                 current_state=authority.data.get("current_state") if authority.data else None,
-                scope_checked=False,
+                scope_checked=scope_checked,
             ),
             evidence=EvidenceView(
                 local_audit_event_id=event.event_id,
