@@ -2,19 +2,19 @@
   {
     "check_id": "S6-02",
     "system": "cybersecurity",
-    "utc": "2026-11-05T14:33:44Z",
-    "elapsed_ms": 4594,
+    "utc": "2026-11-05T15:15:07Z",
+    "elapsed_ms": 5812,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56282/api/v1/protected/access",
+      "url": "http://127.0.0.1:53155/api/v1/protected/access",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "b1872544-3291-4ce8-9153-98dfde2e436b",
+        "x-trace-id": "c5588834-ac6d-49ee-9f27-3997fb2c31fa",
         "content-type": "application/json"
       },
       "body": {
         "contract_version": "1.0.0",
-        "vajra_subject": "cyber-p0-test-vajra-down-8b1a1cfb64",
+        "vajra_subject": "cyber-p0-test-vajra-down-a43811a491",
         "action": "read",
         "resource": {
           "type": "evidence",
@@ -27,17 +27,17 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "039b3a4a-97fe-49b2-8e2f-229057e6c1be",
-        "x-trace-id": "b1872544-3291-4ce8-9153-98dfde2e436b"
+        "x-request-id": "f7732313-ccc6-4862-b235-8a9d07cbc144",
+        "x-trace-id": "c5588834-ac6d-49ee-9f27-3997fb2c31fa"
       },
       "body": {
         "contract_version": "1.0.0",
         "decision": "DENY",
         "reason_code": "VAJRA_UNAVAILABLE",
         "reason": "Access denied: VAJRA authority could not be confirmed (UNAVAILABLE).",
-        "decision_id": "b43a2b840cc84fcd9768f5fa6d4fe4bb",
-        "trace_id": "b1872544-3291-4ce8-9153-98dfde2e436b",
-        "request_id": "039b3a4a-97fe-49b2-8e2f-229057e6c1be",
+        "decision_id": "052b082a07884130a2ea9e0315d28b16",
+        "trace_id": "c5588834-ac6d-49ee-9f27-3997fb2c31fa",
+        "request_id": "f7732313-ccc6-4862-b235-8a9d07cbc144",
         "idempotency_key": null,
         "duplicate": false,
         "actor_id": "cc_usr_2",
@@ -47,14 +47,14 @@
           "id": "EV-P0-0001"
         },
         "vajra": {
-          "subject_ref": "subj_sha256_92d49f03ad883981",
+          "subject_ref": "subj_sha256_92ee1bd070726e8d",
           "status": "UNAVAILABLE",
           "is_authorized": null,
           "current_state": null,
           "scope_checked": false
         },
         "evidence": {
-          "local_audit_event_id": "9d73466a-43ed-4847-b01e-8ae2865aca4d",
+          "local_audit_event_id": "7248857f-5cf7-49f8-8697-2d52bddf3904",
           "superseded_audit_event_id": null,
           "vajra": {
             "status": "UNAVAILABLE",
@@ -76,18 +76,18 @@
           ]
         },
         "policy_applied": "vajra_authority_v1",
-        "evaluated_at": "2026-11-05T14:33:39.667Z"
+        "evaluated_at": "2026-11-05T15:15:01.816Z"
       }
     }
   },
   {
     "check_id": "S6-02",
     "system": "cybersecurity",
-    "utc": "2026-11-05T14:33:46Z",
-    "elapsed_ms": 2265,
+    "utc": "2026-11-05T15:15:10Z",
+    "elapsed_ms": 2890,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:56282/api/v1/system/health",
+      "url": "http://127.0.0.1:53155/api/v1/system/health",
       "headers": {
         "authorization": "[REDACTED]"
       },
@@ -97,8 +97,8 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "a460706b-5b50-405b-8bfe-8bf8cede8ae0",
-        "x-trace-id": "e3c98245-b52d-4fb8-af15-d5bb50efca66"
+        "x-request-id": "a08ac709-91f2-4312-b450-c543eda6254d",
+        "x-trace-id": "919ee84f-fc93-4f82-85f4-0dcfba696cac"
       },
       "body": {
         "status": "healthy",
@@ -108,12 +108,12 @@
         },
         "integrations": {
           "storage": {
-            "path": "C:\\tmp\\cyber-p0-verify-20261105T143237Z-p3844728\\evidence_storage",
+            "path": "C:\\tmp\\cyber-p0-verify-20261105T151254Z-0j9wvvx6\\evidence_storage",
             "exists": true,
             "writable": true
           },
           "event_queue": {
-            "buffer_path": "C:\\tmp\\cyber-p0-verify-20261105T143237Z-p3844728\\event_buffer\\events.jsonl",
+            "buffer_path": "C:\\tmp\\cyber-p0-verify-20261105T151254Z-0j9wvvx6\\event_buffer\\events.jsonl",
             "buffer_exists": true,
             "buffered_events": 1,
             "kafka_configured": false,

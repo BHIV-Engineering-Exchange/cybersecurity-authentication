@@ -2,11 +2,11 @@
   {
     "check_id": "O-01",
     "system": "cybersecurity",
-    "utc": "2026-11-05T14:32:44Z",
+    "utc": "2026-11-05T15:13:13Z",
     "elapsed_ms": 0,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:56282/health",
+      "url": "http://127.0.0.1:53155/health",
       "headers": {},
       "body": null
     },
@@ -14,8 +14,8 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "78eea966-5aad-431f-98a7-299374bec3a9",
-        "x-trace-id": "40360d25-2d4f-47c3-8893-87c0df42cc23"
+        "x-request-id": "c8a3427b-1adc-4362-bc1c-3b962ffb763d",
+        "x-trace-id": "e744c540-d01f-4899-9719-ed340ac2aa53"
       },
       "body": {
         "status": "healthy",
@@ -26,11 +26,11 @@
   {
     "check_id": "O-01",
     "system": "cybersecurity",
-    "utc": "2026-11-05T14:32:44Z",
+    "utc": "2026-11-05T15:13:13Z",
     "elapsed_ms": 0,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:56282/api/v1/system/health",
+      "url": "http://127.0.0.1:53155/api/v1/system/health",
       "headers": {},
       "body": null
     },
@@ -38,8 +38,8 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "b858af0c-3c4a-45ae-9f32-96f436b8720d",
-        "x-trace-id": "5547508a-1d2a-4452-bbdd-b23d4d707501"
+        "x-request-id": "a80a9cd2-347e-41da-90ce-dd540724ed88",
+        "x-trace-id": "196b447f-15ac-4684-a9b4-83fb6d3349da"
       },
       "body": {
         "status": "healthy",
@@ -71,11 +71,11 @@
   {
     "check_id": "O-01",
     "system": "cybersecurity",
-    "utc": "2026-11-05T14:32:45Z",
-    "elapsed_ms": 266,
+    "utc": "2026-11-05T15:13:14Z",
+    "elapsed_ms": 750,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:56282/api/v1/system/health",
+      "url": "http://127.0.0.1:53155/api/v1/system/health",
       "headers": {
         "authorization": "[REDACTED]"
       },
@@ -85,8 +85,8 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "27b22c9f-7fd6-4a23-867e-7e1adb550df8",
-        "x-trace-id": "8a386e28-2cdb-4d3f-b50d-a2687622f680"
+        "x-request-id": "327dfb08-0f53-4340-b7ce-f57afd37412e",
+        "x-trace-id": "4a46c811-1513-4b3e-9c04-b35de151fd53"
       },
       "body": {
         "status": "healthy",
@@ -96,12 +96,12 @@
         },
         "integrations": {
           "storage": {
-            "path": "C:\\tmp\\cyber-p0-verify-20261105T143237Z-p3844728\\evidence_storage",
+            "path": "C:\\tmp\\cyber-p0-verify-20261105T151254Z-0j9wvvx6\\evidence_storage",
             "exists": true,
             "writable": true
           },
           "event_queue": {
-            "buffer_path": "C:\\tmp\\cyber-p0-verify-20261105T143237Z-p3844728\\event_buffer\\events.jsonl",
+            "buffer_path": "C:\\tmp\\cyber-p0-verify-20261105T151254Z-0j9wvvx6\\event_buffer\\events.jsonl",
             "buffer_exists": false,
             "buffered_events": 0,
             "kafka_configured": false,
@@ -147,11 +147,11 @@
   {
     "check_id": "O-01",
     "system": "vajra-local",
-    "utc": "2026-11-05T14:32:45Z",
-    "elapsed_ms": 0,
+    "utc": "2026-11-05T15:13:14Z",
+    "elapsed_ms": 15,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:56277/api/health",
+      "url": "http://127.0.0.1:53150/api/health",
       "headers": {},
       "body": null
     },

@@ -2,14 +2,14 @@
   {
     "check_id": "S4-03",
     "system": "cybersecurity",
-    "utc": "2026-11-05T14:32:56Z",
-    "elapsed_ms": 15,
+    "utc": "2026-11-05T15:13:47Z",
+    "elapsed_ms": 46,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56282/api/v1/access/revoke",
+      "url": "http://127.0.0.1:53155/api/v1/access/revoke",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "6beb4f15-ffea-46eb-9049-8ffdd594d835",
+        "x-trace-id": "0dff64df-4f85-4131-bb01-1436d21e50ae",
         "content-type": "application/json"
       },
       "body": {
@@ -26,31 +26,31 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "f5f590e4-35f8-4253-828c-f678fd81b34e",
-        "x-trace-id": "6beb4f15-ffea-46eb-9049-8ffdd594d835"
+        "x-request-id": "0c0b0676-b921-46a7-a000-4f1de9ffd5f4",
+        "x-trace-id": "0dff64df-4f85-4131-bb01-1436d21e50ae"
       },
       "body": {
         "contract_version": "1.0.0",
-        "revocation_id": "dd90c509-480c-4cf9-94ac-3b28eda85375",
+        "revocation_id": "4041e19c-65b8-43d8-bbd7-1e3c9de1d9c3",
         "revocation_type": "user_deactivation",
         "status": "REVOKED",
-        "effective_at": "2026-11-05T14:32:56.147Z",
-        "trace_id": "6beb4f15-ffea-46eb-9049-8ffdd594d835",
-        "audit_event_id": "d7219c62-aaf4-4bfd-ba08-79e885c41b1a"
+        "effective_at": "2026-11-05T15:13:47.490Z",
+        "trace_id": "0dff64df-4f85-4131-bb01-1436d21e50ae",
+        "audit_event_id": "1112ac90-744d-42a5-80bf-0b06e9e12a10"
       }
     }
   },
   {
     "check_id": "S4-03",
     "system": "cybersecurity",
-    "utc": "2026-11-05T14:32:56Z",
-    "elapsed_ms": 0,
+    "utc": "2026-11-05T15:13:47Z",
+    "elapsed_ms": 15,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56282/api/v1/access/revoke",
+      "url": "http://127.0.0.1:53155/api/v1/access/revoke",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "475b2c16-4a78-4fd4-a147-ac7ff345d116",
+        "x-trace-id": "30a6df70-242a-4eff-ba83-4f9b7dc39284",
         "content-type": "application/json"
       },
       "body": {
@@ -67,17 +67,17 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "02cafde3-a198-4a5f-a2bf-117575503f5c",
-        "x-trace-id": "475b2c16-4a78-4fd4-a147-ac7ff345d116"
+        "x-request-id": "6d0e89be-d857-4e86-9a4b-4292e5996177",
+        "x-trace-id": "30a6df70-242a-4eff-ba83-4f9b7dc39284"
       },
       "body": {
         "contract_version": "1.0.0",
-        "revocation_id": "43e50543-607d-4079-9440-6a17f2265b4b",
+        "revocation_id": "7d9697c4-2777-4b26-afcc-1fae5ff3b7da",
         "revocation_type": "user_deactivation",
         "status": "ALREADY_INACTIVE",
-        "effective_at": "2026-11-05T14:32:56.157Z",
-        "trace_id": "475b2c16-4a78-4fd4-a147-ac7ff345d116",
-        "audit_event_id": "e7b95172-b17f-492c-9608-0abec4e15207"
+        "effective_at": "2026-11-05T15:13:47.531Z",
+        "trace_id": "30a6df70-242a-4eff-ba83-4f9b7dc39284",
+        "audit_event_id": "5a2cb7a6-e2a2-4da1-9ed1-224f10c22085"
       }
     }
   }

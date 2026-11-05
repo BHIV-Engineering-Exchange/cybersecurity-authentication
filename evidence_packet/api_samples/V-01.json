@@ -2,11 +2,11 @@
   {
     "check_id": "V-01",
     "system": "vajra-local",
-    "utc": "2026-11-05T14:32:45Z",
+    "utc": "2026-11-05T15:13:14Z",
     "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56277/api/admin/add-tokens",
+      "url": "http://127.0.0.1:53150/api/admin/add-tokens",
       "headers": {
         "content-type": "application/json"
       },
@@ -30,16 +30,16 @@
   {
     "check_id": "V-01",
     "system": "vajra-local",
-    "utc": "2026-11-05T14:32:45Z",
-    "elapsed_ms": 0,
+    "utc": "2026-11-05T15:13:14Z",
+    "elapsed_ms": 15,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56277/api/v1/permission/grant",
+      "url": "http://127.0.0.1:53150/api/v1/permission/grant",
       "headers": {
         "content-type": "application/json"
       },
       "body": {
-        "trace_id": "1e4e7f9f-37c5-4a06-a3a6-312d5b6fa60d",
+        "trace_id": "bdc61338-0110-419e-b1ac-abfb9111e6e9",
         "subject": "cyber-p0-test-subj",
         "requester": "attacker",
         "purpose": "unauthenticated grant attempt (synthetic)",
@@ -61,11 +61,11 @@
   {
     "check_id": "V-01",
     "system": "vajra-local",
-    "utc": "2026-11-05T14:32:45Z",
+    "utc": "2026-11-05T15:13:14Z",
     "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56277/api/cybercrime/freeze",
+      "url": "http://127.0.0.1:53150/api/cybercrime/freeze",
       "headers": {
         "content-type": "application/json"
       },
@@ -88,11 +88,11 @@
   {
     "check_id": "V-01",
     "system": "vajra-local",
-    "utc": "2026-11-05T14:32:45Z",
+    "utc": "2026-11-05T15:13:14Z",
     "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56277/api/cybercrime/unfreeze",
+      "url": "http://127.0.0.1:53150/api/cybercrime/unfreeze",
       "headers": {
         "content-type": "application/json"
       },
@@ -115,11 +115,11 @@
   {
     "check_id": "V-01",
     "system": "vajra-local",
-    "utc": "2026-11-05T14:32:45Z",
+    "utc": "2026-11-05T15:13:14Z",
     "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56277/api/admin/submit-transaction",
+      "url": "http://127.0.0.1:53150/api/admin/submit-transaction",
       "headers": {
         "content-type": "application/json"
       },
@@ -144,17 +144,17 @@
   {
     "check_id": "V-01",
     "system": "vajra-local",
-    "utc": "2026-11-05T14:32:45Z",
+    "utc": "2026-11-05T15:13:14Z",
     "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56277/api/v1/permission/revoke",
+      "url": "http://127.0.0.1:53150/api/v1/permission/revoke",
       "headers": {
         "content-type": "application/json"
       },
       "body": {
         "permission_id": "perm-cyber-p0-test",
-        "trace_id": "803d7757-ccc7-4d8a-bb6b-6dab3da89d5b",
+        "trace_id": "4643bf71-9502-47ff-bf86-186a5164e755",
         "reason": "unauthenticated revoke attempt (synthetic)"
       }
     },
@@ -172,16 +172,16 @@
   {
     "check_id": "V-01",
     "system": "vajra-local",
-    "utc": "2026-11-05T14:32:45Z",
+    "utc": "2026-11-05T15:13:14Z",
     "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56277/api/v1/permission/check",
+      "url": "http://127.0.0.1:53150/api/v1/permission/check",
       "headers": {
         "content-type": "application/json"
       },
       "body": {
-        "trace_id": "345d79ee-6faa-497a-b4bb-5702f6081a18",
+        "trace_id": "7648de11-0e52-4cd5-b2a9-a7c02c45f51f",
         "subject": "cyber-p0-test-subj",
         "requester": "attacker",
         "scope": "read"

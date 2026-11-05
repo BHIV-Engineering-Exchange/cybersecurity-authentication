@@ -2,11 +2,11 @@
   {
     "check_id": "S8-03",
     "system": "vajra-local",
-    "utc": "2026-11-05T14:33:54Z",
-    "elapsed_ms": 16,
+    "utc": "2026-11-05T15:15:30Z",
+    "elapsed_ms": 15,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:56277/api/tantra/chain-integrity",
+      "url": "http://127.0.0.1:53150/api/tantra/chain-integrity",
       "headers": {},
       "body": null
     },
@@ -26,11 +26,11 @@
   {
     "check_id": "S8-03",
     "system": "vajra-local",
-    "utc": "2026-11-05T14:33:54Z",
-    "elapsed_ms": 15,
+    "utc": "2026-11-05T15:15:30Z",
+    "elapsed_ms": 30,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:56277/api/tantra/chain-integrity",
+      "url": "http://127.0.0.1:53150/api/tantra/chain-integrity",
       "headers": {},
       "body": null
     },

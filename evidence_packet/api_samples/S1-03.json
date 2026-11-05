@@ -2,14 +2,14 @@
   {
     "check_id": "S1-03",
     "system": "cybersecurity",
-    "utc": "2026-11-05T14:32:45Z",
+    "utc": "2026-11-05T15:13:14Z",
     "elapsed_ms": 15,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56282/api/v1/access/revoke",
+      "url": "http://127.0.0.1:53155/api/v1/access/revoke",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "6bc846b0-6c64-4f33-85e9-f1bee954f200",
+        "x-trace-id": "13bf6668-e4e9-41c5-8a5a-750ea047c8df",
         "content-type": "application/json"
       },
       "body": {
@@ -26,17 +26,17 @@
       "status": 403,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "4ce96655-a3ac-4376-b43c-01be64b0e130",
-        "x-trace-id": "6bc846b0-6c64-4f33-85e9-f1bee954f200"
+        "x-request-id": "fefd2d7f-6a31-42b9-b5e8-6a42cd4b3c24",
+        "x-trace-id": "13bf6668-e4e9-41c5-8a5a-750ea047c8df"
       },
       "body": {
         "error": true,
         "code": "INSUFFICIENT_PERMISSIONS",
         "status_code": 403,
         "message": "Access denied.",
-        "trace_id": "6bc846b0-6c64-4f33-85e9-f1bee954f200",
-        "request_id": "4ce96655-a3ac-4376-b43c-01be64b0e130",
-        "timestamp": "2026-11-05T14:32:45.146Z",
+        "trace_id": "13bf6668-e4e9-41c5-8a5a-750ea047c8df",
+        "request_id": "fefd2d7f-6a31-42b9-b5e8-6a42cd4b3c24",
+        "timestamp": "2026-11-05T15:13:14.591Z",
         "details": []
       }
     }
@@ -44,11 +44,11 @@
   {
     "check_id": "S1-03",
     "system": "cybersecurity",
-    "utc": "2026-11-05T14:32:45Z",
-    "elapsed_ms": 0,
+    "utc": "2026-11-05T15:13:14Z",
+    "elapsed_ms": 16,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:56282/api/v1/audit/?limit=500",
+      "url": "http://127.0.0.1:53155/api/v1/audit/?limit=500",
       "headers": {
         "authorization": "[REDACTED]"
       },
@@ -58,8 +58,8 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "606e941a-c3e5-4d81-921b-aae328e0bf09",
-        "x-trace-id": "7d60b0b8-9c23-4be5-8490-d2ab1da3f8e4"
+        "x-request-id": "4a05a1f1-3ae5-45df-8aef-9462ea911730",
+        "x-trace-id": "ce7be777-8ce7-4531-a0c8-607056177023"
       },
       "body": [
         {
@@ -69,13 +69,13 @@
           "entity_type": "policy",
           "entity_id": "/api/v1/access/revoke",
           "status": "denied",
-          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"e14d4b87-3352-4362-bd0c-b85527bdbbc1\",\"event_type\":\"authz.decision\",\"timestamp\":\"2026-11-05T14:32:45.136Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"6bc846b0-6c64-4f33-85e9-f1bee954f200\",\"request_id\":\"4ce96655-a3ac-4376-b43c-01be64b0e130\",\"actor\":{\"actor_id\":\"cc_usr_2\",\"actor_type\":\"user\",\"role\":\"investigator\",\"display_name\":null,\"authenticated\":true,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"policy\",\"resource_id\":\"/api/v1/access/revoke\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"DENIED\",\"status_code\":403,\"reason_code\":\"INSUFFICIENT_PERMISSIONS\",\"message\":\"Access denied.\"},\"policy_reference\":{\"policy_id\":\"rbac_permissions_v1\",\"rule_name\":null,\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"path\":\"/api/v1/access/revoke\",\"method\":\"POST\",\"role\":\"investigator\"},\"extensions\":null}",
+          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"99500947-96d9-403c-aafc-689438127874\",\"event_type\":\"authz.decision\",\"timestamp\":\"2026-11-05T15:13:14.583Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"13bf6668-e4e9-41c5-8a5a-750ea047c8df\",\"request_id\":\"fefd2d7f-6a31-42b9-b5e8-6a42cd4b3c24\",\"actor\":{\"actor_id\":\"cc_usr_2\",\"actor_type\":\"user\",\"role\":\"investigator\",\"display_name\":null,\"authenticated\":true,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"policy\",\"resource_id\":\"/api/v1/access/revoke\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"DENIED\",\"status_code\":403,\"reason_code\":\"INSUFFICIENT_PERMISSIONS\",\"message\":\"Access denied.\"},\"policy_reference\":{\"policy_id\":\"rbac_permissions_v1\",\"rule_name\":null,\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"path\":\"/api/v1/access/revoke\",\"method\":\"POST\",\"role\":\"investigator\"},\"extensions\":null}",
           "user_id": 2,
           "ip_address": null,
-          "request_id": "4ce96655-a3ac-4376-b43c-01be64b0e130",
+          "request_id": "fefd2d7f-6a31-42b9-b5e8-6a42cd4b3c24",
           "path": "/api/v1/access/revoke",
           "method": "POST",
-          "timestamp": "2026-11-05T14:32:45.136687"
+          "timestamp": "2026-11-05T15:13:14.583081"
         },
         {
           "id": 8,
@@ -84,13 +84,13 @@
           "entity_type": "policy",
           "entity_id": "/api/v1/cases",
           "status": "denied",
-          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"9afda492-c61e-4f51-b046-611afc50ea15\",\"event_type\":\"authz.decision\",\"timestamp\":\"2026-11-05T14:32:45.124Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"e2bc49ce-86b5-4eb5-bddb-3c9cadac517e\",\"request_id\":\"3e620c36-4370-4932-a0c4-09bdc5f4205e\",\"actor\":{\"actor_id\":\"anonymous\",\"actor_type\":\"user\",\"role\":\"public\",\"display_name\":null,\"authenticated\":false,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"policy\",\"resource_id\":\"/api/v1/cases\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"DENIED\",\"status_code\":401,\"reason_code\":\"INVALID_CREDENTIALS\",\"message\":\"Invalid or expired credentials.\"},\"policy_reference\":{\"policy_id\":\"rbac_permissions_v1\",\"rule_name\":null,\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"path\":\"/api/v1/cases\",\"method\":\"GET\",\"role\":\"public\"},\"extensions\":null}",
+          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"31e8bd48-4deb-4b0d-b28b-30152fd332bc\",\"event_type\":\"authz.decision\",\"timestamp\":\"2026-11-05T15:13:14.551Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"14e89708-63dd-4e35-a62b-c54336dd466f\",\"request_id\":\"e7d59582-5ee0-4029-8ae3-95a7c7925bc5\",\"actor\":{\"actor_id\":\"anonymous\",\"actor_type\":\"user\",\"role\":\"public\",\"display_name\":null,\"authenticated\":false,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"policy\",\"resource_id\":\"/api/v1/cases\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"DENIED\",\"status_code\":401,\"reason_code\":\"INVALID_CREDENTIALS\",\"message\":\"Invalid or expired credentials.\"},\"policy_reference\":{\"policy_id\":\"rbac_permissions_v1\",\"rule_name\":null,\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"path\":\"/api/v1/cases\",\"method\":\"GET\",\"role\":\"public\"},\"extensions\":null}",
           "user_id": null,
           "ip_address": null,
-          "request_id": "3e620c36-4370-4932-a0c4-09bdc5f4205e",
+          "request_id": "e7d59582-5ee0-4029-8ae3-95a7c7925bc5",
           "path": "/api/v1/cases",
           "method": "GET",
-          "timestamp": "2026-11-05T14:32:45.124627"
+          "timestamp": "2026-11-05T15:13:14.561679"
         },
         {
           "id": 7,
@@ -99,13 +99,13 @@
           "entity_type": "policy",
           "entity_id": "/api/v1/cases",
           "status": "denied",
-          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"2bf50460-19ed-44bb-b2b0-ced109bccbe7\",\"event_type\":\"authz.decision\",\"timestamp\":\"2026-11-05T14:32:45.105Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"1731b519-aad3-4ae8-acad-6c032d4aca5f\",\"request_id\":\"74c081aa-61ad-4eae-b27e-d2da92d66faa\",\"actor\":{\"actor_id\":\"anonymous\",\"actor_type\":\"user\",\"role\":\"public\",\"display_name\":null,\"authenticated\":false,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"policy\",\"resource_id\":\"/api/v1/cases\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"DENIED\",\"status_code\":401,\"reason_code\":\"AUTHENTICATION_REQUIRED\",\"message\":\"Authentication required.\"},\"policy_reference\":{\"policy_id\":\"rbac_permissions_v1\",\"rule_name\":null,\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"path\":\"/api/v1/cases\",\"method\":\"GET\",\"role\":\"public\"},\"extensions\":null}",
+          "details": "{\"schema_version\":\"1.0.0\",\"event_id\":\"c495ae9e-9530-46e3-ac6d-bd0ce69ea64b\",\"event_type\":\"authz.decision\",\"timestamp\":\"2026-11-05T15:13:14.519Z\",\"source_system\":\"cybercrime\",\"trace_id\":\"01198ae8-9194-46f5-83ed-3f2ecc7df6aa\",\"request_id\":\"8a5ce002-49c2-482b-823a-0a4e39e60db9\",\"actor\":{\"actor_id\":\"anonymous\",\"actor_type\":\"user\",\"role\":\"public\",\"display_name\":null,\"authenticated\":false,\"auth_method\":\"bearer_jwt\"},\"action\":\"read\",\"resource\":{\"resource_type\":\"policy\",\"resource_id\":\"/api/v1/cases\",\"case_id\":null,\"target_address\":null,\"integrity_hash\":null},\"outcome\":{\"status\":\"DENIED\",\"status_code\":401,\"reason_code\":\"AUTHENTICATION_REQUIRED\",\"message\":\"Authentication required.\"},\"policy_reference\":{\"policy_id\":\"rbac_permissions_v1\",\"rule_name\":null,\"enforcement_mode\":\"mandatory\",\"boundary_checked\":null},\"metadata\":{\"path\":\"/api/v1/cases\",\"method\":\"GET\",\"role\":\"public\"},\"extensions\":null}",
           "user_id": null,
           "ip_address": null,
-          "request_id": "74c081aa-61ad-4eae-b27e-d2da92d66faa",
+          "request_id": "8a5ce002-49c2-482b-823a-0a4e39e60db9",
           "path": "/api/v1/cases",
           "method": "GET",
-          "timestamp": "2026-11-05T14:32:45.105285"
+          "timestamp": "2026-11-05T15:13:14.519451"
         },
         {
           "id": 6,
@@ -120,7 +120,7 @@
           "request_id": null,
           "path": null,
           "method": null,
-          "timestamp": "2026-11-05T14:32:44.822882"
+          "timestamp": "2026-11-05T15:13:13.640495"
         },
         {
           "id": 5,
@@ -135,7 +135,7 @@
           "request_id": null,
           "path": null,
           "method": null,
-          "timestamp": "2026-11-05T14:32:44.566244"
+          "timestamp": "2026-11-05T15:13:13.101144"
         },
         {
           "id": 4,
@@ -150,7 +150,7 @@
           "request_id": null,
           "path": null,
           "method": null,
-          "timestamp": "2026-11-05T14:32:44.315415"
+          "timestamp": "2026-11-05T15:13:12.496425"
         },
         {
           "id": 3,
@@ -165,7 +165,7 @@
           "request_id": null,
           "path": null,
           "method": null,
-          "timestamp": "2026-11-05T14:32:44.072281"
+          "timestamp": "2026-11-05T15:13:11.903895"
         },
         {
           "id": 2,
@@ -180,7 +180,7 @@
           "request_id": null,
           "path": null,
           "method": null,
-          "timestamp": "2026-11-05T14:32:43.831005"
+          "timestamp": "2026-11-05T15:13:11.299953"
         },
         {
           "id": 1,
@@ -195,7 +195,7 @@
           "request_id": null,
           "path": null,
           "method": null,
-          "timestamp": "2026-11-05T14:32:43.592257"
+          "timestamp": "2026-11-05T15:13:10.683679"
         }
       ]
     }

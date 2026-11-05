@@ -2,22 +2,22 @@
   {
     "check_id": "O-04",
     "system": "cybersecurity",
-    "utc": "2026-11-05T14:33:56Z",
-    "elapsed_ms": 15,
+    "utc": "2026-11-05T15:15:34Z",
+    "elapsed_ms": 30,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:56282/api/v1/cases",
+      "url": "http://127.0.0.1:53155/api/v1/cases",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "5e4df783-5a48-4328-812e-6cf59677cf7c"
+        "x-trace-id": "6339bef9-0eb5-4b18-925e-4502090f48c4"
       },
       "body": null
     },
     "response": {
       "status": 307,
       "headers": {
-        "x-request-id": "c92ce91f-3c02-4780-bdfa-a6a8fa66e9c4",
-        "x-trace-id": "5e4df783-5a48-4328-812e-6cf59677cf7c"
+        "x-request-id": "4ebb709b-767f-4c46-b9da-47c08fa4bfed",
+        "x-trace-id": "6339bef9-0eb5-4b18-925e-4502090f48c4"
       },
       "body": null
     }

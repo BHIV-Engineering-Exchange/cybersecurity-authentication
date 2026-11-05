@@ -2,11 +2,11 @@
   {
     "check_id": "S7-04",
     "system": "vajra-local",
-    "utc": "2026-11-05T14:33:00Z",
-    "elapsed_ms": 0,
+    "utc": "2026-11-05T15:13:58Z",
+    "elapsed_ms": 16,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:56277/api/vajra/recovery/package",
+      "url": "http://127.0.0.1:53150/api/vajra/recovery/package",
       "headers": {},
       "body": null
     },
@@ -30,7 +30,7 @@
                 "val3_sig_ed25519_5b32026841a5f9fe",
                 "val4_sig_ed25519_ab653925492f07fb"
               ],
-              "timestamp": 1793889180
+              "timestamp": 1793891638
             }
           ],
           "state_commitment_root": "28aa643d20079274e707ea742e33193edc5bacbe1ae290779c462203bf245253",
@@ -46,8 +46,8 @@
           ],
           "revocation_state_root": "clean_revocation_root",
           "recovery_policy": "CANONICAL_CHECKPOINT_REPLAY_POLICY",
-          "generated_at": 1793889180,
-          "package_hash": "1e1953ffff45fd7623e52f207c9017017fafeecfb9020bca597c0bfdeb4d3f4a"
+          "generated_at": 1793891638,
+          "package_hash": "e541c335c352a5aec9447e368bda3e813bc7064f6ebd4348eb7342df30dcbd22"
         },
         "success": true
       }
@@ -56,11 +56,11 @@
   {
     "check_id": "S7-04",
     "system": "vajra-local",
-    "utc": "2026-11-05T14:33:00Z",
+    "utc": "2026-11-05T15:13:58Z",
     "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56277/api/vajra/recovery/verify-anchor",
+      "url": "http://127.0.0.1:53150/api/vajra/recovery/verify-anchor",
       "headers": {
         "content-type": "application/json"
       },
@@ -78,7 +78,7 @@
             "val3_sig_ed25519_5b32026841a5f9fe",
             "val4_sig_ed25519_ab653925492f07fb"
           ],
-          "timestamp": 1793889180
+          "timestamp": 1793891638
         },
         "current_state_root": "0xdeadbeef",
         "akashic_lineage_hash": "unknown",
@@ -105,7 +105,7 @@
           "quorum_satisfied": true,
           "lineage_intact": false,
           "state_root_valid": false,
-          "certified_at": 1793889180
+          "certified_at": 1793891638
         }
       }
     }
@@ -113,11 +113,11 @@
   {
     "check_id": "S7-04",
     "system": "vajra-local",
-    "utc": "2026-11-05T14:33:00Z",
+    "utc": "2026-11-05T15:13:58Z",
     "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56277/api/vajra/recovery/verify-anchor",
+      "url": "http://127.0.0.1:53150/api/vajra/recovery/verify-anchor",
       "headers": {
         "content-type": "application/json"
       },
@@ -135,7 +135,7 @@
             "val3_sig_ed25519_5b32026841a5f9fe",
             "val4_sig_ed25519_ab653925492f07fb"
           ],
-          "timestamp": 1793889180
+          "timestamp": 1793891638
         },
         "current_state_root": "28aa643d20079274e707ea742e33193edc5bacbe1ae290779c462203bf245253",
         "akashic_lineage_hash": "unknown",
@@ -157,8 +157,8 @@
           "quorum_satisfied": true,
           "lineage_intact": true,
           "state_root_valid": true,
-          "certificate_hash": "0a2b202110d38874871e9decb90421b8ff846f0e0cbb31a71f27cb0ac613abfd",
-          "certified_at": 1793889180
+          "certificate_hash": "657bc8a3a9ad0245fe7c076e763324063360c69a8efc1c35c093b3129ab7954b",
+          "certified_at": 1793891638
         }
       }
     }

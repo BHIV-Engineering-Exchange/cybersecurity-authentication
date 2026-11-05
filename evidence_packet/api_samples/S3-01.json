@@ -2,18 +2,18 @@
   {
     "check_id": "S3-01",
     "system": "cybersecurity",
-    "utc": "2026-11-05T14:32:52Z",
-    "elapsed_ms": 16,
+    "utc": "2026-11-05T15:13:37Z",
+    "elapsed_ms": 47,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56282/api/v1/incidents/analyze",
+      "url": "http://127.0.0.1:53155/api/v1/incidents/analyze",
       "headers": {
         "authorization": "[REDACTED]",
-        "x-trace-id": "2baaea67-c46d-4cea-b999-1e06ef7dd6d5",
+        "x-trace-id": "c9f19ba9-0835-4ca9-b762-368d0ae8c3b3",
         "content-type": "application/json"
       },
       "body": {
-        "wallet_address": "0xAMBIGUOUSe0de33c70d8c",
+        "wallet_address": "0xAMBIGUOUS83cfab0ad2c9",
         "description": "unclear activity, possibly unusual, not sure (synthetic)",
         "investigator_id": 2
       }
@@ -22,11 +22,11 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "029969a3-f53d-4fec-9293-10f620acf142",
-        "x-trace-id": "2baaea67-c46d-4cea-b999-1e06ef7dd6d5"
+        "x-request-id": "ff9a4d67-975f-4f7e-80c9-244d5f2a783f",
+        "x-trace-id": "c9f19ba9-0835-4ca9-b762-368d0ae8c3b3"
       },
       "body": {
-        "wallet": "0xAMBIGUOUSe0de33c70d8c",
+        "wallet": "0xAMBIGUOUS83cfab0ad2c9",
         "risk_score": 0.0,
         "risk_level": "INSUFFICIENT DATA",
         "detected_patterns": [],

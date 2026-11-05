@@ -2,11 +2,11 @@
   {
     "check_id": "setup",
     "system": "cybersecurity",
-    "utc": "2026-11-05T14:32:43Z",
-    "elapsed_ms": 281,
+    "utc": "2026-11-05T15:13:10Z",
+    "elapsed_ms": 703,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56282/api/v1/auth/login",
+      "url": "http://127.0.0.1:53155/api/v1/auth/login",
       "headers": {
         "content-type": "application/x-www-form-urlencoded"
       },
@@ -19,8 +19,8 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "051842ea-9fec-4304-83f7-63496b275077",
-        "x-trace-id": "0d30335d-4c72-44fb-8d29-71f31f05d50e"
+        "x-request-id": "38ba2b74-2e7d-48ec-a54b-b6cc9509ed69",
+        "x-trace-id": "d8b40c7c-203f-42a2-9ed2-773b3d4de78e"
       },
       "body": {
         "access_token": "[REDACTED]",
@@ -31,11 +31,11 @@
   {
     "check_id": "setup",
     "system": "cybersecurity",
-    "utc": "2026-11-05T14:32:43Z",
-    "elapsed_ms": 233,
+    "utc": "2026-11-05T15:13:11Z",
+    "elapsed_ms": 577,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56282/api/v1/auth/login",
+      "url": "http://127.0.0.1:53155/api/v1/auth/login",
       "headers": {
         "content-type": "application/x-www-form-urlencoded"
       },
@@ -48,8 +48,8 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "6bf1cc4f-98ea-41ba-a882-8c61e03cb1c7",
-        "x-trace-id": "bc3546fa-7b1a-4026-8293-8a329aec9e03"
+        "x-request-id": "9d2bc1c1-b08d-4935-b470-82157eb6e940",
+        "x-trace-id": "a82c22fd-aa1b-4f67-b9cf-8851dd353ff9"
       },
       "body": {
         "access_token": "[REDACTED]",
@@ -60,11 +60,11 @@
   {
     "check_id": "setup",
     "system": "cybersecurity",
-    "utc": "2026-11-05T14:32:44Z",
-    "elapsed_ms": 250,
+    "utc": "2026-11-05T15:13:11Z",
+    "elapsed_ms": 608,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56282/api/v1/auth/login",
+      "url": "http://127.0.0.1:53155/api/v1/auth/login",
       "headers": {
         "content-type": "application/x-www-form-urlencoded"
       },
@@ -77,8 +77,8 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "d3d91d77-5d9e-48d5-bf9c-f96345e24c6a",
-        "x-trace-id": "fca9770c-a7b4-45e8-8a48-002261021a4a"
+        "x-request-id": "b7f6938e-8da3-45a4-a663-80d5b0aad5b1",
+        "x-trace-id": "a62ced88-ce25-436d-bced-6558181e4fc9"
       },
       "body": {
         "access_token": "[REDACTED]",
@@ -89,11 +89,11 @@
   {
     "check_id": "setup",
     "system": "cybersecurity",
-    "utc": "2026-11-05T14:32:44Z",
-    "elapsed_ms": 234,
+    "utc": "2026-11-05T15:13:12Z",
+    "elapsed_ms": 594,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56282/api/v1/auth/login",
+      "url": "http://127.0.0.1:53155/api/v1/auth/login",
       "headers": {
         "content-type": "application/x-www-form-urlencoded"
       },
@@ -106,8 +106,8 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "4886a4b2-4a73-478e-8641-e75c4885d3b9",
-        "x-trace-id": "c6aeffe6-6e50-449b-bd29-b828eb7b155a"
+        "x-request-id": "f3869534-e045-4181-b5a6-36e5a65ca0b3",
+        "x-trace-id": "a6717a15-27a9-4773-9806-8afd1e4feac3"
       },
       "body": {
         "access_token": "[REDACTED]",
@@ -118,11 +118,11 @@
   {
     "check_id": "setup",
     "system": "cybersecurity",
-    "utc": "2026-11-05T14:32:44Z",
-    "elapsed_ms": 250,
+    "utc": "2026-11-05T15:13:13Z",
+    "elapsed_ms": 609,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56282/api/v1/auth/login",
+      "url": "http://127.0.0.1:53155/api/v1/auth/login",
       "headers": {
         "content-type": "application/x-www-form-urlencoded"
       },
@@ -135,8 +135,8 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "ce4221c8-3a29-45ba-8ba6-9dc615999fa5",
-        "x-trace-id": "bbf3f111-235d-4186-9f4b-cbedadab071a"
+        "x-request-id": "db263a3f-e356-49bc-8c66-cc73808a80df",
+        "x-trace-id": "d14917bf-5ecd-43ef-baea-deedce406656"
       },
       "body": {
         "access_token": "[REDACTED]",
@@ -147,11 +147,11 @@
   {
     "check_id": "setup",
     "system": "cybersecurity",
-    "utc": "2026-11-05T14:32:44Z",
-    "elapsed_ms": 265,
+    "utc": "2026-11-05T15:13:13Z",
+    "elapsed_ms": 530,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56282/api/v1/auth/login",
+      "url": "http://127.0.0.1:53155/api/v1/auth/login",
       "headers": {
         "content-type": "application/x-www-form-urlencoded"
       },
@@ -164,8 +164,8 @@
       "status": 200,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "8a208b8d-fc77-49aa-8480-6a9d682e9601",
-        "x-trace-id": "46f1fe46-c0dc-45ff-9ed9-475dfb4ec568"
+        "x-request-id": "ae5ea679-f673-4e07-9abf-dd48cf4f54d6",
+        "x-trace-id": "a5ee7b90-1464-4210-929b-ecbc3bad64a7"
       },
       "body": {
         "access_token": "[REDACTED]",

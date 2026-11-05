@@ -220,7 +220,7 @@ DEFECTS = [
                    "verified_by": "read at 3cc883f: run_cyber_biqos_10day_proofs.bat:22 now runs 'go test -v -run TestVajra "
                                   "./api/...'; that test set passes here (test_results/vajra_go_tests.txt)"},
      "check": None, "title": "Proof runner script references a file that does not exist",
-     "where": "run_cyber_biqos_10day_proofs.bat:22 (api/api_test_helpers.go missing; the fallback always runs)",
+     "where": "at 07d683c: run_cyber_biqos_10day_proofs.bat:22 (api/api_test_helpers.go missing; the fallback always runs)",
      "steps": ["Run the .bat; step 2's first command always fails and the fallback runs."],
      "expected": "The script runs the intended command.",
      "fix": "Use: go test -v -run TestVajra ./api/..."},

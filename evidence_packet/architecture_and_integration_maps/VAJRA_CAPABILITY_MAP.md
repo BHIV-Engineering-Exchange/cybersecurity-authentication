@@ -1,6 +1,6 @@
 # VAJRA capability map (as tested from Cybersecurity)
 
-From run `20261105T143237Z` against a local node built from VAJRA commit `3cc883f760562767d7039c5067b7b7d822b22b68` (VAJRA asks for no test records on its live node). Owner of every capability: Prakash / VAJRA team. Status per row comes from the named checks; a row with no check was not tested.
+From run `20261105T151254Z` against a local node built from VAJRA commit `3cc883f760562767d7039c5067b7b7d822b22b68` (VAJRA asks for no test records on its live node). Owner of every capability: Prakash / VAJRA team. Status per row comes from the named checks; a row with no check was not tested.
 
 | Capability | VAJRA interface | Auth | Checks (result) | Status |
 |---|---|---|---|---|

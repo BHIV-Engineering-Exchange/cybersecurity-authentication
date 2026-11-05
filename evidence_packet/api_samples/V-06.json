@@ -2,11 +2,11 @@
   {
     "check_id": "V-06",
     "system": "vajra-local",
-    "utc": "2026-11-05T14:33:00Z",
+    "utc": "2026-11-05T15:13:58Z",
     "elapsed_ms": 0,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:56277/api/vajra/recovery/package",
+      "url": "http://127.0.0.1:53150/api/vajra/recovery/package",
       "headers": {},
       "body": null
     },
@@ -30,7 +30,7 @@
                 "val3_sig_ed25519_5b32026841a5f9fe",
                 "val4_sig_ed25519_ab653925492f07fb"
               ],
-              "timestamp": 1793889180
+              "timestamp": 1793891638
             }
           ],
           "state_commitment_root": "28aa643d20079274e707ea742e33193edc5bacbe1ae290779c462203bf245253",
@@ -46,8 +46,8 @@
           ],
           "revocation_state_root": "clean_revocation_root",
           "recovery_policy": "CANONICAL_CHECKPOINT_REPLAY_POLICY",
-          "generated_at": 1793889180,
-          "package_hash": "1e1953ffff45fd7623e52f207c9017017fafeecfb9020bca597c0bfdeb4d3f4a"
+          "generated_at": 1793891638,
+          "package_hash": "e541c335c352a5aec9447e368bda3e813bc7064f6ebd4348eb7342df30dcbd22"
         },
         "success": true
       }
@@ -56,11 +56,11 @@
   {
     "check_id": "V-06",
     "system": "vajra-local",
-    "utc": "2026-11-05T14:33:00Z",
+    "utc": "2026-11-05T15:13:58Z",
     "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56277/api/vajra/recovery/verify-anchor",
+      "url": "http://127.0.0.1:53150/api/vajra/recovery/verify-anchor",
       "headers": {
         "content-type": "application/json"
       },
@@ -78,7 +78,7 @@
             "forged-3",
             "forged-4"
           ],
-          "timestamp": 1793889180
+          "timestamp": 1793891638
         },
         "current_state_root": "forged-root",
         "akashic_lineage_hash": "forged",
@@ -101,8 +101,8 @@
           "quorum_satisfied": true,
           "lineage_intact": true,
           "state_root_valid": true,
-          "certificate_hash": "ce6989ca6ea49c3861df7017f87b254d91ed916bbe86d7aefdfae76dbdbff40b",
-          "certified_at": 1793889180
+          "certificate_hash": "e8e7a19e4fcd0c0ab95ef007763e35d5fd0f4a7508586b6b3926d153b3faffb1",
+          "certified_at": 1793891638
         }
       }
     }

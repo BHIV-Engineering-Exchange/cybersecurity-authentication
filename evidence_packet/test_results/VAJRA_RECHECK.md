@@ -1,6 +1,6 @@
 # VAJRA re-check (after VAJRA's fixes)
 
-Run `20261105T143237Z` (2026-11-05T14:32:44Z to 2026-11-05T14:33:56Z) against a LOCAL node built from VAJRA commit `3cc883f760562767d7039c5067b7b7d822b22b68`. Nothing was written to VAJRA's live node. Every status below comes from this run's `results.json` or from `verification/defects.py` (CODE-VERIFIED items).
+Run `20261105T151254Z` (2026-11-05T15:13:13Z to 2026-11-05T15:15:34Z) against a LOCAL node built from VAJRA commit `3cc883f760562767d7039c5067b7b7d822b22b68`. Nothing was written to VAJRA's live node. Every status below comes from this run's `results.json` or from `verification/defects.py` (CODE-VERIFIED items).
 
 ## 1. VAJRA's re-verification steps
 

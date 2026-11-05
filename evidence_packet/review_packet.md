@@ -1,6 +1,6 @@
 # REVIEW_PACKET - Cybersecurity P0 verification and BHIV runtime bridge
 
-Branch `hemanth/p0-verification-2026-11-04` - base commit `59d2d63` (main, 2026-10-27). Generated from run `20261105T143237Z` (2026-11-05T14:32:44Z to 2026-11-05T14:33:56Z UTC, TANTRA mode `off`).
+Branch `hemanth/p0-verification-2026-11-04` - base commit `59d2d63` (main, 2026-10-27). Generated from run `20261105T151254Z` (2026-11-05T15:13:13Z to 2026-11-05T15:15:34Z UTC, TANTRA mode `off`).
 
 ## 1. Entry point
 
@@ -28,7 +28,7 @@ Investigator (JWT) --> Cybersecurity RBAC --> POST /api/v1/protected/access
 
 What ALLOW means: the caller passed RBAC, VAJRA reports GRANT or USE for the subject, the scope VAJRA reports contains `<action>:<resource type>` (for example `read:evidence`; `vajra.scope_checked: true`), and VAJRA recorded the evidence. Not checked: the resource id, the purpose, and whether the caller may act for the subject (CYB-13).
 
-Golden trace for review: `b87529b7-cd7a-42fb-9be6-a2b0f5a5a30e` (check S8-01). The id appears in the HTTP response and the audit store, and it prefixes the VAJRA TruthStore row id (`<trace>::<decision_id>`); see `replay_evidence/GOLDEN_TRACE.md`.
+Golden trace for review: `9f09a114-cd0f-46c4-bceb-f3714bbe513a` (check S8-01). The id appears in the HTTP response and the audit store, and it prefixes the VAJRA TruthStore row id (`<trace>::<decision_id>`); see `replay_evidence/GOLDEN_TRACE.md`.
 
 ## 4. Real JSON request/response (recorded, secrets redacted)
 
@@ -38,15 +38,15 @@ Golden trace for review: `b87529b7-cd7a-42fb-9be6-a2b0f5a5a30e` (check S8-01). T
 {
   "request": {
     "method": "POST",
-    "url": "http://127.0.0.1:56282/api/v1/protected/access",
+    "url": "http://127.0.0.1:53155/api/v1/protected/access",
     "headers": {
       "authorization": "[REDACTED]",
-      "x-trace-id": "3631e3f9-f27f-4b4e-ad36-fb7f11663d8d",
+      "x-trace-id": "ba53ebbd-94f4-474b-ab3c-d81ddbf439d6",
       "content-type": "application/json"
     },
     "body": {
       "contract_version": "1.0.0",
-      "vajra_subject": "cyber-p0-test-consenting-user-cd82c337d4",
+      "vajra_subject": "cyber-p0-test-consenting-user-4312b0b439",
       "action": "read",
       "resource": {
         "type": "evidence",
@@ -59,17 +59,17 @@ Golden trace for review: `b87529b7-cd7a-42fb-9be6-a2b0f5a5a30e` (check S8-01). T
     "status": 200,
     "headers": {
       "content-type": "application/json",
-      "x-request-id": "fcfbae5b-7df6-4be5-8904-c219740c9fac",
-      "x-trace-id": "3631e3f9-f27f-4b4e-ad36-fb7f11663d8d"
+      "x-request-id": "1d580d68-fce5-4c5f-971e-e536aba19ef1",
+      "x-trace-id": "ba53ebbd-94f4-474b-ab3c-d81ddbf439d6"
     },
     "body": {
       "contract_version": "1.0.0",
       "decision": "ALLOW",
       "reason_code": "ALLOWED_BY_VAJRA_AUTHORITY",
       "reason": "Access permitted: VAJRA authority state is 'USE', the granted scope includes 'read:evidence', the caller passed RBAC and VAJRA recorded the evidence.",
-      "decision_id": "ff212325a79c443496bacb8dee77b2ee",
-      "trace_id": "3631e3f9-f27f-4b4e-ad36-fb7f11663d8d",
-      "request_id": "fcfbae5b-7df6-4be5-8904-c219740c9fac",
+      "decision_id": "7dbd25f80d8f4972bdbb29ede992a60f",
+      "trace_id": "ba53ebbd-94f4-474b-ab3c-d81ddbf439d6",
+      "request_id": "1d580d68-fce5-4c5f-971e-e536aba19ef1",
       "idempotency_key": null,
       "duplicate": false,
       "actor_id": "cc_usr_2",
@@ -79,25 +79,25 @@ Golden trace for review: `b87529b7-cd7a-42fb-9be6-a2b0f5a5a30e` (check S8-01). T
         "id": "EV-P0-0001"
       },
       "vajra": {
-        "subject_ref": "subj_sha256_48c4e8a4d46cf4c9",
+        "subject_ref": "subj_sha256_79c1fee86e0a6f85",
         "status": "OK",
         "is_authorized": true,
         "current_state": "USE",
         "scope_checked": true
       },
       "evidence": {
-        "local_audit_event_id": "fb827f48-5965-4c93-8327-e9cc50e3a17a",
+        "local_audit_event_id": "0d5a4367-b651-46f1-b0d7-13ae3a116aaa",
         "superseded_audit_event_id": null,
         "vajra": {
           "status": "RECORDED",
           "http_status": 200,
           "detail": "",
           "data": {
-            "evidence_hash": "sha256:57af3350c959a2088f43688ca7e4dcd2b91db028ae69e0ea8e8109eb87cba3a3",
+            "evidence_hash": "sha256:1cfe1a78b2844cfbdcf0178d278fe94c682d38f1d1ea4cc3dff94227720ea1ea",
             "stored_in": [
               "TruthStore (tantra_truth.jsonl)"
             ],
-            "recorded_at": 1793889171,
+            "recorded_at": 1793891615,
             "credential": "tantra_governance"
           }
         },
@@ -112,7 +112,7 @@ Golden trace for review: `b87529b7-cd7a-42fb-9be6-a2b0f5a5a30e` (check S8-01). T
         ]
       },
       "policy_applied": "vajra_authority_v1",
-      "evaluated_at": "2026-11-05T14:32:51.323Z"
+      "evaluated_at": "2026-11-05T15:13:34.526Z"
     }
   }
 }
@@ -124,15 +124,15 @@ Golden trace for review: `b87529b7-cd7a-42fb-9be6-a2b0f5a5a30e` (check S8-01). T
 {
   "request": {
     "method": "POST",
-    "url": "http://127.0.0.1:56282/api/v1/protected/access",
+    "url": "http://127.0.0.1:53155/api/v1/protected/access",
     "headers": {
       "authorization": "[REDACTED]",
-      "x-trace-id": "3b6f4254-3ea7-4d66-8ce0-3adf65a16753",
+      "x-trace-id": "2cb2e6f5-bec3-4c2c-8438-7c7798c97f6e",
       "content-type": "application/json"
     },
     "body": {
       "contract_version": "1.0.0",
-      "vajra_subject": "cyber-p0-test-revocable-user-bd42b540fa",
+      "vajra_subject": "cyber-p0-test-revocable-user-b5ba7b36c2",
       "action": "read",
       "resource": {
         "type": "evidence",
@@ -145,17 +145,17 @@ Golden trace for review: `b87529b7-cd7a-42fb-9be6-a2b0f5a5a30e` (check S8-01). T
     "status": 200,
     "headers": {
       "content-type": "application/json",
-      "x-request-id": "e37fed0e-2bbb-4918-bd63-a3eec9f1caa6",
-      "x-trace-id": "3b6f4254-3ea7-4d66-8ce0-3adf65a16753"
+      "x-request-id": "57b8e6b0-775a-4e15-83c0-4fd20b664460",
+      "x-trace-id": "2cb2e6f5-bec3-4c2c-8438-7c7798c97f6e"
     },
     "body": {
       "contract_version": "1.0.0",
       "decision": "DENY",
       "reason_code": "VAJRA_AUTHORITY_NOT_GRANTED",
       "reason": "Access denied: VAJRA authority state is 'REVOKE', which does not permit access.",
-      "decision_id": "66d698bc8a534f218dcecb5caf410128",
-      "trace_id": "3b6f4254-3ea7-4d66-8ce0-3adf65a16753",
-      "request_id": "e37fed0e-2bbb-4918-bd63-a3eec9f1caa6",
+      "decision_id": "d2ceea5f259f41e59eef9755752e654f",
+      "trace_id": "2cb2e6f5-bec3-4c2c-8438-7c7798c97f6e",
+      "request_id": "57b8e6b0-775a-4e15-83c0-4fd20b664460",
       "idempotency_key": null,
       "duplicate": false,
       "actor_id": "cc_usr_2",
@@ -165,25 +165,25 @@ Golden trace for review: `b87529b7-cd7a-42fb-9be6-a2b0f5a5a30e` (check S8-01). T
         "id": "EV-P0-0001"
       },
       "vajra": {
-        "subject_ref": "subj_sha256_699d3999cdd83306",
+        "subject_ref": "subj_sha256_1385af754f31fe5e",
         "status": "OK",
         "is_authorized": false,
         "current_state": "REVOKE",
         "scope_checked": false
       },
       "evidence": {
-        "local_audit_event_id": "08847e10-f208-45c5-8100-77d43b000d87",
+        "local_audit_event_id": "128be5e2-7d5b-42a0-af92-63798b56cf68",
         "superseded_audit_event_id": null,
         "vajra": {
           "status": "RECORDED",
           "http_status": 200,
           "detail": "",
           "data": {
-            "evidence_hash": "sha256:fd9c5b6dcb8c396645c55116b4f65c13e163effe00b9d576f0ebfff519c00b1f",
+            "evidence_hash": "sha256:e8019bdb4e6c5e9f98bbc39db25895d1a658198fc8382d906b79c035d83b878b",
             "stored_in": [
               "TruthStore (tantra_truth.jsonl)"
             ],
-            "recorded_at": 1793889169,
+            "recorded_at": 1793891606,
             "credential": "tantra_governance"
           }
         },
@@ -198,7 +198,7 @@ Golden trace for review: `b87529b7-cd7a-42fb-9be6-a2b0f5a5a30e` (check S8-01). T
         ]
       },
       "policy_applied": "vajra_authority_v1",
-      "evaluated_at": "2026-11-05T14:32:48.664Z"
+      "evaluated_at": "2026-11-05T15:13:25.603Z"
     }
   }
 }

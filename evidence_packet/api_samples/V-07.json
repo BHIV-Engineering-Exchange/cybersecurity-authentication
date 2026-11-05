@@ -2,16 +2,16 @@
   {
     "check_id": "V-07",
     "system": "vajra-local",
-    "utc": "2026-11-05T14:33:00Z",
-    "elapsed_ms": 0,
+    "utc": "2026-11-05T15:13:58Z",
+    "elapsed_ms": 15,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56277/api/cybercrime/report",
+      "url": "http://127.0.0.1:53150/api/cybercrime/report",
       "headers": {
         "content-type": "application/json"
       },
       "body": {
-        "wallet_address": "cyber-p0-test-wallet-63fc1409",
+        "wallet_address": "cyber-p0-test-wallet-b4594b0b",
         "reporter_id": "anonymous (synthetic)",
         "reason": "synthetic test",
         "severity": 15,
@@ -31,11 +31,11 @@
   {
     "check_id": "V-07",
     "system": "vajra-local",
-    "utc": "2026-11-05T14:33:00Z",
+    "utc": "2026-11-05T15:13:58Z",
     "elapsed_ms": 0,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:56277/api/cybercrime/status/cyber-p0-test-wallet-63fc1409",
+      "url": "http://127.0.0.1:53150/api/cybercrime/status/cyber-p0-test-wallet-b4594b0b",
       "headers": {},
       "body": null
     },
@@ -45,12 +45,12 @@
         "content-type": "application/json"
       },
       "body": {
-        "address": "cyber-p0-test-wallet-63fc1409",
+        "address": "cyber-p0-test-wallet-b4594b0b",
         "status": "frozen",
         "report_count": 1,
         "total_severity_score": 15,
-        "last_reported_at": "2026-11-05T18:33:00.8081494+04:00",
-        "frozen_at": "2026-11-05T18:33:00.8081494+04:00",
+        "last_reported_at": "2026-11-05T19:13:58.1119553+04:00",
+        "frozen_at": "2026-11-05T19:13:58.1119553+04:00",
         "frozen_by": "SYSTEM_AUTO_FREEZE",
         "reports": [
           {
@@ -58,7 +58,7 @@
             "reason": "synthetic test",
             "severity": 15,
             "tx_hash": "",
-            "timestamp": "2026-11-05T18:33:00.8081494+04:00"
+            "timestamp": "2026-11-05T19:13:58.1119553+04:00"
           }
         ]
       }
@@ -67,16 +67,16 @@
   {
     "check_id": "V-07",
     "system": "vajra-local",
-    "utc": "2026-11-05T14:33:00Z",
+    "utc": "2026-11-05T15:13:58Z",
     "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56277/api/cybercrime/report",
+      "url": "http://127.0.0.1:53150/api/cybercrime/report",
       "headers": {
         "content-type": "application/json"
       },
       "body": {
-        "wallet_address": "cyber-p0-test-wallet-96cce7c0",
+        "wallet_address": "cyber-p0-test-wallet-9bba9a23",
         "reporter_id": "anonymous (synthetic)",
         "reason": "synthetic test",
         "severity": -1000,
@@ -96,16 +96,16 @@
   {
     "check_id": "V-07",
     "system": "vajra-local",
-    "utc": "2026-11-05T14:33:00Z",
+    "utc": "2026-11-05T15:13:58Z",
     "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56277/api/cybercrime/report",
+      "url": "http://127.0.0.1:53150/api/cybercrime/report",
       "headers": {
         "content-type": "application/json"
       },
       "body": {
-        "wallet_address": "cyber-p0-test-wallet-96cce7c0",
+        "wallet_address": "cyber-p0-test-wallet-9bba9a23",
         "reporter_id": "reporter (synthetic)",
         "reason": "synthetic test",
         "severity": 10,
@@ -125,16 +125,16 @@
   {
     "check_id": "V-07",
     "system": "vajra-local",
-    "utc": "2026-11-05T14:33:00Z",
+    "utc": "2026-11-05T15:13:58Z",
     "elapsed_ms": 0,
     "request": {
       "method": "POST",
-      "url": "http://127.0.0.1:56277/api/cybercrime/report",
+      "url": "http://127.0.0.1:53150/api/cybercrime/report",
       "headers": {
         "content-type": "application/json"
       },
       "body": {
-        "wallet_address": "cyber-p0-test-wallet-96cce7c0",
+        "wallet_address": "cyber-p0-test-wallet-9bba9a23",
         "reporter_id": "reporter (synthetic)",
         "reason": "synthetic test",
         "severity": 10,
@@ -154,11 +154,11 @@
   {
     "check_id": "V-07",
     "system": "vajra-local",
-    "utc": "2026-11-05T14:33:00Z",
+    "utc": "2026-11-05T15:13:58Z",
     "elapsed_ms": 0,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:56277/api/cybercrime/status/cyber-p0-test-wallet-96cce7c0",
+      "url": "http://127.0.0.1:53150/api/cybercrime/status/cyber-p0-test-wallet-9bba9a23",
       "headers": {},
       "body": null
     },
@@ -168,11 +168,11 @@
         "content-type": "application/json"
       },
       "body": {
-        "address": "cyber-p0-test-wallet-96cce7c0",
+        "address": "cyber-p0-test-wallet-9bba9a23",
         "status": "active",
         "report_count": 3,
         "total_severity_score": -980,
-        "last_reported_at": "2026-11-05T18:33:00.8109241+04:00",
+        "last_reported_at": "2026-11-05T19:13:58.1186639+04:00",
         "frozen_at": "0001-01-01T00:00:00Z",
         "reports": [
           {
@@ -180,21 +180,21 @@
             "reason": "synthetic test",
             "severity": -1000,
             "tx_hash": "",
-            "timestamp": "2026-11-05T18:33:00.8096908+04:00"
+            "timestamp": "2026-11-05T19:13:58.1161642+04:00"
           },
           {
             "reporter_id": "reporter (synthetic)",
             "reason": "synthetic test",
             "severity": 10,
             "tx_hash": "",
-            "timestamp": "2026-11-05T18:33:00.8103333+04:00"
+            "timestamp": "2026-11-05T19:13:58.1181442+04:00"
           },
           {
             "reporter_id": "reporter (synthetic)",
             "reason": "synthetic test",
             "severity": 10,
             "tx_hash": "",
-            "timestamp": "2026-11-05T18:33:00.8109241+04:00"
+            "timestamp": "2026-11-05T19:13:58.1186639+04:00"
           }
         ]
       }

@@ -2,7 +2,7 @@
 
 Each requirement maps to checks in this run. VERIFIED = every mapped check passed and the requirement asks for nothing more; FAILING = at least one failed; PARTIAL = some passed and the rest were blocked or skipped, or all passed but the requirement asks for more than the run showed (the reason follows the bracket); NOT VERIFIED = none passed. The bracket lists the systems the passing checks touched (live or local) and whether the harness simulated a role.
 
-Run `20261105T143237Z`, TANTRA mode `off`. TANTRA was not called in this run (mode off, on purpose). The last run that called live TANTRA (read-only), `20261104T133229Z`, is archived under `previous_runs/20261104T133229Z/`; its TANTRA checks: O-02 PASS, S5-01 PASS, S5-04 PASS, S8-02 SKIPPED. The one TANTRA ledger write (S8-02) was made in run `20261104T103939Z`.
+Run `20261105T151254Z`, TANTRA mode `off`. TANTRA was not called in this run (mode off, on purpose). The last run that called live TANTRA (read-only), `20261104T133229Z`, is archived under `previous_runs/20261104T133229Z/`; its TANTRA checks: O-02 PASS, S5-01 PASS, S5-04 PASS, S8-02 SKIPPED. The one TANTRA ledger write (S8-02) was made in run `20261104T103939Z`.
 
 | Source | Requirement | Checks (result) | Status |
 |---|---|---|---|

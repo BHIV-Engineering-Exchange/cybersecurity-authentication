@@ -15,7 +15,9 @@ node or to TANTRA.
   `VAJRA_TANTRA_SECRET` (VAJRA's governance token) is only a fallback, and superadmin health then warns
   (`write_credential`, `warnings`).
 - **Verification:** new checks V-03..V-08, S1-08 and S6-05; V-02 and V-01 updated for routes that now need a token;
-  S7-04 reads the recovery package correctly. Run `20261105T143237Z`: 43 PASS, 7 FAIL, 0 ERROR, 0 BLOCKED, 4 SKIPPED
+  S7-04 reads the recovery package correctly; recordings name the VAJRA token a call used (`[REDACTED:<setting>]`) and
+  the run records the node binary's SHA-256. Final run `20261105T151254Z` (the earlier 05 Nov runs gave the same
+  results and are superseded): 43 PASS, 7 FAIL, 0 ERROR, 0 BLOCKED, 4 SKIPPED
   of 54. All 7 failures are VAJRA defects. The 4 skipped checks need live TANTRA, which was not called. Unit tests:
   119 passed. VAJRA's own Go tests at `3cc883f`: 27 passed with the 04 Nov command, and 24 packages ok in the whole
   module.

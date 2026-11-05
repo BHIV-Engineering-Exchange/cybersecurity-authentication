@@ -2,13 +2,13 @@
   {
     "check_id": "O-03",
     "system": "cybersecurity",
-    "utc": "2026-11-05T14:33:56Z",
-    "elapsed_ms": 0,
+    "utc": "2026-11-05T15:15:34Z",
+    "elapsed_ms": 16,
     "request": {
       "method": "GET",
-      "url": "http://127.0.0.1:56282/api/v1/wallets",
+      "url": "http://127.0.0.1:53155/api/v1/wallets",
       "headers": {
-        "x-trace-id": "95791607-8ac9-4b2b-a34b-96a4b9b90edd"
+        "x-trace-id": "9d7b31ca-6d2f-48f5-a86c-8bfc4c29f971"
       },
       "body": null
     },
@@ -16,17 +16,17 @@
       "status": 401,
       "headers": {
         "content-type": "application/json",
-        "x-request-id": "6e0514c4-10a5-4684-a532-83792bfcc7ee",
-        "x-trace-id": "95791607-8ac9-4b2b-a34b-96a4b9b90edd"
+        "x-request-id": "24f0b3db-fde1-4dcd-b7ce-0ea42dd5c1fc",
+        "x-trace-id": "9d7b31ca-6d2f-48f5-a86c-8bfc4c29f971"
       },
       "body": {
         "error": true,
         "code": "AUTHENTICATION_REQUIRED",
         "status_code": 401,
         "message": "Authentication required.",
-        "trace_id": "95791607-8ac9-4b2b-a34b-96a4b9b90edd",
-        "request_id": "6e0514c4-10a5-4684-a532-83792bfcc7ee",
-        "timestamp": "2026-11-05T14:33:56.063Z",
+        "trace_id": "9d7b31ca-6d2f-48f5-a86c-8bfc4c29f971",
+        "request_id": "24f0b3db-fde1-4dcd-b7ce-0ea42dd5c1fc",
+        "timestamp": "2026-11-05T15:15:34.683Z",
         "details": []
       }
     }
