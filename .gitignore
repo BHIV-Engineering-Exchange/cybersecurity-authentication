@@ -32,8 +32,9 @@ coverage/
 
 # Logs & temporary files
 **/*.log
-# ...except the run logs that belong to the evidence packet
+# ...except the run logs that belong to the evidence packet (current run and archived runs)
 !evidence_packet/runtime_logs/*.log
+!evidence_packet/previous_runs/*/runtime_logs/*.log
 **/logs/
 *.tmp
 *.temp
