@@ -162,7 +162,11 @@ class Settings(BaseSettings):
     TANTRA_SUBMISSION_PREFIX: str = ""            # e.g. "cyber-p0-test-" so test traffic is recognisable
     # VAJRA (bhiv-VAJRA_Blockchain relay node). Use the HTTP API port (default 8080), not the P2P port.
     VAJRA_API_URL: Optional[str] = None           # e.g. http://<vajra-host>:8080
-    VAJRA_TANTRA_SECRET: Optional[str] = None     # Bearer token for VAJRA write routes; never logged
+    # Bearer tokens for VAJRA evidence writes; never logged. VAJRA_CYBER_SECRET (VAJRA's evidence-only tier, added in
+    # VAJRA commit 3cc883f) is used when set. VAJRA_TANTRA_SECRET is VAJRA's governance token (it also authorizes
+    # authority transitions); it is used only when VAJRA_CYBER_SECRET is unset, and system health then warns.
+    VAJRA_CYBER_SECRET: Optional[str] = None
+    VAJRA_TANTRA_SECRET: Optional[str] = None
     BHIV_RUNTIME_TIMEOUT_SECONDS: float = 5.0
     # A repeated idempotency key replays an earlier ALLOW only inside this window and only after VAJRA
     # confirms the authority again; otherwise the client must send a new request.

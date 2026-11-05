@@ -11,15 +11,19 @@ TANTRA (bhiv-TANTRA_Layer)
   GET  {TANTRA_PRANA_URL}/replay/{trace_id}              read-only replay lookup
 
 VAJRA (bhiv-VAJRA_Blockchain relay node, HTTP API port)
-  GET  {VAJRA_API_URL}/api/vajra/authority/verify?subject=...   authority state (no auth)
+  GET  {VAJRA_API_URL}/api/vajra/authority/verify?subject=...   authority state, and since VAJRA commit 3cc883f the
+                                                                 granted scope and issuing authority (no auth)
   POST {VAJRA_API_URL}/api/vajra/evidence/record                evidence (Authorization: Bearer)
 
 Scope of this slice
   * Cybersecurity READS VAJRA authority state and SUBMITS evidence. This slice deliberately does not
     call /api/vajra/authority/transition. (VAJRA's integration package assigns opt-out revocation via
     that route to "Kaushlendra / User UX"; who calls it is a team decision, not made here.)
-  * VAJRA does not scope the bearer token: the same value also authorizes VAJRA transitions.
-    Treat it as a high-privilege credential.
+  * Credential: VAJRA_CYBER_SECRET (VAJRA's evidence-only tier) is preferred. VAJRA_TANTRA_SECRET is VAJRA's
+    governance token (it also authorizes authority transitions); it is used only when the evidence-only token is
+    not configured, and runtime_health() then reports a warning. Re-check of 3cc883f on 05 Nov 2026: VAJRA's
+    evidence/record handler still accepts only VAJRA_TANTRA_SECRET, so the evidence-only token is answered 401
+    there (VAJ-10); the evidence write then fails and the decision fails closed.
   * TANTRA's contract gate is respected: an event TANTRA rejects is never written to the
     TANTRA ledger by another route (same order as TANTRA's own e2e test: validate, ingest, verify).
 
@@ -139,6 +143,12 @@ def vajra_verify_authority(subject: str, *, trace_id: str, request_id: Optional[
     body = _json_or_text(response)
     if response.status_code != 200 or not isinstance(body, dict) or "is_authorized" not in body:
         return SinkResult(status="ERROR", http_status=response.status_code, detail="unexpected VAJRA verify response")
+    scope = body.get("scope")
+    # Strict: only a list of strings counts as a reported scope. Missing or malformed -> None, which the
+    # protected-access decision treats as "scope cannot be checked" (deny).
+    if not (isinstance(scope, list) and all(isinstance(item, str) for item in scope)):
+        scope = None
+    authority = body.get("authority")
     return SinkResult(
         status="OK",
         http_status=200,
@@ -146,8 +156,19 @@ def vajra_verify_authority(subject: str, *, trace_id: str, request_id: Optional[
             "is_authorized": body.get("is_authorized") is True,  # strict: the string "false" or 1 is not True
             "current_state": body.get("current_state") or "",
             "verified_at": body.get("verified_at"),
+            "scope": scope,
+            "authority": authority if isinstance(authority, str) else None,
         },
     )
+
+
+def vajra_write_credential() -> Dict[str, Any]:
+    """Which VAJRA bearer token evidence writes use: the evidence-only one when configured, else the legacy one."""
+    if settings.VAJRA_CYBER_SECRET:
+        return {"kind": "cyber_evidence_only", "setting": "VAJRA_CYBER_SECRET", "token": settings.VAJRA_CYBER_SECRET}
+    if settings.VAJRA_TANTRA_SECRET:
+        return {"kind": "tantra_governance", "setting": "VAJRA_TANTRA_SECRET", "token": settings.VAJRA_TANTRA_SECRET}
+    return {"kind": "none", "setting": None, "token": None}
 
 
 def vajra_record_evidence(
@@ -165,11 +186,12 @@ def vajra_record_evidence(
     """Submit an evidence record to VAJRA (POST /api/vajra/evidence/record)."""
     if not settings.VAJRA_API_URL:
         return SinkResult(status="NOT_CONFIGURED", detail="VAJRA_API_URL is not set")
-    if not settings.VAJRA_TANTRA_SECRET:
+    credential = vajra_write_credential()
+    if credential["kind"] == "none":
         # VAJRA's write routes fail closed without a bearer token; do not send a request that must fail.
-        return SinkResult(status="NOT_CONFIGURED", detail="VAJRA_TANTRA_SECRET is not set")
-    if not _secret_usable(settings.VAJRA_TANTRA_SECRET):
-        return SinkResult(status="NOT_CONFIGURED", detail="VAJRA_TANTRA_SECRET contains invalid characters")
+        return SinkResult(status="NOT_CONFIGURED", detail="neither VAJRA_CYBER_SECRET nor VAJRA_TANTRA_SECRET is set")
+    if not _secret_usable(credential["token"]):
+        return SinkResult(status="NOT_CONFIGURED", detail=f"{credential['setting']} contains invalid characters")
     url = settings.VAJRA_API_URL.rstrip("/") + "/api/vajra/evidence/record"
     payload = {
         "trace_id": trace_id,
@@ -183,27 +205,31 @@ def vajra_record_evidence(
         "metadata": metadata or {},
     }
     headers = _trace_headers(trace_id, request_id)
-    headers["Authorization"] = f"Bearer {settings.VAJRA_TANTRA_SECRET}"
+    headers["Authorization"] = f"Bearer {credential['token']}"
+    kind = credential["kind"]
     try:
         with _client() as client:
             response = client.post(url, json=payload, headers=headers)
     except Exception as exc:
-        return SinkResult(status="UNAVAILABLE", detail=_exc_detail(exc))
+        return SinkResult(status="UNAVAILABLE", detail=_exc_detail(exc), data={"credential": kind})
     body = _json_or_text(response)
     code = response.status_code
     if code == 200 and isinstance(body, dict) and body.get("success"):
         if body.get("simulated") or body.get("stored") is False:
             return SinkResult(status="SIMULATED", http_status=code, detail="VAJRA rehearsal: nothing stored",
-                              data={"evidence_hash": body.get("evidence_hash")})
+                              data={"evidence_hash": body.get("evidence_hash"), "credential": kind})
         return SinkResult(status="RECORDED", http_status=code,
                           data={"evidence_hash": body.get("evidence_hash"), "stored_in": body.get("stored_in"),
-                                "recorded_at": body.get("recorded_at")})
+                                "recorded_at": body.get("recorded_at"), "credential": kind})
     if code == 409:
         return SinkResult(status="DUPLICATE_TRACE", http_status=code,
                           detail="VAJRA keeps one evidence record per trace_id; this record was not stored",
-                          data={"existing_hash": (body or {}).get("existing_hash") if isinstance(body, dict) else None})
-    if code == 401:
-        return SinkResult(status="UNAUTHORIZED", http_status=code, detail="VAJRA rejected the bearer token")
+                          data={"existing_hash": (body or {}).get("existing_hash") if isinstance(body, dict) else None,
+                                "credential": kind})
+    if code in (401, 403):
+        return SinkResult(status="UNAUTHORIZED", http_status=code,
+                          detail=f"VAJRA refused the {credential['setting']} bearer token on evidence/record",
+                          data={"credential": kind})
     if code == 400:
         return SinkResult(status="REJECTED", http_status=code, detail=str((body or {}).get("error") if isinstance(body, dict) else body))
     if code >= 500:
@@ -360,10 +386,23 @@ def _runtime_health_uncached() -> Dict[str, Any]:
             "prana": _probe(settings.TANTRA_PRANA_URL, "/health"),
             "event_type": settings.TANTRA_EVENT_TYPE,
         },
-        "vajra": {
-            "api": _probe(settings.VAJRA_API_URL, "/api/health"),
-            "write_token_configured": bool(settings.VAJRA_TANTRA_SECRET),
-        },
+        "vajra": _vajra_health(),
+    }
+
+
+def _vajra_health() -> Dict[str, Any]:
+    kind = vajra_write_credential()["kind"]
+    warnings = []
+    if kind == "tantra_governance":
+        warnings.append("Evidence writes use VAJRA_TANTRA_SECRET, VAJRA's governance token (it also authorizes authority "
+                        "transitions). Configure the evidence-only VAJRA_CYBER_SECRET instead.")
+    if settings.VAJRA_CYBER_SECRET and settings.VAJRA_TANTRA_SECRET:
+        warnings.append("VAJRA_TANTRA_SECRET is set but not used (VAJRA_CYBER_SECRET takes precedence); remove it.")
+    return {
+        "api": _probe(settings.VAJRA_API_URL, "/api/health"),
+        "write_token_configured": kind != "none",
+        "write_credential": kind,
+        "warnings": warnings,
     }
 
 

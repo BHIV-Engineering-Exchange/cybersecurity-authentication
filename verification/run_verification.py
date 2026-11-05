@@ -49,12 +49,13 @@ from harness.runner import REGISTRY, Context, Recorder, results_as_dicts, run_ch
 from harness import services  # noqa: E402
 
 TEST_PREFIX = "cyber-p0-test-"
-SEGMENT_1 = ["O-01", "O-02", "S1-01", "S1-02", "S1-03", "S1-07", "S1-06", "V-01", "V-02", "S1-05", "S1-04",
-             "S2-01", "S4-01", "S4-02", "S4-04", "S4-05"]
+SEGMENT_1 = ["O-01", "O-02", "S1-01", "S1-02", "S1-03", "S1-07", "S1-06", "V-01", "V-02", "V-03", "V-04", "V-05",
+             "S1-05", "S1-08", "S1-04", "S2-01", "S4-01", "S4-02", "S4-04", "S4-05"]
 SEGMENT_LIVE = ["P-A", "S8-01", "S5-01"]  # the only checks during which the API is pointed at live TANTRA
 SEGMENT_3 = ["S5-04", "S8-02", "S3-01", "S3-02", "S3-03", "S6-04", "P-C1", "P-C2", "P-C3", "S2-02", "S2-03", "S4-03",
-             "S7-01", "S7-02", "S7-04", "S5-02", "S5-05", "S6-01", "S6-03", "S6-02", "S7-03", "S7-05", "S8-03",
-             "S5-03", "O-03", "O-04", "S2-04"]  # S2-04 last: it would remove investigator 'read' if it worked
+             "S7-01", "S7-02", "S7-04", "V-06", "V-07", "S5-02", "S5-05", "S6-01", "S6-03", "S6-02", "S6-05", "S7-03",
+             "S7-05", "S8-03", "V-08", "S5-03", "O-03", "O-04",
+             "S2-04"]  # S2-04 last: it would remove investigator 'read' if it worked
 
 
 def git_head(path: Path) -> str:
@@ -139,8 +140,9 @@ def main() -> int:
     work = Path(tempfile.mkdtemp(prefix=f"cyber-p0-verify-{run_id}-", dir=str(args.work_root)))
     logs = work / "logs"
     redactor = Redactor()
-    secret_key, vajra_secret = secrets.token_urlsafe(32), secrets.token_urlsafe(32)
-    redactor.add(secret_key, vajra_secret)
+    secret_key, vajra_secret, vajra_cyber_secret = (secrets.token_urlsafe(32), secrets.token_urlsafe(32),
+                                                    secrets.token_urlsafe(32))
+    redactor.add(secret_key, vajra_secret, vajra_cyber_secret)
 
     db_path = work / "cyber.db"
     tantra_live_env = {}
@@ -160,13 +162,17 @@ def main() -> int:
         "BHIV_CORE_EVENT_URL": "", "BHIV_BUCKET_EVIDENCE_URL": "", "KAFKA_BOOTSTRAP_SERVERS": "",
         "TANTRA_VALIDATION_URL": "", "TANTRA_KARMA_URL": "", "TANTRA_PRANA_URL": "", "TANTRA_SUBMISSION_PREFIX": "",
         "BHIV_HEALTH_CACHE_SECONDS": "0",
+        # Main run: the legacy governance token, because VAJRA 3cc883f's evidence/record handler refuses the
+        # evidence-only token (VAJ-10). Check S6-05 runs the API with the evidence-only token alone.
         "VAJRA_TANTRA_SECRET": vajra_secret,
+        "VAJRA_CYBER_SECRET": "",
     }
     os.environ.update(cyber_base_env)  # the harness process imports the module for seeding and the S8-02 probe
     sys.path.insert(0, str(BACKEND))
     users = seed_users(redactor)
 
-    vajra = services.vajra_node(args.vajra_bin.resolve(), work / "vajra", vajra_secret, logs)
+    vajra = services.vajra_node(args.vajra_bin.resolve(), work / "vajra", vajra_secret, logs,
+                                cyber_secret=vajra_cyber_secret)
     print(f"run {run_id}: work folder {work}", flush=True)
     vajra.start()
     cyber_base_env["VAJRA_API_URL"] = vajra.base_url
@@ -180,6 +186,7 @@ def main() -> int:
         "cyber": recorder.client(cyber.base_url, "cybersecurity"),
         "vajra": recorder.client(vajra.base_url, "vajra-local"),
         "vajra_secret": vajra_secret,
+        "vajra_cyber_secret": vajra_cyber_secret,
         "users": users,
         "services": {"cyber": cyber, "vajra": vajra},
         "cyber_base_env": cyber_base_env,

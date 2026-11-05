@@ -94,8 +94,12 @@ class ManagedProcess:
         return bool(self.proc and self.proc.poll() is None)
 
 
-def vajra_node(bin_path: Path, workdir: Path, secret: str, logs: Path) -> ManagedProcess:
-    """Real VAJRA relay node built from bhiv-VAJRA_Blockchain, headless, isolated working folder."""
+def vajra_node(bin_path: Path, workdir: Path, secret: str, logs: Path, cyber_secret: Optional[str] = None) -> ManagedProcess:
+    """Real VAJRA relay node built from bhiv-VAJRA_Blockchain, headless, isolated working folder.
+
+    secret is VAJRA's governance token (VAJRA_TANTRA_SECRET); cyber_secret is its evidence-only tier
+    (VAJRA_CYBER_SECRET, VAJRA commit 3cc883f and later; older nodes ignore it, as they ignore VAJRA_AUTHORITY_LEDGER).
+    """
     workdir.mkdir(parents=True, exist_ok=True)
     http_port, p2p_port = free_port(), free_port()
     env = base_env({
@@ -105,12 +109,16 @@ def vajra_node(bin_path: Path, workdir: Path, secret: str, logs: Path) -> Manage
         "TRUTH_STORE_PATH": str(workdir / "tantra_truth.jsonl"),
         "AKASHIC_STORE_PATH": str(workdir / "akashic_lineage.jsonl"),
         "NONCE_STORE_PATH": str(workdir / "nonce_ledger.jsonl"),
+        "VAJRA_AUTHORITY_LEDGER": str(workdir / "authority_ledger.jsonl"),
         "VAJRA_TANTRA_SECRET": secret,
     })
+    if cyber_secret:
+        env["VAJRA_CYBER_SECRET"] = cyber_secret
     process = ManagedProcess("vajra-relay-node", [str(bin_path)], workdir, env, logs / "vajra_node.log",
                              f"http://127.0.0.1:{http_port}/api/health")
     process.base_url = f"http://127.0.0.1:{http_port}"  # type: ignore[attr-defined]
     process.truth_store = workdir / "tantra_truth.jsonl"  # type: ignore[attr-defined]
+    process.authority_ledger = workdir / "authority_ledger.jsonl"  # type: ignore[attr-defined]
     return process
 
 

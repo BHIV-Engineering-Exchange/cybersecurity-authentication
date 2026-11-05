@@ -20,6 +20,7 @@ All identities, subjects and payloads are synthetic.
 from __future__ import annotations
 
 import base64
+import hashlib
 import json
 import os
 import socket
@@ -81,31 +82,55 @@ def new_subject(prefix: str) -> str:
     return f"cyber-p0-test-{prefix}-{uuid.uuid4().hex[:10]}"
 
 
-def transition(ctx: Context, subject: str, to_state: str, issuer: str, *, bearer: Optional[str] = "valid"):
+DEFAULT_SCOPE = ("read:evidence",)  # what protected() asks for by default: action read on an evidence resource
+
+
+def vajra_auth(ctx: Context, which: str = "governance") -> Dict[str, str]:
+    """Headers for the local VAJRA node: 'governance' = VAJRA_TANTRA_SECRET, 'cyber' = VAJRA_CYBER_SECRET."""
+    token = ctx.data["vajra_secret"] if which == "governance" else ctx.data["vajra_cyber_secret"]
+    return {"Authorization": f"Bearer {token}", "X-Trace-Id": ctx.new_trace()}
+
+
+def transition(ctx: Context, subject: str, to_state: str, issuer: str, *, bearer: Optional[str] = "valid",
+               scope=DEFAULT_SCOPE):
     headers = {"X-Trace-Id": ctx.new_trace()}
     if bearer == "valid":
         headers["Authorization"] = f"Bearer {ctx.data['vajra_secret']}"
+    elif bearer == "cyber":
+        headers["Authorization"] = f"Bearer {ctx.data['vajra_cyber_secret']}"
     elif bearer:
         headers["Authorization"] = f"Bearer {bearer}"
     body = {
         "trace_id": headers["X-Trace-Id"], "subject": subject, "authority": "AUTH_ROLE_CLIENT", "issuer": issuer,
-        "target": "VAJRA_LEDGER", "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)", "scope": ["read"],
+        "target": "VAJRA_LEDGER", "purpose": "BHIV_CYBER_P0_VERIFICATION (synthetic)", "scope": list(scope),
         "to_state": to_state, "policy_version": "v1.0.0", "evidence_ref": "synthetic-test",
     }
     return vajra(ctx).post("/api/vajra/authority/transition", json=body, headers=headers)
 
 
-def grant_use(ctx: Context, subject: str) -> None:
+def grant_use(ctx: Context, subject: str, scope=DEFAULT_SCOPE) -> None:
     for state in ("GRANT", "USE"):
-        r = transition(ctx, subject, state, SIM_ISSUER_USER)
+        r = transition(ctx, subject, state, SIM_ISSUER_USER, scope=scope)
         ctx.require(f"VAJRA {state} transition accepted for {subject}", 200, r.status_code)
 
 
+def verify_view(ctx: Context, subject: str) -> Dict[str, Any]:
+    r = vajra(ctx).get("/api/vajra/authority/verify", params={"subject": subject})
+    return r.json() if r.status_code == 200 else {}
+
+
+def reply_text(response, limit: int = 160) -> str:
+    try:
+        return json.dumps(response.json(), separators=(",", ":"))[:limit]
+    except ValueError:
+        return response.text[:limit]
+
+
 def protected(ctx: Context, token: str, subject: str, *, trace: Optional[str] = None, key: Optional[str] = None,
-              resource_id: str = "EV-P0-0001", action: str = "read"):
+              resource_id: str = "EV-P0-0001", action: str = "read", resource_type: str = "evidence"):
     trace = trace or ctx.new_trace(ctx.data.get("trace_prefix", ""))
     body = {"contract_version": "1.0.0", "vajra_subject": subject, "action": action,
-            "resource": {"type": "evidence", "id": resource_id}, "purpose": "P0 verification (synthetic)"}
+            "resource": {"type": resource_type, "id": resource_id}, "purpose": "P0 verification (synthetic)"}
     if key:
         body["idempotency_key"] = key
     return cyber(ctx).post("/api/v1/protected/access", json=body, headers=auth(token, trace)), trace
@@ -295,6 +320,29 @@ def s1_05(ctx: Context):
     ctx.expect("one VAJRA TruthStore row for this decision, decision DENY", ["DENY"], [x.get("fraud_decision") for x in rows])
 
 
+@check(id="S1-08", title="An action outside the scope VAJRA reports is denied; inside it is allowed (CYB-13)",
+       scenario="S1 Unauthorized access",
+       refs=["EOD scenario: Unauthorized access", "Task1 M Vajra boundary", "CYB-13", "Principle: least privilege"],
+       systems=[CYBER, VAJRA], evidence_level=SIM_USER)
+def s1_08(ctx: Context):
+    token = token_of(ctx, "investigator_a")
+    subject = new_subject("scoped-consent")
+    grant_use(ctx, subject, scope=("read:evidence",))
+    cases = (("read", "evidence", "ALLOW", "ALLOWED_BY_VAJRA_AUTHORITY"),
+             ("download", "evidence", "DENY", "VAJRA_SCOPE_NOT_GRANTED"),
+             ("read", "case", "DENY", "VAJRA_SCOPE_NOT_GRANTED"))
+    for action, resource_type, decision, reason in cases:
+        r, trace = protected(ctx, token, subject, action=action, resource_type=resource_type)
+        body = r.json()
+        label = f"{action}:{resource_type} with VAJRA scope ['read:evidence']"
+        ctx.expect(f"{label}: decision", decision, body.get("decision"))
+        ctx.expect(f"{label}: reason", reason, body.get("reason_code"))
+        ctx.expect(f"{label}: scope_checked", True, body.get("vajra", {}).get("scope_checked"))
+        ctx.expect(f"{label}: VAJRA evidence recorded", "RECORDED", body.get("evidence", {}).get("vajra", {}).get("status"))
+        rows = vajra_rows_for(ctx, trace)
+        ctx.expect(f"{label}: VAJRA row carries the decision", [decision], [x.get("fraud_decision") for x in rows])
+
+
 @check(id="S1-06", title="VAJRA write routes reject callers without the bearer token (VAJRA enforcement point)",
        scenario="S1 Unauthorized access", refs=["EOD scenario: Unauthorized access", "10-day TANTRA: refuse actions outside contract"],
        systems=[VAJRA], evidence_level=OFFLINE)
@@ -328,6 +376,13 @@ def v_01(ctx: Context):
                                           {"trace_id": ctx.new_trace(), "subject": "cyber-p0-test-subj", "requester": "attacker",
                                            "purpose": "unauthenticated grant attempt (synthetic)", "scope": "read", "ttl_seconds": 60}),
         "POST /api/cybercrime/freeze": ("/api/cybercrime/freeze", {"wallet_address": "cyber-p0-test-wallet", "admin_address": "attacker"}),
+        "POST /api/cybercrime/unfreeze": ("/api/cybercrime/unfreeze", {"wallet_address": "cyber-p0-test-wallet", "admin_address": "attacker"}),
+        "POST /api/admin/submit-transaction": ("/api/admin/submit-transaction",
+                                               {"from": "cyber-p0-test-a", "to": "cyber-p0-test-b", "token": "BHX", "amount": 1}),
+        "POST /api/v1/permission/revoke": ("/api/v1/permission/revoke",
+                                           {"permission_id": "perm-cyber-p0-test", "trace_id": ctx.new_trace(), "reason": "unauthenticated revoke attempt (synthetic)"}),
+        "POST /api/v1/permission/check": ("/api/v1/permission/check",
+                                          {"trace_id": ctx.new_trace(), "subject": "cyber-p0-test-subj", "requester": "attacker", "scope": "read"}),
     }
     any_open = False
     for label, (path, body) in probes.items():
@@ -354,28 +409,149 @@ def v_01(ctx: Context):
 def v_02(ctx: Context):
     subject = "cyber-p0-test-long-subject-" + uuid.uuid4().hex[:6]  # 18+ characters
     grants = {}
+    # Since VAJRA 3cc883f these routes need a token (VAJ-06 fix): the governance token plays the consent service here.
     for requester, scope in (("app-alpha", "read"), ("app-beta", "write")):
-        r = vajra(ctx).post("/api/v1/permission/grant", json={
+        r = vajra(ctx).post("/api/v1/permission/grant", headers=vajra_auth(ctx), json={
             "trace_id": ctx.new_trace(), "subject": subject, "requester": requester,
             "purpose": "P0 verification (synthetic)", "scope": scope, "ttl_seconds": 600})
         ctx.require(f"grant for {requester} created", True, r.status_code in (200, 201), ok=r.status_code in (200, 201))
         grants[requester] = (scope, r.json().get("permission_id"))
     ids = [pid for _, pid in grants.values()]
     ctx.expect("two different grants get two different permission ids", True, ids[0] != ids[1])
-    rv = vajra(ctx).post("/api/v1/permission/revoke", json={"permission_id": grants["app-beta"][1], "trace_id": ctx.new_trace(),
-                                                             "reason": "revoke beta only (synthetic)"})
+    rv = vajra(ctx).post("/api/v1/permission/revoke", headers=vajra_auth(ctx),
+                         json={"permission_id": grants["app-beta"][1], "trace_id": ctx.new_trace(),
+                               "reason": "revoke beta only (synthetic)"})
     ctx.note(f"permission ids: {ids}; revoke(beta) -> HTTP {rv.status_code}")
 
     def allowed(requester):
         scope = grants[requester][0]
-        c = vajra(ctx).post("/api/v1/permission/check", json={"trace_id": ctx.new_trace(), "subject": subject,
-                                                               "requester": requester, "scope": scope})
+        c = vajra(ctx).post("/api/v1/permission/check", headers=vajra_auth(ctx),
+                            json={"trace_id": ctx.new_trace(), "subject": subject, "requester": requester, "scope": scope})
         return (c.json() or {}).get("allowed")
 
     ctx.expect("revoked grant (beta) is denied", False, allowed("app-beta"))
     ctx.expect("untouched grant (alpha) is still allowed", True, allowed("app-alpha"))
     if ids[0] == ids[1]:
         ctx.defect("VAJ-07")
+
+
+@check(id="V-03", title="VAJRA evidence-only token (VAJRA_CYBER_SECRET): accepted for evidence, refused for governance and admin routes (local node)",
+       scenario="S1 Unauthorized access",
+       refs=["VAJRA reply 05 Nov 2026 (evidence-only tier)", "Task1 non-goal: no absorbing VAJRA authority", "Principle: least privilege"],
+       systems=[VAJRA], evidence_level=OFFLINE)
+def v_03(ctx: Context):
+    trace = ctx.new_trace()
+    ev = vajra(ctx).post("/api/vajra/evidence/record", headers=vajra_auth(ctx, "cyber"), json={
+        "trace_id": trace, "source": "CYBERSECURITY_AUTHENTICATION", "threat_type": "ACCESS_DECISION",
+        "severity": "UNASSESSED", "action_taken": "DENY", "actor": new_subject("evidence-only"), "details": "synthetic",
+        "evidence_hex": hashlib.sha256(trace.encode()).hexdigest(), "metadata": {}})
+    stored = ev.status_code == 200 and (ev.json() or {}).get("success") is True
+    ctx.expect("evidence/record with the evidence-only token is stored", "200, success=true",
+               f"{ev.status_code}: {reply_text(ev)}", ok=stored)
+    if not stored:
+        ctx.defect("VAJ-10")
+    subject = new_subject("cyber-token-governance")
+    ctx.expect("authority/transition with the evidence-only token is refused", 403,
+               transition(ctx, subject, "GRANT", "EVIDENCE_ONLY_TOKEN_ATTEMPT (synthetic)", bearer="cyber").status_code)
+    mint = vajra(ctx).post("/api/admin/add-tokens", headers=vajra_auth(ctx, "cyber"),
+                           json={"address": "cyber-p0-test-addr", "token": "BHX", "amount": 1})
+    ctx.expect("admin/add-tokens with the evidence-only token is refused", 403, mint.status_code)
+
+    reached = []
+    g = vajra(ctx).post("/api/v1/permission/grant", headers=vajra_auth(ctx, "cyber"), json={
+        "trace_id": ctx.new_trace(), "subject": subject, "requester": "cyber-p0-test-requester",
+        "purpose": "evidence-only token grant attempt (synthetic)", "scope": "read", "ttl_seconds": 60})
+    target = vajra(ctx).post("/api/v1/permission/grant", headers=vajra_auth(ctx), json={
+        "trace_id": ctx.new_trace(), "subject": new_subject("governance-grant"), "requester": "cyber-p0-test-requester",
+        "purpose": "grant made with the governance token (synthetic)", "scope": "read", "ttl_seconds": 60})
+    rv = vajra(ctx).post("/api/v1/permission/revoke", headers=vajra_auth(ctx, "cyber"), json={
+        "permission_id": (target.json() or {}).get("permission_id"), "trace_id": ctx.new_trace(),
+        "reason": "evidence-only token revoke attempt (synthetic)"})
+    # A malformed body: if the auth layer lets the token through, the handler answers; no transaction is created.
+    tx = vajra(ctx).post("/api/admin/submit-transaction", headers={**vajra_auth(ctx, "cyber"), "Content-Type": "application/json"},
+                         content=b"not-json")
+    for label, resp in (("permission/grant", g), ("permission/revoke", rv), ("admin/submit-transaction", tx)):
+        refused = resp.status_code in (401, 403)
+        ctx.expect(f"{label} with the evidence-only token is refused", "401 or 403",
+                   resp.status_code if refused else f"{resp.status_code}, handler ran: {reply_text(resp)}", ok=refused)
+        if not refused:
+            reached.append(label)
+    if reached:
+        ctx.defect("VAJ-11")
+    fr = vajra(ctx).post("/api/cybercrime/freeze", headers=vajra_auth(ctx, "cyber"),
+                         json={"wallet_address": "cyber-p0-test-wallet-cyber-token", "admin_address": "cyber-p0-test-admin"})
+    uf = vajra(ctx).post("/api/cybercrime/unfreeze", headers=vajra_auth(ctx, "cyber"),
+                         json={"wallet_address": "cyber-p0-test-wallet-cyber-token", "admin_address": "cyber-p0-test-admin"})
+    ctx.note(f"cybercrime freeze/unfreeze with the evidence-only token: HTTP {fr.status_code}/{uf.status_code} "
+             "(VAJRA's reply says this tier may freeze/unfreeze; Cybersecurity never calls these routes)")
+
+
+@check(id="V-04", title="VAJRA permission ids stay unique for subjects that share a prefix (same requester, scope and second; local node)",
+       scenario="S2 Revoked permission", refs=["EOD scenario: Revoked permission", "VAJ-07 re-check 05 Nov 2026"],
+       systems=[VAJRA], evidence_level=OFFLINE)
+def v_04(ctx: Context):
+    def grant(subject):
+        r = vajra(ctx).post("/api/v1/permission/grant", headers=vajra_auth(ctx), json={
+            "trace_id": ctx.new_trace(), "subject": subject, "requester": "app-alpha",
+            "purpose": "P0 verification (synthetic)", "scope": "read", "ttl_seconds": 600})
+        return r.json() if r.status_code in (200, 201) else {}
+
+    pair = None
+    for _ in range(8):  # both grants must land in the same second (VAJRA's id uses a seconds timestamp)
+        frac = time.time() % 1
+        if frac > 0.5:
+            time.sleep(1.05 - frac)
+        a, b = new_subject("collide-a"), new_subject("collide-b")  # same first 12 characters
+        ga, gb = grant(a), grant(b)
+        if ga.get("record", {}).get("created_at") and ga["record"]["created_at"] == gb.get("record", {}).get("created_at"):
+            pair = (a, b, ga.get("permission_id"), gb.get("permission_id"))
+            break
+    ctx.require("two grants landed in the same second", True, pair is not None, ok=pair is not None)
+    a, b, id_a, id_b = pair
+    ctx.expect("the two grants get different permission ids", "different", f"{id_a} / {id_b}", ok=id_a != id_b)
+
+    def allowed(subject):
+        c = vajra(ctx).post("/api/v1/permission/check", headers=vajra_auth(ctx), json={
+            "trace_id": ctx.new_trace(), "subject": subject, "requester": "app-alpha", "scope": "read"})
+        return (c.json() or {}).get("allowed")
+
+    vajra(ctx).post("/api/v1/permission/revoke", headers=vajra_auth(ctx), json={
+        "permission_id": id_a, "trace_id": ctx.new_trace(), "reason": "revoke subject A only (synthetic)"})
+    after_a, after_b = allowed(a), allowed(b)
+    ctx.expect("revoking subject A's permission id denies subject A", False, after_a)
+    ctx.expect("revoking subject A's permission id leaves subject B allowed", True, after_b)
+    if id_a == id_b or after_a is not False or after_b is not True:
+        ctx.defect("VAJ-07")
+
+
+@check(id="V-05", title="VAJRA verify reports the granted scope and authority; a later transition does not change the granted scope (local node)",
+       scenario="S1 Unauthorized access", refs=["VAJRA reply 05 Nov 2026 (scope in verify)", "CYB-13", "Principle: least privilege"],
+       systems=[CYBER, VAJRA], evidence_level=SIM_USER)
+def v_05(ctx: Context):
+    subject = new_subject("scope-visible")
+    grant_use(ctx, subject)
+    view = verify_view(ctx, subject)
+    posted = vajra(ctx).post("/api/vajra/authority/verify", json={"subject": subject})
+    ctx.expect("verify (GET) reports the granted scope", list(DEFAULT_SCOPE), view.get("scope"))
+    ctx.expect("verify (GET) reports the issuing authority", "AUTH_ROLE_CLIENT", view.get("authority"))
+    ctx.expect("verify (POST) reports the same scope", view.get("scope"), (posted.json() or {}).get("scope"))
+
+    cleared, widened = new_subject("scope-cleared"), new_subject("scope-widened")
+    for subj, use_scope in ((cleared, ()), (widened, DEFAULT_SCOPE + ("delete:evidence",))):
+        ctx.require(f"GRANT {list(DEFAULT_SCOPE)} accepted", 200, transition(ctx, subj, "GRANT", SIM_ISSUER_USER).status_code)
+        ctx.require(f"USE with scope {list(use_scope)} accepted", 200,
+                    transition(ctx, subj, "USE", SIM_ISSUER_USER, scope=use_scope).status_code)
+    got_cleared, got_widened = verify_view(ctx, cleared).get("scope"), verify_view(ctx, widened).get("scope")
+    ctx.expect("a USE sent without scope keeps the scope granted at GRANT", list(DEFAULT_SCOPE), got_cleared)
+    ctx.expect("a USE sent with a wider scope does not widen the grant", list(DEFAULT_SCOPE), got_widened)
+    if got_cleared != list(DEFAULT_SCOPE) or got_widened != list(DEFAULT_SCOPE):
+        ctx.defect("VAJ-12")
+    token = token_of(ctx, "investigator_a")
+    after_clear = protected(ctx, token, cleared)[0].json()
+    after_widen = protected(ctx, token, widened, action="delete")[0].json()
+    ctx.note(f"Cybersecurity follows the scope VAJRA reports: read:evidence for the cleared subject -> "
+             f"{after_clear.get('decision')} ({after_clear.get('reason_code')}); delete:evidence for the widened subject -> "
+             f"{after_widen.get('decision')} ({after_widen.get('reason_code')})")
 
 
 # ------------------------------------------------------------------------------------------- Proof A
@@ -394,7 +570,8 @@ def proof_a(ctx: Context):
     body = r.json()
     ctx.expect("decision", "ALLOW", body.get("decision"))
     ctx.expect("VAJRA state seen by Cybersecurity", "USE", body.get("vajra", {}).get("current_state"))
-    ctx.expect("response states that scope was not checked", False, body.get("vajra", {}).get("scope_checked"))
+    ctx.expect("the action was checked against the scope VAJRA reports (read:evidence)", True,
+               body.get("vajra", {}).get("scope_checked"))
     ctx.expect("local audit event recorded", True, bool(body.get("evidence", {}).get("local_audit_event_id")))
     ctx.expect("VAJRA evidence recorded", "RECORDED", body.get("evidence", {}).get("vajra", {}).get("status"))
     tantra = body.get("evidence", {}).get("tantra", {})
@@ -827,6 +1004,32 @@ def s6_03(ctx: Context):
         restart_cyber(ctx)
 
 
+@check(id="S6-05", title="Least-privilege set-up: with only VAJRA's evidence-only token, Cybersecurity records evidence and allows in-scope access",
+       scenario="S6 Evidence failure",
+       refs=["VAJRA reply 05 Nov 2026 (evidence-only tier)", "Principle: least privilege", "Task1 non-goal: no absorbing VAJRA authority"],
+       systems=[CYBER, VAJRA], evidence_level=SIM_USER)
+def s6_05(ctx: Context):
+    restart_cyber(ctx, {"VAJRA_CYBER_SECRET": ctx.data["vajra_cyber_secret"], "VAJRA_TANTRA_SECRET": ""})
+    try:
+        health = admin_health(ctx).get("bhiv_runtime", {}).get("vajra", {})
+        ctx.expect("health: evidence writes use the evidence-only token", "cyber_evidence_only", health.get("write_credential"))
+        ctx.expect("health: no governance-token warning", [], health.get("warnings"))
+        subject = new_subject("least-privilege")
+        grant_use(ctx, subject)
+        body = protected(ctx, token_of(ctx, "investigator_a"), subject)[0].json()
+        vajra_ev = body.get("evidence", {}).get("vajra", {})
+        recorded = vajra_ev.get("status") == "RECORDED"
+        ctx.expect("VAJRA records the evidence sent with the evidence-only token", "RECORDED",
+                   f"{vajra_ev.get('status')} (HTTP {vajra_ev.get('http_status')}; {vajra_ev.get('detail')})", ok=recorded)
+        ctx.expect("in-scope access is allowed", "ALLOW", body.get("decision"))
+        ctx.expect("no access without evidence: if VAJRA refuses the write, the decision is DENY", True,
+                   recorded or (body.get("decision") == "DENY" and body.get("reason_code") == "VAJRA_EVIDENCE_NOT_RECORDED"))
+        if not recorded:
+            ctx.defect("VAJ-10")
+    finally:
+        restart_cyber(ctx)
+
+
 @check(id="S6-04", title="Evidence upload without Bucket does not claim anchoring", scenario="S6 Evidence failure",
        refs=["EOD scenario: Evidence failure"], systems=[CYBER], evidence_level=OFFLINE)
 def s6_04(ctx: Context):
@@ -994,12 +1197,14 @@ def s7_03(ctx: Context):
 def s7_04(ctx: Context):
     pkg = vajra(ctx).get("/api/vajra/recovery/package")
     ctx.require("recovery package served", 200, pkg.status_code)
-    p = pkg.json().get("package") or pkg.json()
+    p = pkg.json().get("recovery_package") or pkg.json().get("package") or pkg.json()
     ctx.note(f"recovery package keys: {sorted(p.keys())[:12]}")
+    checkpoints = p.get("signed_checkpoints") or p.get("checkpoints")
+    latest = checkpoints[-1] if isinstance(checkpoints, list) and checkpoints else p.get("latest_checkpoint", {})
     candidate = {
         "node_id": "cyber-p0-test-candidate", "genesis_id": p.get("genesis_id"), "config_hash": p.get("config_hash"),
-        "latest_checkpoint": (p.get("checkpoints") or [{}])[-1] if isinstance(p.get("checkpoints"), list) else p.get("latest_checkpoint", {}),
-        "current_state_root": p.get("state_root") or p.get("current_state_root"),
+        "latest_checkpoint": latest,
+        "current_state_root": latest.get("state_root") or p.get("state_commitment_root") or p.get("current_state_root"),
         "akashic_lineage_hash": p.get("akashic_lineage_hash") or "unknown", "chain_intact": True,
         "validator_count": p.get("validator_count") or 0,
     }
@@ -1008,8 +1213,59 @@ def s7_04(ctx: Context):
     ctx.expect("corrupt candidate not qualified", False, verdict)
     ok = vajra(ctx).post("/api/vajra/recovery/verify-anchor", json=candidate)
     ctx.note(f"informational only: a candidate copied from the node's own package -> qualified="
-             f"{((ok.json() or {}).get('verification') or {}).get('qualified')}; VAJRA counts placeholder signature strings, "
-             "so this is not cryptographic proof (VAJ-05)")
+             f"{((ok.json() or {}).get('verification') or {}).get('qualified')}; VAJRA counts signature strings and does "
+             "not verify them, so this is not cryptographic proof (VAJ-05; see V-06)")
+
+
+@check(id="V-06", title="VAJRA recovery anchor check rejects a candidate whose validator signatures are made up (local node)",
+       scenario="S7 Recovery failure", refs=["10-day 20.D", "10-day Prakash recovery verification path", "VAJ-05 re-check 05 Nov 2026"],
+       systems=[VAJRA], evidence_level=OFFLINE + "; inputs synthetic")
+def v_06(ctx: Context):
+    pkg = vajra(ctx).get("/api/vajra/recovery/package")
+    ctx.require("recovery package served", 200, pkg.status_code)
+    p = (pkg.json() or {}).get("recovery_package") or {}
+    checkpoints = p.get("signed_checkpoints") or [{}]
+    ctx.note(f"signatures in the node's recovery package: {checkpoints[-1].get('signatures')}")
+    forged = {
+        "node_id": "cyber-p0-test-forged-node", "genesis_id": p.get("genesis_id"),  # public: served by /recovery/package
+        "config_hash": "forged",
+        "latest_checkpoint": {"block_height": 1, "block_hash": "forged", "state_root": "forged-root",
+                              "signatures": ["forged-1", "forged-2", "forged-3", "forged-4"], "timestamp": int(time.time())},
+        "current_state_root": "forged-root", "akashic_lineage_hash": "forged", "chain_intact": True,
+        "revoked_entities": {}, "validator_count": 5,
+    }
+    verdict = ((vajra(ctx).post("/api/vajra/recovery/verify-anchor", json=forged).json() or {}).get("verification") or {})
+    ctx.expect("a candidate with four made-up signatures is not qualified as recovery anchor", False, verdict.get("qualified"))
+    ctx.note(f"verdict for the forged candidate: {json.dumps(verdict, separators=(',', ':'))[:300]}")
+    if verdict.get("qualified") is not False:
+        ctx.defect("VAJ-05")
+
+
+@check(id="V-07", title="One anonymous report cannot freeze a wallet, and a negative severity cannot hide reports (local node)",
+       scenario="S1 Unauthorized access", refs=["EOD scenario: Unauthorized access", "VAJ-06 follow-up 05 Nov 2026"],
+       systems=[VAJRA], evidence_level=OFFLINE + "; synthetic wallets")
+def v_07(ctx: Context):
+    def report(wallet, severity, reporter="anonymous (synthetic)"):
+        return vajra(ctx).post("/api/cybercrime/report", json={"wallet_address": wallet, "reporter_id": reporter,
+                                                                "reason": "synthetic test", "severity": severity, "tx_hash": ""})
+
+    def status(wallet):
+        return vajra(ctx).get(f"/api/cybercrime/status/{wallet}").json() or {}
+
+    w1 = "cyber-p0-test-wallet-" + uuid.uuid4().hex[:8]
+    r1 = report(w1, 15)
+    s1 = status(w1)
+    ctx.expect("one report without a token, severity 15, does not freeze the wallet", "wallet not frozen",
+               f"report HTTP {r1.status_code}; wallet {s1.get('status')} (by {s1.get('frozen_by')})", ok=s1.get("status") != "frozen")
+    w2 = "cyber-p0-test-wallet-" + uuid.uuid4().hex[:8]
+    report(w2, -1000)
+    for _ in range(2):
+        report(w2, 10, reporter="reporter (synthetic)")
+    s2 = status(w2)
+    ctx.expect("a report with severity -1000 cannot cancel two later reports of 10 (freeze threshold 15)", "wallet frozen",
+               f"wallet {s2.get('status')}, total severity {s2.get('total_severity_score')}", ok=s2.get("status") == "frozen")
+    if s1.get("status") == "frozen" or s2.get("status") != "frozen":
+        ctx.defect("VAJ-14")
 
 
 @check(id="S7-05", title="VAJRA authority state survives a node restart", scenario="S7 Recovery failure",
@@ -1019,8 +1275,13 @@ def s7_05(ctx: Context):
     subject = new_subject("persistence")
     grant_use(ctx, subject)
     ctx.data["services"]["vajra"].restart()
-    state = vajra(ctx).get("/api/vajra/authority/verify", params={"subject": subject}).json().get("current_state")
+    view = verify_view(ctx, subject)
+    state = view.get("current_state")
     ctx.expect("authority state after restart (subject was USE)", "USE", state)
+    ctx.expect("granted scope after restart", list(DEFAULT_SCOPE), view.get("scope"),
+               ok=view.get("scope") == list(DEFAULT_SCOPE) or "scope" not in view)
+    if "scope" not in view:
+        ctx.note("this VAJRA build's verify reports no scope (older than 3cc883f)")
     if state != "USE":
         ctx.defect("VAJ-02")
 
@@ -1123,6 +1384,104 @@ def s8_03(ctx: Context):
         store.write_bytes(original)
         node.start()
         ctx.expect("restored store reported intact", True, (vajra(ctx).get("/api/tantra/chain-integrity").json() or {}).get("intact"))
+
+
+@check(id="V-08", title="VAJRA authority ledger: an edited, unsaved or unreadable record is not trusted after a restart (local node)",
+       scenario="S7 Recovery failure",
+       refs=["VAJ-02 re-check 05 Nov 2026", "10-day Samsoorya: prove restart and state recovery", "Principle: provenance / tamper evidence"],
+       systems=[VAJRA], evidence_level=OFFLINE + "; induced faults on the local node (ledger line edited, file read-only, corrupt line)")
+def v_08(ctx: Context):
+    node = ctx.data["services"]["vajra"]
+    ledger: Path = node.authority_ledger
+    sentinel = new_subject("ledger-sentinel")
+    grant_use(ctx, sentinel)
+    if not ledger.exists():
+        raise Skipped("this VAJRA build keeps no authority ledger file (authority state is held in memory only)")
+    original = ledger.read_bytes()
+    problems = 0
+
+    def start_or_refused() -> bool:
+        """Start the node; False when it refuses to start (an acceptable, fail-closed answer to a damaged ledger)."""
+        try:
+            node.start()
+            return True
+        except TimeoutError:
+            node.stop()
+            return False
+
+    try:
+        # 1. A REVOKE record edited to USE on disk.
+        edited = new_subject("ledger-edited")
+        grant_use(ctx, edited)
+        ctx.require("REVOKE accepted", 200, transition(ctx, edited, "REVOKE", SIM_ISSUER_USER).status_code)
+        node.stop()
+        lines = ledger.read_text(encoding="utf-8").splitlines()
+        for i in range(len(lines) - 1, -1, -1):
+            rec = json.loads(lines[i])
+            if rec.get("subject") == edited and (rec.get("state_transition") or {}).get("to") == "REVOKE":
+                rec["state_transition"]["to"] = "USE"
+                lines[i] = json.dumps(rec, separators=(",", ":"))
+                break
+        ledger.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        if start_or_refused():
+            v = verify_view(ctx, edited)
+            ok = v.get("is_authorized") is False
+            ctx.expect("a REVOKE record edited to USE on disk is not trusted after restart",
+                       "still REVOKE, or the node refuses the edited ledger",
+                       f"after restart: {v.get('current_state')}, is_authorized={v.get('is_authorized')}", ok=ok)
+        else:
+            ok = True
+            ctx.expect("a REVOKE record edited to USE on disk is not trusted after restart",
+                       "still REVOKE, or the node refuses the edited ledger", "node refused to start", ok=True)
+            ledger.write_bytes(original)
+            node.start()
+        problems += not ok
+
+        # 2. A REVOKE that cannot be saved (ledger file read-only).
+        unsaved = new_subject("ledger-unsaved")
+        grant_use(ctx, unsaved)
+        os.chmod(ledger, stat.S_IREAD)
+        try:
+            code = transition(ctx, unsaved, "REVOKE", SIM_ISSUER_USER).status_code
+        finally:
+            os.chmod(ledger, stat.S_IREAD | stat.S_IWRITE)
+        node.restart()
+        v = verify_view(ctx, unsaved)
+        ok = not (code == 200 and v.get("is_authorized") is True)
+        ctx.expect("a REVOKE that could not be saved is not answered as done", "an error reply, or REVOKE after restart",
+                   f"REVOKE reply HTTP {code}; after restart: {v.get('current_state')}, is_authorized={v.get('is_authorized')}", ok=ok)
+        problems += not ok
+
+        # 3. One unreadable line at the end of the ledger.
+        node.stop()
+        with open(ledger, "a", encoding="utf-8") as fh:
+            fh.write("{corrupt line (synthetic)\n")
+        if start_or_refused():
+            earlier = verify_view(ctx, sentinel).get("current_state")
+            later = new_subject("ledger-after-corrupt")
+            ctx.require("GRANT accepted after the corrupt line", 200, transition(ctx, later, "GRANT", SIM_ISSUER_USER).status_code)
+            node.restart()
+            kept = verify_view(ctx, later).get("current_state")
+            ok = earlier == "USE" and kept == "GRANT"
+            ctx.expect("one unreadable line neither wipes the stored state nor stops saving",
+                       "earlier subject USE and the new GRANT kept, or the node refuses to start",
+                       f"earlier subject '{earlier}'; new subject after another restart '{kept}'", ok=ok)
+        else:
+            ok = True
+            ctx.expect("one unreadable line neither wipes the stored state nor stops saving",
+                       "earlier subject USE and the new GRANT kept, or the node refuses to start", "node refused to start", ok=True)
+        problems += not ok
+        warnings = [line for line in node.log_path.read_text(encoding="utf-8", errors="replace").splitlines()
+                    if "Failed to load authority ledger" in line]
+        ctx.note(f"node log lines 'Failed to load authority ledger': {len(warnings)}")
+    finally:
+        node.stop()
+        os.chmod(ledger, stat.S_IREAD | stat.S_IWRITE)
+        ledger.write_bytes(original)  # the ledger exactly as before this check
+        node.start()
+    ctx.expect("restored ledger: the sentinel subject is back to USE", "USE", verify_view(ctx, sentinel).get("current_state"))
+    if problems:
+        ctx.defect("VAJ-13")
 
 
 # ------------------------------------------------------------------------------------------- closing observability

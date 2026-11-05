@@ -10,11 +10,13 @@ Reads   evidence_packet/test_results/results.json      (integrated verification 
         evidence_packet/api_samples/outside_run/*       (live calls made by hand on the run day, outside the harness)
         evidence_packet/runtime_logs/cyber_service.log  (service-side TANTRA outcomes)
         verification/defects.py                         (static defect facts)
-Writes  evidence_packet/test_results/{TEST_REPORT,DEFECTS,PROOF_MATRIX,LIVE_TANTRA_CALLS}.md
-        evidence_packet/review_packet.md, review_packets/CYBER-P0-2026-11-04/{REVIEW_PACKET,EOD_REPORT}.md
+Writes  evidence_packet/test_results/{TEST_REPORT,DEFECTS,VAJRA_RECHECK,PROOF_MATRIX,LIVE_TANTRA_CALLS}.md
+        evidence_packet/review_packet.md; with --packet-dir: <dir>/{REVIEW_PACKET,VAJRA_RECHECK}.md (+ EOD_REPORT.md with --eod)
         evidence_packet/replay_evidence/GOLDEN_TRACE.md, evidence_packet/architecture_and_integration_maps/CROSS_PILLAR_MAP.md
         evidence_packet/code_packet/*, evidence_packet/MANIFEST.sha256
-Usage   python verification/build_reports.py [--evidence evidence_packet] [--branch <name>]
+Usage   python verification/build_reports.py [--evidence evidence_packet] [--branch <name>] [--packet-dir review_packets/<name>]
+        The 04 Nov delivery was built with --packet-dir review_packets/CYBER-P0-2026-11-04 --eod --commit 04634cc...; that
+        folder is not rewritten by later builds unless it is named again.
 """
 
 from __future__ import annotations
@@ -38,7 +40,6 @@ BASE_COMMIT = "59d2d63"  # last commit on main before this change (2026-10-27)
 # kept under evidence_packet/previous_runs/<id>/ and carried over, labelled with its run id.
 PREVIOUS_LIVE_RUN = "20261104T103939Z"
 EVIDENCE_DIR = REPO / "evidence_packet"  # set from --evidence in main(); defect statuses read recorded files under it
-PACKET_DIR = REPO / "review_packets" / "CYBER-P0-2026-11-04"
 CORE_FILES = [
     ("cybercrime/backend/app/api/v1/endpoints/protected_access.py", "Entry point and core flow of the protected-access decision"),
     ("cybercrime/backend/app/core/bhiv_runtime.py", "The VAJRA and TANTRA contracts as called by Cybersecurity"),
@@ -77,10 +78,24 @@ def parse_raw_suites(evidence: Path) -> list[dict]:
     f = tr / "vajra_go_tests.txt"
     if f.exists():
         text = f.read_text(encoding="utf-8", errors="replace")
-        suites.append({"suite": "VAJRA's own Go tests (authority, permission, api packages)",
+        at = re.search(r"Go tests at (\w+)", text.splitlines()[0] if text else "")
+        suites.append({"suite": "VAJRA's own Go tests (authority, permission, api packages)"
+                                + (f", VAJRA commit {at.group(1)}" if at else ""),
                        "command": "cd core/relay-chain && go test -count=1 -v ./authority/... ./permission/... ; "
                                   "go test -count=1 -v -run \"TestVajra|TestPermissionHandlers\" ./api/...",
-                       "result": f"{text.count('--- PASS')} passed, {text.count('--- FAIL')} failed", "raw": "vajra_go_tests.txt"})
+                       "result": f"{len(re.findall(r'(?m)^--- PASS', text))} passed, {len(re.findall(r'(?m)^--- FAIL', text))} failed",
+                       "raw": "vajra_go_tests.txt"})
+    f = tr / "vajra_go_tests_full.txt"
+    if f.exists():
+        text = f.read_text(encoding="utf-8", errors="replace")
+        at = re.search(r"tests at (\w+)", text.splitlines()[0] if text else "")
+        ok = re.findall(r"(?m)^ok\s", text)
+        failed = re.findall(r"(?m)^FAIL\s", text)
+        no_tests = re.findall(r"(?m)^ok\s.*\[no tests to run\]", text)
+        suites.append({"suite": "VAJRA's whole Go module (core/relay-chain)" + (f", VAJRA commit {at.group(1)}" if at else ""),
+                       "command": "cd core/relay-chain && go test -count=1 ./...",
+                       "result": f"{len(ok)} packages ok ({len(no_tests)} of them with no tests to run), {len(failed)} failed",
+                       "raw": "vajra_go_tests_full.txt"})
     f = tr / "determinism_50_runs.json"
     if f.exists():
         d = json.loads(f.read_text(encoding="utf-8"))
@@ -124,6 +139,32 @@ def defect_status(defect: dict, by_id: dict) -> str:
         if r["status"] == "PASS":
             return f"FIXED in this change; {chk} passes in this run"
         return f"FIX NOT CONFIRMED: {chk} {r['status']} in this run"
+    if defect.get("status") == "PARTLY FIXED":  # our own change; what is still open is in 'remaining'
+        chk = defect.get("check")
+        r = by_id.get(chk) if chk else None
+        part = f"{chk} {r['status']} in this run" if r else (f"{chk} not run" if chk else "no runtime check")
+        return f"PARTLY FIXED in this change ({part}); still open: see details"
+    owner = defect.get("owner_fix")  # a fix the peer owner reported, judged against this run
+    if owner:
+        where = f"VAJRA {owner['commit']}"
+        chk = defect.get("check")
+        r = by_id.get(chk) if chk else None
+        if owner["state"] == "FIXED":
+            if chk:
+                if r is None:
+                    return f"FIXED by the owner in {where} ({chk} not run)"
+                if r["status"] == "PASS":
+                    return f"FIXED by the owner in {where}; {chk} passes in this run"
+                return f"OWNER FIX NOT CONFIRMED ({where}): {chk} {r['status']} in this run"
+            return f"FIXED by the owner in {where} (CODE-VERIFIED)"
+        runtime = _runtime_status(defect, by_id)
+        if owner["state"] == "PARTLY FIXED":
+            return f"PARTLY FIXED by the owner in {where}; {runtime}"
+        return f"NOT FIXED in {where} (reported fixed by the owner); {runtime}"
+    return _runtime_status(defect, by_id)
+
+
+def _runtime_status(defect: dict, by_id: dict) -> str:
     failing = sorted(r["id"] for r in by_id.values() if r["status"] == "FAIL" and defect["id"] in r["defects"])
     if failing:
         return f"CONFIRMED at runtime by {', '.join(failing)}"
@@ -387,8 +428,17 @@ def defects_report(by_id, samples) -> str:
         lines.append("")
         for d in rows:
             lines += [f"### {d['id']} - {d['title']}", "",
-                      f"- Severity: {d['severity']}; owner: {d['owner']}; status: {defect_status(d, by_id)}",
-                      f"- Where: `{d['where']}`", "- Steps:"]
+                      f"- Severity: {d['severity']}; owner: {d['owner']}; status: {defect_status(d, by_id)}"]
+            owner = d.get("owner_fix") or {}
+            if d.get("remaining"):
+                lines.append(f"- Still open: {d['remaining']}")
+            if owner.get("remaining"):
+                lines.append(f"- Still open after VAJRA {owner['commit']}: {owner['remaining']}")
+            if owner.get("verified_by"):
+                lines.append(f"- Owner fix verified by: {owner['verified_by']}")
+            if owner.get("note"):
+                lines.append(f"- Note: {owner['note']}")
+            lines += [f"- Where: `{d['where']}`", "- Steps:"]
             lines += [f"  {i}. {s}" for i, s in enumerate(d["steps"], 1)]
             lines.append(f"- Expected: {d['expected']}")
             act = actual_for(d, by_id)
@@ -400,15 +450,15 @@ def defects_report(by_id, samples) -> str:
                 lines += [f"  - {x}" for x in replies]
             if d.get("fixed_by"):
                 lines.append(f"- Fixed by: {d['fixed_by']}")
-            lines += [f"- {'Fix' if d.get('status') == 'FIXED' else 'Suggested fix'}: {d['fix']}", ""]
+            lines += [f"- {'Fix' if d.get('status') in ('FIXED', 'PARTLY FIXED') else 'Suggested fix'}: {d['fix']}", ""]
     return "\n".join(lines)
 
 
 ROWS = [
     ("EOD 04 Nov - mandatory scenario", "Unauthorized access: denied at the enforcement point; actor, resource, decision, reason evidenced",
-     ["S1-01", "S1-02", "S1-03", "S1-04", "S1-05", "S1-06", "S1-07", "V-01"]),
+     ["S1-01", "S1-02", "S1-03", "S1-04", "S1-05", "S1-06", "S1-07", "S1-08", "V-01", "V-03", "V-07"]),
     ("EOD 04 Nov - mandatory scenario", "Revoked permission: next request denied; stale grants do not persist",
-     ["S2-01", "S2-02", "S2-03", "S2-04", "S4-05", "V-02"]),
+     ["S2-01", "S2-02", "S2-03", "S2-04", "S4-05", "V-02", "V-04"]),
     ("EOD 04 Nov - mandatory scenario", "Ambiguous / low confidence: uncertainty visible; no autonomous high-impact action",
      ["S3-01", "S3-02", "S3-03"]),
     ("EOD 04 Nov - mandatory scenario", "Duplicate event: no duplicate incident or repeated privileged action",
@@ -416,9 +466,9 @@ ROWS = [
     ("EOD 04 Nov - mandatory scenario", "TANTRA denial / outage: fails safely, no bypass, failure observable",
      ["S5-01", "S5-02", "S5-03", "S5-04", "S5-05"]),
     ("EOD 04 Nov - mandatory scenario", "Evidence failure: missing evidence visible, no false completion",
-     ["S6-01", "S6-02", "S6-03", "S6-04"]),
+     ["S6-01", "S6-02", "S6-03", "S6-04", "S6-05"]),
     ("EOD 04 Nov - mandatory scenario", "Recovery failure: stays restricted until required checks pass",
-     ["S7-01", "S7-02", "S7-03", "S7-04", "S7-05"]),
+     ["S7-01", "S7-02", "S7-03", "S7-04", "S7-05", "V-06", "V-08"]),
     ("EOD 04 Nov - mandatory scenario", "Trace / replay: source, decision, enforcement and evidence linked; replay where supported",
      ["S8-01", "S8-02", "S8-03"]),
     ("10-day - mandatory proof", "A NORMAL: user -> identity -> consent -> authorised access -> evidence", ["P-A"]),
@@ -436,10 +486,10 @@ ROWS = [
     ("Task 1 section M - live path", "TANTRA runtime participation", ["O-02", "S5-01", "S5-04", "S8-02"],
      {"needs_live": True, "cap": "TANTRA's contract gate refuses the module's security decisions (TAN-01); only TANTRA's own "
                                  "integrity_probe contract was written"}),
-    ("Task 1 section M - Vajra boundary", "Vajra consent state -> Cybersecurity enforcement -> permitted operation -> evidence "
-     "(scope and caller binding are NOT checked: CYB-13)", ["S2-01", "P-A", "S1-05", "S5-03", "S1-06"],
-     {"needs_live": True, "cap": "VAJRA ran as a local node with consent SIMULATED, and scope and caller binding are not "
-                                 "checked (CYB-13)"}),
+    ("Task 1 section M - Vajra boundary", "Vajra consent state and scope -> Cybersecurity enforcement -> permitted operation "
+     "-> evidence (caller binding NOT checked: CYB-13)", ["S2-01", "P-A", "S1-05", "S1-08", "S5-03", "S1-06"],
+     {"needs_live": True, "cap": "VAJRA ran as a local node with consent SIMULATED; the caller is not bound to the subject "
+                                 "(CYB-13); the evidence-only VAJRA token is refused by VAJRA (VAJ-10)"}),
 ]
 
 
@@ -607,9 +657,9 @@ def review_packet(meta, results, by_id, samples, branch) -> str:
         "   --> response: decision, reason, decision_id, trace_id, evidence {local, vajra, tantra, complete, gaps}",
         "```",
         "",
-        "What ALLOW means: the caller passed RBAC, VAJRA reports GRANT or USE for the subject, and VAJRA recorded the "
-        "evidence. The requested action and resource are not checked against a VAJRA scope (`vajra.scope_checked: false`, "
-        "CYB-13).",
+        "What ALLOW means: the caller passed RBAC, VAJRA reports GRANT or USE for the subject, the scope VAJRA reports "
+        "contains `<action>:<resource type>` (for example `read:evidence`; `vajra.scope_checked: true`), and VAJRA recorded "
+        "the evidence. Not checked: the resource id, the purpose, and whether the caller may act for the subject (CYB-13).",
         "",
         f"Golden trace for review: `{golden}` (check S8-01). The id appears in the HTTP response and the audit store, and it "
         "prefixes the VAJRA TruthStore row id (`<trace>::<decision_id>`); see `replay_evidence/GOLDEN_TRACE.md`.",
@@ -986,18 +1036,97 @@ def golden_trace(by_id, samples, evidence: Path) -> str:
 VAJRA_CAPABILITIES = [
     # (capability, VAJRA interface, auth, checks)
     ("Authority read (consent state)", "GET /api/vajra/authority/verify", "none", ["S1-05", "S2-01", "P-A"]),
-    ("Authority lifecycle GRANT -> USE -> REVOKE", "POST /api/vajra/authority/transition", "Bearer VAJRA_TANTRA_SECRET", ["S2-01", "S4-05"]),
-    ("Containment ISOLATE / TERMINATE and staged recovery", "POST /api/vajra/authority/transition", "Bearer", ["P-C3", "S7-02"]),
+    ("Granted scope and authority in verify, kept by later transitions", "GET/POST /api/vajra/authority/verify", "none",
+     ["S1-08", "V-05"]),
+    ("Authority lifecycle GRANT -> USE -> REVOKE", "POST /api/vajra/authority/transition", "Bearer VAJRA_TANTRA_SECRET (governance)",
+     ["S2-01", "S4-05"]),
+    ("Containment ISOLATE / TERMINATE and staged recovery", "POST /api/vajra/authority/transition", "Bearer (governance)", ["P-C3", "S7-02"]),
     ("Write routes refuse callers without the token", "authority/transition, evidence/record", "Bearer (fail closed)", ["S1-06"]),
+    ("Evidence-only token: evidence accepted; governance, consent and admin routes refused",
+     "evidence/record; authority/transition; permission/*; admin/*", "Bearer VAJRA_CYBER_SECRET", ["V-03", "S6-05"]),
     ("Evidence record, one row per trace", "POST /api/vajra/evidence/record", "Bearer", ["S8-01", "S4-02"]),
     ("Evidence refused, so no ALLOW", "POST /api/vajra/evidence/record", "Bearer", ["S6-01"]),
     ("Tamper detection on stored evidence", "GET /api/tantra/chain-integrity", "none", ["S8-03"]),
     ("Authority state survives a node restart", "node restart", "-", ["S7-05"]),
-    ("Privileged routes (token mint, permission grant, wallet freeze) need auth",
-     "/api/admin/add-tokens, /api/v1/permission/grant, /api/cybercrime/freeze", "none today (VAJ-06)", ["V-01"]),
-    ("Permission ids are unique per grant", "POST /api/v1/permission/grant", "none today", ["V-02"]),
-    ("Recovery anchors with real validator signatures", "recovery handlers", "-", []),
+    ("Authority ledger: unsaved, edited or damaged records are not trusted", "authority_ledger.jsonl, node restart", "-", ["V-08"]),
+    ("Privileged routes (token mint and transfer, permission grant/revoke/check, wallet freeze/unfreeze) need a token",
+     "/api/admin/*, /api/v1/permission/*, /api/cybercrime/freeze|unfreeze", "Bearer", ["V-01"]),
+    ("No wallet freeze from an anonymous report", "POST /api/cybercrime/report (auto-freeze)", "none (VAJ-14)", ["V-07"]),
+    ("Permission ids are unique per grant", "POST /api/v1/permission/grant", "Bearer", ["V-02", "V-04"]),
+    ("Recovery anchors need real validator signatures", "POST /api/vajra/recovery/verify-anchor", "none", ["S7-04", "V-06"]),
 ]
+
+
+# VAJRA's own re-verification steps from its reply of 05 Nov 2026 (paraphrased), each with the check and the expectation
+# that tests it in this run. Steps 1-2 are set-up.
+VAJRA_RECHECK_STEPS = [
+    ("1", "Fetch branch vajra-tantra-runtime-increment and build it", None, None),
+    ("2", "Set VAJRA_TANTRA_SECRET, VAJRA_CYBER_SECRET and PORT=8080", None, None),
+    ("3", "Freeze without a token answers 401", "V-01", "POST /api/cybercrime/freeze without credentials is refused"),
+    ("4", "Evidence with the cyber token answers 200", "V-03", "evidence/record with the evidence-only token is stored"),
+    ("5", "A transition with the cyber token answers 403", "V-03", "authority/transition with the evidence-only token is refused"),
+    ("6", "Verify shows the scope", "V-05", "verify (GET) reports the granted scope"),
+    ("7", "Authority state survives a reboot", "S7-05", "authority state after restart (subject was USE)"),
+]
+VAJRA_CLAIMS = {  # what VAJRA's reply of 05 Nov 2026 said about each item (paraphrased)
+    "VAJ-01": "docs now give port 8080",
+    "VAJ-02": "authority state persisted in an append-only authority_ledger.jsonl",
+    "VAJ-03": "hash-only evidence storage documented",
+    "VAJ-04": "scripted steps labelled simulated; totals counted",
+    "VAJ-05": "deterministic Ed25519-format signature commitments",
+    "VAJ-06": "the routes now go through the auth middleware (401)",
+    "VAJ-07": "the hash part of the id is kept",
+    "VAJ-08": "script fixed",
+    "VAJ-09": "curl samples send the Bearer header",
+}
+
+
+def vajra_recheck(meta, by_id) -> str:
+    def expectation(check_id, what):
+        for e in (by_id.get(check_id) or {}).get("expectations", []):
+            if e.get("what") == what:
+                return e
+        return None
+
+    commit = meta["versions"]["vajra_repo_commit"]
+    lines = ["# VAJRA re-check (after VAJRA's fixes)", "",
+             f"Run `{meta['run_id']}` ({meta['started_utc']} to {meta['finished_utc']}) against a LOCAL node built from VAJRA "
+             f"commit `{commit}`. Nothing was written to VAJRA's live node. Every status below comes from this run's "
+             "`results.json` or from `verification/defects.py` (CODE-VERIFIED items).", "",
+             "## 1. VAJRA's re-verification steps", "",
+             "| Step | VAJRA's step (paraphrased) | Check | Result in this run |", "|---|---|---|---|"]
+    setup = {"1": f"set-up: node built from `{commit}`",
+             "2": "set-up: fresh random values for both secrets. The relay reads HTTP_PORT, not PORT "
+                  "(core/relay-chain/cmd/relay/main.go:230), so PORT=8080 has no effect; 8080 is only the default."}
+    for step, text, chk, what in VAJRA_RECHECK_STEPS:
+        if not chk:
+            lines.append(f"| {step} | {text} | - | {md_escape(setup[step])} |")
+            continue
+        e = expectation(chk, what)
+        if e is None:
+            result = f"NOT RUN ({chk} {status_of(by_id, chk)})"
+        else:
+            result = f"{'PASS' if e['ok'] else 'FAIL'}: expected {e['expected']}, got {str(e['actual'])[:160]}"
+        lines.append(f"| {step} | {text} | {chk} | {md_escape(result)} |")
+    lines += ["", "## 2. The items VAJRA reported fixed, and what this re-check found", "",
+              "| ID | Severity | VAJRA's reply (paraphrased) | Status after this run |", "|---|---|---|---|"]
+    for d in DEFECTS:
+        if d["system"] != "VAJRA":
+            continue
+        claim = VAJRA_CLAIMS.get(d["id"], "new: found in this re-check")
+        lines.append(f"| {d['id']} | {d['severity']} | {md_escape(claim)} | {md_escape(defect_status(d, by_id))} |")
+    lines += ["", "Details, steps and suggested fixes for every item: [DEFECTS.md](DEFECTS.md).", "",
+              "## 3. The two asks", "",
+              f"- Evidence-only token: V-03 {status_of(by_id, 'V-03')}, S6-05 {status_of(by_id, 'S6-05')}. "
+              "The token is refused where it is needed (evidence/record, VAJ-10) and accepted where it should not be "
+              "(permission grant/revoke, admin submit-transaction, VAJ-11).",
+              f"- Scope in verify: shown (V-05 step 6 above); Cybersecurity now checks it (S1-08 {status_of(by_id, 'S1-08')}). "
+              f"A later transition replaces the scope (V-05 {status_of(by_id, 'V-05')}, VAJ-12).",
+              "- Token issuer: VAJRA's reply names TANTRA's security/jwt_handler.py (RS256). CODE-VERIFIED at the tested "
+              "commit: VAJRA compares the bearer with a fixed value from its environment (core/relay-chain/api/server.go:381-424) "
+              "and checks no JWT; jwt_handler.py is in neither repository we can read. Who issues and rotates the value is "
+              "still UNKNOWN.", ""]
+    return "\n".join(lines)
 
 
 def vajra_capability_map(meta, by_id) -> str:
@@ -1008,7 +1137,7 @@ def vajra_capability_map(meta, by_id) -> str:
              "| Capability | VAJRA interface | Auth | Checks (result) | Status |", "|---|---|---|---|---|"]
     for name, route, auth_, checks in VAJRA_CAPABILITIES:
         detail = ", ".join(f"{c} {status_of(by_id, c)}" for c in checks) or "-"
-        status = row_status(checks, by_id) if checks else "NOT TESTED (signatures are placeholders: VAJ-05)"
+        status = row_status(checks, by_id) if checks else "NOT TESTED"
         lines.append(f"| {name} | `{route}` | {auth_} | {detail} | **{md_escape(status)}** |")
     lines.append("")
     return "\n".join(lines)
@@ -1048,6 +1177,10 @@ def main() -> int:
     parser.add_argument("--evidence", type=Path, default=REPO / "evidence_packet")
     parser.add_argument("--branch", default=git("rev-parse", "--abbrev-ref", "HEAD") or "unknown")
     parser.add_argument("--commit", default="", help="the delivery commit to name in the EOD report")
+    parser.add_argument("--packet-dir", type=Path, default=None,
+                        help="review_packets/<name> to write REVIEW_PACKET.md (and VAJRA_RECHECK.md) into; omitted = none. "
+                             "Delivered packets (for example review_packets/CYBER-P0-2026-11-04) are not rewritten unless named.")
+    parser.add_argument("--eod", action="store_true", help="also write EOD_REPORT.md (the 04 Nov format) into --packet-dir")
     args = parser.parse_args()
     evidence = args.evidence.resolve()
     global EVIDENCE_DIR
@@ -1064,15 +1197,22 @@ def main() -> int:
     (maps / "VAJRA_CAPABILITY_MAP.md").write_text(vajra_capability_map(meta, by_id), encoding="utf-8")
     (tr / "TEST_REPORT.md").write_text(test_report(meta, results, by_id, suites, samples), encoding="utf-8")
     (tr / "DEFECTS.md").write_text(defects_report(by_id, samples), encoding="utf-8")
+    (tr / "VAJRA_RECHECK.md").write_text(vajra_recheck(meta, by_id), encoding="utf-8")
     (tr / "PROOF_MATRIX.md").write_text(proof_matrix(meta, by_id, evidence, suites), encoding="utf-8")
     if meta["mode"]["tantra"] == "live":
         (tr / "LIVE_TANTRA_CALLS.md").write_text(live_tantra_calls(meta, samples, evidence), encoding="utf-8")
     packet = review_packet(meta, results, by_id, samples, args.branch)
     (evidence / "review_packet.md").write_text(packet, encoding="utf-8")
-    PACKET_DIR.mkdir(parents=True, exist_ok=True)
-    (PACKET_DIR / "REVIEW_PACKET.md").write_text(
-        packet.replace("](test_results/", "](../../evidence_packet/test_results/"), encoding="utf-8")
-    (PACKET_DIR / "EOD_REPORT.md").write_text(eod_report(meta, results, by_id, suites, args.branch, args.commit), encoding="utf-8")
+    if args.packet_dir:
+        packet_dir = args.packet_dir if args.packet_dir.is_absolute() else REPO / args.packet_dir
+        packet_dir.mkdir(parents=True, exist_ok=True)
+        to_results = "](../../evidence_packet/test_results/"
+        (packet_dir / "REVIEW_PACKET.md").write_text(packet.replace("](test_results/", to_results), encoding="utf-8")
+        (packet_dir / "VAJRA_RECHECK.md").write_text(
+            vajra_recheck(meta, by_id).replace("](DEFECTS.md)", to_results + "DEFECTS.md)"), encoding="utf-8")
+        if args.eod:
+            (packet_dir / "EOD_REPORT.md").write_text(eod_report(meta, results, by_id, suites, args.branch, args.commit),
+                                                      encoding="utf-8")
     # LF line endings, so `sha256sum -c MANIFEST.sha256` works on every platform (.gitattributes keeps the bytes).
     (evidence / "MANIFEST.sha256").write_text(manifest(evidence), encoding="utf-8", newline="\n")
     print(f"reports written for run {meta['run_id']}: {counts(results)}")

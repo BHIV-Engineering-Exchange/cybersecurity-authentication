@@ -35,7 +35,8 @@ def _mock_client(handler):
 @pytest.fixture(autouse=True)
 def runtime_settings(monkeypatch):
     monkeypatch.setattr(settings, "VAJRA_API_URL", "http://vajra.test:8080")
-    monkeypatch.setattr(settings, "VAJRA_TANTRA_SECRET", TEST_SECRET)
+    monkeypatch.setattr(settings, "VAJRA_CYBER_SECRET", TEST_SECRET)  # the evidence-only token is the default path
+    monkeypatch.setattr(settings, "VAJRA_TANTRA_SECRET", "")
     monkeypatch.setattr(settings, "TANTRA_VALIDATION_URL", "http://tantra.test:8101")
     monkeypatch.setattr(settings, "TANTRA_KARMA_URL", "http://tantra.test:8102")
     yield
@@ -90,6 +91,7 @@ def test_vajra_unreachable_is_unavailable_not_success():
         (200, {"success": True, "simulated": True, "stored": False, "evidence_hash": "rehearsal-x"}, "SIMULATED"),
         (409, {"success": False, "duplicate": True, "existing_hash": "sha256:ab"}, "DUPLICATE_TRACE"),
         (401, {"error": "UNAUTHORIZED"}, "UNAUTHORIZED"),
+        (403, {"error": "FORBIDDEN"}, "UNAUTHORIZED"),
         (400, {"success": False, "error": "trace_id is mandatory"}, "REJECTED"),
         (503, {"success": False, "error": "STORE_UNAVAILABLE"}, "UNAVAILABLE"),
     ],
@@ -113,6 +115,7 @@ def test_vajra_evidence_status_mapping(code, body, expected):
 
 
 def test_vajra_evidence_without_secret_is_not_sent(monkeypatch):
+    monkeypatch.setattr(settings, "VAJRA_CYBER_SECRET", "")
     monkeypatch.setattr(settings, "VAJRA_TANTRA_SECRET", "")
     calls = []
 
@@ -124,6 +127,66 @@ def test_vajra_evidence_without_secret_is_not_sent(monkeypatch):
         res = bhiv_runtime.vajra_record_evidence(trace_id="t4", action_taken="DENY", threat_type="x",
                                                  severity="x", actor="s", details="d", evidence_sha256_hex="00")
     assert res.status == "NOT_CONFIGURED" and calls == []
+
+
+def _evidence_auth_header():
+    seen = {}
+
+    def handler(request):
+        seen["auth"] = request.headers.get("Authorization")
+        return httpx.Response(200, json={"success": True, "stored": True, "evidence_hash": "sha256:ab"})
+
+    with patch.object(bhiv_runtime, "_client", _mock_client(handler)):
+        res = bhiv_runtime.vajra_record_evidence(trace_id="t4b", action_taken="DENY", threat_type="x", severity="x",
+                                                 actor="s", details="d", evidence_sha256_hex="00")
+    return seen.get("auth"), res
+
+
+def test_evidence_only_token_is_preferred_and_spare_governance_token_is_flagged(monkeypatch):
+    governance = "unit-test-governance-" + uuid.uuid4().hex
+    monkeypatch.setattr(settings, "VAJRA_TANTRA_SECRET", governance)
+    auth, res = _evidence_auth_header()
+    assert auth == f"Bearer {TEST_SECRET}" and res.data["credential"] == "cyber_evidence_only"
+    with patch.object(bhiv_runtime, "_probe", return_value={"status": "not probed in unit test"}):
+        health = bhiv_runtime._vajra_health()
+    assert health["write_credential"] == "cyber_evidence_only"
+    assert any("not used" in w for w in health["warnings"])
+    assert governance not in json.dumps(health) and TEST_SECRET not in json.dumps(health)
+
+
+def test_governance_token_is_used_only_as_a_flagged_fallback(monkeypatch):
+    governance = "unit-test-governance-" + uuid.uuid4().hex
+    monkeypatch.setattr(settings, "VAJRA_CYBER_SECRET", "")
+    monkeypatch.setattr(settings, "VAJRA_TANTRA_SECRET", governance)
+    auth, res = _evidence_auth_header()
+    assert auth == f"Bearer {governance}" and res.data["credential"] == "tantra_governance"
+    with patch.object(bhiv_runtime, "_probe", return_value={"status": "not probed in unit test"}):
+        health = bhiv_runtime._vajra_health()
+    assert health["write_credential"] == "tantra_governance" and health["write_token_configured"] is True
+    assert any("governance token" in w for w in health["warnings"])
+
+
+@pytest.mark.parametrize(
+    "reply_scope,expected",
+    [
+        (["read:evidence", "execute:quarantine"], ["read:evidence", "execute:quarantine"]),
+        ([], []),
+        (None, None),                  # field missing (VAJRA before 3cc883f)
+        ("read:evidence", None),       # not a list
+        (["read:evidence", 7], None),  # not all strings
+    ],
+)
+def test_vajra_verify_reports_scope_strictly(reply_scope, expected):
+    def handler(request):
+        body = {"subject": "s", "current_state": "USE", "is_authorized": True, "authority": "AUTH_ROLE_OPERATOR"}
+        if reply_scope is not None:
+            body["scope"] = reply_scope
+        return httpx.Response(200, json=body)
+
+    with patch.object(bhiv_runtime, "_client", _mock_client(handler)):
+        res = bhiv_runtime.vajra_verify_authority("s", trace_id="t4c")
+    assert res.status == "OK" and res.data["scope"] == expected
+    assert res.data["authority"] == "AUTH_ROLE_OPERATOR"
 
 
 # ---------------------------------------------------------------- bridge: TANTRA
@@ -190,7 +253,7 @@ def test_vajra_verify_is_strict_about_booleans():
 
 def test_malformed_secret_is_not_sent_and_never_echoed(monkeypatch):
     bad = "secret-with-newline-" + uuid.uuid4().hex + "\n"
-    monkeypatch.setattr(settings, "VAJRA_TANTRA_SECRET", bad)
+    monkeypatch.setattr(settings, "VAJRA_CYBER_SECRET", bad)
     calls = []
 
     def handler(request):
@@ -243,8 +306,11 @@ def _ok_evidence(*args, **kwargs):
     return SinkResult(status="RECORDED", http_status=200, data={"evidence_hash": "sha256:00"})
 
 
-def _authority(state="USE"):
-    return SinkResult(status="OK", data={"is_authorized": state in ("GRANT", "USE"), "current_state": state})
+def _authority(state="USE", scope=("read:evidence",)):
+    """A VAJRA verify result; scope=None means VAJRA reported no scope (the field was missing or malformed)."""
+    return SinkResult(status="OK", data={"is_authorized": state in ("GRANT", "USE"), "current_state": state,
+                                         "scope": None if scope is None else list(scope),
+                                         "authority": "AUTH_ROLE_OPERATOR"})
 
 
 def _body(key=None, subject="0xSubjectA", action="read"):
@@ -279,24 +345,73 @@ def test_endpoint_requires_authentication():
 
 
 @pytest.mark.parametrize(
-    "authority,decision,reason",
+    "authority,decision,reason,scope_checked",
     [
-        (_authority("USE"), "ALLOW", "ALLOWED_BY_VAJRA_AUTHORITY"),
-        (_authority("REVOKE"), "DENY", "VAJRA_AUTHORITY_NOT_GRANTED"),
-        (SinkResult(status="UNAVAILABLE", detail="ConnectError"), "DENY", "VAJRA_UNAVAILABLE"),
-        (SinkResult(status="NOT_CONFIGURED"), "DENY", "VAJRA_NOT_CONFIGURED"),
+        (_authority("USE"), "ALLOW", "ALLOWED_BY_VAJRA_AUTHORITY", True),
+        (_authority("GRANT", scope=("download:evidence", "read:evidence")), "ALLOW", "ALLOWED_BY_VAJRA_AUTHORITY", True),
+        (_authority("REVOKE"), "DENY", "VAJRA_AUTHORITY_NOT_GRANTED", False),
+        (SinkResult(status="UNAVAILABLE", detail="ConnectError"), "DENY", "VAJRA_UNAVAILABLE", False),
+        (SinkResult(status="NOT_CONFIGURED"), "DENY", "VAJRA_NOT_CONFIGURED", False),
+        # CYB-13: the action must be inside the scope VAJRA reports
+        (_authority("USE", scope=None), "DENY", "VAJRA_SCOPE_UNAVAILABLE", False),
+        (_authority("USE", scope=()), "DENY", "VAJRA_SCOPE_NOT_GRANTED", True),
+        (_authority("USE", scope=("download:evidence",)), "DENY", "VAJRA_SCOPE_NOT_GRANTED", True),
+        (_authority("USE", scope=("read",)), "DENY", "VAJRA_SCOPE_NOT_GRANTED", True),           # no partial match
+        (_authority("USE", scope=("READ:EVIDENCE",)), "DENY", "VAJRA_SCOPE_NOT_GRANTED", True),  # case-sensitive
+        (_authority("USE", scope=("read:*", "*")), "DENY", "VAJRA_SCOPE_NOT_GRANTED", True),     # no wildcards
+        (_authority("USE", scope=("admin",)), "DENY", "VAJRA_SCOPE_NOT_GRANTED", True),          # no implied superset
     ],
 )
-def test_endpoint_decisions_fail_closed(investigator_token, authority, decision, reason):
+def test_endpoint_decisions_fail_closed(investigator_token, authority, decision, reason, scope_checked):
     with patch.object(bhiv_runtime, "vajra_verify_authority", return_value=authority), \
-         patch.object(bhiv_runtime, "vajra_record_evidence", side_effect=_ok_evidence), \
+         patch.object(bhiv_runtime, "vajra_record_evidence", side_effect=_ok_evidence) as evidence, \
          patch.object(bhiv_runtime, "tantra_submit", side_effect=_ok_evidence):
         r = _post(investigator_token, _body())
     assert r.status_code == 200, r.text
     data = r.json()
     assert data["decision"] == decision and data["reason_code"] == reason
-    assert data["vajra"]["scope_checked"] is False
+    assert data["vajra"]["scope_checked"] is scope_checked
     assert data["evidence"]["complete"] is True and data["evidence"]["gaps"] == []
+    assert evidence.call_args.kwargs["action_taken"] == decision  # a scope denial is recorded at VAJRA too
+
+
+def test_scope_is_recorded_in_the_audit_event_and_tantra_projection(investigator_token):
+    sent = {}
+
+    def capture(envelope, **kwargs):
+        sent["envelope"] = envelope
+        return _ok_evidence()
+
+    with patch.object(bhiv_runtime, "vajra_verify_authority", return_value=_authority("USE", scope=("read:evidence",))), \
+         patch.object(bhiv_runtime, "vajra_record_evidence", side_effect=_ok_evidence), \
+         patch.object(bhiv_runtime, "tantra_submit", side_effect=capture):
+        r = _post(investigator_token, _body(action="download"))
+    data = r.json()
+    assert data["decision"] == "DENY" and data["reason_code"] == "VAJRA_SCOPE_NOT_GRANTED"
+    assert "'download:evidence'" in data["reason"]
+    meta = sent["envelope"]["payload"]["metadata"]
+    assert meta["required_scope"] == "download:evidence" and meta["scope_checked"] is True
+    db = SessionLocal()
+    row = db.query(AuditLog).filter(AuditLog.entity_id == "EV-UNIT-1",
+                                    AuditLog.action == "protected_access.decision:download").order_by(AuditLog.id.desc()).first()
+    db.close()
+    stored = json.loads(row.details)
+    assert stored["trace_id"] == data["trace_id"]
+    assert stored["metadata"]["required_scope"] == "download:evidence" and stored["metadata"]["scope_checked"] is True
+    assert stored["metadata"]["vajra_authority"] == "AUTH_ROLE_OPERATOR"
+
+
+def test_replay_after_scope_narrowed_is_refused(investigator_token):
+    key = "scope-narrow-" + uuid.uuid4().hex[:8]
+    with patch.object(bhiv_runtime, "vajra_record_evidence", side_effect=_ok_evidence), \
+         patch.object(bhiv_runtime, "tantra_submit", side_effect=_ok_evidence):
+        with patch.object(bhiv_runtime, "vajra_verify_authority", return_value=_authority("USE")):
+            first = _post(investigator_token, _body(key=key))
+        with patch.object(bhiv_runtime, "vajra_verify_authority",
+                          return_value=_authority("USE", scope=("download:evidence",))):
+            again = _post(investigator_token, _body(key=key))
+    assert first.json()["decision"] == "ALLOW"
+    assert again.status_code == 409 and again.json()["code"] == "STALE_DECISION"
 
 
 def test_allow_requires_vajra_evidence(investigator_token):

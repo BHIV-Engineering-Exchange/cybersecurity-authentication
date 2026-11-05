@@ -90,15 +90,21 @@ DEFECTS = [
      "expected": "Public health returns status only; details (paths) need an authenticated operator.",
      "fix": "Drop paths from the public response or move the detailed view behind superadmin."},
     {"id": "CYB-13", "severity": "HIGH", "system": "Cybersecurity", "owner": "Rajaryan (integration) with Prakash (VAJRA contract); bridge by Hemanth",
-     "check": None, "title": "Protected access does not check scope or bind the caller to the subject; the VAJRA token is unscoped",
+     "status": "PARTLY FIXED", "fixed_by": "Hemanth on 2026-11-05 (his bridge), after VAJRA 3cc883f added scope to verify; for review by Rajaryan",
+     "remaining": "nothing binds the calling user to the VAJRA subject (needs a team decision); the evidence-only VAJRA token is "
+                  "supported, but VAJRA 3cc883f refuses it on evidence/record (VAJ-10), so the main run still sends the "
+                  "governance token; the '<action>:<resource type>' scope form is Cybersecurity's proposal, not yet agreed with "
+                  "VAJRA/TANTRA",
+     "check": "S1-08", "title": "Protected access does not check scope or bind the caller to the subject; the VAJRA token is unscoped",
      "where": "cybercrime/backend/app/api/v1/endpoints/protected_access.py (_decide uses only VAJRA's GRANT/USE state; "
               "response field vajra.scope_checked=false); VAJRA_TANTRA_SECRET also authorizes VAJRA transitions (server.go:277,279,284)",
      "steps": ["Grant a subject with scope ['read'] in VAJRA.",
                "Ask /api/v1/protected/access for action 'delete' on any resource: ALLOW, because VAJRA's verify returns no scope.",
                "Any investigator can ask about any subject (no link between the caller and the subject)."],
      "expected": "ALLOW only for actions inside the granted scope, for a caller entitled to act for that subject.",
-     "fix": "Needs a scope-aware VAJRA contract (UNKNOWN; VAJRA's /api/v1/permission/check has requester and scope but is a "
-            "separate registry) and an evidence-only VAJRA credential; until then ALLOW means only 'subject is GRANT/USE in VAJRA'."},
+     "fix": "Done on 05 Nov for scope: ALLOW now also needs '<action>:<resource type>' in the scope VAJRA's verify reports "
+            "(exact match, no wildcards; missing scope denies), and the bridge prefers VAJRA_CYBER_SECRET. Still needed: a "
+            "caller-to-subject binding and an agreed scope vocabulary."},
     {"id": "CYB-14", "verified_by": "unit test test_protected_access_is_rate_limited_per_caller",  "severity": "MEDIUM", "system": "Cybersecurity", "owner": "Rajaryan (integration); bridge by Hemanth", "status": "FIXED", "fixed_by": "Hemanth on 2026-11-04 (his bridge); for review by Rajaryan",
      "check": None, "title": "Every protected-access decision appends a permanent VAJRA row; there is no rate limit",
      "where": "cybercrime/backend/app/api/v1/endpoints/protected_access.py (one VAJRA evidence record per non-duplicate request, "
@@ -127,18 +133,26 @@ DEFECTS = [
             "PHASE_4_TEST_RESULTS.md, passed in run 2."},
     # ------------------------------------------------------------------ VAJRA
     {"id": "VAJ-01", "severity": "HIGH", "system": "VAJRA", "owner": "Prakash (VAJRA)",
+     "owner_fix": {"commit": "3cc883f", "state": "PARTLY FIXED",
+                   "remaining": "review_packets/CYBER-BIQOS-10DAY/deployment_proof/deployment_proof.md:48-54 still uses "
+                                "localhost:4000 (VAJRA_EXTERNAL_INTEGRATION_PACKAGE.md:7 now says 8080)"},
      "check": None, "title": "Integration docs give the API at port 4000, which is the P2P port",
      "where": "bhiv-VAJRA_Blockchain/VAJRA_EXTERNAL_INTEGRATION_PACKAGE.md:7; start_blockchain.bat:13; cmd/relay/main.go:229-247",
      "steps": ["Start the node as documented; the HTTP API listens on HTTP_PORT (default 8080), not 4000."],
      "expected": "Docs name the HTTP API port.",
      "fix": "Change the base URL in the integration package and review packet to the HTTP port."},
     {"id": "VAJ-02", "severity": "HIGH", "system": "VAJRA", "owner": "Prakash (VAJRA) / Samsoorya (runtime)",
+     "owner_fix": {"commit": "3cc883f", "state": "FIXED", "verified_by": "S7-05 (state and scope survive a restart)",
+                   "note": "the new ledger file has its own problems: see VAJ-13"},
      "check": "S7-05", "title": "Authority state (GRANT/USE/REVOKE...) is lost when the node restarts",
      "where": "core/relay-chain/authority/lifecycle.go:91-105 (in-memory map)",
      "steps": ["GRANT then USE a subject.", "Restart the node.", "GET /api/vajra/authority/verify?subject=..."],
      "expected": "State and history survive a restart.",
      "fix": "Persist authority records (the hash chain already exists) and reload them at start."},
     {"id": "VAJ-03", "severity": "LOW", "system": "VAJRA", "owner": "Prakash (VAJRA)",
+     "owner_fix": {"commit": "3cc883f", "state": "PARTLY FIXED",
+                   "remaining": "hash-only storage is stated in a code comment (api/vajra_handlers.go:204) but not in "
+                                "VAJRA_EXTERNAL_INTEGRATION_PACKAGE.md, which integrators read"},
      "check": None, "title": "Evidence fields other than trace_id and action_taken cannot be read back (they are bound only by the hash)",
      "where": "core/relay-chain/api/vajra_handlers.go:301-314 (evidence_hash = SHA-256 of the full request; the row stores trace_id, "
               "the hash and action_taken)",
@@ -148,6 +162,9 @@ DEFECTS = [
      "expected": "Either the fields are readable for audit, or the contract says clearly that only the hash is kept.",
      "fix": "Document hash-only storage in the integration package, or store the fields alongside the hash."},
     {"id": "VAJ-04", "severity": "MEDIUM", "system": "VAJRA", "owner": "Prakash (VAJRA)",
+     "owner_fix": {"commit": "3cc883f", "state": "FIXED",
+                   "verified_by": "read at 3cc883f: authority/mandatory_proofs_runner.go:177,185-186 label the scripted steps "
+                                  "[SIMULATED ...]; :461-475 count passes from each proof's status, and each proof can return FAILED"},
      "check": None, "title": "The '4 mandatory proofs' are partly scripted text; pass totals are hard-coded",
      "where": "core/relay-chain/authority/mandatory_proofs_runner.go:177,185-186 (detection, correlation and TANTRA approval are log "
               "strings, not labelled simulated), :243 (node failure, labelled simulated), :464-465 (TotalProofs/PassedProofs = 5)",
@@ -155,12 +172,19 @@ DEFECTS = [
      "expected": "Proofs call the real components, or label those steps SIMULATED; totals are counted.",
      "fix": "Label simulated steps and count passed proofs from the actual results."},
     {"id": "VAJ-05", "severity": "MEDIUM", "system": "VAJRA", "owner": "Prakash (VAJRA) / Samsoorya (recovery)",
-     "check": None, "title": "Recovery package uses placeholder signatures; anchor check only counts strings",
-     "where": "core/relay-chain/api/vajra_handlers.go:353,367,404; core/relay-chain/authority/recovery.go:127-128",
-     "steps": ["GET /api/vajra/recovery/package: signatures are 'val1_sig'...'val4_sig'."],
+     "owner_fix": {"commit": "3cc883f", "state": "NOT FIXED"},
+     "check": "V-06", "title": "Recovery package uses placeholder signatures; anchor check only counts strings",
+     "where": "core/relay-chain/api/vajra_handlers.go:358-361 (3cc883f: '<validator>_sig_ed25519_' + 8 bytes of SHA-256 over "
+              "public data - not a signature); authority/recovery.go:128 (still counts strings); "
+              "authority/mandatory_proofs_runner.go:251 (still 'val1_sig'...)",
+     "steps": ["GET /api/vajra/recovery/package: signatures are 'val1_sig'...'val4_sig' (07d683c) or "
+               "'val1_sig_ed25519_<16 hex>' (3cc883f): anyone can compute them; no key signs anything.",
+               "POST /api/vajra/recovery/verify-anchor with the public genesis id and four made-up signature strings: qualified=true (V-06)."],
      "expected": "Real validator signatures that are cryptographically verified.",
      "fix": "Sign checkpoints with validator keys and verify the signatures in VerifySurvivingNode."},
     {"id": "VAJ-06", "severity": "HIGH", "system": "VAJRA", "owner": "Prakash (VAJRA)",
+     "owner_fix": {"commit": "3cc883f", "state": "FIXED", "verified_by": "V-01 (7 routes answer 401 without a token)",
+                   "note": "a wallet can still be frozen without a token through /api/cybercrime/report: see VAJ-14"},
      "check": "V-01", "show_replies": True,
      "title": "Permission grant, wallet freeze and token-mint routes run without any login",
      "where": "core/relay-chain/api/server.go:127 (/api/admin/add-tokens), :154-156 (/api/v1/permission/*), :292 (/api/cybercrime/freeze) - wrapped with enableCORS, not enableCORSWithAuth",
@@ -169,26 +193,102 @@ DEFECTS = [
                "run it reported 'token BHX not found' because the test used a token name that does not exist, so no mint was shown."],
      "expected": "401/403 without credentials.",
      "fix": "Wrap these routes with enableCORSWithAuth (or remove admin routes from public builds)."},
-    {"id": "VAJ-07", "severity": "MEDIUM", "system": "VAJRA", "owner": "Prakash (VAJRA)",
-     "check": "V-02", "title": "Permission ids collide for subjects of 18+ characters (ids no longer identify one grant)",
-     "where": "core/relay-chain/permission/permission.go:110 ('perm-' + subject + '-' + hash, cut to 24 characters: no hash left "
-              "once the subject has 18 or more characters)",
-     "steps": ["Grant two permissions for one long subject with different requesters.", "Compare permission_id values."],
-     "expected": "Different grants get different ids. (In our run the revoke still hit the intended grant, but list/revoke by id is ambiguous.)",
-     "fix": "Do not truncate the hash part of the id (for example perm-<sha256 prefix> without the subject)."},
+    {"id": "VAJ-07", "severity": "HIGH", "system": "VAJRA", "owner": "Prakash (VAJRA)",
+     "owner_fix": {"commit": "3cc883f", "state": "PARTLY FIXED",
+                   "remaining": "our original case passes (V-02), but the subject is still cut to 12 characters and is not in the "
+                                "hashed input, so two subjects with the same first 12 characters, granted by the same requester "
+                                "for the same scope in the same second, get one id; the second grant replaces the first in the id "
+                                "map, so revoking A's id revokes B and A stays allowed (V-04)"},
+     "check": "V-04", "title": "Permission ids collide (ids do not identify one grant); revoke by id can hit the wrong subject",
+     "where": "core/relay-chain/permission/permission.go:110 at 07d683c (cut to 24 characters); at 3cc883f :106-113 (subject cut "
+              "to 12 characters, hash input requester:scope:seconds without the subject) and :141 (m.permissions[permID] = record "
+              "overwrites)",
+     "steps": ["07d683c: grant two permissions for one long subject with different requesters; both get the same id (V-02).",
+               "3cc883f: grant subjects 'cyber-p0-test-collide-a-...' and 'cyber-p0-test-collide-b-...' with the same requester "
+               "and scope in one second; both get the same id. Revoke that id; check both subjects (V-04)."],
+     "expected": "Different grants get different ids, and a revoke by id affects only that grant.",
+     "fix": "Derive the id from all identifying fields plus a random or sequence part (for example perm-<uuid4>), and refuse "
+            "to overwrite an existing id. Severity raised from MEDIUM on 05 Nov: the revoke now shown to hit the wrong subject."},
     {"id": "VAJ-08", "severity": "LOW", "system": "VAJRA", "owner": "Prakash (VAJRA)",
+     "owner_fix": {"commit": "3cc883f", "state": "FIXED",
+                   "verified_by": "read at 3cc883f: run_cyber_biqos_10day_proofs.bat:22 now runs 'go test -v -run TestVajra "
+                                  "./api/...'; that test set passes here (test_results/vajra_go_tests.txt)"},
      "check": None, "title": "Proof runner script references a file that does not exist",
      "where": "run_cyber_biqos_10day_proofs.bat:22 (api/api_test_helpers.go missing; the fallback always runs)",
      "steps": ["Run the .bat; step 2's first command always fails and the fallback runs."],
      "expected": "The script runs the intended command.",
      "fix": "Use: go test -v -run TestVajra ./api/..."},
     {"id": "VAJ-09", "severity": "LOW", "system": "VAJRA", "owner": "Prakash (VAJRA)",
+     "owner_fix": {"commit": "3cc883f", "state": "PARTLY FIXED",
+                   "remaining": "the samples now send an Authorization header, but the evidence/record sample says "
+                                "'<VAJRA_TANTRA_SECRET_OR_CYBER_SECRET>' and the cyber token is refused there (VAJ-10); the "
+                                "package still does not say who issues or rotates the tokens or what the cyber tier may do"},
      "check": None, "title": "Integration package examples send no Authorization header, but those routes now return 401 without it",
      "where": "VAJRA_EXTERNAL_INTEGRATION_PACKAGE.md:64-78 (evidence/record curl), :178-205 (authority/transition curls); "
               "core/relay-chain/api/server.go:372-406 (bearer gate)",
      "steps": ["Copy a documented curl for /api/vajra/evidence/record; it returns 401."],
      "expected": "Docs show the required 'Authorization: Bearer <VAJRA_TANTRA_SECRET>' header and how callers obtain it.",
      "fix": "Update the samples and say who issues the token."},
+    # ---- found while re-checking VAJRA 3cc883f on 2026-11-05 (local node only)
+    {"id": "VAJ-10", "severity": "HIGH", "system": "VAJRA", "owner": "Prakash (VAJRA)",
+     "check": "V-03", "show_replies": True,
+     "title": "The evidence-only token is refused by evidence/record, the one route it is meant for",
+     "where": "core/relay-chain/api/vajra_handlers.go:241-252 (handleVajraEvidenceRecord checks the bearer again and accepts only "
+              "VAJRA_TANTRA_SECRET); VAJRA's own test (vajra_handlers_test.go:231-272) covers only authority/transition",
+     "steps": ["Start a node with VAJRA_TANTRA_SECRET and VAJRA_CYBER_SECRET set (both are needed in a real deployment).",
+               "POST /api/vajra/evidence/record with 'Authorization: Bearer <VAJRA_CYBER_SECRET>': 401 'Authorization: Bearer "
+               "<VAJRA_TANTRA_SECRET> required' (V-03).",
+               "Cybersecurity configured with only the evidence-only token: the evidence write fails, so an in-scope request is "
+               "denied with VAJRA_EVIDENCE_NOT_RECORDED (S6-05; it fails closed)."],
+     "expected": "evidence/record accepts the evidence-only token (step 4 of VAJRA's own re-verification steps).",
+     "fix": "Accept VAJRA_CYBER_SECRET in handleVajraEvidenceRecord (or drop the second check, since enableCORSWithAuth already "
+            "authenticates) and add a test that records evidence with the cyber token while VAJRA_TANTRA_SECRET is set."},
+    {"id": "VAJ-11", "severity": "HIGH", "system": "VAJRA", "owner": "Prakash (VAJRA)",
+     "check": "V-03", "show_replies": True,
+     "title": "The 'evidence-only' token can still grant and revoke permissions and reach admin submit-transaction",
+     "where": "core/relay-chain/api/server.go:412-424 (the cyber token is refused only on /api/vajra/authority/transition and "
+              "/api/admin/add-tokens; every other enableCORSWithAuth route accepts it: :136, :162-164, :292, :300-301)",
+     "steps": ["With 'Authorization: Bearer <VAJRA_CYBER_SECRET>': POST /api/v1/permission/grant -> 201 GRANTED; "
+               "POST /api/v1/permission/revoke on a grant made with the governance token -> 200; "
+               "POST /api/admin/submit-transaction (malformed body) -> 200 from the handler, so the token passed (V-03)."],
+     "expected": "An evidence-only token reaches only the evidence routes; consent changes and admin transactions are refused.",
+     "fix": "Use an allow-list for the cyber token (evidence/record, plus anything else agreed) instead of a deny-list of two paths."},
+    {"id": "VAJ-12", "severity": "MEDIUM", "system": "VAJRA", "owner": "Prakash (VAJRA)",
+     "check": "V-05",
+     "title": "Scope in verify is the scope of the latest transition: a later USE can widen or erase what was granted",
+     "where": "core/relay-chain/authority/lifecycle.go:243 (subjectRecord = latest record; GetSubjectInfo returns its scope); "
+              "Transition accepts any scope on any transition (no comparison with the GRANT scope)",
+     "steps": ["GRANT a subject with scope ['read:evidence'], then USE with scope [] -> verify reports [] (V-05).",
+               "GRANT ['read:evidence'], then USE ['read:evidence','delete:evidence'] -> verify reports both; Cybersecurity then "
+               "allows delete:evidence, which was never granted (V-05 note)."],
+     "expected": "The scope granted at GRANT stays until a new GRANT; a later transition cannot widen it.",
+     "fix": "Keep the GRANT scope as the subject's scope, and refuse or ignore a different scope on later transitions "
+            "(or document that each transition re-states the scope, and who may widen it)."},
+    {"id": "VAJ-13", "severity": "HIGH", "system": "VAJRA", "owner": "Prakash (VAJRA) / Samsoorya (runtime)",
+     "check": "V-08",
+     "title": "Authority ledger: a revocation can be undone by a restart; edited lines are trusted; one bad line wipes all state",
+     "where": "core/relay-chain/authority/lifecycle.go:246-255 (write errors ignored; the transition still succeeds), :127-152 "
+              "(loadFromFile trusts each line; prev_hash/entry_hash are not checked), api/server.go:102-106 (any load error -> "
+              "in-memory manager: nothing is loaded and nothing is saved from then on)",
+     "steps": ["GRANT, USE, then REVOKE a subject while the ledger file cannot be written: REVOKE answers 200; after a "
+               "restart the subject is USE and authorized again (V-08).",
+               "Edit the REVOKE line to USE in authority_ledger.jsonl and restart: the subject is USE and authorized (V-08).",
+               "Append one unreadable line and restart: every subject's state is gone, and a new GRANT is not kept after the "
+               "next restart (V-08)."],
+     "expected": "A transition that cannot be saved fails (and does not change state); the hash chain is checked on reload; "
+                 "a damaged ledger stops the node (fail closed) or is reported, never silently replaced by an empty one.",
+     "fix": "Return an error and roll back when the append (and fsync) fails; verify prev_hash/entry_hash while loading; on any "
+            "load error refuse to start, instead of falling back to memory-only."},
+    {"id": "VAJ-14", "severity": "HIGH", "system": "VAJRA", "owner": "Prakash (VAJRA)",
+     "check": "V-07",
+     "title": "One anonymous report can freeze any wallet; a negative severity can hide reports",
+     "where": "core/relay-chain/api/server.go:298 (/api/cybercrime/report without login); api/cybercrime_handlers.go:55 "
+              "(severity is any int the caller sends), :41 and :86 (auto-freeze when the sum reaches 15)",
+     "steps": ["POST /api/cybercrime/report with no token and severity 15: the wallet is frozen by SYSTEM_AUTO_FREEZE (V-07).",
+               "Report severity -1000, then two reports of 10: the sum is -980 and the wallet stays active (V-07)."],
+     "expected": "Only an authenticated, bounded report counts, and reports alone do not freeze a wallet without review.",
+     "fix": "Require login on report, bound severity (for example 1-10), count distinct authenticated reporters, and keep "
+            "freezing behind the authenticated freeze route. This bypasses the VAJ-06 fix for freeze."},
     # ------------------------------------------------------------------ TANTRA
     {"id": "TAN-01", "severity": "HIGH", "system": "TANTRA", "owner": "TANTRA team (owner name UNKNOWN)",
      "check": "S5-01", "confirmed_when": {"check": "S5-01", "what": "TANTRA reason", "actual": "event_type_not_registered"},
